@@ -356,13 +356,13 @@ const { previewType, variantId, variantName, badge } = Astro.props;
 
   {/* 9. TABLA EXPANDIBLE MASTER-DETAIL */}
   {previewType === 'table-expandable' && (
-    <div class="cxd-table-shell">
+    <div class="cxd-table-shell" data-expandable-table>
       <table class="cxd-table">
         <thead>
           <tr><th>Incidente / Despliegue (Haz clic en la fila para expandir detalles)</th><th>Severidad</th><th>Duración</th></tr>
         </thead>
         <tbody>
-          <tr class="expand-trigger-row" onclick="const n=this.nextElementSibling; n.style.display=n.style.display==='none'?'table-row':'none'">
+          <tr class="expand-trigger-row" data-exp-row>
             <td><Icon name="chevron-down" size={14} /> <strong>INC-4091 — Latencia elevada en balanceador US-East</strong></td>
             <td><span class="cxd-badge cxd-badge--pending">SEV-2</span></td>
             <td class="mono">14m 22s</td>
@@ -375,12 +375,12 @@ const { previewType, variantId, variantName, badge } = Astro.props;
               </div>
             </td>
           </tr>
-          <tr class="expand-trigger-row" onclick="const n=this.nextElementSibling; n.style.display=n.style.display==='none'?'table-row':'none'">
+          <tr class="expand-trigger-row" data-exp-row>
             <td><Icon name="chevron-down" size={14} /> <strong>DEP-8820 — Actualización de Kernel en Nodos Worker</strong></td>
             <td><span class="cxd-badge cxd-badge--active">COMPLETED</span></td>
             <td class="mono">04m 10s</td>
           </tr>
-          <tr class="expand-detail-row" style="display:none">
+          <tr class="expand-detail-row" hidden>
             <td colspan="3">
               <div class="expanded-panel-box">
                 <strong>Resumen de Nodos:</strong>
@@ -451,14 +451,14 @@ const { previewType, variantId, variantName, badge } = Astro.props;
 
   {previewType === 'toast-actions' && (
     <div class="stage-center">
-      <div class="cxd-toast-card" style="width:100%; max-width:520px; align-items:center;">
+      <div class="cxd-toast-card" style="width:100%; max-width:520px; align-items:center;" data-action-toast>
         <div>
           <strong>Solicitud de fusión en rama principal (#409)</strong>
           <p class="sub-p" data-action-toast-msg>¿Deseas aprobar y desplegar los cambios ahora mismo?</p>
         </div>
         <div class="row-actions">
-          <button type="button" class="mini-btn mini-btn--accent" onclick="this.closest('.cxd-toast-card').querySelector('[data-action-toast-msg]').textContent='Estado: Aprobado y desplegado en producción.'">Aprobar</button>
-          <button type="button" class="mini-btn" onclick="this.closest('.cxd-toast-card').querySelector('[data-action-toast-msg]').textContent='Estado: Pospuesto por 1 hora.'">Posponer</button>
+          <button type="button" class="mini-btn mini-btn--accent" data-at-btn="Estado: Aprobado y desplegado en producción.">Aprobar</button>
+          <button type="button" class="mini-btn" data-at-btn="Estado: Pospuesto por 1 hora.">Posponer</button>
         </div>
       </div>
     </div>
@@ -466,15 +466,15 @@ const { previewType, variantId, variantName, badge } = Astro.props;
 
   {previewType === 'toast-form' && (
     <div class="stage-center">
-      <div class="cxd-toast-card" style="width:100%; max-width:520px; flex-direction:column;">
+      <div class="cxd-toast-card" style="width:100%; max-width:520px; flex-direction:column;" data-form-toast>
         <div style="display:flex; justify-content:space-between; width:100%;">
           <strong>Comentario de Revisión — @sofia_vance</strong>
-          <span class="mono" style="font-size:0.7rem">hace 1 min</span>
+          <span class="mono" style="font-size:0.7rem" data-ft-time>hace 1 min</span>
         </div>
         <p class="sub-p">"¿Podemos subir el límite de rate-limiting a 5,000 req/min?"</p>
-        <form class="toast-inline-form" onsubmit="event.preventDefault(); this.querySelector('button').textContent='Respuesta Enviada'">
-          <input type="text" class="tbl-input" placeholder="Escribe una respuesta rápida..." required />
-          <button type="submit" class="mini-btn mini-btn--accent">Responder</button>
+        <form class="toast-inline-form" data-ft-form>
+          <input type="text" class="tbl-input" placeholder="Escribe una respuesta rápida..." data-ft-inp required />
+          <button type="submit" class="mini-btn mini-btn--accent" data-ft-btn>Responder</button>
         </form>
       </div>
     </div>
@@ -507,10 +507,10 @@ const { previewType, variantId, variantName, badge } = Astro.props;
 
   {previewType === 'toast-pill' && (
     <div class="stage-center">
-      <div class="toast-pill-fit">
+      <div class="toast-pill-fit" data-pill-toast>
         <span class="cxd-badge cxd-badge--active">NUEVO</span>
-        <span>Motor Anime.js v4 integrado en todas las rutas</span>
-        <button type="button" class="mini-btn" onclick="this.textContent='Verificado'">Entendido</button>
+        <span data-pt-text>Motor Anime.js v4 integrado en todas las rutas</span>
+        <button type="button" class="mini-btn mini-btn--accent" data-pt-btn>Entendido</button>
       </div>
     </div>
   )}
@@ -537,37 +537,42 @@ const { previewType, variantId, variantName, badge } = Astro.props;
       CATEGORÍA 03: BOTONES Y CONTROLES (8 VARIANTES DISTINTAS)
       ========================================================================== */}
   {previewType === 'btn-modern' && (
-    <div class="stage-center" style="gap:1rem; flex-wrap:wrap;">
-      <button type="button" class="btn-pill-modern btn-pill-modern--primary">Botón Píldora Moderno</button>
-      <button type="button" class="btn-pill-modern btn-pill-modern--soft">Secundario Suave</button>
-      <button type="button" class="btn-pill-modern btn-pill-modern--outline">Contorno Redondeado</button>
+    <div class="stage-center" style="gap:1rem; flex-wrap:wrap;" data-btn-modern-group>
+      <button type="button" class="btn-pill-modern btn-pill-modern--primary" data-pill-btn="Despliegue Iniciado"><Icon name="play" size={14} /> <span>Botón Píldora Moderno</span></button>
+      <button type="button" class="btn-pill-modern btn-pill-modern--soft" data-pill-btn="Modo Previsualización Activo"><Icon name="eye" size={14} /> <span>Secundario Suave</span></button>
+      <button type="button" class="btn-pill-modern btn-pill-modern--outline" data-pill-btn="Sincronizado con Éxito"><Icon name="refresh" size={14} /> <span>Contorno Redondeado</span></button>
+      <span class="mono" style="font-size:0.72rem; color:var(--cxd-accent); width:100%; text-align:center;" data-pill-status>HAZ CLIC EN CUALQUIER BOTÓN PÍLDORA PARA VER SU PULSO ELÁSTICO</span>
     </div>
   )}
 
   {previewType === 'btn-styleless' && (
-    <div class="stage-center" style="gap:2.5rem; flex-wrap:wrap;">
-      <button type="button" class="btn-styleless-minimal">
+    <div class="stage-center" style="gap:2.5rem; flex-wrap:wrap;" data-btn-styleless-group>
+      <button type="button" class="btn-styleless-minimal" data-styleless-btn="Abriendo especificación técnica v4.2...">
         <span>Explorar Documentación Técnica</span>
         <Icon name="arrow-right" size={15} />
       </button>
-      <button type="button" class="btn-styleless-minimal">
+      <button type="button" class="btn-styleless-minimal" data-styleless-btn="Descargando manifiesto raw (42 KB)...">
         <span>Descargar Especificación Raw</span>
         <Icon name="arrow-right" size={15} />
       </button>
+      <span class="mono" style="font-size:0.72rem; color:var(--cxd-text-secondary); width:100%; text-align:center;" data-styleless-status>PASA EL CURSOR O HAZ CLIC SOBRE LOS ENLACES STYLELESS</span>
     </div>
   )}
 
   {previewType === 'btn-floating' && (
     <div class="stage-center" data-fab-stage>
       <div class="fab-cluster">
-        <button type="button" class="fab-main-trigger" data-fab-toggle>
-          <Icon name="layers" size={18} />
-          <span>Menú Flotante FAB (Click)</span>
-        </button>
+        <div class="row-actions" style="justify-content:space-between; width:100%;">
+          <button type="button" class="fab-main-trigger" data-fab-toggle>
+            <Icon name="layers" size={18} />
+            <span data-fab-label>Abrir / Cerrar Menú Flotante FAB</span>
+          </button>
+          <span class="cxd-badge cxd-badge--active mono" data-fab-readout>SATÉLITES ACTIVOS</span>
+        </div>
         <div class="fab-satellites" data-fab-items>
-          <button type="button" class="mini-btn">01. Nuevo Despliegue</button>
-          <button type="button" class="mini-btn">02. Clonar Repositorio</button>
-          <button type="button" class="mini-btn">03. Exportar Logs</button>
+          <button type="button" class="mini-btn mini-btn--accent" data-fab-action="01. Nuevo Despliegue Ejecutado"><Icon name="play" size={12} /> <span>01. Nuevo Despliegue</span></button>
+          <button type="button" class="mini-btn" data-fab-action="02. Repositorio Clonado"><Icon name="copy" size={12} /> <span>02. Clonar Repositorio</span></button>
+          <button type="button" class="mini-btn" data-fab-action="03. Logs Exportados (JSON)"><Icon name="terminal" size={12} /> <span>03. Exportar Logs</span></button>
         </div>
       </div>
     </div>
@@ -586,45 +591,49 @@ const { previewType, variantId, variantName, badge } = Astro.props;
   )}
 
   {previewType === 'btn-hold' && (
-    <div class="stage-center">
-      <button type="button" class="cxd-btn hold-confirm-btn" onmousedown="this.querySelector('.hold-label').textContent='Mantén presionado...'" onmouseup="this.querySelector('.hold-label').textContent=' Acción Confirmada'">
-        <span class="hold-fill"></span>
+    <div class="stage-center" style="flex-direction:column; gap:0.6rem;" data-hold-stage>
+      <button type="button" class="cxd-btn hold-confirm-btn" data-hold-btn>
+        <span class="hold-fill" data-hold-fill></span>
         <Icon name="shield" size={15} />
-        <span class="hold-label">Mantén Presionado 1.2s para Purgar Caché</span>
+        <span class="hold-label" data-hold-label>Mantén Presionado (o Haz Clic) para Purgar Caché</span>
       </button>
+      <span class="mono" style="font-size:0.7rem; color:var(--cxd-text-muted);" data-hold-pct>PROGRESO DE SEGURIDAD: 0%</span>
     </div>
   )}
 
   {previewType === 'btn-split' && (
-    <div class="stage-center">
+    <div class="stage-center" style="flex-direction:column; gap:0.65rem;" data-split-btn-stage>
       <div class="split-btn-group">
-        <button type="button" class="cxd-btn cxd-btn--primary" style="border-top-right-radius:0; border-bottom-right-radius:0;" onclick="this.textContent='Ejecutado Correctamente'">
-          Ejecutar Acción Principal
+        <button type="button" class="cxd-btn cxd-btn--primary" style="border-top-right-radius:0; border-bottom-right-radius:0;" data-split-exec>
+          <Icon name="play" size={13} />
+          <span data-split-main-lbl>Ejecutar: Producción Directa</span>
         </button>
-        <select class="cxd-architect-select" style="border-top-left-radius:0; border-bottom-left-radius:0; height:38px;">
-          <option>Modo: Producción Directa</option>
-          <option>Modo: Simulación Dry-Run</option>
-          <option>Modo: Rollback Instantáneo</option>
+        <select class="cxd-architect-select" style="border-top-left-radius:0; border-bottom-left-radius:0; height:38px;" data-split-mode-sel>
+          <option value="Producción Directa">Modo: Producción Directa</option>
+          <option value="Simulación Dry-Run">Modo: Simulación Dry-Run</option>
+          <option value="Rollback Instantáneo">Modo: Rollback Instantáneo</option>
         </select>
       </div>
+      <span class="mono" style="font-size:0.72rem; color:var(--cxd-accent);" data-split-feedback>LISTO PARA EJECUTAR ACCIÓN SELECCIONADA</span>
     </div>
   )}
 
   {previewType === 'btn-segmented' && (
-    <div class="stage-center">
+    <div class="stage-center" style="flex-direction:column; gap:0.75rem;" data-seg-stage>
       <div class="cxd-table-filter-group" data-seg-group>
-        <button type="button" class="cxd-table-filter-btn is-active" onclick="this.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('is-active'));this.classList.add('is-active')">Vista Tabla</button>
-        <button type="button" class="cxd-table-filter-btn" onclick="this.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('is-active'));this.classList.add('is-active')">Vista Tarjetas</button>
-        <button type="button" class="cxd-table-filter-btn" onclick="this.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('is-active'));this.classList.add('is-active')">Vista Grafo 3D</button>
-        <button type="button" class="cxd-table-filter-btn" onclick="this.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('is-active'));this.classList.add('is-active')">JSON Raw</button>
+        <button type="button" class="cxd-table-filter-btn is-active" data-seg-val="Vista de Tabla Estructurada (10 Variantes)">Vista Tabla</button>
+        <button type="button" class="cxd-table-filter-btn" data-seg-val="Vista de Tarjetas Bento (8 Variantes)">Vista Tarjetas</button>
+        <button type="button" class="cxd-table-filter-btn" data-seg-val="Vista de Grafo Vectorial 3D">Vista Grafo 3D</button>
+        <button type="button" class="cxd-table-filter-btn" data-seg-val="Inspector JSON Raw en Vivo">JSON Raw</button>
       </div>
+      <div class="mono" style="font-size:0.74rem; color:var(--cxd-text-secondary);" data-seg-output>MODO ACTIVO: Vista de Tabla Estructurada (10 Variantes)</div>
     </div>
   )}
 
   {previewType === 'btn-3d' && (
-    <div class="stage-center" style="gap:1.25rem; flex-wrap:wrap;">
-      <button type="button" class="cxd-btn cxd-btn--brutalist">PRESIÓN FÍSICA 3D PRIMARIA</button>
-      <button type="button" class="btn-3d-secondary">INTERRUPTOR MECÁNICO</button>
+    <div class="stage-center" style="gap:1.25rem; flex-wrap:wrap;" data-btn-3d-stage>
+      <button type="button" class="cxd-btn cxd-btn--brutalist" data-push-3d>PRESIÓN FÍSICA 3D PRIMARIA (<span data-push-count>0</span>)</button>
+      <button type="button" class="btn-3d-secondary" data-push-toggle>INTERRUPTOR MECÁNICO: <span data-push-state>ON</span></button>
     </div>
   )}
 
@@ -685,16 +694,16 @@ const { previewType, variantId, variantName, badge } = Astro.props;
 
   {previewType === 'card-actions' && (
     <div class="stage-center">
-      <article class="card-with-actions">
+      <article class="card-with-actions" data-action-card>
         <div>
           <span class="mono" style="font-size:0.7rem">REPOSITORIO // CORE-UI</span>
           <h4>Paquete de Componentes Multi-Framework</h4>
           <p class="sub-p">Incluye plantillas para React, Vue, Svelte, Angular, Astro, Blade y Livewire.</p>
         </div>
         <div class="card-action-footer">
-          <button type="button" class="mini-btn" onclick="const s=this.querySelector('span');s.textContent=Number(s.textContent)+1">Estrella (<span>142</span>)</button>
-          <button type="button" class="mini-btn" onclick="this.textContent='Enlace Copiado'">Compartir</button>
-          <button type="button" class="mini-btn mini-btn--accent" onclick="this.textContent='Clonado'">Clonar</button>
+          <button type="button" class="mini-btn" data-ac-star><Icon name="sparkles" size={12} /> <span>Estrella (<strong data-ac-count>142</strong>)</span></button>
+          <button type="button" class="mini-btn" data-ac-share><Icon name="copy" size={12} /> <span>Compartir</span></button>
+          <button type="button" class="mini-btn mini-btn--accent" data-ac-clone><Icon name="check" size={12} /> <span>Clonar</span></button>
         </div>
       </article>
     </div>
@@ -702,15 +711,15 @@ const { previewType, variantId, variantName, badge } = Astro.props;
 
   {previewType === 'card-form' && (
     <div class="stage-center">
-      <article class="card-with-actions" style="max-width:440px; width:100%;">
+      <article class="card-with-actions" style="max-width:440px; width:100%;" data-calc-card>
         <h4>Calculadora Rápida de Instancia</h4>
         <div style="display:flex; gap:0.6rem; margin:0.75rem 0;">
-          <input type="number" value="8" min="1" class="tbl-input" id="card-cores-inp" oninput="document.getElementById('card-cost-out').textContent='$'+(this.value*24)+'/mes'" />
+          <input type="number" value="8" min="1" max="128" class="tbl-input" data-cc-input />
           <span class="mono" style="align-self:center;">Núcleos vCPU × $24</span>
         </div>
         <div style="display:flex; justify-content:space-between; align-items:center;">
           <span>Costo Estimado:</span>
-          <strong class="mono" id="card-cost-out" style="font-size:1.25rem; color:var(--cxd-accent);">$192/mes</strong>
+          <strong class="mono" data-cc-out style="font-size:1.25rem; color:var(--cxd-accent);">$192/mes</strong>
         </div>
       </article>
     </div>
@@ -728,14 +737,15 @@ const { previewType, variantId, variantName, badge } = Astro.props;
 
   {previewType === 'card-expand' && (
     <div class="stage-center">
-      <article class="card-with-actions" style="max-width:480px; width:100%;">
+      <article class="card-with-actions" style="max-width:480px; width:100%;" data-expand-card>
         <div style="display:flex; justify-content:space-between; align-items:center;">
           <strong>Reporte de Seguridad Automático</strong>
-          <button type="button" class="mini-btn" onclick="const d=this.closest('article').querySelector('[data-exp-area]'); d.hidden=!d.hidden">
-            Desplegar / Ocultar Diagnóstico
+          <button type="button" class="mini-btn mini-btn--accent" data-ec-toggle>
+            <Icon name="chevron-down" size={12} />
+            <span>Desplegar / Ocultar Diagnóstico</span>
           </button>
         </div>
-        <div data-exp-area style="margin-top:0.75rem; padding-top:0.75rem; border-top:1px dashed var(--cxd-border);">
+        <div data-ec-area style="margin-top:0.75rem; padding-top:0.75rem; border-top:1px dashed var(--cxd-border);">
           <p class="sub-p">0 vulnerabilidades críticas detectadas · Certificados TLS renovados por 90 días.</p>
         </div>
       </article>
@@ -747,10 +757,14 @@ const { previewType, variantId, variantName, badge } = Astro.props;
       ========================================================================== */}
   {previewType === 'form-modern' && (
     <div class="stage-center">
-      <div class="form-modern-box">
+      <form class="form-modern-box" data-modern-form>
         <label>Correo Electrónico Corporativo</label>
-        <input type="email" value="arquitectura@componentesxd.dev" class="input-modern-rounded" />
-      </div>
+        <div style="display:flex; gap:0.5rem;">
+          <input type="email" value="arquitectura@componentesxd.dev" class="input-modern-rounded" style="flex:1;" required />
+          <button type="submit" class="mini-btn mini-btn--accent"><Icon name="check" size={12} /> <span>Guardar</span></button>
+        </div>
+        <small class="mono" style="font-size:0.7rem; color:var(--cxd-accent);" data-mf-msg>Dominio corporativo verificado con registros SPF/DKIM</small>
+      </form>
     </div>
   )}
 
@@ -758,16 +772,17 @@ const { previewType, variantId, variantName, badge } = Astro.props;
     <div class="stage-center">
       <div class="form-styleless-box">
         <input type="text" placeholder="Escribe el título del documento (Estilo Subrayado Puro)..." value="Manifiesto de Diseño Industrial" class="input-styleless-line" />
+        <small class="mono" style="display:block; margin-top:0.45rem; font-size:0.7rem; color:var(--cxd-text-muted);">EDICIÓN EN VIVO SIN CAJA EXTERIOR // BORDE INFERIOR REACTIVO</small>
       </div>
     </div>
   )}
 
   {previewType === 'form-fit' && (
     <div class="stage-center">
-      <div class="form-inline-fit">
+      <div class="form-inline-fit" data-inline-fit-form>
         <span class="mono" style="padding:0 0.6rem; color:var(--cxd-text-muted);">https://</span>
-        <input type="text" value="mi-proyecto.dev" class="tbl-input" style="width:160px; border:none;" />
-        <button type="button" class="mini-btn mini-btn--accent" onclick="this.textContent='Conectado'">Conectar Dominio</button>
+        <input type="text" value="mi-proyecto.dev" class="tbl-input" style="width:160px; border:none;" data-if-inp />
+        <button type="button" class="mini-btn mini-btn--accent" data-if-btn><Icon name="check" size={12} /> <span>Conectar Dominio</span></button>
       </div>
     </div>
   )}
@@ -784,16 +799,19 @@ const { previewType, variantId, variantName, badge } = Astro.props;
   )}
 
   {previewType === 'form-otp' && (
-    <div class="stage-center" style="flex-direction:column; gap:0.75rem;">
-      <div class="cxd-otp-grid" data-live-otp>
+    <div class="stage-center" style="flex-direction:column; gap:0.75rem;" data-live-otp>
+      <div class="cxd-otp-grid">
         <input maxlength="1" value="8" class="cxd-otp-slot" />
         <input maxlength="1" value="4" class="cxd-otp-slot" />
         <input maxlength="1" value="1" class="cxd-otp-slot" />
-        <input maxlength="1" placeholder="·" class="cxd-otp-slot" />
-        <input maxlength="1" placeholder="·" class="cxd-otp-slot" />
-        <input maxlength="1" placeholder="·" class="cxd-otp-slot" />
+        <input maxlength="1" value="9" class="cxd-otp-slot" />
+        <input maxlength="1" value="2" class="cxd-otp-slot" />
+        <input maxlength="1" value="6" class="cxd-otp-slot" />
       </div>
-      <span class="mono" style="font-size:0.7rem; color:var(--cxd-text-muted);">Teclea números para auto-avanzar de casilla</span>
+      <div class="row-actions">
+        <button type="button" class="mini-btn mini-btn--accent" data-otp-gen><Icon name="refresh" size={12} /> <span>Generar Nuevo Código OTP</span></button>
+        <span class="mono" style="font-size:0.7rem; color:var(--cxd-text-muted);" data-otp-status>6 DÍGITOS VERIFICADOS</span>
+      </div>
     </div>
   )}
 
@@ -812,97 +830,596 @@ const { previewType, variantId, variantName, badge } = Astro.props;
 
   {previewType === 'form-filters' && (
     <div class="stage-center">
-      <div class="filter-facet-box">
+      <div class="filter-facet-box" data-facet-filter>
         <div class="row-actions" style="flex-wrap:wrap;">
-          <button type="button" class="mini-btn mini-btn--accent" onclick="this.classList.toggle('mini-btn--accent')">SSR Activo</button>
-          <button type="button" class="mini-btn mini-btn--accent" onclick="this.classList.toggle('mini-btn--accent')">Edge Ready</button>
-          <button type="button" class="mini-btn" onclick="this.classList.toggle('mini-btn--accent')">TypeScript Strict</button>
-          <button type="button" class="mini-btn" onclick="this.classList.toggle('mini-btn--accent')">Dockerizado</button>
+          <button type="button" class="mini-btn mini-btn--accent" data-facet-chip>SSR Activo</button>
+          <button type="button" class="mini-btn mini-btn--accent" data-facet-chip>Edge Ready</button>
+          <button type="button" class="mini-btn" data-facet-chip>TypeScript Strict</button>
+          <button type="button" class="mini-btn" data-facet-chip>Dockerizado</button>
         </div>
+        <div class="mono" style="font-size:0.72rem; margin-top:0.55rem; color:var(--cxd-text-secondary);" data-facet-count>2 filtros activos seleccionados</div>
       </div>
     </div>
   )}
 
   {previewType === 'form-controls' && (
-    <div class="stage-center" style="gap:1.5rem; flex-wrap:wrap;">
+    <div class="stage-center" style="gap:1.5rem; flex-wrap:wrap;" data-tactile-controls>
       <label class="switch-row">
-        <input type="checkbox" checked />
+        <input type="checkbox" checked data-tc-check />
         <span>Auto-Deploy en Push</span>
       </label>
       <label class="switch-row">
-        <input type="checkbox" />
+        <input type="checkbox" data-tc-check />
         <span>Modo Estricto WAF</span>
       </label>
+      <div class="row-actions">
+        <button type="button" class="mini-btn" data-tc-dec>-</button>
+        <span class="mono" style="min-width:90px; text-align:center;" data-tc-val>4 Réplicas</span>
+        <button type="button" class="mini-btn mini-btn--accent" data-tc-inc>+</button>
+      </div>
     </div>
   )}
 
   {/* ==========================================================================
-      CATEGORÍAS 06, 07, 08, 09: MODALES, NAVEGACIÓN, BADGES & DOCKER
+      CATEGORÍA 06: MODALES, DIÁLOGOS Y COMMAND PALETTES (6 VARIANTES DISTINTAS)
       ========================================================================== */}
-  {previewType.startsWith('modal-') && (
+
+  {/* 06-1: MODAL MODERNO CON BORDES REDONDEADOS Y BLUR */}
+  {previewType === 'modal-modern' && (
+    <div class="stage-center" style="flex-direction:column; gap:0.75rem;" data-modal-modern>
+      <div class="row-actions">
+        <button type="button" class="mini-btn mini-btn--accent" data-mm-toggle><Icon name="eye" size={12} /> <span>Abrir / Minimizar Modal con Anime.js</span></button>
+        <span class="mono" style="font-size:0.72rem;" data-mm-status>ESTADO: MODAL VISIBLE</span>
+      </div>
+      <div class="modal-modern-dialog" data-mm-box>
+        <div class="modal-modern-dialog__head">
+          <div class="row-actions">
+            <span class="toast-icon-circle"><Icon name="sparkles" size={14} /></span>
+            <div>
+              <strong>Actualización de Arquitectura v4.2</strong>
+              <p class="sub-p">12 interfaces sincronizadas con soporte SSR y estático.</p>
+            </div>
+          </div>
+          <span class="cxd-badge cxd-badge--active">READY</span>
+        </div>
+        <div class="modal-modern-dialog__body">
+          <p class="sub-p">Al confirmar esta operación se actualizarán las variables CSS y los adaptadores de componentes sin tiempo de inactividad.</p>
+        </div>
+        <div class="modal-modern-dialog__foot">
+          <button type="button" class="mini-btn" data-mm-cancel>Cancelar</button>
+          <button type="button" class="mini-btn mini-btn--accent" data-mm-confirm><Icon name="check" size={12} /> <span>Aplicar Actualización</span></button>
+        </div>
+      </div>
+    </div>
+  )}
+
+  {/* 06-2: COMMAND PALETTE INTERACTIVA (CMD+K BUSCADOR EN VIVO) */}
+  {previewType === 'modal-cmdk' && (
     <div class="stage-center">
-      <div class="cxd-cmd-palette" style="max-width:500px; width:100%;">
+      <div class="cxd-cmd-palette" style="max-width:520px; width:100%;" data-cmdk-box>
         <div class="cxd-cmd-header">
           <Icon name="search" size={14} />
-          <input class="cxd-cmd-input" placeholder={`Filtrar en ${variantName}...`} oninput="const q=this.value.toLowerCase(); this.closest('.cxd-cmd-palette').querySelectorAll('.cxd-cmd-item').forEach(i=>i.style.display=i.textContent.toLowerCase().includes(q)?'flex':'none')" />
-          <kbd class="cxd-cmd-kbd">{badge}</kbd>
+          <input class="cxd-cmd-input" placeholder="Escribe para filtrar comandos (ej. deploy, caché, tema)..." data-cmdk-input />
+          <kbd class="cxd-cmd-kbd">CMD+K</kbd>
         </div>
-        <div class="cxd-cmd-list">
-          <div class="cxd-cmd-item is-active" onclick="this.querySelector('span').textContent='Comando Ejecutado Correctamente'">
+        <div class="cxd-cmd-list" data-cmdk-list>
+          <button type="button" class="cxd-cmd-item is-active" data-cmdk-item="Despliegue en producción ejecutado en 42ms">
             <span>Ejecutar despliegue inmediato en producción</span>
             <kbd class="cxd-cmd-kbd">ENTER</kbd>
-          </div>
-          <div class="cxd-cmd-item" onclick="this.querySelector('span').textContent='Caché Global Limpiada'">
+          </button>
+          <button type="button" class="cxd-cmd-item" data-cmdk-item="Caché global purgada en 14 nodos Edge">
             <span>Purgar caché de CDN en todas las regiones</span>
-            <kbd class="cxd-cmd-kbd">CMD+P</kbd>
+            <kbd class="cxd-cmd-kbd">SHIFT+P</kbd>
+          </button>
+          <button type="button" class="cxd-cmd-item" data-cmdk-item="Tema conmutado a Tokyo Night Telemetry">
+            <span>Cambiar interfaz activa a Tokyo Night Telemetry</span>
+            <kbd class="cxd-cmd-kbd">CMD+T</kbd>
+          </button>
+        </div>
+        <div class="mono" style="padding:0.45rem 0.85rem; font-size:0.7rem; border-top:1px solid var(--cxd-border); color:var(--cxd-accent);" data-cmdk-log>
+          SELECCIONA UN COMANDO DE LA LISTA O FILTRA ARRIBA
+        </div>
+      </div>
+    </div>
+  )}
+
+  {/* 06-3: MENÚ POPOVER FLOTANTE CONTENT-FIT CON ACCIONES */}
+  {previewType === 'modal-popover' && (
+    <div class="stage-center" style="flex-direction:column; gap:0.65rem;" data-popover-demo>
+      <button type="button" class="mini-btn mini-btn--accent" data-pop-trigger>
+        <Icon name="sliders" size={13} />
+        <span>Alternar Popover Contextual del Nodo</span>
+        <Icon name="chevron-down" size={12} />
+      </button>
+      <div class="popover-floating-card" data-pop-card>
+        <div class="popover-floating-card__head">
+          <span class="mono" style="font-size:0.68rem; color:var(--cxd-text-muted);">NODO // US-EAST-01</span>
+          <span class="cxd-badge cxd-badge--active">ONLINE</span>
+        </div>
+        <label class="switch-row" style="justify-content:space-between; width:100%;">
+          <span>Auto-Escalado Horizontal</span>
+          <input type="checkbox" checked />
+        </label>
+        <label class="switch-row" style="justify-content:space-between; width:100%;">
+          <span>Protección DDoS L7</span>
+          <input type="checkbox" checked />
+        </label>
+        <div style="border-top:1px solid var(--cxd-border); padding-top:0.45rem; display:flex; justify-content:space-between;">
+          <button type="button" class="mini-btn" data-pop-act="Métricas Abiertas">Ver Métricas</button>
+          <button type="button" class="mini-btn mini-btn--danger" data-pop-act="Nodo Reiniciado">Reiniciar</button>
+        </div>
+      </div>
+    </div>
+  )}
+
+  {/* 06-4: MODAL CON FORMULARIO DE CREACIÓN DE PROYECTO */}
+  {previewType === 'modal-form' && (
+    <div class="stage-center">
+      <form class="modal-modern-dialog" style="max-width:480px; width:100%;" data-modal-form-demo>
+        <div class="modal-modern-dialog__head">
+          <strong>Crear Nuevo Cluster Cloud</strong>
+          <span class="cxd-badge">FORM MODAL</span>
+        </div>
+        <div class="modal-modern-dialog__body" style="display:flex; flex-direction:column; gap:0.65rem;">
+          <div>
+            <label class="mono" style="font-size:0.7rem; display:block; margin-bottom:0.25rem;">NOMBRE DEL PROYECTO</label>
+            <input type="text" value="edge-analytics-v4" class="tbl-input" style="width:100%;" data-mf-name required />
+          </div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.6rem;">
+            <div>
+              <label class="mono" style="font-size:0.7rem; display:block; margin-bottom:0.25rem;">REGIÓN PRIMARIA</label>
+              <select class="tbl-select" style="width:100%;" data-mf-reg>
+                <option value="Frankfurt (eu-central-1)">Frankfurt (EU)</option>
+                <option value="Tokyo (ap-northeast-1)">Tokyo (AP)</option>
+                <option value="Virginia (us-east-1)">Virginia (US)</option>
+              </select>
+            </div>
+            <div>
+              <label class="mono" style="font-size:0.7rem; display:block; margin-bottom:0.25rem;">VISIBILIDAD</label>
+              <select class="tbl-select" style="width:100%;">
+                <option>Privado (Zero-Trust)</option>
+                <option>Público (CDN Global)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="modal-modern-dialog__foot" style="justify-content:space-between; align-items:center;">
+          <span class="mono" style="font-size:0.7rem; color:var(--cxd-accent);" data-mf-out>Listo para aprovisionar</span>
+          <button type="submit" class="mini-btn mini-btn--accent"><Icon name="play" size={12} /> <span>Crear Cluster</span></button>
+        </div>
+      </form>
+    </div>
+  )}
+
+  {/* 06-5: MODAL DE CONFIRMACIÓN DE SEGURIDAD CON VALIDACIÓN DE TEXTO */}
+  {previewType === 'modal-confirm' && (
+    <div class="stage-center">
+      <div class="modal-modern-dialog modal-modern-dialog--danger" style="max-width:480px; width:100%;" data-modal-confirm-demo>
+        <div class="modal-modern-dialog__head">
+          <div class="row-actions">
+            <Icon name="shield" size={16} />
+            <strong>Zona de Peligro: Eliminar Base de Datos</strong>
+          </div>
+          <span class="cxd-badge cxd-badge--failed">DESTRUCTIVE</span>
+        </div>
+        <div class="modal-modern-dialog__body" style="display:flex; flex-direction:column; gap:0.6rem;">
+          <p class="sub-p">Escribe <code class="mono">ELIMINAR</code> en el campo inferior (o usa el botón rápido) para desbloquear la acción destructiva:</p>
+          <div class="row-actions" style="width:100%;">
+            <input type="text" class="tbl-input" style="flex:1;" placeholder="Escribe ELIMINAR aquí..." data-mc-input />
+            <button type="button" class="mini-btn" data-mc-fill>Autocompletar "ELIMINAR"</button>
+          </div>
+        </div>
+        <div class="modal-modern-dialog__foot" style="justify-content:space-between; align-items:center;">
+          <span class="mono" style="font-size:0.7rem;" data-mc-status>BLOQUEADO POR SEGURIDAD</span>
+          <button type="button" class="mini-btn mini-btn--danger" disabled data-mc-btn>Eliminar Permanentemente</button>
+        </div>
+      </div>
+    </div>
+  )}
+
+  {/* 06-6: PANEL INSPECTOR LATERAL (SLIDE-OVER DRAWER) */}
+  {previewType === 'modal-drawer' && (
+    <div class="drawer-stage-shell" data-drawer-demo>
+      <div class="drawer-main-workspace">
+        <div>
+          <span class="mono" style="font-size:0.7rem; color:var(--cxd-text-muted);">LIENZO PRINCIPAL DE TRABAJO</span>
+          <h4 style="margin-top:0.25rem;">NodoSeleccionado: worker-eu-central-04</h4>
+          <p class="sub-p">Usa el botón para deslizar el panel inspector lateral de propiedades.</p>
+        </div>
+        <button type="button" class="mini-btn mini-btn--accent" data-drw-toggle>
+          <Icon name="layers" size={12} />
+          <span>Alternar Inspector Lateral</span>
+        </button>
+      </div>
+      <aside class="drawer-side-panel" data-drw-panel>
+        <div class="drawer-side-panel__head">
+          <strong class="mono" style="font-size:0.75rem;">INSPECTOR // PROPIEDADES</strong>
+          <span class="cxd-badge cxd-badge--active">LIVE</span>
+        </div>
+        <div class="drawer-kv-list mono">
+          <div><span>ID:</span><strong>wk-9042-eu</strong></div>
+          <div><span>MEMORIA:</span><strong>16.0 GB DDR5</strong></div>
+          <div><span>LATENCIA:</span><strong>3.8 ms</strong></div>
+        </div>
+      </aside>
+    </div>
+  )}
+
+  {/* ==========================================================================
+      CATEGORÍA 07: NAVBARS, MENÚS CASCADA Y NAVEGACIÓN (6 VARIANTES DISTINTAS)
+      ========================================================================== */}
+
+  {/* 07-1: NAVBAR CON MENÚ EN CASCADA MULTI-NIVEL (ESTILO MICROSOFT) */}
+  {previewType === 'nav-cascade' && (
+    <div class="nav-cascade-showcase" data-nav-cascade-demo>
+      <div class="nav-cascade-bar">
+        <div class="row-actions">
+          <Icon name="grid" size={15} />
+          <strong class="mono" style="font-size:0.78rem;">CLOUD SUITE</strong>
+        </div>
+        <div class="row-actions" style="flex-wrap:wrap;">
+          <button type="button" class="mini-btn mini-btn--accent" data-nc-cat="compute">01 · Cómputo & Contenedores <Icon name="chevron-down" size={11} /></button>
+          <button type="button" class="mini-btn" data-nc-cat="data">02 · Bases de Datos & Caché <Icon name="chevron-down" size={11} /></button>
+          <button type="button" class="mini-btn" data-nc-cat="sec">03 · Seguridad & Red <Icon name="chevron-down" size={11} /></button>
+        </div>
+      </div>
+      <div class="nav-cascade-dropdown" data-nc-panel>
+        <div class="nav-cascade-col" data-nc-sublist>
+          <button type="button" class="nav-cascade-item is-active" data-nc-sub="Kubernetes Serverless" data-nc-items="Auto-Scaling Pods,GPU H100 Nodes,Zero-Downtime Rollout">
+            <span>Kubernetes Serverless</span>
+            <Icon name="arrow-right" size={12} />
+          </button>
+          <button type="button" class="nav-cascade-item" data-nc-sub="Edge Functions V8" data-nc-items="Arranque en 0ms,300+ Regiones Globales,WebAssembly Runtime">
+            <span>Edge Functions V8</span>
+            <Icon name="arrow-right" size={12} />
+          </button>
+          <button type="button" class="nav-cascade-item" data-nc-sub="Docker Micro-VMs" data-nc-items="Aislamiento Firecracker,Snapshots Instantáneos,Red Privada WireGuard">
+            <span>Docker Micro-VMs</span>
+            <Icon name="arrow-right" size={12} />
+          </button>
+        </div>
+        <div class="nav-cascade-detail" data-nc-detail>
+          <span class="mono" style="font-size:0.68rem; color:var(--cxd-accent);" data-nc-title>SUB-MENÚ EN CASCADA // KUBERNETES SERVERLESS</span>
+          <div class="nav-cascade-chips" data-nc-chips>
+            <span class="hyb-chip">Auto-Scaling Pods</span>
+            <span class="hyb-chip">GPU H100 Nodes</span>
+            <span class="hyb-chip">Zero-Downtime Rollout</span>
           </div>
         </div>
       </div>
     </div>
   )}
 
-  {previewType.startsWith('nav-') && (
-    <div class="stage-center">
-      <nav class="demo-nav-bar">
-        <span class="cxd-badge cxd-badge--active">{badge}</span>
-        <button type="button" class="mini-btn mini-btn--accent" onclick="this.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('mini-btn--accent'));this.classList.add('mini-btn--accent')">01. General</button>
-        <button type="button" class="mini-btn" onclick="this.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('mini-btn--accent'));this.classList.add('mini-btn--accent')">02. Topología</button>
-        <button type="button" class="mini-btn" onclick="this.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('mini-btn--accent'));this.classList.add('mini-btn--accent')">03. Seguridad</button>
-        <button type="button" class="mini-btn" onclick="this.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('mini-btn--accent'));this.classList.add('mini-btn--accent')">04. Facturación</button>
+  {/* 07-2: NAVBAR FLOTANTE REDONDEADA TIPO CÁPSULA (FLOATING PILL) */}
+  {previewType === 'nav-floating' && (
+    <div class="stage-center" style="flex-direction:column; gap:0.65rem;" data-nav-pill-demo>
+      <nav class="nav-floating-pill">
+        <div class="nav-floating-pill__brand">
+          <span class="cxd-badge-dot" style="background:var(--cxd-accent); width:8px; height:8px; border-radius:50%;"></span>
+          <strong class="mono">CXD.OS</strong>
+        </div>
+        <div class="nav-floating-pill__links">
+          <button type="button" class="pill-nav-link is-active" data-np-link="Arquitectura General">Arquitectura</button>
+          <button type="button" class="pill-nav-link" data-np-link="Motor Cinético Anime.js">Animaciones</button>
+          <button type="button" class="pill-nav-link" data-np-link="Catálogo de 12 Interfaces">Interfaces</button>
+          <button type="button" class="pill-nav-link" data-np-link="Documentación & CLI">Docs</button>
+        </div>
+        <button type="button" class="btn-pill-modern btn-pill-modern--primary" style="padding:0.35rem 0.85rem; font-size:0.72rem;" data-np-cta>Desplegar</button>
       </nav>
+      <span class="mono" style="font-size:0.7rem; color:var(--cxd-text-secondary);" data-np-status>SECCIÓN ACTIVA EN CÁPSULA: Arquitectura General</span>
     </div>
   )}
 
-  {previewType.startsWith('data-') && (
-    <div class="stage-center" style="gap:1rem; flex-wrap:wrap;">
-      {previewType === 'data-gauges' ? (
-        <div style="display:flex; align-items:center; gap:1.25rem;">
-          <input type="range" min="5" max="100" value="84" oninput="this.nextElementSibling.textContent=this.value+'% SLA'" />
-          <strong class="mono" style="font-size:1.3rem;">84% SLA</strong>
+  {/* 07-3: NAVEGACIÓN STYLELESS MINIMALISTA CON INDICADOR DESLIZANTE */}
+  {previewType === 'nav-styleless' && (
+    <div class="nav-styleless-showcase" data-nav-styleless-demo>
+      <nav class="nav-styleless-strip">
+        <button type="button" class="nav-styleless-tab is-active" data-ns-tab="01 / TOPOLOGÍA DE RED — 14 Nodos Sincronizados">01 / TOPOLOGÍA</button>
+        <button type="button" class="nav-styleless-tab" data-ns-tab="02 / RENDIMIENTO — Latencia Media 4.1ms (P99)">02 / RENDIMIENTO</button>
+        <button type="button" class="nav-styleless-tab" data-ns-tab="03 / AUDITORÍA — Certificados TLS 1.3 Activos">03 / AUDITORÍA</button>
+        <button type="button" class="nav-styleless-tab" data-ns-tab="04 / REGISTROS — Flujo de Eventos en Tiempo Real">04 / REGISTROS</button>
+      </nav>
+      <div class="nav-styleless-panel mono" data-ns-panel>
+        01 / TOPOLOGÍA DE RED — 14 Nodos Sincronizados
+      </div>
+    </div>
+  )}
+
+  {/* 07-4: BREADCRUMBS INTERACTIVOS CON SELECTOR DE RAMA / PROYECTO */}
+  {previewType === 'nav-breadcrumbs' && (
+    <div class="stage-center" style="flex-direction:column; gap:0.65rem;" data-nav-bc-demo>
+      <nav class="breadcrumb-interactive-bar" aria-label="Breadcrumb">
+        <span class="bc-node"><Icon name="box" size={13} /> <strong>componentesxd</strong></span>
+        <span class="bc-sep">/</span>
+        <select class="tbl-select" data-bc-pkg>
+          <option value="components/tables">components/tables</option>
+          <option value="components/carousels">components/carousels</option>
+          <option value="animations/svg-animations">animations/svg-animations</option>
+        </select>
+        <span class="bc-sep">/</span>
+        <select class="tbl-select" data-bc-branch>
+          <option value="main">rama: main</option>
+          <option value="feat/anime-v4">rama: feat/anime-v4</option>
+          <option value="release/v4.2">rama: release/v4.2</option>
+        </select>
+        <span class="bc-sep">/</span>
+        <span class="cxd-badge cxd-badge--active mono" data-bc-file>index.tsx</span>
+      </nav>
+      <div class="mono" style="font-size:0.72rem; color:var(--cxd-accent);" data-bc-path>
+        RUTA RESUELTA: github.com/componentesxd/tree/main/components/tables/index.tsx
+      </div>
+    </div>
+  )}
+
+  {/* 07-5: DOCK FLOTANTE INFERIOR CON ESCALADO MAGNÉTICO */}
+  {previewType === 'nav-dock' && (
+    <div class="stage-center" style="flex-direction:column; gap:0.75rem;" data-nav-dock-demo>
+      <div class="dock-floating-bar">
+        <button type="button" class="dock-app-btn is-active" data-dock-app="Terminal Interactiva CLI"><Icon name="terminal" size={18} /><span class="dock-dot"></span></button>
+        <button type="button" class="dock-app-btn" data-dock-app="Explorador de Componentes"><Icon name="grid" size={18} /><span class="dock-dot"></span></button>
+        <button type="button" class="dock-app-btn" data-dock-app="Motor Cinético Anime.js v4"><Icon name="sparkles" size={18} /><span class="dock-dot"></span></button>
+        <button type="button" class="dock-app-btn" data-dock-app="Monitor de Telemetría"><Icon name="activity" size={18} /><span class="dock-dot"></span></button>
+        <button type="button" class="dock-app-btn" data-dock-app="Conmutador de 12 Interfaces"><Icon name="palette" size={18} /><span class="dock-dot"></span></button>
+        <button type="button" class="dock-app-btn" data-dock-app="Escudo de Seguridad Zero-Trust"><Icon name="shield" size={18} /><span class="dock-dot"></span></button>
+      </div>
+      <span class="mono" style="font-size:0.72rem;" data-dock-label>APLICACIÓN ACTIVA EN DOCK: Terminal Interactiva CLI</span>
+    </div>
+  )}
+
+  {/* 07-6: BARRA DE PAGINACIÓN INTERACTIVA CON SALTO DE PÁGINA */}
+  {previewType === 'nav-pagination' && (
+    <div class="pagination-showcase" data-nav-page-demo>
+      <div class="pagination-info-row mono">
+        <span data-pg-info>MOSTRANDO PÁGINA 01 DE 05 (REGISTROS 1 - 10 DE 50)</span>
+        <span class="cxd-badge cxd-badge--active" data-pg-badge>PÁGINA 01</span>
+      </div>
+      <div class="pagination-controls-bar">
+        <button type="button" class="mini-btn" data-pg-prev>Anterior</button>
+        <div class="row-actions" data-pg-nums>
+          <button type="button" class="mini-btn mini-btn--accent" data-pg-num="1">01</button>
+          <button type="button" class="mini-btn" data-pg-num="2">02</button>
+          <button type="button" class="mini-btn" data-pg-num="3">03</button>
+          <button type="button" class="mini-btn" data-pg-num="4">04</button>
+          <button type="button" class="mini-btn" data-pg-num="5">05</button>
         </div>
-      ) : (
-        <>
-          <span class="cxd-badge cxd-badge--active"><span class="cxd-badge-dot"></span>OPERATIONAL</span>
-          <span class="cxd-badge cxd-badge--pending"><span class="cxd-badge-dot"></span>DEGRADED</span>
-          <span class="cxd-badge cxd-badge--failed"><span class="cxd-badge-dot"></span>OUTAGE</span>
-          <span class="mono" style="font-size:0.76rem">{variantName}</span>
-        </>
-      )}
+        <button type="button" class="mini-btn" data-pg-next>Siguiente</button>
+      </div>
     </div>
   )}
 
-  {previewType.startsWith('docker-') && (
-    <div class="stage-center">
+  {/* ==========================================================================
+      CATEGORÍA 08: BADGES, TIMELINES, ACORDEONES Y MICRO-UI (6 VARIANTES DISTINTAS)
+      ========================================================================== */}
+
+  {/* 08-1: COLECCIÓN DE BADGES MODERNOS, OUTLINE, PULSANTES Y ELIMINABLES */}
+  {previewType === 'data-badges' && (
+    <div class="stage-center" style="flex-direction:column; gap:0.75rem;" data-badges-demo>
+      <div class="row-actions" style="flex-wrap:wrap; gap:0.55rem;" data-bdg-list>
+        <span class="cxd-badge cxd-badge--active"><span class="cxd-badge-dot"></span>OPERATIONAL</span>
+        <span class="cxd-badge cxd-badge--pending"><span class="cxd-badge-dot"></span>DEGRADED</span>
+        <span class="cxd-badge cxd-badge--failed"><span class="cxd-badge-dot"></span>OUTAGE</span>
+        <button type="button" class="mini-btn" data-bdg-dismiss>tag: astro-5 ×</button>
+        <button type="button" class="mini-btn" data-bdg-dismiss>tag: animejs-v4 ×</button>
+        <button type="button" class="mini-btn" data-bdg-dismiss>tag: typescript ×</button>
+      </div>
+      <button type="button" class="mini-btn mini-btn--accent" data-bdg-restore><Icon name="refresh" size={12} /> <span>Restaurar Etiquetas Eliminadas</span></button>
+    </div>
+  )}
+
+  {/* 08-2: ACORDEÓN INTERACTIVO MULTI-SECCIÓN */}
+  {previewType === 'data-accordion' && (
+    <div class="acc-stack" data-exclusive-accordion>
+      <div class="acc-item is-open" data-acc-item>
+        <button type="button" class="acc-trigger" data-acc-btn>
+          <span>01 · Especificación de Tokens CSS y Variables Dinámicas</span>
+          <span class="mono" data-acc-icon>-</span>
+        </button>
+        <div class="acc-panel" data-acc-panel>
+          <p class="sub-p">Define colores, radios, sombras y tipografías mediante propiedades personalizadas que responden en tiempo real al atributo <code>data-theme</code>.</p>
+        </div>
+      </div>
+      <div class="acc-item" data-acc-item>
+        <button type="button" class="acc-trigger" data-acc-btn>
+          <span>02 · Arquitectura de Islas e Hidratación Selectiva</span>
+          <span class="mono" data-acc-icon>+</span>
+        </button>
+        <div class="acc-panel" data-acc-panel hidden>
+          <p class="sub-p">Cero costo de JavaScript innecesario: solo los componentes interactivos se hidratan en el navegador a 60 FPS.</p>
+        </div>
+      </div>
+    </div>
+  )}
+
+  {/* 08-3: MEDIDORES CIRCULARES SVG CON CONTROL DESLIZANTE EN VIVO */}
+  {previewType === 'data-gauges' && (
+    <div class="stage-center" style="flex-direction:column; gap:0.85rem;" data-svg-gauges-demo>
+      <div class="svg-gauges-row">
+        <div class="svg-gauge-card">
+          <svg viewBox="0 0 80 80" class="svg-gauge-ring">
+            <circle cx="40" cy="40" r="32" fill="none" stroke="currentColor" stroke-opacity="0.15" stroke-width="6" />
+            <circle cx="40" cy="40" r="32" fill="none" stroke="currentColor" stroke-width="6" stroke-dasharray="201" stroke-dashoffset="32" stroke-linecap="round" data-gg-circle />
+          </svg>
+          <strong class="mono" data-gg-text>84%</strong>
+          <span class="mono" style="font-size:0.65rem; color:var(--cxd-text-muted);">SLA GLOBAL</span>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:0.5rem; min-width:220px;">
+          <label class="mono" style="font-size:0.72rem;">AJUSTAR PORCENTAJE EN TIEMPO REAL:</label>
+          <input type="range" min="5" max="100" value="84" data-gg-slider />
+          <div class="row-actions">
+            <button type="button" class="mini-btn" data-gg-set="45">45%</button>
+            <button type="button" class="mini-btn" data-gg-set="78">78%</button>
+            <button type="button" class="mini-btn mini-btn--accent" data-gg-set="99">99%</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  )}
+
+  {/* 08-4: LÍNEA DE TIEMPO VERTICAL CON FILTRO E INSERCIÓN DE EVENTOS */}
+  {previewType === 'data-timeline' && (
+    <div class="timeline-showcase" data-timeline-demo>
+      <div class="row-actions" style="justify-content:space-between; margin-bottom:0.65rem;">
+        <span class="mono" style="font-size:0.72rem;">CRONOLOGÍA DE EVENTOS DEL SISTEMA</span>
+        <button type="button" class="mini-btn mini-btn--accent" data-tl-add><Icon name="play" size={12} /> <span>+ Agregar Evento en Vivo</span></button>
+      </div>
+      <div class="timeline-vertical-list" data-tl-list>
+        <div class="timeline-node-row">
+          <span class="timeline-dot"></span>
+          <div class="timeline-content">
+            <strong>v4.2.0 desplegado en producción</strong>
+            <small class="mono">hace 2 min · 25 páginas estáticas verificadas</small>
+          </div>
+        </div>
+        <div class="timeline-node-row">
+          <span class="timeline-dot"></span>
+          <div class="timeline-content">
+            <strong>1,120 archivos multi-framework sincronizados</strong>
+            <small class="mono">hace 14 min · 10 frameworks soportados</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  )}
+
+  {/* 08-5: LISTA CLAVE-VALOR CON COPIADO AL PORTAPAPELES POR FILA */}
+  {previewType === 'data-kv' && (
+    <div class="kv-grid-showcase" data-kv-demo>
+      <div class="kv-row-item" data-kv-copy="cxd_live_98f4a2b10c7e">
+        <span class="mono kv-key">API_PUBLIC_KEY</span>
+        <code class="mono kv-val">cxd_live_98f4a2b10c7e</code>
+        <span class="cxd-badge mono" data-kv-badge>COPIAR</span>
+      </div>
+      <div class="kv-row-item" data-kv-copy="10.240.88.192:4321">
+        <span class="mono kv-key">PRIMARY_ENDPOINT</span>
+        <code class="mono kv-val">10.240.88.192:4321</code>
+        <span class="cxd-badge mono" data-kv-badge>COPIAR</span>
+      </div>
+      <div class="kv-row-item" data-kv-copy="sha256:7e3b9c4a1f90c2">
+        <span class="mono kv-key">BUILD_DIGEST</span>
+        <code class="mono kv-val">sha256:7e3b9c4a1f90c2</code>
+        <span class="cxd-badge mono" data-kv-badge>COPIAR</span>
+      </div>
+    </div>
+  )}
+
+  {/* 08-6: GRUPO DE AVATARES FLOTANTES CON INSPECTOR DE USUARIO */}
+  {previewType === 'data-avatars' && (
+    <div class="stage-center" style="justify-content:space-between; flex-wrap:wrap; gap:1rem;" data-avatars-demo>
+      <div class="avatar-stack-group">
+        <button type="button" class="avatar-stack-item is-active" data-av-user="Elena Rostova" data-av-role="Principal UI Architect · Zurich (ONLINE)">ER</button>
+        <button type="button" class="avatar-stack-item" data-av-user="Marco Kovacs" data-av-role="Staff Systems Engineer · Frankfurt (ONLINE)">MK</button>
+        <button type="button" class="avatar-stack-item" data-av-user="Sofía Vance" data-av-role="Motion Design Lead · San Francisco (ONLINE)">SV</button>
+        <button type="button" class="avatar-stack-item" data-av-user="Kenji Takahashi" data-av-role="Distributed DB Lead · Tokyo (BUSY)">KT</button>
+      </div>
+      <div class="avatar-inspector-box">
+        <strong data-av-name>Elena Rostova</strong>
+        <p class="mono" style="font-size:0.72rem; color:var(--cxd-text-secondary);" data-av-desc>Principal UI Architect · Zurich (ONLINE)</p>
+      </div>
+    </div>
+  )}
+
+  {/* ==========================================================================
+      CATEGORÍA 09: DOCKERFILES Y ORQUESTACIÓN DE CONTENEDORES (6 VARIANTES DISTINTAS)
+      ========================================================================== */}
+
+  {/* 09-1: ASTRO / NODE 22 ALPINE MULTI-STAGE SSR */}
+  {previewType === 'docker-node' && (
+    <div class="hyb-shell" data-docker-sim>
+      <div class="row-actions" style="justify-content:space-between; flex-wrap:wrap;">
+        <span class="mono" style="font-size:0.73rem;" data-dk-status>PIPELINE MULTI-STAGE // REDUCCIÓN DE IMAGEN: 840 MB a 48 MB</span>
+        <button type="button" class="mini-btn mini-btn--accent" data-dk-run><Icon name="play" size={12} /> <span>Simular Build Multi-Stage</span></button>
+      </div>
       <div class="docker-topology-box">
-        <div class="docker-node">
-          <Icon name="box" size={16} />
-          <div><strong>{variantName}</strong><small class="mono">IMAGE READY // MULTI-STAGE</small></div>
-        </div>
-        <Icon name="arrow-right" size={15} />
-        <div class="docker-node">
-          <Icon name="cpu" size={16} />
-          <div><strong>Runtime Container</strong><small class="mono">NON-ROOT · HEALTHY</small></div>
-        </div>
+        <div class="docker-node" data-dk-step><Icon name="box" size={15} /><div><strong>01. STAGE: deps</strong><small class="mono">node:22-alpine · npm ci</small></div></div>
+        <Icon name="arrow-right" size={14} />
+        <div class="docker-node" data-dk-step><Icon name="layers" size={15} /><div><strong>02. STAGE: builder</strong><small class="mono">astro build · 25 rutas</small></div></div>
+        <Icon name="arrow-right" size={14} />
+        <div class="docker-node" data-dk-step><Icon name="shield" size={15} /><div><strong>03. STAGE: runner</strong><small class="mono">USER node · 48 MB Final</small></div></div>
+      </div>
+    </div>
+  )}
+
+  {/* 09-2: LARAVEL 11 + LIVEWIRE 3 + PHP 8.3 FPM + OPCACHE */}
+  {previewType === 'docker-laravel' && (
+    <div class="hyb-shell" data-docker-sim>
+      <div class="row-actions" style="justify-content:space-between; flex-wrap:wrap;">
+        <span class="mono" style="font-size:0.73rem;" data-dk-status>STACK LARAVEL 11 // PHP 8.3-FPM + OPCACHE JIT ACTIVO</span>
+        <button type="button" class="mini-btn mini-btn--accent" data-dk-run><Icon name="activity" size={12} /> <span>Probar Pool FastCGI</span></button>
+      </div>
+      <div class="docker-topology-box">
+        <div class="docker-node" data-dk-step><Icon name="compass" size={15} /><div><strong>Nginx FastCGI</strong><small class="mono">:8080 HTTP/2</small></div></div>
+        <Icon name="arrow-right" size={14} />
+        <div class="docker-node" data-dk-step><Icon name="cpu" size={15} /><div><strong>PHP 8.3-FPM Alpine</strong><small class="mono">OPcache JIT 256MB</small></div></div>
+        <Icon name="arrow-right" size={14} />
+        <div class="docker-node" data-dk-step><Icon name="terminal" size={15} /><div><strong>Horizon Worker</strong><small class="mono">Redis Queue · 16 procs</small></div></div>
+      </div>
+    </div>
+  )}
+
+  {/* 09-3: SPA REACT / VUE / SVELTE / ANGULAR + NGINX ALPINE */}
+  {previewType === 'docker-spa' && (
+    <div class="hyb-shell" data-docker-sim>
+      <div class="row-actions" style="justify-content:space-between; flex-wrap:wrap;">
+        <span class="mono" style="font-size:0.73rem;" data-dk-status>NGINX 1.27 ALPINE // TRY_FILES SPA ROUTER + GZIP/BROTLI</span>
+        <button type="button" class="mini-btn mini-btn--accent" data-dk-run><Icon name="search" size={12} /> <span>Verificar Rutas SPA (200 OK)</span></button>
+      </div>
+      <div class="docker-topology-box">
+        <div class="docker-node" data-dk-step><Icon name="code" size={15} /><div><strong>Vite Static Bundle</strong><small class="mono">/usr/share/nginx/html</small></div></div>
+        <Icon name="arrow-right" size={14} />
+        <div class="docker-node" data-dk-step><Icon name="sliders" size={15} /><div><strong>try_files $uri /index.html</strong><small class="mono">Client-Side Routing</small></div></div>
+        <Icon name="arrow-right" size={14} />
+        <div class="docker-node" data-dk-step><Icon name="check" size={15} /><div><strong>Cache-Control Immutable</strong><small class="mono">18 MB Image Size</small></div></div>
+      </div>
+    </div>
+  )}
+
+  {/* 09-4: DOCKER COMPOSE FULLSTACK (APP + POSTGRES 17 + REDIS 7.4) */}
+  {previewType === 'docker-compose' && (
+    <div class="hyb-shell" data-docker-sim>
+      <div class="row-actions" style="justify-content:space-between; flex-wrap:wrap;">
+        <span class="mono" style="font-size:0.73rem;" data-dk-status>DOCKER COMPOSE MESH // 3 SERVICIOS CON HEALTHCHECK OK</span>
+        <button type="button" class="mini-btn mini-btn--accent" data-dk-run><Icon name="refresh" size={12} /> <span>Ejecutar Healthcheck Global</span></button>
+      </div>
+      <div class="docker-topology-box">
+        <div class="docker-node" data-dk-step><Icon name="grid" size={15} /><div><strong>app-server:4321</strong><small class="mono">depends_on: healthy</small></div></div>
+        <Icon name="arrow-right" size={14} />
+        <div class="docker-node" data-dk-step><Icon name="layers" size={15} /><div><strong>postgres:17-alpine</strong><small class="mono">pg_isready · vol: pgdata</small></div></div>
+        <Icon name="arrow-right" size={14} />
+        <div class="docker-node" data-dk-step><Icon name="activity" size={15} /><div><strong>redis:7.4-alpine</strong><small class="mono">redis-cli ping -> PONG</small></div></div>
+      </div>
+    </div>
+  )}
+
+  {/* 09-5: MICROSERVICIO ULTRA-RÁPIDO CON BUN ALPINE */}
+  {previewType === 'docker-bun' && (
+    <div class="hyb-shell" data-docker-sim>
+      <div class="row-actions" style="justify-content:space-between; flex-wrap:wrap;">
+        <span class="mono" style="font-size:0.73rem;" data-dk-status>OVEN/BUN:1.2-ALPINE // ARRANQUE EN FRÍO: 11.4 MS</span>
+        <button type="button" class="mini-btn mini-btn--accent" data-dk-run><Icon name="sparkles" size={12} /> <span>Medir Cold-Start Benchmark</span></button>
+      </div>
+      <div class="docker-topology-box">
+        <div class="docker-node" data-dk-step><Icon name="terminal" size={15} /><div><strong>bun install --frozen</strong><small class="mono">Cache Hit · 0.4s</small></div></div>
+        <Icon name="arrow-right" size={14} />
+        <div class="docker-node" data-dk-step><Icon name="cpu" size={15} /><div><strong>bun run src/index.ts</strong><small class="mono">Nativo TS sin transpilación</small></div></div>
+        <Icon name="arrow-right" size={14} />
+        <div class="docker-node" data-dk-step><Icon name="check" size={15} /><div><strong>142,000 req/s HTTP</strong><small class="mono">RAM: 28 MB</small></div></div>
+      </div>
+    </div>
+  )}
+
+  {/* 09-6: PROXY INVERSO TRAEFIK V3 CON BALANCEO AUTOMÁTICO */}
+  {previewType === 'docker-traefik' && (
+    <div class="hyb-shell" data-docker-sim>
+      <div class="row-actions" style="justify-content:space-between; flex-wrap:wrap;">
+        <span class="mono" style="font-size:0.73rem;" data-dk-status>TRAEFIK v3.2 INGRESS // AUTO-DISCOVERY DOCKER SOCKET + LET'S ENCRYPT</span>
+        <button type="button" class="mini-btn mini-btn--accent" data-dk-run><Icon name="shield" size={12} /> <span>Simular Balanceo Round-Robin</span></button>
+      </div>
+      <div class="docker-topology-box">
+        <div class="docker-node" data-dk-step><Icon name="shield" size={15} /><div><strong>Traefik v3 (:443 TLS)</strong><small class="mono"> Certificados ACME Auto</small></div></div>
+        <Icon name="arrow-right" size={14} />
+        <div class="docker-node" data-dk-step><Icon name="layers" size={15} /><div><strong>Replica-01 & Replica-02</strong><small class="mono">LoadBalancer RoundRobin</small></div></div>
+        <Icon name="arrow-right" size={14} />
+        <div class="docker-node" data-dk-step><Icon name="activity" size={15} /><div><strong>Prometheus Metrics</strong><small class="mono">:8082 /metrics Ready</small></div></div>
       </div>
     </div>
   )}
@@ -3000,15 +3517,552 @@ const { previewType, variantId, variantName, badge } = Astro.props;
     display: flex;
     align-items: center;
     gap: 0.6rem;
-    padding: 0.5rem 0.8rem;
+    padding: 0.55rem 0.85rem;
     background: var(--cxd-bg-base);
     border: 1px solid var(--cxd-border);
+    border-radius: var(--cxd-radius-sm);
   }
 
   .docker-node small {
     display: block;
     font-size: 0.66rem;
     color: var(--cxd-text-muted);
+  }
+
+  /* Botón Hold-to-Confirm */
+  .hold-confirm-btn {
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+  }
+
+  .hold-fill {
+    position: absolute;
+    inset: 0;
+    width: 0%;
+    background: color-mix(in srgb, var(--cxd-danger, #ef4444) 35%, transparent);
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  .split-btn-group {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  /* Modales (6 Variantes Distintas) */
+  .modal-modern-dialog {
+    width: 100%;
+    max-width: 500px;
+    background: var(--cxd-bg-surface);
+    border: 1px solid var(--cxd-border-strong);
+    border-radius: 18px;
+    box-shadow: var(--cxd-shadow-lg);
+    overflow: hidden;
+  }
+
+  .modal-modern-dialog--danger {
+    border-color: var(--cxd-danger, #ef4444);
+  }
+
+  .modal-modern-dialog__head {
+    padding: 0.9rem 1.15rem;
+    background: var(--cxd-bg-elevated);
+    border-bottom: 1px solid var(--cxd-border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+  }
+
+  .modal-modern-dialog__body {
+    padding: 1rem 1.15rem;
+  }
+
+  .modal-modern-dialog__foot {
+    padding: 0.75rem 1.15rem;
+    border-top: 1px solid var(--cxd-border);
+    background: var(--cxd-bg-base);
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+  }
+
+  .cxd-cmd-item {
+    width: 100%;
+    background: transparent;
+    border: none;
+    color: var(--cxd-text-primary);
+    text-align: left;
+    font-family: inherit;
+    cursor: pointer;
+  }
+
+  .popover-floating-card {
+    width: 100%;
+    max-width: 310px;
+    padding: 0.85rem 1rem;
+    background: var(--cxd-bg-surface);
+    border: 1px solid var(--cxd-border-strong);
+    border-radius: 12px;
+    box-shadow: var(--cxd-shadow-md);
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .popover-floating-card__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid var(--cxd-border);
+  }
+
+  .drawer-stage-shell {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 0.75rem;
+    background: var(--cxd-bg-base);
+    border: 1px solid var(--cxd-border-strong);
+    border-radius: var(--cxd-radius-md);
+    padding: 0.85rem;
+    overflow: hidden;
+    align-items: center;
+  }
+
+  .drawer-main-workspace {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    padding: 0.5rem;
+  }
+
+  .drawer-side-panel {
+    width: 250px;
+    background: var(--cxd-bg-surface);
+    border: 1px solid var(--cxd-border-strong);
+    border-radius: var(--cxd-radius-sm);
+    padding: 0.85rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+  }
+
+  .drawer-side-panel__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 0.45rem;
+    border-bottom: 1px solid var(--cxd-border);
+  }
+
+  .drawer-kv-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    font-size: 0.72rem;
+  }
+
+  .drawer-kv-list > div {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  /* Navbars (6 Variantes Radicalmente Distintas) */
+  .nav-cascade-showcase {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+  }
+
+  .nav-cascade-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    padding: 0.7rem 1rem;
+    background: var(--cxd-bg-surface);
+    border: 1px solid var(--cxd-border-strong);
+    border-radius: var(--cxd-radius-sm);
+  }
+
+  .nav-cascade-dropdown {
+    display: grid;
+    grid-template-columns: minmax(200px, 250px) 1fr;
+    background: var(--cxd-bg-surface);
+    border: 1px solid var(--cxd-border-strong);
+    border-radius: var(--cxd-radius-sm);
+    overflow: hidden;
+  }
+
+  .nav-cascade-col {
+    border-right: 1px solid var(--cxd-border);
+    background: var(--cxd-bg-elevated);
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .nav-cascade-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 0.7rem;
+    background: transparent;
+    border: 1px solid transparent;
+    color: var(--cxd-text-secondary);
+    font-family: var(--cxd-font-mono);
+    font-size: 0.73rem;
+    cursor: pointer;
+    border-radius: var(--cxd-radius-sm);
+    text-align: left;
+  }
+
+  .nav-cascade-item.is-active {
+    background: var(--cxd-bg-surface);
+    color: var(--cxd-text-primary);
+    border-color: var(--cxd-accent);
+    font-weight: 700;
+  }
+
+  .nav-cascade-detail {
+    padding: 0.9rem 1.1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.65rem;
+  }
+
+  .nav-cascade-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+  }
+
+  .nav-floating-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.85rem;
+    flex-wrap: wrap;
+    padding: 0.45rem 0.65rem 0.45rem 1.1rem;
+    background: var(--cxd-bg-surface);
+    border: 1px solid var(--cxd-border-strong);
+    border-radius: 999px;
+    box-shadow: var(--cxd-shadow-md);
+  }
+
+  .nav-floating-pill__brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-size: 0.8rem;
+  }
+
+  .nav-floating-pill__links {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    background: var(--cxd-bg-base);
+    padding: 0.22rem;
+    border-radius: 999px;
+  }
+
+  .pill-nav-link {
+    padding: 0.32rem 0.75rem;
+    border-radius: 999px;
+    border: none;
+    background: transparent;
+    color: var(--cxd-text-secondary);
+    font-family: var(--cxd-font-mono);
+    font-size: 0.72rem;
+    cursor: pointer;
+    transition: all 140ms ease;
+  }
+
+  .pill-nav-link.is-active {
+    background: var(--cxd-accent);
+    color: var(--cxd-accent-fg, #000);
+    font-weight: 700;
+  }
+
+  .nav-styleless-showcase {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .nav-styleless-strip {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    border-bottom: 1px solid var(--cxd-border-strong);
+  }
+
+  .nav-styleless-tab {
+    padding: 0.6rem 0;
+    background: none;
+    border: none;
+    border-bottom: 2.5px solid transparent;
+    color: var(--cxd-text-muted);
+    font-family: var(--cxd-font-mono);
+    font-size: 0.76rem;
+    font-weight: 700;
+    cursor: pointer;
+    margin-bottom: -1px;
+  }
+
+  .nav-styleless-tab.is-active {
+    color: var(--cxd-text-primary);
+    border-bottom-color: var(--cxd-accent);
+  }
+
+  .nav-styleless-panel {
+    padding: 0.75rem 0;
+    font-size: 0.82rem;
+    color: var(--cxd-text-secondary);
+  }
+
+  .breadcrumb-interactive-bar {
+    display: inline-flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding: 0.55rem 0.95rem;
+    background: var(--cxd-bg-surface);
+    border: 1px solid var(--cxd-border-strong);
+    border-radius: var(--cxd-radius-sm);
+  }
+
+  .bc-node {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-family: var(--cxd-font-mono);
+    font-size: 0.76rem;
+  }
+
+  .bc-sep {
+    color: var(--cxd-text-muted);
+    font-family: var(--cxd-font-mono);
+  }
+
+  .dock-floating-bar {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0.55rem 0.85rem;
+    background: var(--cxd-bg-surface);
+    border: 1px solid var(--cxd-border-strong);
+    border-radius: 18px;
+    box-shadow: var(--cxd-shadow-md);
+  }
+
+  .dock-app-btn {
+    position: relative;
+    width: 42px;
+    height: 42px;
+    border-radius: 11px;
+    background: var(--cxd-bg-elevated);
+    border: 1px solid var(--cxd-border);
+    color: var(--cxd-text-primary);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 150ms ease, border-color 150ms ease;
+  }
+
+  .dock-app-btn:hover {
+    transform: translateY(-4px) scale(1.08);
+    border-color: var(--cxd-accent);
+  }
+
+  .dock-app-btn.is-active {
+    background: var(--cxd-accent);
+    color: var(--cxd-accent-fg, #000);
+    border-color: var(--cxd-accent);
+  }
+
+  .dock-dot {
+    position: absolute;
+    bottom: -5px;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: transparent;
+  }
+
+  .dock-app-btn.is-active .dock-dot {
+    background: var(--cxd-accent);
+  }
+
+  .pagination-showcase {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+    padding: 0.85rem 1rem;
+    background: var(--cxd-bg-surface);
+    border: 1px solid var(--cxd-border-strong);
+    border-radius: var(--cxd-radius-sm);
+  }
+
+  .pagination-info-row,
+  .pagination-controls-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    font-size: 0.74rem;
+  }
+
+  /* Badges, Gauges, Timelines, KV & Avatares */
+  .svg-gauges-row {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .svg-gauge-card {
+    position: relative;
+    width: 105px;
+    height: 105px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .svg-gauge-ring {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+    color: var(--cxd-accent);
+  }
+
+  .timeline-showcase {
+    width: 100%;
+    padding: 0.85rem 1rem;
+    background: var(--cxd-bg-surface);
+    border: 1px solid var(--cxd-border-strong);
+    border-radius: var(--cxd-radius-sm);
+  }
+
+  .timeline-vertical-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+    border-left: 2px solid var(--cxd-accent);
+    padding-left: 1rem;
+    margin-left: 0.35rem;
+  }
+
+  .timeline-node-row {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .timeline-dot {
+    position: absolute;
+    left: -1.38rem;
+    top: 0.25rem;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--cxd-accent);
+  }
+
+  .timeline-content small {
+    display: block;
+    color: var(--cxd-text-muted);
+    font-size: 0.7rem;
+  }
+
+  .kv-grid-showcase {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+
+  .kv-row-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 0.6rem 0.9rem;
+    background: var(--cxd-bg-surface);
+    border: 1px solid var(--cxd-border-strong);
+    border-radius: var(--cxd-radius-sm);
+    cursor: pointer;
+    transition: border-color 140ms ease;
+  }
+
+  .kv-row-item:hover {
+    border-color: var(--cxd-accent);
+  }
+
+  .kv-key {
+    font-size: 0.72rem;
+    color: var(--cxd-text-muted);
+  }
+
+  .kv-val {
+    font-size: 0.78rem;
+    color: var(--cxd-text-primary);
+  }
+
+  .avatar-stack-group {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .avatar-stack-item {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: var(--cxd-bg-elevated);
+    border: 2px solid var(--cxd-bg-base);
+    color: var(--cxd-text-primary);
+    font-family: var(--cxd-font-mono);
+    font-size: 0.75rem;
+    font-weight: 700;
+    margin-left: -10px;
+    cursor: pointer;
+    transition: transform 140ms ease;
+  }
+
+  .avatar-stack-item:first-child {
+    margin-left: 0;
+  }
+
+  .avatar-stack-item.is-active {
+    background: var(--cxd-accent);
+    color: var(--cxd-accent-fg, #000);
+    transform: translateY(-4px);
+    z-index: 2;
+  }
+
+  .avatar-inspector-box {
+    padding: 0.6rem 1rem;
+    background: var(--cxd-bg-surface);
+    border: 1px solid var(--cxd-border-strong);
+    border-radius: var(--cxd-radius-sm);
+    flex: 1;
+    min-width: 240px;
   }
 
   /* Carruseles & Sliders */

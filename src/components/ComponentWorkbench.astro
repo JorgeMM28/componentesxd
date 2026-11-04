@@ -342,13 +342,621 @@ const frameworks = registry.frameworks;
     });
   });
 
-  // 6. FAB Radial, 3D Tilt Card, Tabbed Card, OTP & Password Meter
+  // 6. FAB Radial, 3D Tilt Card, Tabbed Card, OTP & Password Meter + ALL Interactive Variants
+  document.querySelectorAll<HTMLElement>('[data-expandable-table]').forEach((wrap) => {
+    const toggleBtn = wrap.querySelector('[data-expand-toggle]');
+    const detailRow = wrap.querySelector<HTMLElement>('[data-expand-detail]');
+    const badge = wrap.querySelector<HTMLElement>('[data-expand-badge]');
+    const restartBtn = wrap.querySelector('[data-expand-restart]');
+    toggleBtn?.addEventListener('click', () => {
+      if (!detailRow) return;
+      detailRow.hidden = !detailRow.hidden;
+      if (!detailRow.hidden) {
+        animate(detailRow, { opacity: [0, 1], duration: 280, ease: 'outQuad' });
+      }
+    });
+    restartBtn?.addEventListener('click', () => {
+      if (badge) {
+        badge.textContent = 'REINICIANDO POD...';
+        animate(badge, { scale: [0.9, 1.06, 1], duration: 360, ease: 'outBack' });
+        setTimeout(() => { badge.textContent = 'POD REINICIADO OK (4ms)'; }, 650);
+      }
+    });
+  });
+
+  document.querySelectorAll<HTMLElement>('[data-action-toast]').forEach((toast) => {
+    const status = toast.querySelector<HTMLElement>('[data-toast-action-status]');
+    toast.querySelectorAll<HTMLButtonElement>('[data-toast-act]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const mode = btn.dataset.toastAct;
+        if (status) {
+          status.textContent = mode === 'undo'
+            ? 'ROLLBACK COMPLETADO: Instancia #84 restaurada'
+            : 'SNAPSHOT ARCHIVADO EN S3 GLACIER';
+        }
+        animate(toast, { scale: [0.98, 1.02, 1], duration: 320, ease: 'outBack' });
+      });
+    });
+  });
+
+  document.querySelectorAll<HTMLElement>('[data-form-toast]').forEach((toast) => {
+    const input = toast.querySelector<HTMLInputElement>('[data-toast-form-input]');
+    const btn = toast.querySelector<HTMLButtonElement>('[data-toast-form-send]');
+    const status = toast.querySelector<HTMLElement>('[data-toast-form-status]');
+    btn?.addEventListener('click', () => {
+      const msg = input?.value.trim() || 'Aprobado para producción';
+      if (status) status.textContent = `ENVIADO A PR #412: "${msg}"`;
+      if (input) input.value = '';
+      animate(toast, { y: [-4, 0], scale: [0.98, 1], duration: 300, ease: 'outBack' });
+    });
+  });
+
+  document.querySelectorAll<HTMLElement>('[data-pill-toast]').forEach((stage) => {
+    const pill = stage.querySelector<HTMLElement>('[data-pill-badge]');
+    const text = stage.querySelector<HTMLElement>('[data-pill-text]');
+    const states = [
+      'Sincronizado · Hace 2s · 99.98% SLA',
+      'Replicando Snapshot #904 · 14 ms',
+      'Cache Edge Purgada · 38 PoPs Activos'
+    ];
+    let idx = 0;
+    stage.querySelector('[data-pill-ping]')?.addEventListener('click', () => {
+      idx = (idx + 1) % states.length;
+      if (text) text.textContent = states[idx];
+      if (pill) animate(pill, { scale: [0.92, 1.06, 1], duration: 360, ease: 'outBack' });
+    });
+  });
+
+  document.querySelectorAll<HTMLElement>('[data-btn-modern-group]').forEach((grp) => {
+    const status = grp.querySelector<HTMLElement>('[data-btn-modern-status]');
+    grp.querySelectorAll<HTMLButtonElement>('[data-btn-pick]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        grp.querySelectorAll('[data-btn-pick]').forEach((b) => b.classList.remove('is-selected'));
+        btn.classList.add('is-selected');
+        if (status) status.textContent = `ACCIÓN EJECUTADA: ${btn.dataset.btnPick}`;
+        animate(btn, { scale: [0.94, 1.04, 1], duration: 280, ease: 'outBack' });
+      });
+    });
+  });
+
+  document.querySelectorAll<HTMLElement>('[data-btn-styleless-group]').forEach((grp) => {
+    const status = grp.querySelector<HTMLElement>('[data-styleless-status]');
+    grp.querySelectorAll<HTMLButtonElement>('[data-styleless-pick]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        grp.querySelectorAll('[data-styleless-pick]').forEach((b) => b.classList.remove('is-active'));
+        btn.classList.add('is-active');
+        if (status) status.textContent = `RUTA ACTIVA: ${btn.dataset.stylelessPick}`;
+        animate(btn, { x: [0, 5, 0], duration: 260, ease: 'outQuad' });
+      });
+    });
+  });
+
   document.querySelectorAll<HTMLElement>('[data-fab-stage]').forEach((st) => {
     const items = st.querySelector<HTMLElement>('[data-fab-items]');
+    const status = st.querySelector<HTMLElement>('[data-fab-status]');
+    let open = true;
     st.querySelector('[data-fab-toggle]')?.addEventListener('click', () => {
       if (!items) return;
+      open = !open;
       const children = items.querySelectorAll('button');
-      animate(children, { scale: [0.5, 1], opacity: [0, 1], y: [10, 0], delay: stagger(60), duration: 340, ease: 'outBack' });
+      if (open) {
+        items.style.display = 'inline-flex';
+        animate(children, { scale: [0.5, 1], opacity: [0, 1], y: [10, 0], delay: stagger(60), duration: 340, ease: 'outBack' });
+        if (status) status.textContent = 'MENÚ RADIAL ABIERTO';
+      } else {
+        animate(children, {
+          scale: [1, 0.6],
+          opacity: [1, 0],
+          duration: 200,
+          ease: 'inQuad',
+          onComplete: () => { items.style.display = 'none'; }
+        });
+        if (status) status.textContent = 'MENÚ RADIAL CERRADO';
+      }
+    });
+    st.querySelectorAll<HTMLButtonElement>('[data-fab-act]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        if (status) status.textContent = `ACCIÓN: ${btn.dataset.fabAct}`;
+        animate(btn, { scale: [0.9, 1.08, 1], duration: 280, ease: 'outBack' });
+      });
+    });
+  });
+
+  document.querySelectorAll<HTMLElement>('[data-hold-stage]').forEach((st) => {
+    const btn = st.querySelector<HTMLElement>('[data-hold-btn]');
+    const fill = st.querySelector<HTMLElement>('[data-hold-fill]');
+    const label = st.querySelector<HTMLElement>('[data-hold-label]');
+    const status = st.querySelector<HTMLElement>('[data-hold-status]');
+    let timer: number | null = null;
+    let pct = 0;
+
+    const startHold = () => {
+      if (timer) window.clearInterval(timer);
+      pct = 0;
+      if (status) status.textContent = 'VERIFICANDO FIRMA...';
+      timer = window.setInterval(() => {
+        pct = Math.min(100, pct + 8);
+        if (fill) fill.style.width = `${pct}%`;
+        if (pct >= 100) {
+          if (timer) window.clearInterval(timer);
+          timer = null;
+          if (label) label.textContent = 'PURGA EJECUTADA (100%)';
+          if (status) status.textContent = 'CLUSTER PURGADO OK';
+          if (btn) animate(btn, { scale: [0.96, 1.04, 1], duration: 340, ease: 'outBack' });
+        }
+      }, 60);
+    };
+
+    const stopHold = () => {
+      if (timer) {
+        window.clearInterval(timer);
+        timer = null;
+      }
+      if (pct < 100) {
+        pct = 0;
+        if (fill) fill.style.width = '0%';
+        if (status) status.textContent = 'CANCELADO (MANTÉN PRESIONADO)';
+      }
+    };
+
+    btn?.addEventListener('mousedown', startHold);
+    btn?.addEventListener('mouseup', stopHold);
+    btn?.addEventListener('mouseleave', stopHold);
+    btn?.addEventListener('click', () => {
+      if (pct < 100) {
+        if (fill) animate(fill, { width: ['0%', '100%'], duration: 550, ease: 'outExpo' });
+        if (label) label.textContent = 'PURGA CONFIRMADA (100%)';
+        if (status) status.textContent = 'EJECUTADO INSTANTÁNEAMENTE';
+        pct = 100;
+      } else {
+        pct = 0;
+        if (fill) fill.style.width = '0%';
+        if (label) label.textContent = 'Mantén presionado (o clic) para Purgar Cluster';
+        if (status) status.textContent = 'LISTO PARA CONFIRMAR';
+      }
+    });
+  });
+
+  document.querySelectorAll<HTMLElement>('[data-split-btn-stage]').forEach((st) => {
+    const mainBtn = st.querySelector<HTMLButtonElement>('[data-split-main]');
+    const toggleBtn = st.querySelector<HTMLButtonElement>('[data-split-toggle]');
+    const menu = st.querySelector<HTMLElement>('[data-split-menu]');
+    const status = st.querySelector<HTMLElement>('[data-split-status]');
+    let selectedEnv = 'Producción (v4.2)';
+
+    mainBtn?.addEventListener('click', () => {
+      if (status) status.textContent = `DESPLEGANDO EN: ${selectedEnv.toUpperCase()}...`;
+      animate(mainBtn, { scale: [0.95, 1.03, 1], duration: 280, ease: 'outBack' });
+    });
+    toggleBtn?.addEventListener('click', () => {
+      if (!menu) return;
+      menu.hidden = !menu.hidden;
+    });
+    st.querySelectorAll<HTMLButtonElement>('[data-split-opt]').forEach((opt) => {
+      opt.addEventListener('click', () => {
+        selectedEnv = opt.dataset.splitOpt || 'Producción';
+        if (mainBtn) mainBtn.textContent = `Desplegar en ${selectedEnv}`;
+        if (status) status.textContent = `DESTINO CAMBIADO A: ${selectedEnv}`;
+        if (menu) menu.hidden = true;
+      });
+    });
+  });
+
+  document.querySelectorAll<HTMLElement>('[data-seg-stage]').forEach((st) => {
+    const status = st.querySelector<HTMLElement>('[data-seg-status]');
+    st.querySelectorAll<HTMLButtonElement>('[data-seg-opt]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        st.querySelectorAll('[data-seg-opt]').forEach((b) => b.classList.remove('is-active'));
+        btn.classList.add('is-active');
+        if (status) status.textContent = `VISTA ACTIVA: ${(btn.dataset.segOpt || '').toUpperCase()}`;
+        animate(btn, { scale: [0.94, 1], duration: 240, ease: 'outBack' });
+      });
+    });
+  });
+
+  document.querySelectorAll<HTMLElement>('[data-btn-3d-stage]').forEach((st) => {
+    const status = st.querySelector<HTMLElement>('[data-3d-status]');
+    let count = 0;
+    st.querySelectorAll<HTMLButtonElement>('[data-3d-key]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        count++;
+        if (status) status.textContent = `TECLA [${btn.getAttribute('data-3d-key')}] · ${count} PULSACIONES`;
+        animate(btn, { y: [0, 4, 0], duration: 180, ease: 'outQuad' });
+      });
+    });
+  });
+
+  document.querySelectorAll<HTMLElement>('[data-action-card]').forEach((card) => {
+    const badge = card.querySelector<HTMLElement>('[data-card-status]');
+    card.querySelectorAll<HTMLButtonElement>('[data-card-act]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const act = btn.dataset.cardAct;
+        if (badge) {
+          badge.textContent = act === 'Scale +2' ? '42 PODS ACTIVOS' : act === 'Purge Cache' ? 'CACHE L1 VACIADA' : 'LOGS EN VIVO OK';
+        }
+        animate(card, { scale: [0.99, 1.01, 1], duration: 260, ease: 'outQuad' });
+      });
+    });
+  });
+
+  document.querySelectorAll<HTMLElement>('[data-calc-card]').forEach((card) => {
+    const range = card.querySelector<HTMLInputElement>('[data-calc-range]');
+    const tier = card.querySelector<HTMLSelectElement>('[data-calc-tier]');
+    const label = card.querySelector<HTMLElement>('[data-calc-nodes-label]');
+    const total = card.querySelector<HTMLElement>('[data-calc-total]');
+    const recalc = () => {
+      const nodes = Number(range?.value || 12);
+      const unit = Number(tier?.value || 20);
+      if (label) label.textContent = `${nodes} Nodos`;
+      if (total) total.textContent = `$${(nodes * unit).toFixed(2)} / mes`;
+    };
+    range?.addEventListener('input', recalc);
+    tier?.addEventListener('change', recalc);
+  });
+
+  document.querySelectorAll<HTMLElement>('[data-expand-card]').forEach((card) => {
+    const btn = card.querySelector<HTMLButtonElement>('[data-expand-card-btn]');
+    const body = card.querySelector<HTMLElement>('[data-expand-card-body]');
+    btn?.addEventListener('click', () => {
+      if (!body) return;
+      body.hidden = !body.hidden;
+      btn.textContent = body.hidden ? 'Mostrar Stacktrace Completo' : 'Ocultar Stacktrace';
+      if (!body.hidden) animate(body, { opacity: [0, 1], y: [-6, 0], duration: 260, ease: 'outQuad' });
+    });
+  });
+
+  document.querySelectorAll<HTMLElement>('[data-modern-form]').forEach((form) => {
+    const nameInp = form.querySelector<HTMLInputElement>('[data-mf-name]');
+    const regionSel = form.querySelector<HTMLSelectElement>('[data-mf-region]');
+    const status = form.querySelector<HTMLElement>('[data-mf-status]');
+    form.querySelector('[data-mf-submit]')?.addEventListener('click', () => {
+      const name = nameInp?.value.trim() || 'edge-worker';
+      const reg = regionSel?.value || 'us-east-1';
+      if (status) status.textContent = `DESPLEGADO: ${name} EN ${reg.toUpperCase()}`;
+      animate(form, { scale: [0.99, 1.01, 1], duration: 280, ease: 'outBack' });
+    });
+  });
+
+  document.querySelectorAll<HTMLElement>('[data-inline-fit-form]').forEach((row) => {
+    const domain = row.querySelector<HTMLInputElement>('[data-fit-domain]');
+    const status = row.querySelector<HTMLElement>('[data-fit-status]');
+    row.querySelector('[data-fit-connect]')?.addEventListener('click', () => {
+      const d = domain?.value.trim() || 'componentesxd.dev';
+      if (status) status.textContent = `SSL ACTIVO PARA https://${d}`;
+      animate(row, { x: [0, 4, 0], duration: 240, ease: 'outQuad' });
+    });
+  });
+
+  document.querySelectorAll<HTMLElement>('[data-facet-filter]').forEach((box) => {
+    const search = box.querySelector<HTMLInputElement>('[data-ff-search]');
+    const status = box.querySelector<HTMLElement>('[data-ff-status]');
+    let currentFilter = 'all';
+    const updateFilter = () => {
+      const q = search?.value.trim() || '';
+      if (status) {
+        status.textContent = `FILTRO: ${currentFilter.toUpperCase()} ${q ? `· BUSCANDO "${q}"` : '· 24 RESULTADOS'}`;
+      }
+    };
+    search?.addEventListener('input', updateFilter);
+    box.querySelectorAll<HTMLButtonElement>('[data-ff-tag]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        box.querySelectorAll('[data-ff-tag]').forEach((b) => b.classList.remove('is-on'));
+        btn.classList.add('is-on');
+        currentFilter = btn.dataset.ffTag || 'all';
+        updateFilter();
+      });
+    });
+  });
+
+  document.querySelectorAll<HTMLElement>('[data-tactile-controls]').forEach((ctrl) => {
+    const checks = ctrl.querySelectorAll<HTMLInputElement>('input[type="checkbox"]');
+    const range = ctrl.querySelector<HTMLInputElement>('[data-tc-range]');
+    const status = ctrl.querySelector<HTMLElement>('[data-tc-status]');
+    const sync = () => {
+      let activeCount = 0;
+      checks.forEach((c) => { if (c.checked) activeCount++; });
+      if (status) status.textContent = `${activeCount}/${checks.length} Reglas Activas · Límite: ${range?.value || 72}% CPU`;
+    };
+    checks.forEach((c) => c.addEventListener('change', sync));
+    range?.addEventListener('input', sync);
+  });
+
+  // 6A-MODALS: 6 Unique Interactive Modals (CAT-06)
+  document.querySelectorAll<HTMLElement>('[data-modal-modern]').forEach((stage) => {
+    const dialog = stage.querySelector<HTMLElement>('[data-mm-dialog]');
+    const status = stage.querySelector<HTMLElement>('[data-mm-status]');
+    stage.querySelector('[data-mm-toggle]')?.addEventListener('click', () => {
+      if (!dialog) return;
+      dialog.hidden = !dialog.hidden;
+      if (!dialog.hidden) animate(dialog, { scale: [0.92, 1], opacity: [0, 1], duration: 300, ease: 'outBack' });
+    });
+    stage.querySelectorAll<HTMLButtonElement>('[data-mm-act]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const act = btn.dataset.mmAct;
+        if (status) status.textContent = act === 'confirm' ? 'MIGRACIÓN EJECUTADA CON ÉXITO' : 'OPERACIÓN POSPUESTA';
+        if (dialog) animate(dialog, { scale: [0.97, 1.02, 1], duration: 280, ease: 'outBack' });
+      });
+    });
+  });
+
+  document.querySelectorAll<HTMLElement>('[data-cmdk-box]').forEach((cmdk) => {
+    const input = cmdk.querySelector<HTMLInputElement>('[data-cmdk-input]');
+    const items = Array.from(cmdk.querySelectorAll<HTMLElement>('[data-cmdk-item]'));
+    const status = cmdk.querySelector<HTMLElement>('[data-cmdk-status]');
+    input?.addEventListener('input', () => {
+      const q = input.value.toLowerCase().trim();
+      items.forEach((it) => {
+        const match = (it.textContent || '').toLowerCase().includes(q);
+        it.style.display = match ? 'flex' : 'none';
+      });
+    });
+    items.forEach((it) => {
+      it.addEventListener('click', () => {
+        items.forEach((x) => x.classList.remove('is-selected'));
+        it.classList.add('is-selected');
+        if (status) status.textContent = `COMANDO EJECUTADO: ${it.dataset.cmdkItem}`;
+        animate(it, { x: [0, 6, 0], duration: 240, ease: 'outQuad' });
+      });
+    });
+  });
+
+  document.querySelectorAll<HTMLElement>('[data-popover-demo]').forEach((pop) => {
+    const card = pop.querySelector<HTMLElement>('[data-pop-card]');
+    const status = pop.querySelector<HTMLElement>('[data-pop-status]');
+    pop.querySelector('[data-pop-toggle]')?.addEventListener('click', () => {
+      if (!card) return;
+      card.hidden = !card.hidden;
+      if (!card.hidden) animate(card, { y: [8, 0], opacity: [0, 1], duration: 260, ease: 'outBack' });
+    });
+    pop.querySelectorAll<HTMLButtonElement>('[data-pop-act]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        if (status) status.textContent = `ACCIÓN EN NODO: ${(btn.dataset.popAct || '').toUpperCase()}`;
+        if (card) animate(card, { scale: [0.97, 1], duration: 220, ease: 'outQuad' });
+      });
+    });
+  });
+
+  document.querySelectorAll<HTMLElement>('[data-modal-form-demo]').forEach((mf) => {
+    const nameInp = mf.querySelector<HTMLInputElement>('[data-mform-name]');
+    const regSel = mf.querySelector<HTMLSelectElement>('[data-mform-region]');
+    const visSel = mf.querySelector<HTMLSelectElement>('[data-mform-vis]');
+    const status = mf.querySelector<HTMLElement>('[data-mform-status]');
+    mf.querySelector('[data-mform-save]')?.addEventListener('click', () => {
+      const n = nameInp?.value.trim() || 'analytics-engine';
+      if (status) status.textContent = `PROYECTO "${n}" CREADO (${regSel?.value} · ${visSel?.value})`;
+      animate(mf, { scale: [0.98, 1.01, 1], duration: 280, ease: 'outBack' });
+    });
+  });
+
+  document.querySelectorAll<HTMLElement>('[data-modal-confirm-demo]').forEach((mc) => {
+    const input = mc.querySelector<HTMLInputElement>('[data-mconf-input]');
+    const delBtn = mc.querySelector<HTMLButtonElement>('[data-mconf-delete]');
+    const fillBtn = mc.querySelector<HTMLButtonElement>('[data-mconf-autofill]');
+    const status = mc.querySelector<HTMLElement>('[data-mconf-status]');
+    const check = () => {
+      const unlocked = (input?.value.trim().toUpperCase() === 'ELIMINAR');
+      if (delBtn) delBtn.disabled = !unlocked;
+      if (status && unlocked) status.textContent = 'DESBLOQUEADO: LISTO PARA ELIMINAR';
+    };
+    input?.addEventListener('input', check);
+    fillBtn?.addEventListener('click', () => {
+      if (input) input.value = 'ELIMINAR';
+      check();
+    });
+    delBtn?.addEventListener('click', () => {
+      if (status) status.textContent = 'VOLUMEN PROD-DB-01 ELIMINADO PERMANENTEMENTE';
+      animate(mc, { x: [-6, 6, -4, 4, 0], duration: 360, ease: 'outQuad' });
+    });
+  });
+
+  document.querySelectorAll<HTMLElement>('[data-drawer-demo]').forEach((dr) => {
+    const panel = dr.querySelector<HTMLElement>('[data-drawer-panel]');
+    const status = dr.querySelector<HTMLElement>('[data-drawer-status]');
+    dr.querySelector('[data-drawer-toggle]')?.addEventListener('click', () => {
+      if (!panel) return;
+      panel.hidden = !panel.hidden;
+      if (!panel.hidden) {
+        animate(panel, { x: [40, 0], opacity: [0, 1], duration: 300, ease: 'outExpo' });
+        if (status) status.textContent = 'DRAWER ABIERTO · INSPECCIONANDO REQ_99281A';
+      } else if (status) {
+        status.textContent = 'DRAWER CERRADO · HAZ CLIC EN ALTERNAR';
+      }
+    });
+    dr.querySelector('[data-drawer-replay]')?.addEventListener('click', () => {
+      if (status) status.textContent = 'WEBHOOK REENVIADO -> HTTP 200 OK (19ms)';
+      if (panel) animate(panel, { scale: [0.97, 1], duration: 240, ease: 'outBack' });
+    });
+  });
+
+  // 6B-NAVBARS: 6 Radically Distinct Navbars (CAT-07)
+  document.querySelectorAll<HTMLElement>('[data-nav-cascade-demo]').forEach((nav) => {
+    const status = nav.querySelector<HTMLElement>('[data-nc-status]');
+    const subContainer = nav.querySelector<HTMLElement>('[data-nc-subitems]');
+    const detail = nav.querySelector<HTMLElement>('[data-nc-detail]');
+    const catalog: Record<string, { subs: string[]; chips: string[] }> = {
+      compute: { subs: ['Edge Workers', 'Kubernetes Pods', 'GPU Serverless'], chips: ['Auto-Scaling L7', 'Zero Cold Start', 'WASM Runtime'] },
+      database: { subs: ['Postgres 17 HA', 'Redis Cluster', 'Vector Store'], chips: ['Read Replicas', 'Point-in-Time Backup', 'Sub-ms Cache'] },
+      security: { subs: ['Zero-Trust WAF', 'mTLS Mesh', 'IAM Vault'], chips: ['DDoS Shield', 'SOC2 Compliance', 'JWT Rotator'] }
+    };
+
+    nav.querySelectorAll<HTMLButtonElement>('[data-nc-cat]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        nav.querySelectorAll('[data-nc-cat]').forEach((b) => b.classList.remove('is-active'));
+        btn.classList.add('is-active');
+        const key = btn.dataset.ncCat || 'compute';
+        const data = catalog[key] || catalog.compute;
+        if (status) status.textContent = `CATEGORÍA: ${key.toUpperCase()}`;
+        if (subContainer) {
+          subContainer.innerHTML = data.subs
+            .map((s, i) => `<button type="button" class="nc-sub-btn ${i === 0 ? 'is-active' : ''}" data-nc-sub="${s}">${s}</button>`)
+            .join('');
+        }
+        if (detail) {
+          detail.innerHTML = `<strong>${data.subs[0]}</strong><p>Arquitectura distribuida con replicación automática.</p><div class="nc-chip-row">${data.chips.map((c) => `<span>${c}</span>`).join('')}</div>`;
+          animate(detail, { opacity: [0, 1], x: [8, 0], duration: 240, ease: 'outQuad' });
+        }
+      });
+    });
+  });
+
+  document.querySelectorAll<HTMLElement>('[data-nav-pill-demo]').forEach((nav) => {
+    const status = nav.querySelector<HTMLElement>('[data-np-status]');
+    nav.querySelectorAll<HTMLButtonElement>('[data-np-item]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        nav.querySelectorAll('[data-np-item]').forEach((b) => b.classList.remove('is-active'));
+        btn.classList.add('is-active');
+        if (status) status.textContent = `SECCIÓN ACTIVA: ${(btn.dataset.npItem || '').toUpperCase()}`;
+        animate(btn, { scale: [0.92, 1], duration: 240, ease: 'outBack' });
+      });
+    });
+    nav.querySelector('[data-np-cta]')?.addEventListener('click', () => {
+      if (status) status.textContent = 'DESPLIEGUE GLOBAL INICIADO DESDE NAVBAR FLOTANTE';
+    });
+  });
+
+  document.querySelectorAll<HTMLElement>('[data-nav-styleless-demo]').forEach((nav) => {
+    const readout = nav.querySelector<HTMLElement>('[data-ns-readout]');
+    nav.querySelectorAll<HTMLButtonElement>('[data-ns-tab]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        nav.querySelectorAll('[data-ns-tab]').forEach((b) => b.classList.remove('is-active'));
+        btn.classList.add('is-active');
+        if (readout) {
+          readout.textContent = `VISTA EDITORIAL ACTIVA: ${btn.dataset.nsTab?.toUpperCase()} — Sin bordes ni contenedores artificiales.`;
+          animate(readout, { opacity: [0.3, 1], x: [6, 0], duration: 240, ease: 'outQuad' });
+        }
+      });
+    });
+  });
+
+  document.querySelectorAll<HTMLElement>('[data-nav-bc-demo]').forEach((bc) => {
+    const pkg = bc.querySelector<HTMLSelectElement>('[data-bc-pkg]');
+    const branch = bc.querySelector<HTMLSelectElement>('[data-bc-branch]');
+    const pathEl = bc.querySelector<HTMLElement>('[data-bc-path]');
+    const sync = () => {
+      if (pathEl) pathEl.textContent = `github.com/componentesxd/packages/${pkg?.value || 'ui-core'}/tree/${branch?.value || 'main'}/src/index.tsx`;
+    };
+    pkg?.addEventListener('change', sync);
+    branch?.addEventListener('change', sync);
+    bc.querySelector('[data-bc-root]')?.addEventListener('click', () => {
+      if (pathEl) pathEl.textContent = 'github.com/componentesxd (RAÍZ DEL MONOREPO)';
+    });
+    bc.querySelector('[data-bc-copy]')?.addEventListener('click', (e) => {
+      const btn = e.currentTarget as HTMLButtonElement;
+      btn.textContent = '¡Copiado!';
+      setTimeout(() => { btn.textContent = 'Copiar Ruta'; }, 1000);
+    });
+  });
+
+  document.querySelectorAll<HTMLElement>('[data-nav-dock-demo]').forEach((dock) => {
+    const label = dock.querySelector<HTMLElement>('[data-dock-label]');
+    dock.querySelectorAll<HTMLButtonElement>('[data-dock-app]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        dock.querySelectorAll('[data-dock-app]').forEach((b) => b.classList.remove('is-active'));
+        btn.classList.add('is-active');
+        if (label) label.textContent = `APLICACIÓN ACTIVA: ${btn.dataset.dockApp}`;
+        animate(btn, { y: [0, -10, 0], scale: [1, 1.18, 1], duration: 360, ease: 'outBack' });
+      });
+    });
+  });
+
+  document.querySelectorAll<HTMLElement>('[data-nav-page-demo]').forEach((pg) => {
+    const btns = Array.from(pg.querySelectorAll<HTMLButtonElement>('[data-pg-num]'));
+    const info = pg.querySelector<HTMLElement>('[data-pg-info]');
+    let cur = 1;
+    const setPage = (p: number) => {
+      cur = Math.max(1, Math.min(5, p));
+      btns.forEach((b) => b.classList.toggle('is-active', Number(b.dataset.pgNum) === cur));
+      const start = (cur - 1) * 10 + 1;
+      const end = cur * 10;
+      if (info) info.textContent = `MOSTRANDO PÁGINA ${cur} DE 5 (REGISTROS ${start} - ${end} DE 50)`;
+    };
+    btns.forEach((b) => b.addEventListener('click', () => setPage(Number(b.dataset.pgNum))));
+    pg.querySelector('[data-pg-prev]')?.addEventListener('click', () => setPage(cur - 1));
+    pg.querySelector('[data-pg-next]')?.addEventListener('click', () => setPage(cur + 1));
+  });
+
+  // 6C-DATA & BADGES: 6 Unique Micro-UI Previews (CAT-08)
+  document.querySelectorAll<HTMLElement>('[data-badges-demo]').forEach((bd) => {
+    const chips = bd.querySelectorAll<HTMLButtonElement>('[data-dismiss-chip]');
+    chips.forEach((c) => {
+      c.addEventListener('click', () => {
+        c.style.display = 'none';
+      });
+    });
+    bd.querySelector('[data-restore-chips]')?.addEventListener('click', () => {
+      chips.forEach((c) => {
+        c.style.display = 'inline-flex';
+        animate(c, { scale: [0.8, 1], opacity: [0, 1], duration: 240, ease: 'outBack' });
+      });
+    });
+  });
+
+  document.querySelectorAll<HTMLElement>('[data-svg-gauges-demo]').forEach((gd) => {
+    const circle = gd.querySelector<SVGCircleElement>('[data-gauge-circle]');
+    const text = gd.querySelector<SVGTextElement>('[data-gauge-text]');
+    const range = gd.querySelector<HTMLInputElement>('[data-gauge-range]');
+    const setVal = (pct: number) => {
+      const offset = 201 - (201 * pct) / 100;
+      if (circle) circle.style.strokeDashoffset = String(offset);
+      if (text) text.textContent = `${pct}%`;
+      if (range) range.value = String(pct);
+    };
+    range?.addEventListener('input', () => setVal(Number(range.value)));
+    gd.querySelectorAll<HTMLButtonElement>('[data-gauge-preset]').forEach((btn) => {
+      btn.addEventListener('click', () => setVal(Number(btn.dataset.gaugePreset || 78)));
+    });
+  });
+
+  document.querySelectorAll<HTMLElement>('[data-timeline-demo]').forEach((tl) => {
+    const list = tl.querySelector<HTMLElement>('[data-tl-list]');
+    let seq = 413;
+    tl.querySelector('[data-tl-add]')?.addEventListener('click', () => {
+      if (!list) return;
+      const item = document.createElement('div');
+      item.className = 'cxd-tl-item is-live';
+      item.innerHTML = `<span class="tl-dot"></span><div><strong>Release v4.2.${seq++} — Auto-Deploy</strong><small>Justo ahora · Healthcheck 100% OK</small></div>`;
+      list.prepend(item);
+      animate(item, { x: [-16, 0], opacity: [0, 1], duration: 300, ease: 'outBack' });
+    });
+  });
+
+  document.querySelectorAll<HTMLElement>('[data-kv-demo]').forEach((kv) => {
+    const status = kv.querySelector<HTMLElement>('[data-kv-status]');
+    kv.querySelectorAll<HTMLButtonElement>('[data-kv-copy]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const val = btn.dataset.kvCopy || '';
+        navigator.clipboard?.writeText(val).catch(() => {});
+        if (status) status.textContent = `COPIADO AL PORTAPAPELES: ${val}`;
+        animate(btn, { scale: [0.97, 1.02, 1], duration: 220, ease: 'outQuad' });
+      });
+    });
+  });
+
+  document.querySelectorAll<HTMLElement>('[data-avatars-demo]').forEach((av) => {
+    const status = av.querySelector<HTMLElement>('[data-av-status]');
+    av.querySelectorAll<HTMLButtonElement>('[data-av-user]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        if (status) status.textContent = `MIEMBRO SELECCIONADO: ${btn.dataset.avUser}`;
+        animate(btn, { y: [0, -6, 0], scale: [1, 1.15, 1], duration: 280, ease: 'outBack' });
+      });
+    });
+  });
+
+  // 6D-DOCKER: Interactive Container Orchestration Topologies (CAT-09)
+  document.querySelectorAll<HTMLElement>('[data-docker-sim]').forEach((dk) => {
+    const status = dk.querySelector<HTMLElement>('[data-dk-status]');
+    const stages = dk.querySelectorAll<HTMLElement>('.dk-stage');
+    dk.querySelector('[data-dk-run]')?.addEventListener('click', () => {
+      if (status) status.textContent = 'EJECUTANDO PIPELINE DE CONTENEDORES...';
+      animate(stages, {
+        scale: [0.95, 1.03, 1],
+        delay: stagger(90),
+        duration: 380,
+        ease: 'outBack',
+        onComplete: () => {
+          if (status) status.textContent = 'PIPELINE VERIFICADO · 0 VULNERABILIDADES · IMAGEN LISTA';
+        }
+      });
     });
   });
 
@@ -380,14 +988,23 @@ const frameworks = registry.frameworks;
 
   document.querySelectorAll<HTMLElement>('[data-live-otp]').forEach((grid) => {
     const slots = Array.from(grid.querySelectorAll<HTMLInputElement>('.cxd-otp-slot'));
+    const status = grid.querySelector<HTMLElement>('[data-otp-status]');
     slots.forEach((inp, idx) => {
       inp.addEventListener('input', () => {
         inp.value = inp.value.replace(/\D/g, '').slice(-1);
         if (inp.value && idx < slots.length - 1) slots[idx + 1].focus();
+        const code = slots.map((s) => s.value).join('');
+        if (status && code.length === slots.length) status.textContent = `TOKEN ${code} VALIDADO`;
       });
       inp.addEventListener('keydown', (e) => {
         if (e.key === 'Backspace' && !inp.value && idx > 0) slots[idx - 1].focus();
       });
+    });
+    grid.querySelector('[data-otp-gen]')?.addEventListener('click', () => {
+      slots.forEach((s) => { s.value = String(Math.floor(Math.random() * 10)); });
+      const code = slots.map((s) => s.value).join('');
+      if (status) status.textContent = `TOKEN ${code} VALIDADO`;
+      animate(slots, { scale: [0.85, 1], delay: stagger(40), duration: 240, ease: 'outBack' });
     });
   });
 
@@ -403,7 +1020,7 @@ const frameworks = registry.frameworks;
     });
   });
 
-  // 6B. CARRUSELES INTERACTIVOS CON ANIME.JS v4
+  // 6E. CARRUSELES INTERACTIVOS CON ANIME.JS v4
   document.querySelectorAll<HTMLElement>('[data-coverflow-carousel]').forEach((cf) => {
     const slides = Array.from(cf.querySelectorAll<HTMLElement>('[data-cf-slide]'));
     const dots = Array.from(cf.querySelectorAll<HTMLElement>('[data-cf-go]'));
@@ -462,26 +1079,37 @@ const frameworks = registry.frameworks;
   });
 
   document.querySelectorAll<HTMLElement>('[data-peek-carousel]').forEach((pk) => {
+    const track = pk.querySelector<HTMLElement>('.peek-track');
     const cards = Array.from(pk.querySelectorAll<HTMLElement>('.peek-card'));
     const counter = pk.querySelector('[data-peek-counter]');
     const bar = pk.querySelector<HTMLElement>('[data-peek-bar]');
     let idx = 0;
 
-    function updatePeek(next: number) {
+    function updatePeek(next: number, direction: number) {
       idx = (next + cards.length) % cards.length;
+      if (track && cards.length > 1) {
+        if (direction > 0) {
+          const first = track.firstElementChild;
+          if (first) track.appendChild(first);
+        } else {
+          const last = track.lastElementChild;
+          if (last) track.prepend(last);
+        }
+      }
       if (counter) counter.textContent = `DIAPOSITIVA 0${idx + 1} / 0${cards.length}`;
       if (bar) bar.style.width = `${((idx + 1) / cards.length) * 100}%`;
       animate(cards, {
-        scale: [0.94, 1],
-        opacity: [0.5, 1],
+        x: [direction * 18, 0],
+        scale: [0.95, 1],
+        opacity: [0.6, 1],
         delay: stagger(45),
         duration: 320,
-        ease: 'outQuad'
+        ease: 'outBack'
       });
     }
 
-    pk.querySelector('[data-peek-prev]')?.addEventListener('click', () => updatePeek(idx - 1));
-    pk.querySelector('[data-peek-next]')?.addEventListener('click', () => updatePeek(idx + 1));
+    pk.querySelector('[data-peek-prev]')?.addEventListener('click', () => updatePeek(idx - 1, -1));
+    pk.querySelector('[data-peek-next]')?.addEventListener('click', () => updatePeek(idx + 1, 1));
   });
 
   document.querySelectorAll<HTMLElement>('[data-vertical-carousel]').forEach((vc) => {
