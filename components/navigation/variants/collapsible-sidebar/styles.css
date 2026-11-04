@@ -1,0 +1,11 @@
+/**
+ * Variante 07 — Sidebar Lateral Colapsable con Árbol de Proyectos y Estado de Clúster
+ * Archivo: components/navigation/variants/collapsible-sidebar/styles.css
+ */
+.cxd-navigation-collapsible-sidebar {
+  background: var(--cxd-bg-surface);
+  color: var(--cxd-text-primary);
+  border: var(--cxd-border-width, 1px) solid var(--cxd-border);
+  border-radius: var(--cxd-radius-md);
+  font-family: var(--cxd-font-sans);
+}

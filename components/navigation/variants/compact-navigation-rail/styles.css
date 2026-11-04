@@ -1,0 +1,11 @@
+/**
+ * Variante 09 — Navigation Rail Ultra-Compacto con Tooltips y Puntos Activos
+ * Archivo: components/navigation/variants/compact-navigation-rail/styles.css
+ */
+.cxd-navigation-compact-navigation-rail {
+  background: var(--cxd-bg-surface);
+  color: var(--cxd-text-primary);
+  border: var(--cxd-border-width, 1px) solid var(--cxd-border);
+  border-radius: var(--cxd-radius-md);
+  font-family: var(--cxd-font-sans);
+}

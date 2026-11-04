@@ -663,26 +663,32 @@ const frameworks = registry.frameworks;
 
   // 6A-MODALS: 6 Unique Interactive Modals (CAT-06)
   document.querySelectorAll<HTMLElement>('[data-modal-modern]').forEach((stage) => {
-    const dialog = stage.querySelector<HTMLElement>('[data-mm-dialog]');
+    const box = stage.querySelector<HTMLElement>('[data-mm-box]');
     const status = stage.querySelector<HTMLElement>('[data-mm-status]');
     stage.querySelector('[data-mm-toggle]')?.addEventListener('click', () => {
-      if (!dialog) return;
-      dialog.hidden = !dialog.hidden;
-      if (!dialog.hidden) animate(dialog, { scale: [0.92, 1], opacity: [0, 1], duration: 300, ease: 'outBack' });
+      if (!box) return;
+      box.hidden = !box.hidden;
+      if (!box.hidden) {
+        animate(box, { scale: [0.92, 1], opacity: [0, 1], duration: 300, ease: 'outBack' });
+        if (status) status.textContent = 'ESTADO: MODAL VISIBLE';
+      } else if (status) {
+        status.textContent = 'ESTADO: MODAL MINIMIZADO';
+      }
     });
-    stage.querySelectorAll<HTMLButtonElement>('[data-mm-act]').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        const act = btn.dataset.mmAct;
-        if (status) status.textContent = act === 'confirm' ? 'MIGRACIÓN EJECUTADA CON ÉXITO' : 'OPERACIÓN POSPUESTA';
-        if (dialog) animate(dialog, { scale: [0.97, 1.02, 1], duration: 280, ease: 'outBack' });
-      });
+    stage.querySelector('[data-mm-confirm]')?.addEventListener('click', () => {
+      if (status) status.textContent = 'ESTADO: ACTUALIZACIÓN APLICADA (v4.2 OK)';
+      if (box) animate(box, { scale: [0.98, 1.02, 1], duration: 280, ease: 'outBack' });
+    });
+    stage.querySelector('[data-mm-cancel]')?.addEventListener('click', () => {
+      if (status) status.textContent = 'ESTADO: OPERACIÓN CANCELADA';
+      if (box) animate(box, { x: [-4, 4, 0], duration: 240, ease: 'outQuad' });
     });
   });
 
   document.querySelectorAll<HTMLElement>('[data-cmdk-box]').forEach((cmdk) => {
     const input = cmdk.querySelector<HTMLInputElement>('[data-cmdk-input]');
     const items = Array.from(cmdk.querySelectorAll<HTMLElement>('[data-cmdk-item]'));
-    const status = cmdk.querySelector<HTMLElement>('[data-cmdk-status]');
+    const log = cmdk.querySelector<HTMLElement>('[data-cmdk-log]');
     input?.addEventListener('input', () => {
       const q = input.value.toLowerCase().trim();
       items.forEach((it) => {
@@ -692,9 +698,9 @@ const frameworks = registry.frameworks;
     });
     items.forEach((it) => {
       it.addEventListener('click', () => {
-        items.forEach((x) => x.classList.remove('is-selected'));
-        it.classList.add('is-selected');
-        if (status) status.textContent = `COMANDO EJECUTADO: ${it.dataset.cmdkItem}`;
+        items.forEach((x) => x.classList.remove('is-active'));
+        it.classList.add('is-active');
+        if (log) log.textContent = `EJECUTADO: ${it.dataset.cmdkItem}`;
         animate(it, { x: [0, 6, 0], duration: 240, ease: 'outQuad' });
       });
     });
@@ -702,98 +708,97 @@ const frameworks = registry.frameworks;
 
   document.querySelectorAll<HTMLElement>('[data-popover-demo]').forEach((pop) => {
     const card = pop.querySelector<HTMLElement>('[data-pop-card]');
-    const status = pop.querySelector<HTMLElement>('[data-pop-status]');
-    pop.querySelector('[data-pop-toggle]')?.addEventListener('click', () => {
+    pop.querySelector('[data-pop-trigger]')?.addEventListener('click', () => {
       if (!card) return;
       card.hidden = !card.hidden;
       if (!card.hidden) animate(card, { y: [8, 0], opacity: [0, 1], duration: 260, ease: 'outBack' });
     });
     pop.querySelectorAll<HTMLButtonElement>('[data-pop-act]').forEach((btn) => {
       btn.addEventListener('click', () => {
-        if (status) status.textContent = `ACCIÓN EN NODO: ${(btn.dataset.popAct || '').toUpperCase()}`;
+        const msg = btn.dataset.popAct || 'Acción ejecutada';
+        const headLbl = card?.querySelector('.mono');
+        if (headLbl) headLbl.textContent = `NODO // ${msg.toUpperCase()}`;
         if (card) animate(card, { scale: [0.97, 1], duration: 220, ease: 'outQuad' });
       });
     });
   });
 
   document.querySelectorAll<HTMLElement>('[data-modal-form-demo]').forEach((mf) => {
-    const nameInp = mf.querySelector<HTMLInputElement>('[data-mform-name]');
-    const regSel = mf.querySelector<HTMLSelectElement>('[data-mform-region]');
-    const visSel = mf.querySelector<HTMLSelectElement>('[data-mform-vis]');
-    const status = mf.querySelector<HTMLElement>('[data-mform-status]');
-    mf.querySelector('[data-mform-save]')?.addEventListener('click', () => {
-      const n = nameInp?.value.trim() || 'analytics-engine';
-      if (status) status.textContent = `PROYECTO "${n}" CREADO (${regSel?.value} · ${visSel?.value})`;
+    const nameInp = mf.querySelector<HTMLInputElement>('[data-mf-name]');
+    const regSel = mf.querySelector<HTMLSelectElement>('[data-mf-reg]');
+    const out = mf.querySelector<HTMLElement>('[data-mf-out]');
+    mf.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const n = nameInp?.value.trim() || 'edge-analytics';
+      const r = regSel?.value || 'eu-central-1';
+      if (out) out.textContent = `CLÚSTER "${n}" APROVISIONADO EN ${r.toUpperCase()}`;
       animate(mf, { scale: [0.98, 1.01, 1], duration: 280, ease: 'outBack' });
     });
   });
 
   document.querySelectorAll<HTMLElement>('[data-modal-confirm-demo]').forEach((mc) => {
-    const input = mc.querySelector<HTMLInputElement>('[data-mconf-input]');
-    const delBtn = mc.querySelector<HTMLButtonElement>('[data-mconf-delete]');
-    const fillBtn = mc.querySelector<HTMLButtonElement>('[data-mconf-autofill]');
-    const status = mc.querySelector<HTMLElement>('[data-mconf-status]');
+    const input = mc.querySelector<HTMLInputElement>('[data-mc-input]');
+    const btn = mc.querySelector<HTMLButtonElement>('[data-mc-btn]');
+    const fillBtn = mc.querySelector<HTMLButtonElement>('[data-mc-fill]');
+    const status = mc.querySelector<HTMLElement>('[data-mc-status]');
     const check = () => {
       const unlocked = (input?.value.trim().toUpperCase() === 'ELIMINAR');
-      if (delBtn) delBtn.disabled = !unlocked;
-      if (status && unlocked) status.textContent = 'DESBLOQUEADO: LISTO PARA ELIMINAR';
+      if (btn) btn.disabled = !unlocked;
+      if (status) {
+        status.textContent = unlocked ? 'DESBLOQUEADO: LISTO PARA ELIMINAR' : 'BLOQUEADO POR SEGURIDAD';
+        status.style.color = unlocked ? '#ef4444' : 'var(--cxd-text-muted)';
+      }
     };
     input?.addEventListener('input', check);
     fillBtn?.addEventListener('click', () => {
       if (input) input.value = 'ELIMINAR';
       check();
     });
-    delBtn?.addEventListener('click', () => {
-      if (status) status.textContent = 'VOLUMEN PROD-DB-01 ELIMINADO PERMANENTEMENTE';
-      animate(mc, { x: [-6, 6, -4, 4, 0], duration: 360, ease: 'outQuad' });
+    btn?.addEventListener('click', () => {
+      if (status) status.textContent = 'BASE DE DATOS ELIMINADA PERMANENTEMENTE';
+      animate(mc, { x: [-8, 8, -4, 4, 0], duration: 380, ease: 'outQuad' });
     });
   });
 
   document.querySelectorAll<HTMLElement>('[data-drawer-demo]').forEach((dr) => {
-    const panel = dr.querySelector<HTMLElement>('[data-drawer-panel]');
-    const status = dr.querySelector<HTMLElement>('[data-drawer-status]');
-    dr.querySelector('[data-drawer-toggle]')?.addEventListener('click', () => {
+    const panel = dr.querySelector<HTMLElement>('[data-drw-panel]');
+    dr.querySelector('[data-drw-toggle]')?.addEventListener('click', () => {
       if (!panel) return;
       panel.hidden = !panel.hidden;
       if (!panel.hidden) {
-        animate(panel, { x: [40, 0], opacity: [0, 1], duration: 300, ease: 'outExpo' });
-        if (status) status.textContent = 'DRAWER ABIERTO · INSPECCIONANDO REQ_99281A';
-      } else if (status) {
-        status.textContent = 'DRAWER CERRADO · HAZ CLIC EN ALTERNAR';
+        animate(panel, { x: [60, 0], opacity: [0, 1], duration: 320, ease: 'outExpo' });
       }
-    });
-    dr.querySelector('[data-drawer-replay]')?.addEventListener('click', () => {
-      if (status) status.textContent = 'WEBHOOK REENVIADO -> HTTP 200 OK (19ms)';
-      if (panel) animate(panel, { scale: [0.97, 1], duration: 240, ease: 'outBack' });
     });
   });
 
-  // 6B-NAVBARS: 6 Radically Distinct Navbars (CAT-07)
+  // 6B-NAVBARS: 10 Radically Distinct Navbars (CAT-07)
   document.querySelectorAll<HTMLElement>('[data-nav-cascade-demo]').forEach((nav) => {
-    const status = nav.querySelector<HTMLElement>('[data-nc-status]');
-    const subContainer = nav.querySelector<HTMLElement>('[data-nc-subitems]');
-    const detail = nav.querySelector<HTMLElement>('[data-nc-detail]');
-    const catalog: Record<string, { subs: string[]; chips: string[] }> = {
-      compute: { subs: ['Edge Workers', 'Kubernetes Pods', 'GPU Serverless'], chips: ['Auto-Scaling L7', 'Zero Cold Start', 'WASM Runtime'] },
-      database: { subs: ['Postgres 17 HA', 'Redis Cluster', 'Vector Store'], chips: ['Read Replicas', 'Point-in-Time Backup', 'Sub-ms Cache'] },
-      security: { subs: ['Zero-Trust WAF', 'mTLS Mesh', 'IAM Vault'], chips: ['DDoS Shield', 'SOC2 Compliance', 'JWT Rotator'] }
-    };
+    const panel = nav.querySelector<HTMLElement>('[data-nc-panel]');
+    const titleEl = nav.querySelector<HTMLElement>('[data-nc-title]');
+    const chipsEl = nav.querySelector<HTMLElement>('[data-nc-chips]');
+    const subItems = Array.from(nav.querySelectorAll<HTMLButtonElement>('[data-nc-sub]'));
 
-    nav.querySelectorAll<HTMLButtonElement>('[data-nc-cat]').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        nav.querySelectorAll('[data-nc-cat]').forEach((b) => b.classList.remove('is-active'));
-        btn.classList.add('is-active');
-        const key = btn.dataset.ncCat || 'compute';
-        const data = catalog[key] || catalog.compute;
-        if (status) status.textContent = `CATEGORÍA: ${key.toUpperCase()}`;
-        if (subContainer) {
-          subContainer.innerHTML = data.subs
-            .map((s, i) => `<button type="button" class="nc-sub-btn ${i === 0 ? 'is-active' : ''}" data-nc-sub="${s}">${s}</button>`)
-            .join('');
+    nav.querySelectorAll<HTMLButtonElement>('[data-nc-cat]').forEach((catBtn) => {
+      catBtn.addEventListener('click', () => {
+        nav.querySelectorAll('[data-nc-cat]').forEach((b) => b.classList.remove('mini-btn--accent'));
+        catBtn.classList.add('mini-btn--accent');
+        if (panel) {
+          panel.hidden = false;
+          animate(panel, { opacity: [0.4, 1], y: [-6, 0], duration: 240, ease: 'outQuad' });
         }
-        if (detail) {
-          detail.innerHTML = `<strong>${data.subs[0]}</strong><p>Arquitectura distribuida con replicación automática.</p><div class="nc-chip-row">${data.chips.map((c) => `<span>${c}</span>`).join('')}</div>`;
-          animate(detail, { opacity: [0, 1], x: [8, 0], duration: 240, ease: 'outQuad' });
+      });
+    });
+
+    subItems.forEach((subBtn) => {
+      subBtn.addEventListener('click', () => {
+        subItems.forEach((x) => x.classList.remove('is-active'));
+        subBtn.classList.add('is-active');
+        const subName = subBtn.dataset.ncSub || '';
+        const items = (subBtn.dataset.ncItems || '').split(',');
+        if (titleEl) titleEl.textContent = `SUB-MENÚ EN CASCADA // ${subName.toUpperCase()}`;
+        if (chipsEl) {
+          chipsEl.innerHTML = items.map((it) => `<span class="hyb-chip">${it}</span>`).join('');
+          animate(chipsEl.children, { scale: [0.85, 1], opacity: [0, 1], delay: stagger(40), duration: 220, ease: 'outBack' });
         }
       });
     });
@@ -801,28 +806,30 @@ const frameworks = registry.frameworks;
 
   document.querySelectorAll<HTMLElement>('[data-nav-pill-demo]').forEach((nav) => {
     const status = nav.querySelector<HTMLElement>('[data-np-status]');
-    nav.querySelectorAll<HTMLButtonElement>('[data-np-item]').forEach((btn) => {
+    nav.querySelectorAll<HTMLButtonElement>('[data-np-link]').forEach((btn) => {
       btn.addEventListener('click', () => {
-        nav.querySelectorAll('[data-np-item]').forEach((b) => b.classList.remove('is-active'));
+        nav.querySelectorAll('[data-np-link]').forEach((b) => b.classList.remove('is-active'));
         btn.classList.add('is-active');
-        if (status) status.textContent = `SECCIÓN ACTIVA: ${(btn.dataset.npItem || '').toUpperCase()}`;
+        const link = btn.dataset.npLink || '';
+        if (status) status.textContent = `SECCIÓN ACTIVA EN CÁPSULA: ${link}`;
         animate(btn, { scale: [0.92, 1], duration: 240, ease: 'outBack' });
       });
     });
     nav.querySelector('[data-np-cta]')?.addEventListener('click', () => {
-      if (status) status.textContent = 'DESPLIEGUE GLOBAL INICIADO DESDE NAVBAR FLOTANTE';
+      if (status) status.textContent = 'DESPLIEGUE GLOBAL INICIADO DESDE NAVBAR FLOTANTE (14 POPS)';
     });
   });
 
   document.querySelectorAll<HTMLElement>('[data-nav-styleless-demo]').forEach((nav) => {
-    const readout = nav.querySelector<HTMLElement>('[data-ns-readout]');
+    const panel = nav.querySelector<HTMLElement>('[data-ns-panel]');
     nav.querySelectorAll<HTMLButtonElement>('[data-ns-tab]').forEach((btn) => {
       btn.addEventListener('click', () => {
         nav.querySelectorAll('[data-ns-tab]').forEach((b) => b.classList.remove('is-active'));
         btn.classList.add('is-active');
-        if (readout) {
-          readout.textContent = `VISTA EDITORIAL ACTIVA: ${btn.dataset.nsTab?.toUpperCase()} — Sin bordes ni contenedores artificiales.`;
-          animate(readout, { opacity: [0.3, 1], x: [6, 0], duration: 240, ease: 'outQuad' });
+        const text = btn.dataset.nsTab || '';
+        if (panel) {
+          panel.textContent = text;
+          animate(panel, { opacity: [0.3, 1], x: [8, 0], duration: 240, ease: 'outQuad' });
         }
       });
     });
@@ -833,18 +840,10 @@ const frameworks = registry.frameworks;
     const branch = bc.querySelector<HTMLSelectElement>('[data-bc-branch]');
     const pathEl = bc.querySelector<HTMLElement>('[data-bc-path]');
     const sync = () => {
-      if (pathEl) pathEl.textContent = `github.com/componentesxd/packages/${pkg?.value || 'ui-core'}/tree/${branch?.value || 'main'}/src/index.tsx`;
+      if (pathEl) pathEl.textContent = `RUTA RESUELTA: github.com/componentesxd/tree/${branch?.value || 'main'}/${pkg?.value || 'components/tables'}/index.tsx`;
     };
     pkg?.addEventListener('change', sync);
     branch?.addEventListener('change', sync);
-    bc.querySelector('[data-bc-root]')?.addEventListener('click', () => {
-      if (pathEl) pathEl.textContent = 'github.com/componentesxd (RAÍZ DEL MONOREPO)';
-    });
-    bc.querySelector('[data-bc-copy]')?.addEventListener('click', (e) => {
-      const btn = e.currentTarget as HTMLButtonElement;
-      btn.textContent = '¡Copiado!';
-      setTimeout(() => { btn.textContent = 'Copiar Ruta'; }, 1000);
-    });
   });
 
   document.querySelectorAll<HTMLElement>('[data-nav-dock-demo]').forEach((dock) => {
@@ -853,8 +852,8 @@ const frameworks = registry.frameworks;
       btn.addEventListener('click', () => {
         dock.querySelectorAll('[data-dock-app]').forEach((b) => b.classList.remove('is-active'));
         btn.classList.add('is-active');
-        if (label) label.textContent = `APLICACIÓN ACTIVA: ${btn.dataset.dockApp}`;
-        animate(btn, { y: [0, -10, 0], scale: [1, 1.18, 1], duration: 360, ease: 'outBack' });
+        if (label) label.textContent = `APLICACIÓN ACTIVA EN DOCK: ${btn.dataset.dockApp}`;
+        animate(btn, { y: [0, -12, 0], scale: [1, 1.22, 1], duration: 340, ease: 'outBack' });
       });
     });
   });
@@ -862,39 +861,154 @@ const frameworks = registry.frameworks;
   document.querySelectorAll<HTMLElement>('[data-nav-page-demo]').forEach((pg) => {
     const btns = Array.from(pg.querySelectorAll<HTMLButtonElement>('[data-pg-num]'));
     const info = pg.querySelector<HTMLElement>('[data-pg-info]');
+    const badge = pg.querySelector<HTMLElement>('[data-pg-badge]');
     let cur = 1;
     const setPage = (p: number) => {
       cur = Math.max(1, Math.min(5, p));
-      btns.forEach((b) => b.classList.toggle('is-active', Number(b.dataset.pgNum) === cur));
+      btns.forEach((b) => b.classList.toggle('mini-btn--accent', Number(b.dataset.pgNum) === cur));
       const start = (cur - 1) * 10 + 1;
       const end = cur * 10;
-      if (info) info.textContent = `MOSTRANDO PÁGINA ${cur} DE 5 (REGISTROS ${start} - ${end} DE 50)`;
+      if (info) info.textContent = `MOSTRANDO PÁGINA 0${cur} DE 05 (REGISTROS ${start} - ${end} DE 50)`;
+      if (badge) badge.textContent = `PÁGINA 0${cur}`;
+      animate(pg.querySelector('.pagination-controls-bar'), { scale: [0.99, 1], duration: 200, ease: 'outQuad' });
     };
     btns.forEach((b) => b.addEventListener('click', () => setPage(Number(b.dataset.pgNum))));
     pg.querySelector('[data-pg-prev]')?.addEventListener('click', () => setPage(cur - 1));
     pg.querySelector('[data-pg-next]')?.addEventListener('click', () => setPage(cur + 1));
   });
 
-  // 6C-DATA & BADGES: 6 Unique Micro-UI Previews (CAT-08)
-  document.querySelectorAll<HTMLElement>('[data-badges-demo]').forEach((bd) => {
-    const chips = bd.querySelectorAll<HTMLButtonElement>('[data-dismiss-chip]');
-    chips.forEach((c) => {
-      c.addEventListener('click', () => {
-        c.style.display = 'none';
+  // 07-7. Sidebar Lateral Colapsable
+  document.querySelectorAll<HTMLElement>('[data-nav-sidebar-demo]').forEach((sb) => {
+    const aside = sb.querySelector<HTMLElement>('[data-sb-aside]');
+    const collapseBtn = sb.querySelector<HTMLButtonElement>('[data-sb-collapse]');
+    const activeView = sb.querySelector<HTMLElement>('[data-sb-active-view]');
+    collapseBtn?.addEventListener('click', () => {
+      if (!aside) return;
+      aside.classList.toggle('is-collapsed');
+      animate(aside, { width: aside.classList.contains('is-collapsed') ? [240, 68] : [68, 240], duration: 280, ease: 'outExpo' });
+    });
+    sb.querySelectorAll<HTMLButtonElement>('[data-sb-link]').forEach((linkBtn) => {
+      linkBtn.addEventListener('click', () => {
+        sb.querySelectorAll('[data-sb-link]').forEach((b) => b.classList.remove('is-active'));
+        linkBtn.classList.add('is-active');
+        if (activeView) {
+          activeView.textContent = linkBtn.dataset.sbLink || '';
+          animate(activeView, { x: [10, 0], opacity: [0.3, 1], duration: 240, ease: 'outQuad' });
+        }
       });
     });
-    bd.querySelector('[data-restore-chips]')?.addEventListener('click', () => {
+  });
+
+  // 07-8. Desktop Menubar
+  document.querySelectorAll<HTMLElement>('[data-nav-menubar-demo]').forEach((mb) => {
+    const log = mb.querySelector<HTMLElement>('[data-mb-log]');
+    const surface = mb.querySelector<HTMLElement>('[data-mb-surface]');
+    mb.querySelectorAll<HTMLButtonElement>('[data-mb-menu]').forEach((topBtn) => {
+      topBtn.addEventListener('click', () => {
+        mb.querySelectorAll('[data-mb-menu]').forEach((b) => b.classList.remove('is-active'));
+        topBtn.classList.add('is-active');
+        if (surface) {
+          animate(surface, { opacity: [0.4, 1], y: [-6, 0], duration: 200, ease: 'outQuad' });
+        }
+      });
+    });
+    mb.querySelectorAll<HTMLElement>('[data-mb-act]').forEach((row) => {
+      row.addEventListener('click', () => {
+        const act = row.dataset.mbAct || '';
+        if (log) log.textContent = `ACCIÓN EJECUTADA: ${act}`;
+        animate(row, { scale: [0.97, 1.02, 1], duration: 220, ease: 'outBack' });
+      });
+    });
+  });
+
+  // 07-9. Navigation Rail
+  document.querySelectorAll<HTMLElement>('[data-nav-rail-demo]').forEach((rail) => {
+    const title = rail.querySelector<HTMLElement>('[data-rail-title]');
+    const desc = rail.querySelector<HTMLElement>('[data-rail-desc-txt]');
+    const badge = rail.querySelector<HTMLElement>('[data-rail-badge]');
+    rail.querySelectorAll<HTMLButtonElement>('[data-rail-tab]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        rail.querySelectorAll('[data-rail-tab]').forEach((b) => b.classList.remove('is-active'));
+        btn.classList.add('is-active');
+        const tab = btn.dataset.railTab || '';
+        const d = btn.dataset.railDesc || '';
+        if (title) title.textContent = tab;
+        if (desc) desc.textContent = d;
+        if (badge) badge.textContent = `DESTINO // ${tab.toUpperCase()}`;
+        animate(rail.querySelector('[data-rail-content]'), { x: [12, 0], opacity: [0.4, 1], duration: 260, ease: 'outQuad' });
+      });
+    });
+  });
+
+  // 07-10. Mobile Tabbar
+  document.querySelectorAll<HTMLElement>('[data-nav-tabbar-demo]').forEach((tb) => {
+    const screenTxt = tb.querySelector<HTMLElement>('[data-tabbar-screen-text]');
+    tb.querySelectorAll<HTMLButtonElement>('[data-mtab]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        tb.querySelectorAll('[data-mtab]').forEach((b) => b.classList.remove('is-active'));
+        btn.classList.add('is-active');
+        const tab = btn.dataset.mtab || '';
+        if (screenTxt) {
+          screenTxt.innerHTML = `<strong>${tab}</strong><p class="sub-p" style="margin:0.2rem 0 0 0;">Vista cargada instantáneamente con Anime.js v4.</p>`;
+          animate(screenTxt, { y: [8, 0], opacity: [0.3, 1], duration: 240, ease: 'outBack' });
+        }
+      });
+    });
+  });
+
+  // 6C-DATA & BADGES: 6 Unique Micro-UI Previews (CAT-08)
+  document.querySelectorAll<HTMLElement>('[data-badges-demo]').forEach((bd) => {
+    const chips = bd.querySelectorAll<HTMLButtonElement>('[data-bdg-dismiss]');
+    chips.forEach((c) => {
+      c.addEventListener('click', () => {
+        animate(c, {
+          scale: [1, 0.4],
+          opacity: [1, 0],
+          duration: 180,
+          ease: 'inQuad',
+          onComplete: () => { c.style.display = 'none'; }
+        });
+      });
+    });
+    bd.querySelector('[data-bdg-restore]')?.addEventListener('click', () => {
       chips.forEach((c) => {
         c.style.display = 'inline-flex';
-        animate(c, { scale: [0.8, 1], opacity: [0, 1], duration: 240, ease: 'outBack' });
+        animate(c, { scale: [0.6, 1], opacity: [0, 1], duration: 240, ease: 'outBack' });
+      });
+    });
+  });
+
+  document.querySelectorAll<HTMLElement>('[data-exclusive-accordion]').forEach((acc) => {
+    const items = acc.querySelectorAll<HTMLElement>('[data-acc-item]');
+    items.forEach((it) => {
+      const btn = it.querySelector('[data-acc-btn]');
+      const panel = it.querySelector<HTMLElement>('[data-acc-panel]');
+      const icon = it.querySelector<HTMLElement>('[data-acc-icon]');
+      btn?.addEventListener('click', () => {
+        const isOpen = it.classList.contains('is-open');
+        items.forEach((other) => {
+          other.classList.remove('is-open');
+          const p = other.querySelector<HTMLElement>('[data-acc-panel]');
+          const ic = other.querySelector<HTMLElement>('[data-acc-icon]');
+          if (p) p.hidden = true;
+          if (ic) ic.textContent = '+';
+        });
+        if (!isOpen) {
+          it.classList.add('is-open');
+          if (panel) {
+            panel.hidden = false;
+            animate(panel, { opacity: [0, 1], y: [-6, 0], duration: 240, ease: 'outQuad' });
+          }
+          if (icon) icon.textContent = '-';
+        }
       });
     });
   });
 
   document.querySelectorAll<HTMLElement>('[data-svg-gauges-demo]').forEach((gd) => {
-    const circle = gd.querySelector<SVGCircleElement>('[data-gauge-circle]');
-    const text = gd.querySelector<SVGTextElement>('[data-gauge-text]');
-    const range = gd.querySelector<HTMLInputElement>('[data-gauge-range]');
+    const circle = gd.querySelector<SVGCircleElement>('[data-gg-circle]');
+    const text = gd.querySelector<HTMLElement>('[data-gg-text]');
+    const range = gd.querySelector<HTMLInputElement>('[data-gg-slider]');
     const setVal = (pct: number) => {
       const offset = 201 - (201 * pct) / 100;
       if (circle) circle.style.strokeDashoffset = String(offset);
@@ -902,8 +1016,8 @@ const frameworks = registry.frameworks;
       if (range) range.value = String(pct);
     };
     range?.addEventListener('input', () => setVal(Number(range.value)));
-    gd.querySelectorAll<HTMLButtonElement>('[data-gauge-preset]').forEach((btn) => {
-      btn.addEventListener('click', () => setVal(Number(btn.dataset.gaugePreset || 78)));
+    gd.querySelectorAll<HTMLButtonElement>('[data-gg-set]').forEach((btn) => {
+      btn.addEventListener('click', () => setVal(Number(btn.dataset.ggSet || 78)));
     });
   });
 
@@ -913,30 +1027,41 @@ const frameworks = registry.frameworks;
     tl.querySelector('[data-tl-add]')?.addEventListener('click', () => {
       if (!list) return;
       const item = document.createElement('div');
-      item.className = 'cxd-tl-item is-live';
-      item.innerHTML = `<span class="tl-dot"></span><div><strong>Release v4.2.${seq++} — Auto-Deploy</strong><small>Justo ahora · Healthcheck 100% OK</small></div>`;
+      item.className = 'timeline-node-row';
+      item.innerHTML = `<span class="timeline-dot" style="background:var(--cxd-accent)"></span><div class="timeline-content"><strong>v4.2.${seq++} desplegado en vivo</strong><small class="mono">justo ahora · 0 errores · 100% SLA</small></div>`;
       list.prepend(item);
       animate(item, { x: [-16, 0], opacity: [0, 1], duration: 300, ease: 'outBack' });
     });
   });
 
   document.querySelectorAll<HTMLElement>('[data-kv-demo]').forEach((kv) => {
-    const status = kv.querySelector<HTMLElement>('[data-kv-status]');
-    kv.querySelectorAll<HTMLButtonElement>('[data-kv-copy]').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        const val = btn.dataset.kvCopy || '';
+    kv.querySelectorAll<HTMLElement>('[data-kv-copy]').forEach((row) => {
+      row.addEventListener('click', () => {
+        const val = row.dataset.kvCopy || '';
+        const badge = row.querySelector<HTMLElement>('[data-kv-badge]');
         navigator.clipboard?.writeText(val).catch(() => {});
-        if (status) status.textContent = `COPIADO AL PORTAPAPELES: ${val}`;
-        animate(btn, { scale: [0.97, 1.02, 1], duration: 220, ease: 'outQuad' });
+        if (badge) {
+          badge.textContent = '¡COPIADO!';
+          badge.classList.add('cxd-badge--active');
+          setTimeout(() => {
+            badge.textContent = 'COPIAR';
+            badge.classList.remove('cxd-badge--active');
+          }, 1200);
+        }
+        animate(row, { scale: [0.98, 1.01, 1], duration: 220, ease: 'outQuad' });
       });
     });
   });
 
   document.querySelectorAll<HTMLElement>('[data-avatars-demo]').forEach((av) => {
-    const status = av.querySelector<HTMLElement>('[data-av-status]');
+    const nameEl = av.querySelector<HTMLElement>('[data-av-name]');
+    const descEl = av.querySelector<HTMLElement>('[data-av-desc]');
     av.querySelectorAll<HTMLButtonElement>('[data-av-user]').forEach((btn) => {
       btn.addEventListener('click', () => {
-        if (status) status.textContent = `MIEMBRO SELECCIONADO: ${btn.dataset.avUser}`;
+        av.querySelectorAll('[data-av-user]').forEach((b) => b.classList.remove('is-active'));
+        btn.classList.add('is-active');
+        if (nameEl) nameEl.textContent = btn.dataset.avUser || '';
+        if (descEl) descEl.textContent = btn.dataset.avRole || '';
         animate(btn, { y: [0, -6, 0], scale: [1, 1.15, 1], duration: 280, ease: 'outBack' });
       });
     });
@@ -945,11 +1070,11 @@ const frameworks = registry.frameworks;
   // 6D-DOCKER: Interactive Container Orchestration Topologies (CAT-09)
   document.querySelectorAll<HTMLElement>('[data-docker-sim]').forEach((dk) => {
     const status = dk.querySelector<HTMLElement>('[data-dk-status]');
-    const stages = dk.querySelectorAll<HTMLElement>('.dk-stage');
+    const stages = dk.querySelectorAll<HTMLElement>('.docker-node');
     dk.querySelector('[data-dk-run]')?.addEventListener('click', () => {
       if (status) status.textContent = 'EJECUTANDO PIPELINE DE CONTENEDORES...';
       animate(stages, {
-        scale: [0.95, 1.03, 1],
+        scale: [0.95, 1.04, 1],
         delay: stagger(90),
         duration: 380,
         ease: 'outBack',

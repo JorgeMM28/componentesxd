@@ -1187,6 +1187,176 @@ const { previewType, variantId, variantName, badge } = Astro.props;
     </div>
   )}
 
+  {/* 07-7: SIDEBAR LATERAL COLAPSABLE CON ÁRBOL DE PROYECTOS */}
+  {previewType === 'nav-sidebar' && (
+    <div class="sidebar-showcase" data-nav-sidebar-demo>
+      <aside class="sidebar-shell is-expanded" data-sb-aside>
+        <div class="sidebar-head">
+          <div class="sidebar-brand-area" data-sb-brand>
+            <div class="sidebar-logo"><Icon name="box" size={16} /></div>
+            <div class="sidebar-brand-text">
+              <strong>CXD.CONSOLE</strong>
+              <small class="mono">v4.2-prod</small>
+            </div>
+          </div>
+          <button type="button" class="sidebar-collapse-btn" data-sb-collapse title="Colapsar / Expandir Sidebar">
+            <Icon name="chevron-down" size={14} class="sb-collapse-icon" />
+          </button>
+        </div>
+        <div class="sidebar-body">
+          <div class="sidebar-section-lbl mono">MÓDULOS // NAVEGACIÓN</div>
+          <nav class="sidebar-nav-links">
+            <button type="button" class="sidebar-nav-link is-active" data-sb-link="Overview // Métricas en tiempo real">
+              <Icon name="activity" size={15} />
+              <span class="sb-link-lbl">Visión General</span>
+              <span class="cxd-badge cxd-badge--active mono">LIVE</span>
+            </button>
+            <button type="button" class="sidebar-nav-link" data-sb-link="Deployments // 14 Edge Nodos">
+              <Icon name="layers" size={15} />
+              <span class="sb-link-lbl">Despliegues</span>
+              <span class="sb-badge-pill">14</span>
+            </button>
+            <button type="button" class="sidebar-nav-link" data-sb-link="Databases // Postgres 17 HA">
+              <Icon name="grid" size={15} />
+              <span class="sb-link-lbl">Bases de Datos</span>
+            </button>
+            <button type="button" class="sidebar-nav-link" data-sb-link="Security // WAF Zero-Trust">
+              <Icon name="shield" size={15} />
+              <span class="sb-link-lbl">Seguridad & WAF</span>
+            </button>
+          </nav>
+        </div>
+        <div class="sidebar-foot">
+          <span class="cxd-badge-dot" style="background:#10b981;"></span>
+          <span class="sb-foot-lbl mono">CLUSTER OK (4ms)</span>
+        </div>
+      </aside>
+      <div class="sidebar-stage-content">
+        <span class="mono" style="font-size:0.72rem; color:var(--cxd-text-muted);">VISTA DEL ESPACIO DE TRABAJO:</span>
+        <h3 data-sb-active-view style="margin:0.25rem 0 0.5rem 0;">Overview // Métricas en tiempo real</h3>
+        <p class="sub-p">Haz clic en los enlaces del sidebar o en el botón superior derecho para alternar el ancho de 240px a 68px de forma cinética.</p>
+      </div>
+    </div>
+  )}
+
+  {/* 07-8: DESKTOP MENUBAR CLÁSICO CON MENÚS FLOTANTES */}
+  {previewType === 'nav-menubar' && (
+    <div class="menubar-showcase" data-nav-menubar-demo>
+      <div class="desktop-menubar-strip">
+        <div class="menubar-menu-group">
+          <button type="button" class="menubar-top-item is-active" data-mb-menu="file">
+            <span>Archivo</span>
+          </button>
+          <button type="button" class="menubar-top-item" data-mb-menu="edit">
+            <span>Edición</span>
+          </button>
+          <button type="button" class="menubar-top-item" data-mb-menu="git">
+            <span>Git</span>
+          </button>
+          <button type="button" class="menubar-top-item" data-mb-menu="view">
+            <span>Ver</span>
+          </button>
+        </div>
+        <div class="menubar-sync-status mono">
+          <span class="cxd-badge-dot" style="background:#10b981;"></span>
+          <span>SYNC: GITHUB MAIN</span>
+        </div>
+      </div>
+      <div class="menubar-dropdown-surface" data-mb-surface>
+        <div class="menubar-item-row" data-mb-act="Nuevo Archivo de Componente">
+          <span>Nuevo Componente...</span>
+          <kbd class="cxd-cmd-kbd">⌘N</kbd>
+        </div>
+        <div class="menubar-item-row" data-mb-act="Guardar Cambios Locales">
+          <span>Guardar Cambios</span>
+          <kbd class="cxd-cmd-kbd">⌘S</kbd>
+        </div>
+        <div class="menubar-item-row" data-mb-act="Desplegar a Vercel Production">
+          <span>Desplegar en Vercel</span>
+          <kbd class="cxd-cmd-kbd">⌘⇧D</kbd>
+        </div>
+        <div class="menubar-divider"></div>
+        <div class="menubar-item-row" data-mb-act="Exportar Paquete Multi-Framework">
+          <span>Exportar 10 Frameworks (ZIP)</span>
+          <kbd class="cxd-cmd-kbd">⌘E</kbd>
+        </div>
+      </div>
+      <div class="menubar-feedback-log mono" data-mb-log>
+        Haz clic en una opción del menú para ejecutar la orden en tiempo real.
+      </div>
+    </div>
+  )}
+
+  {/* 07-9: NAVIGATION RAIL ULTRA-COMPACTO */}
+  {previewType === 'nav-rail' && (
+    <div class="rail-showcase" data-nav-rail-demo>
+      <nav class="nav-rail-column">
+        <div class="rail-brand-icon"><Icon name="terminal" size={17} /></div>
+        <div class="rail-action-stack">
+          <button type="button" class="rail-tab-btn is-active" data-rail-tab="Consola Interactiva" data-rail-desc="Terminal CLI lista con 1,120 archivos de componentes">
+            <Icon name="terminal" size={16} />
+            <span class="rail-active-pill"></span>
+          </button>
+          <button type="button" class="rail-tab-btn" data-rail-tab="Explorador de Arquitectura" data-rail-desc="12 Interfaces de diseño listas para alternar">
+            <Icon name="layers" size={16} />
+            <span class="rail-active-pill"></span>
+          </button>
+          <button type="button" class="rail-tab-btn" data-rail-tab="Motor Cinético Anime.js" data-rail-desc="48 Módulos de animación oficiales documentados">
+            <Icon name="sparkles" size={16} />
+            <span class="rail-active-pill"></span>
+          </button>
+          <button type="button" class="rail-tab-btn" data-rail-tab="Telemetría de Red" data-rail-desc="Monitoreo en vivo de latencia y clústeres Edge">
+            <Icon name="activity" size={16} />
+            <span class="rail-active-pill"></span>
+          </button>
+        </div>
+        <div class="rail-bottom-settings">
+          <button type="button" class="rail-tab-btn" data-rail-tab="Ajustes de Infraestructura" data-rail-desc="Configuración de variables de entorno y tokens">
+            <Icon name="sliders" size={16} />
+          </button>
+        </div>
+      </nav>
+      <div class="rail-detail-card" data-rail-content>
+        <span class="cxd-badge cxd-badge--active mono" data-rail-badge>DESTINO // ACTIVO</span>
+        <h4 data-rail-title style="margin:0.35rem 0 0.25rem 0;">Consola Interactiva</h4>
+        <p class="sub-p" data-rail-desc-txt>Terminal CLI lista con 1,120 archivos de componentes</p>
+      </div>
+    </div>
+  )}
+
+  {/* 07-10: MOBILE BOTTOM TAB BAR TÁCTIL */}
+  {previewType === 'nav-tabbar' && (
+    <div class="tabbar-showcase" data-nav-tabbar-demo>
+      <div class="mobile-phone-frame">
+        <div class="mobile-viewport-content">
+          <span class="mono" style="font-size:0.68rem; color:var(--cxd-text-muted);">PANTALLA MÓVIL // 375×120</span>
+          <div data-tabbar-screen-text style="margin-top:0.35rem;">
+            <strong>Inicio / Dashboard</strong>
+            <p class="sub-p" style="margin:0.2rem 0 0 0;">Navega tocando las pastillas inferiores con respuesta física háptica.</p>
+          </div>
+        </div>
+        <nav class="mobile-tabbar-strip">
+          <button type="button" class="m-tab-item is-active" data-mtab="Inicio / Dashboard">
+            <Icon name="box" size={16} />
+            <span>Inicio</span>
+          </button>
+          <button type="button" class="m-tab-item" data-mtab="Catálogo de Componentes">
+            <Icon name="grid" size={16} />
+            <span>Biblioteca</span>
+          </button>
+          <button type="button" class="m-tab-item" data-mtab="Animaciones Anime.js">
+            <Icon name="sparkles" size={16} />
+            <span>Motion</span>
+          </button>
+          <button type="button" class="m-tab-item" data-mtab="Métricas y Registro">
+            <Icon name="activity" size={16} />
+            <span>Métricas</span>
+          </button>
+        </nav>
+      </div>
+    </div>
+  )}
+
   {/* ==========================================================================
       CATEGORÍA 08: BADGES, TIMELINES, ACORDEONES Y MICRO-UI (6 VARIANTES DISTINTAS)
       ========================================================================== */}
@@ -5261,5 +5431,396 @@ const { previewType, variantId, variantName, badge } = Astro.props;
     border-radius: 50%;
     background: var(--cxd-accent);
     box-shadow: 0 0 0 4px var(--cxd-bg-active);
+  }
+
+  /* 07-7. SIDEBAR LATERAL COLAPSABLE */
+  .sidebar-showcase {
+    display: flex;
+    min-height: 230px;
+    background: var(--cxd-bg-base);
+    border: 1px solid var(--cxd-border);
+    border-radius: var(--cxd-radius-md);
+    overflow: hidden;
+    width: 100%;
+  }
+
+  .sidebar-shell {
+    width: 240px;
+    background: var(--cxd-bg-surface);
+    border-right: 1px solid var(--cxd-border);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: width 240ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .sidebar-shell.is-collapsed {
+    width: 68px;
+  }
+
+  .sidebar-shell.is-collapsed .sidebar-brand-text,
+  .sidebar-shell.is-collapsed .sidebar-section-lbl,
+  .sidebar-shell.is-collapsed .sb-link-lbl,
+  .sidebar-shell.is-collapsed .cxd-badge,
+  .sidebar-shell.is-collapsed .sb-badge-pill,
+  .sidebar-shell.is-collapsed .sb-foot-lbl {
+    display: none;
+  }
+
+  .sidebar-shell.is-collapsed .sidebar-collapse-btn {
+    transform: rotate(-90deg);
+  }
+
+  .sidebar-head {
+    padding: 0.85rem;
+    border-bottom: 1px solid var(--cxd-border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .sidebar-brand-area {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .sidebar-logo {
+    width: 30px;
+    height: 30px;
+    border-radius: var(--cxd-radius-sm);
+    background: var(--cxd-accent);
+    color: var(--cxd-accent-fg, #000);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .sidebar-brand-text strong {
+    font-size: 0.76rem;
+    display: block;
+    line-height: 1.1;
+  }
+
+  .sidebar-brand-text small {
+    font-size: 0.65rem;
+    color: var(--cxd-text-muted);
+  }
+
+  .sidebar-collapse-btn {
+    background: var(--cxd-bg-base);
+    border: 1px solid var(--cxd-border-strong);
+    color: var(--cxd-text-secondary);
+    border-radius: var(--cxd-radius-sm);
+    width: 26px;
+    height: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 220ms ease;
+  }
+
+  .sidebar-body {
+    padding: 0.75rem 0.6rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    flex: 1;
+  }
+
+  .sidebar-section-lbl {
+    font-size: 0.64rem;
+    color: var(--cxd-text-muted);
+    padding: 0 0.35rem;
+  }
+
+  .sidebar-nav-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .sidebar-nav-link {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    padding: 0.5rem 0.6rem;
+    border-radius: var(--cxd-radius-sm);
+    border: none;
+    background: transparent;
+    color: var(--cxd-text-secondary);
+    font-family: var(--cxd-font-sans);
+    font-size: 0.76rem;
+    cursor: pointer;
+    text-align: left;
+    width: 100%;
+    transition: background 140ms ease, color 140ms ease;
+  }
+
+  .sidebar-nav-link:hover {
+    background: var(--cxd-bg-hover);
+    color: var(--cxd-text-primary);
+  }
+
+  .sidebar-nav-link.is-active {
+    background: var(--cxd-bg-active);
+    color: var(--cxd-accent);
+    font-weight: 600;
+  }
+
+  .sb-badge-pill {
+    margin-left: auto;
+    font-family: var(--cxd-font-mono);
+    font-size: 0.65rem;
+    padding: 0.1rem 0.4rem;
+    background: var(--cxd-bg-elevated);
+    border-radius: 999px;
+    color: var(--cxd-text-muted);
+  }
+
+  .sidebar-foot {
+    padding: 0.65rem 0.85rem;
+    border-top: 1px solid var(--cxd-border);
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    font-size: 0.68rem;
+  }
+
+  .sidebar-stage-content {
+    flex: 1;
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  /* 07-8. DESKTOP MENUBAR */
+  .menubar-showcase {
+    width: 100%;
+    background: var(--cxd-bg-base);
+    border: 1px solid var(--cxd-border);
+    border-radius: var(--cxd-radius-md);
+    overflow: hidden;
+  }
+
+  .desktop-menubar-strip {
+    background: var(--cxd-bg-surface);
+    border-bottom: 1px solid var(--cxd-border);
+    padding: 0.35rem 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .menubar-menu-group {
+    display: flex;
+    gap: 0.2rem;
+  }
+
+  .menubar-top-item {
+    background: transparent;
+    border: none;
+    padding: 0.35rem 0.65rem;
+    border-radius: var(--cxd-radius-sm);
+    font-size: 0.76rem;
+    color: var(--cxd-text-secondary);
+    cursor: pointer;
+    font-family: var(--cxd-font-sans);
+  }
+
+  .menubar-top-item:hover,
+  .menubar-top-item.is-active {
+    background: var(--cxd-bg-hover);
+    color: var(--cxd-text-primary);
+  }
+
+  .menubar-sync-status {
+    font-size: 0.68rem;
+    color: var(--cxd-text-muted);
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+  }
+
+  .menubar-dropdown-surface {
+    background: var(--cxd-bg-elevated);
+    border: 1px solid var(--cxd-border-strong);
+    border-radius: var(--cxd-radius-md);
+    margin: 0.75rem;
+    max-width: 320px;
+    padding: 0.4rem;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.28);
+  }
+
+  .menubar-item-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.45rem 0.65rem;
+    border-radius: var(--cxd-radius-sm);
+    font-size: 0.74rem;
+    cursor: pointer;
+    color: var(--cxd-text-primary);
+    transition: background 120ms ease;
+  }
+
+  .menubar-item-row:hover {
+    background: var(--cxd-accent);
+    color: var(--cxd-accent-fg, #000);
+  }
+
+  .menubar-divider {
+    height: 1px;
+    background: var(--cxd-border);
+    margin: 0.35rem 0;
+  }
+
+  .menubar-feedback-log {
+    padding: 0.6rem 0.85rem;
+    font-size: 0.7rem;
+    color: var(--cxd-accent);
+    border-top: 1px solid var(--cxd-border);
+  }
+
+  /* 07-9. NAVIGATION RAIL */
+  .rail-showcase {
+    display: flex;
+    background: var(--cxd-bg-base);
+    border: 1px solid var(--cxd-border);
+    border-radius: var(--cxd-radius-md);
+    min-height: 200px;
+    overflow: hidden;
+    width: 100%;
+  }
+
+  .nav-rail-column {
+    width: 60px;
+    background: var(--cxd-bg-surface);
+    border-right: 1px solid var(--cxd-border);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.85rem 0;
+  }
+
+  .rail-brand-icon {
+    color: var(--cxd-accent);
+  }
+
+  .rail-action-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .rail-tab-btn {
+    position: relative;
+    width: 38px;
+    height: 38px;
+    border-radius: var(--cxd-radius-sm);
+    background: transparent;
+    border: 1px solid transparent;
+    color: var(--cxd-text-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 140ms ease;
+  }
+
+  .rail-tab-btn:hover {
+    background: var(--cxd-bg-hover);
+    color: var(--cxd-text-primary);
+  }
+
+  .rail-tab-btn.is-active {
+    background: var(--cxd-bg-active);
+    color: var(--cxd-accent);
+    border-color: var(--cxd-accent);
+  }
+
+  .rail-active-pill {
+    display: none;
+    position: absolute;
+    left: -11px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 4px;
+    height: 18px;
+    background: var(--cxd-accent);
+    border-radius: 0 4px 4px 0;
+  }
+
+  .rail-tab-btn.is-active .rail-active-pill {
+    display: block;
+  }
+
+  .rail-detail-card {
+    flex: 1;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  /* 07-10. MOBILE BOTTOM TAB BAR */
+  .tabbar-showcase {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding: 0.5rem;
+  }
+
+  .mobile-phone-frame {
+    width: 100%;
+    max-width: 400px;
+    background: var(--cxd-bg-surface);
+    border: 1px solid var(--cxd-border-strong);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+  }
+
+  .mobile-viewport-content {
+    padding: 1.2rem;
+    min-height: 90px;
+    background: var(--cxd-bg-base);
+  }
+
+  .mobile-tabbar-strip {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    background: var(--cxd-bg-surface);
+    border-top: 1px solid var(--cxd-border);
+    padding: 0.45rem 0.25rem;
+  }
+
+  .m-tab-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    background: transparent;
+    border: none;
+    color: var(--cxd-text-muted);
+    font-size: 0.65rem;
+    font-family: var(--cxd-font-sans);
+    cursor: pointer;
+    padding: 0.35rem 0;
+    transition: color 140ms ease, transform 140ms ease;
+  }
+
+  .m-tab-item:hover,
+  .m-tab-item.is-active {
+    color: var(--cxd-accent);
+  }
+
+  .m-tab-item.is-active {
+    font-weight: 700;
+    transform: translateY(-2px);
   }
 </style>

@@ -102,6 +102,189 @@ export function initAnimeCategoryWorkbench() {
       const duration = Math.max(200, Math.round(baseDuration / currentSpeed));
       const els = block.querySelectorAll<HTMLElement>('[data-anim-el]');
 
+      // 0A. 3D Perspective Transforms XYZ
+      if (stageType === 'transforms-xyz') {
+        const c1 = block.querySelector<HTMLElement>('[data-xyz-card="1"]');
+        const c2 = block.querySelector<HTMLElement>('[data-xyz-card="2"]');
+        const c3 = block.querySelector<HTMLElement>('[data-xyz-card="3"]');
+        if (c1) {
+          animate(c1, {
+            rotateX: [0, 360],
+            rotateY: [0, 180],
+            duration: duration * 1.5,
+            ease: 'inOutSine',
+            loop: true,
+            alternate: true
+          });
+        }
+        if (c2) {
+          animate(c2, {
+            skewX: [-22, 22, -22],
+            skewY: [-10, 10, -10],
+            scale: [1, 1.18, 1],
+            duration: duration * 1.2,
+            ease: 'inOutQuad',
+            loop: true
+          });
+        }
+        if (c3) {
+          activeAnim = animate(c3, {
+            translateZ: [-60, 60, -60],
+            rotateZ: [-25, 25, -25],
+            ease: createSpring({ mass: 1, stiffness: 120, damping: 8 }),
+            loop: true
+          });
+        }
+        return;
+      }
+
+      // 0B. CSS Variables Reactivity
+      if (stageType === 'css-vars') {
+        const t1 = block.querySelector<HTMLElement>('[data-css-target="1"]');
+        const t2 = block.querySelector<HTMLElement>('[data-css-target="2"]');
+        const t3 = block.querySelector<HTMLElement>('[data-css-target="3"]');
+        const lbl1 = block.querySelector<HTMLElement>('[data-css-val-1]');
+        const lbl2 = block.querySelector<HTMLElement>('[data-css-val-2]');
+        const lbl3 = block.querySelector<HTMLElement>('[data-css-val-3]');
+
+        const state = { r: 16, g: 14, b: 2 };
+        activeAnim = animate(state, {
+          r: [16, 60, 16],
+          g: [14, 40, 14],
+          b: [2, 8, 2],
+          duration: duration * 1.3,
+          ease: 'inOutSine',
+          loop: true,
+          onUpdate: () => {
+            const rad = Math.round(state.r);
+            const glw = Math.round(state.g);
+            const bdr = Math.round(state.b);
+            if (t1) t1.style.setProperty('--radius', `${rad}px`);
+            if (t2) t2.style.setProperty('--glow', `${glw}px`);
+            if (t3) t3.style.setProperty('--border', `${bdr}px`);
+            if (lbl1) lbl1.textContent = `--radius: ${rad}px`;
+            if (lbl2) lbl2.textContent = `--glow: ${glw}px`;
+            if (lbl3) lbl3.textContent = `--border: ${bdr}px`;
+          }
+        });
+        return;
+      }
+
+      // 0C. DOM & SVG Attributes
+      if (stageType === 'dom-attrs') {
+        const prog = block.querySelector<HTMLProgressElement>('[data-dom-progress]');
+        const progLbl = block.querySelector<HTMLElement>('[data-dom-progress-lbl]');
+        const circle = block.querySelector<SVGCircleElement>('[data-dom-circle]');
+        const circleLbl = block.querySelector<HTMLElement>('[data-dom-circle-lbl]');
+        const range = block.querySelector<HTMLInputElement>('[data-dom-range]');
+        const rangeLbl = block.querySelector<HTMLElement>('[data-dom-range-lbl]');
+
+        const domState = { p: 0, r: 16, flow: 100 };
+        activeAnim = animate(domState, {
+          p: [0, 100, 0],
+          r: [16, 38, 16],
+          flow: [100, 1000, 100],
+          duration: duration * 1.4,
+          ease: 'inOutQuad',
+          loop: true,
+          onUpdate: () => {
+            const val = Math.round(domState.p);
+            const rad = Math.round(domState.r);
+            const flw = Math.round(domState.flow);
+            if (prog) prog.value = val;
+            if (progLbl) progLbl.textContent = `VALOR: ${val}%`;
+            if (circle) {
+              circle.setAttribute('r', String(rad));
+              const offset = 176 - (176 * val) / 100;
+              circle.style.strokeDashoffset = String(offset);
+            }
+            if (circleLbl) circleLbl.textContent = `RADIO: ${rad}px`;
+            if (range) range.value = String(flw);
+            if (rangeLbl) rangeLbl.textContent = `TELEMETRÍA: ${flw} MB/s`;
+          }
+        });
+        return;
+      }
+
+      // 0D. Color Spectrum Morphing
+      if (stageType === 'color-morph') {
+        const cards = Array.from(block.querySelectorAll<HTMLElement>('[data-color-card]'));
+        const colors = [
+          '#10b981', '#3b82f6', '#8b5cf6', '#ec4899', '#f59e0b', '#06b6d4', '#10b981'
+        ];
+        cards.forEach((card, idx) => {
+          const lbl = card.querySelector<HTMLElement>('[data-color-label]');
+          const shiftColors = [...colors.slice(idx), ...colors.slice(0, idx), colors[idx]];
+          animate(card, {
+            backgroundColor: shiftColors,
+            duration: duration * 2.2,
+            ease: 'linear',
+            loop: true,
+            delay: idx * 120,
+            onUpdate: () => {
+              const bg = window.getComputedStyle(card).backgroundColor;
+              if (lbl) lbl.textContent = bg.startsWith('rgb') ? bg.replace('rgb(', '').replace(')', '') : bg;
+            }
+          });
+        });
+        return;
+      }
+
+      // 0E. Heterogeneous Multi-Targets
+      if (stageType === 'multi-targets') {
+        const box = block.querySelector<HTMLElement>('[data-multi-el="box"]');
+        const circle = block.querySelector<HTMLElement>('[data-multi-el="circle"]');
+        const btn = block.querySelector<HTMLElement>('[data-multi-el="btn"]');
+        const badge = block.querySelector<HTMLElement>('[data-multi-el="badge"]');
+        const mono = block.querySelector<HTMLElement>('[data-multi-el="mono"]');
+        const targets = [box, circle, btn, badge, mono].filter(Boolean) as HTMLElement[];
+
+        activeAnim = animate(targets, {
+          y: [0, -32, 0],
+          scale: [1, 1.25, 1],
+          rotate: (_el, i) => ((i ?? 0) % 2 === 0 ? ['0deg', '25deg', '0deg'] : ['0deg', '-25deg', '0deg']),
+          duration: duration * 1.1,
+          delay: stagger(90),
+          ease: 'outBack',
+          loop: true
+        });
+        return;
+      }
+
+      // 0F. Explicit From/To Properties
+      if (stageType === 'from-to-prop') {
+        const b1 = block.querySelector<HTMLElement>('[data-ft-node="1"]');
+        const b2 = block.querySelector<HTMLElement>('[data-ft-node="2"]');
+        const b3 = block.querySelector<HTMLElement>('[data-ft-node="3"]');
+        if (b1) {
+          animate(b1, {
+            x: [0, 260, 0],
+            duration: duration * 1.3,
+            ease: 'outExpo',
+            loop: true
+          });
+        }
+        if (b2) {
+          animate(b2, {
+            x: [0, 260, 0],
+            rotate: ['0deg', '720deg'],
+            duration: duration * 1.5,
+            ease: 'inOutQuad',
+            loop: true
+          });
+        }
+        if (b3) {
+          activeAnim = animate(b3, {
+            x: [0, 260, 0],
+            scale: [0.6, 1.4, 0.6],
+            duration: duration * 1.1,
+            ease: createSpring({ mass: 1, stiffness: 140, damping: 9 }),
+            loop: true
+          });
+        }
+        return;
+      }
+
       // 1. Easing Race
       if (stageType === 'easing-race') {
         const r1 = block.querySelector<HTMLElement>('[data-runner="linear"]');

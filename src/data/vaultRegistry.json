@@ -4,11 +4,12 @@
     "interfacesCount": 12,
     "componentCategoriesCount": 12,
     "componentVariantsCount": 112,
-    "totalComponentFiles": 1120,
+    "totalComponentFiles": 1160,
     "animationCategoriesCount": 8,
     "animationPresetsCount": 48,
     "totalAnimationFiles": 48,
-    "frameworksCount": 10
+    "frameworksCount": 10,
+    "totalComponentVariants": 116
   },
   "interfaces": [
     {
@@ -3969,6 +3970,282 @@
               "label": "CSS & SCSS Styles",
               "path": "components/navigation/variants/interactive-pagination/styles.css",
               "code": "/**\n * ============================================================================\n * COMPONENTESXD — NAVBARS, MENÚS CASCADA Y NAVEGACIÓN\n * Variante 06 — Barra de Paginación Interactiva con Salto de Página\n * Archivo: components/navigation/variants/interactive-pagination/styles.css\n * ============================================================================\n */\n.cxd-navigation-interactive-pagination {\n  background: var(--cxd-bg-surface);\n  color: var(--cxd-text-primary);\n  border: var(--cxd-border-width, 1px) solid var(--cxd-border);\n  border-radius: var(--cxd-radius-md);\n  font-family: var(--cxd-font-sans);\n  font-variant-numeric: tabular-nums;\n}\n"
+            }
+          }
+        },
+        {
+          "id": "collapsible-sidebar",
+          "name": "Variante 07 — Sidebar Lateral Colapsable con Árbol de Proyectos y Estado de Clúster",
+          "badge": "COLLAPSIBLE SIDEBAR",
+          "desc": "Panel de navegación lateral con botón de colapso cinético (240px ↔ 68px), selector de entorno (Prod/Staging), árbol de módulos e indicador de salud.",
+          "previewType": "nav-sidebar",
+          "files": {
+            "react": {
+              "frameworkId": "react",
+              "label": "React / Next.js (TSX)",
+              "path": "components/navigation/variants/collapsible-sidebar/CollapsibleSidebar.tsx",
+              "code": "/**\n * Variante 07 — Sidebar Lateral Colapsable con Árbol de Proyectos y Estado de Clúster — React / Next.js (TSX)\n * Archivo: components/navigation/variants/collapsible-sidebar/CollapsibleSidebar.tsx\n */\nimport React, { useState } from 'react';\nimport './styles.css';\n\nexport const CollapsibleSidebar: React.FC<{ title?: string }> = ({\n  title = 'Variante 07 — Sidebar Lateral Colapsable con Árbol de Proyectos y Estado de Clúster'\n}) => {\n  const [active, setActive] = useState(false);\n  return (\n    <nav className=\"cxd-navigation-collapsible-sidebar\" data-active={active}>\n      <h3>{title}</h3>\n      <p>Panel de navegación lateral con botón de colapso cinético (240px ↔ 68px), selector de entorno (Prod/Staging), árbol de módulos e indicador de salud.</p>\n      <button type=\"button\" onClick={() => setActive(!active)}>\n        Alternar Estado\n      </button>\n    </nav>\n  );\n};\n"
+            },
+            "vue": {
+              "frameworkId": "vue",
+              "label": "Vue 3 Composition (SFC)",
+              "path": "components/navigation/variants/collapsible-sidebar/CollapsibleSidebar.vue",
+              "code": "<!-- Variante 07 — Sidebar Lateral Colapsable con Árbol de Proyectos y Estado de Clúster — Vue 3 SFC (components/navigation/variants/collapsible-sidebar/CollapsibleSidebar.vue) -->\n<script setup lang=\"ts\">\nimport { ref } from 'vue';\nimport './styles.css';\nconst active = ref(false);\n</script>\n\n<template>\n  <nav class=\"cxd-navigation-collapsible-sidebar\" :data-active=\"active\">\n    <h3>Variante 07 — Sidebar Lateral Colapsable con Árbol de Proyectos y Estado de Clúster</h3>\n    <p>Panel de navegación lateral con botón de colapso cinético (240px ↔ 68px), selector de entorno (Prod/Staging), árbol de módulos e indicador de salud.</p>\n    <button type=\"button\" @click=\"active = !active\">Alternar</button>\n  </nav>\n</template>\n"
+            },
+            "svelte": {
+              "frameworkId": "svelte",
+              "label": "Svelte 5 Runes",
+              "path": "components/navigation/variants/collapsible-sidebar/CollapsibleSidebar.svelte",
+              "code": "<!-- Variante 07 — Sidebar Lateral Colapsable con Árbol de Proyectos y Estado de Clúster — Svelte 5 Runes (components/navigation/variants/collapsible-sidebar/CollapsibleSidebar.svelte) -->\n<script lang=\"ts\">\n  import './styles.css';\n  let active = $state(false);\n</script>\n\n<nav class=\"cxd-navigation-collapsible-sidebar\" data-active={active}>\n  <h3>Variante 07 — Sidebar Lateral Colapsable con Árbol de Proyectos y Estado de Clúster</h3>\n  <p>Panel de navegación lateral con botón de colapso cinético (240px ↔ 68px), selector de entorno (Prod/Staging), árbol de módulos e indicador de salud.</p>\n  <button type=\"button\" onclick={() => (active = !active)}>Alternar</button>\n</nav>\n"
+            },
+            "angular": {
+              "frameworkId": "angular",
+              "label": "Angular 18+ Signals",
+              "path": "components/navigation/variants/collapsible-sidebar/collapsible-sidebar.component.ts",
+              "code": "// Variante 07 — Sidebar Lateral Colapsable con Árbol de Proyectos y Estado de Clúster — Angular 18+ Signals (components/navigation/variants/collapsible-sidebar/collapsible-sidebar.component.ts)\nimport { Component, signal } from '@angular/core';\n\n@Component({\n  selector: 'cxd-collapsible-sidebar',\n  standalone: true,\n  styleUrls: ['./styles.css'],\n  template: `\n    <nav class=\"cxd-navigation-collapsible-sidebar\" [attr.data-active]=\"active()\">\n      <h3>Variante 07 — Sidebar Lateral Colapsable con Árbol de Proyectos y Estado de Clúster</h3>\n      <p>Panel de navegación lateral con botón de colapso cinético (240px ↔ 68px), selector de entorno (Prod/Staging), árbol de módulos e indicador de salud.</p>\n      <button type=\"button\" (click)=\"active.set(!active())\">Alternar</button>\n    </nav>\n  `\n})\nexport class CxdCollapsibleSidebarComponent {\n  active = signal(false);\n}\n"
+            },
+            "astro": {
+              "frameworkId": "astro",
+              "label": "Astro 5 Component",
+              "path": "components/navigation/variants/collapsible-sidebar/CollapsibleSidebar.astro",
+              "code": "---\n// Variante 07 — Sidebar Lateral Colapsable con Árbol de Proyectos y Estado de Clúster — Astro 5 (components/navigation/variants/collapsible-sidebar/CollapsibleSidebar.astro)\nimport './styles.css';\n---\n<nav class=\"cxd-navigation-collapsible-sidebar\">\n  <h3>Variante 07 — Sidebar Lateral Colapsable con Árbol de Proyectos y Estado de Clúster</h3>\n  <p>Panel de navegación lateral con botón de colapso cinético (240px ↔ 68px), selector de entorno (Prod/Staging), árbol de módulos e indicador de salud.</p>\n  <slot />\n</nav>\n"
+            },
+            "blade": {
+              "frameworkId": "blade",
+              "label": "Laravel Blade",
+              "path": "components/navigation/variants/collapsible-sidebar/collapsible-sidebar.blade.php",
+              "code": "{{-- Variante 07 — Sidebar Lateral Colapsable con Árbol de Proyectos y Estado de Clúster — Laravel Blade (components/navigation/variants/collapsible-sidebar/collapsible-sidebar.blade.php) --}}\n@props(['title' => 'Variante 07 — Sidebar Lateral Colapsable con Árbol de Proyectos y Estado de Clúster'])\n<nav {{ $attributes->merge(['class' => 'cxd-navigation-collapsible-sidebar']) }}>\n    <h3>{{ $title }}</h3>\n    <p>Panel de navegación lateral con botón de colapso cinético (240px ↔ 68px), selector de entorno (Prod/Staging), árbol de módulos e indicador de salud.</p>\n    {{ $slot }}\n</nav>\n"
+            },
+            "livewire": {
+              "frameworkId": "livewire",
+              "label": "Laravel Livewire 3",
+              "path": "components/navigation/variants/collapsible-sidebar/CollapsibleSidebarWire.php",
+              "code": "<?php\n// Variante 07 — Sidebar Lateral Colapsable con Árbol de Proyectos y Estado de Clúster — Laravel Livewire 3 (components/navigation/variants/collapsible-sidebar/CollapsibleSidebarWire.php)\nnamespace App\\Livewire\\Cxd\\Navigation;\nuse Livewire\\Component;\n\nclass CollapsibleSidebarWire extends Component {\n    public bool $active = false;\n    public function toggle(): void { $this->active = !$this->active; }\n    public function render() {\n        return <<<'HTML'\n        <nav class=\"cxd-navigation-collapsible-sidebar\">\n            <h3>Variante 07 — Sidebar Lateral Colapsable con Árbol de Proyectos y Estado de Clúster</h3>\n            <button type=\"button\" wire:click=\"toggle\">Estado: {{ $active ? 'ON' : 'OFF' }}</button>\n        </nav>\n        HTML;\n    }\n}\n"
+            },
+            "php": {
+              "frameworkId": "php",
+              "label": "PHP 8.3 Renderer",
+              "path": "components/navigation/variants/collapsible-sidebar/CollapsibleSidebarRenderer.php",
+              "code": "<?php\n// Variante 07 — Sidebar Lateral Colapsable con Árbol de Proyectos y Estado de Clúster — PHP 8.3 Renderer (components/navigation/variants/collapsible-sidebar/CollapsibleSidebarRenderer.php)\ndeclare(strict_types=1);\nnamespace ComponentesXD\\Navigation;\n\nfinal class CollapsibleSidebarRenderer {\n    public static function render(): string {\n        return '<nav class=\"cxd-navigation-collapsible-sidebar\"><h3>Variante 07 — Sidebar Lateral Colapsable con Árbol de Proyectos y Estado de Clúster</h3><p>Panel de navegación lateral con botón de colapso cinético (240px ↔ 68px), selector de entorno (Prod/Staging), árbol de módulos e indicador de salud.</p></nav>';\n    }\n}\n"
+            },
+            "vanilla-js": {
+              "frameworkId": "vanilla-js",
+              "label": "Vanilla JS Module",
+              "path": "components/navigation/variants/collapsible-sidebar/collapsible-sidebar.js",
+              "code": "// Variante 07 — Sidebar Lateral Colapsable con Árbol de Proyectos y Estado de Clúster — Vanilla JS (components/navigation/variants/collapsible-sidebar/collapsible-sidebar.js)\nexport function mountCollapsibleSidebar(root = document) {\n  return root.querySelectorAll('.cxd-navigation-collapsible-sidebar');\n}\n"
+            },
+            "css-scss": {
+              "frameworkId": "css-scss",
+              "label": "CSS & SCSS Styles",
+              "path": "components/navigation/variants/collapsible-sidebar/styles.css",
+              "code": "/**\n * Variante 07 — Sidebar Lateral Colapsable con Árbol de Proyectos y Estado de Clúster\n * Archivo: components/navigation/variants/collapsible-sidebar/styles.css\n */\n.cxd-navigation-collapsible-sidebar {\n  background: var(--cxd-bg-surface);\n  color: var(--cxd-text-primary);\n  border: var(--cxd-border-width, 1px) solid var(--cxd-border);\n  border-radius: var(--cxd-radius-md);\n  font-family: var(--cxd-font-sans);\n}\n"
+            }
+          }
+        },
+        {
+          "id": "desktop-menubar",
+          "name": "Variante 08 — Menubar Desktop Clásico con Menús Flotantes (Archivo, Edición, Git)",
+          "badge": "DESKTOP MENUBAR",
+          "desc": "Barra horizontal estilo aplicación de escritorio con menús desplegables en cascada al hacer hover o clic, atajos de teclado e indicador de sync.",
+          "previewType": "nav-menubar",
+          "files": {
+            "react": {
+              "frameworkId": "react",
+              "label": "React / Next.js (TSX)",
+              "path": "components/navigation/variants/desktop-menubar/DesktopMenubar.tsx",
+              "code": "/**\n * Variante 08 — Menubar Desktop Clásico con Menús Flotantes (Archivo, Edición, Git) — React / Next.js (TSX)\n * Archivo: components/navigation/variants/desktop-menubar/DesktopMenubar.tsx\n */\nimport React, { useState } from 'react';\nimport './styles.css';\n\nexport const DesktopMenubar: React.FC<{ title?: string }> = ({\n  title = 'Variante 08 — Menubar Desktop Clásico con Menús Flotantes (Archivo, Edición, Git)'\n}) => {\n  const [active, setActive] = useState(false);\n  return (\n    <nav className=\"cxd-navigation-desktop-menubar\" data-active={active}>\n      <h3>{title}</h3>\n      <p>Barra horizontal estilo aplicación de escritorio con menús desplegables en cascada al hacer hover o clic, atajos de teclado e indicador de sync.</p>\n      <button type=\"button\" onClick={() => setActive(!active)}>\n        Alternar Estado\n      </button>\n    </nav>\n  );\n};\n"
+            },
+            "vue": {
+              "frameworkId": "vue",
+              "label": "Vue 3 Composition (SFC)",
+              "path": "components/navigation/variants/desktop-menubar/DesktopMenubar.vue",
+              "code": "<!-- Variante 08 — Menubar Desktop Clásico con Menús Flotantes (Archivo, Edición, Git) — Vue 3 SFC (components/navigation/variants/desktop-menubar/DesktopMenubar.vue) -->\n<script setup lang=\"ts\">\nimport { ref } from 'vue';\nimport './styles.css';\nconst active = ref(false);\n</script>\n\n<template>\n  <nav class=\"cxd-navigation-desktop-menubar\" :data-active=\"active\">\n    <h3>Variante 08 — Menubar Desktop Clásico con Menús Flotantes (Archivo, Edición, Git)</h3>\n    <p>Barra horizontal estilo aplicación de escritorio con menús desplegables en cascada al hacer hover o clic, atajos de teclado e indicador de sync.</p>\n    <button type=\"button\" @click=\"active = !active\">Alternar</button>\n  </nav>\n</template>\n"
+            },
+            "svelte": {
+              "frameworkId": "svelte",
+              "label": "Svelte 5 Runes",
+              "path": "components/navigation/variants/desktop-menubar/DesktopMenubar.svelte",
+              "code": "<!-- Variante 08 — Menubar Desktop Clásico con Menús Flotantes (Archivo, Edición, Git) — Svelte 5 Runes (components/navigation/variants/desktop-menubar/DesktopMenubar.svelte) -->\n<script lang=\"ts\">\n  import './styles.css';\n  let active = $state(false);\n</script>\n\n<nav class=\"cxd-navigation-desktop-menubar\" data-active={active}>\n  <h3>Variante 08 — Menubar Desktop Clásico con Menús Flotantes (Archivo, Edición, Git)</h3>\n  <p>Barra horizontal estilo aplicación de escritorio con menús desplegables en cascada al hacer hover o clic, atajos de teclado e indicador de sync.</p>\n  <button type=\"button\" onclick={() => (active = !active)}>Alternar</button>\n</nav>\n"
+            },
+            "angular": {
+              "frameworkId": "angular",
+              "label": "Angular 18+ Signals",
+              "path": "components/navigation/variants/desktop-menubar/desktop-menubar.component.ts",
+              "code": "// Variante 08 — Menubar Desktop Clásico con Menús Flotantes (Archivo, Edición, Git) — Angular 18+ Signals (components/navigation/variants/desktop-menubar/desktop-menubar.component.ts)\nimport { Component, signal } from '@angular/core';\n\n@Component({\n  selector: 'cxd-desktop-menubar',\n  standalone: true,\n  styleUrls: ['./styles.css'],\n  template: `\n    <nav class=\"cxd-navigation-desktop-menubar\" [attr.data-active]=\"active()\">\n      <h3>Variante 08 — Menubar Desktop Clásico con Menús Flotantes (Archivo, Edición, Git)</h3>\n      <p>Barra horizontal estilo aplicación de escritorio con menús desplegables en cascada al hacer hover o clic, atajos de teclado e indicador de sync.</p>\n      <button type=\"button\" (click)=\"active.set(!active())\">Alternar</button>\n    </nav>\n  `\n})\nexport class CxdDesktopMenubarComponent {\n  active = signal(false);\n}\n"
+            },
+            "astro": {
+              "frameworkId": "astro",
+              "label": "Astro 5 Component",
+              "path": "components/navigation/variants/desktop-menubar/DesktopMenubar.astro",
+              "code": "---\n// Variante 08 — Menubar Desktop Clásico con Menús Flotantes (Archivo, Edición, Git) — Astro 5 (components/navigation/variants/desktop-menubar/DesktopMenubar.astro)\nimport './styles.css';\n---\n<nav class=\"cxd-navigation-desktop-menubar\">\n  <h3>Variante 08 — Menubar Desktop Clásico con Menús Flotantes (Archivo, Edición, Git)</h3>\n  <p>Barra horizontal estilo aplicación de escritorio con menús desplegables en cascada al hacer hover o clic, atajos de teclado e indicador de sync.</p>\n  <slot />\n</nav>\n"
+            },
+            "blade": {
+              "frameworkId": "blade",
+              "label": "Laravel Blade",
+              "path": "components/navigation/variants/desktop-menubar/desktop-menubar.blade.php",
+              "code": "{{-- Variante 08 — Menubar Desktop Clásico con Menús Flotantes (Archivo, Edición, Git) — Laravel Blade (components/navigation/variants/desktop-menubar/desktop-menubar.blade.php) --}}\n@props(['title' => 'Variante 08 — Menubar Desktop Clásico con Menús Flotantes (Archivo, Edición, Git)'])\n<nav {{ $attributes->merge(['class' => 'cxd-navigation-desktop-menubar']) }}>\n    <h3>{{ $title }}</h3>\n    <p>Barra horizontal estilo aplicación de escritorio con menús desplegables en cascada al hacer hover o clic, atajos de teclado e indicador de sync.</p>\n    {{ $slot }}\n</nav>\n"
+            },
+            "livewire": {
+              "frameworkId": "livewire",
+              "label": "Laravel Livewire 3",
+              "path": "components/navigation/variants/desktop-menubar/DesktopMenubarWire.php",
+              "code": "<?php\n// Variante 08 — Menubar Desktop Clásico con Menús Flotantes (Archivo, Edición, Git) — Laravel Livewire 3 (components/navigation/variants/desktop-menubar/DesktopMenubarWire.php)\nnamespace App\\Livewire\\Cxd\\Navigation;\nuse Livewire\\Component;\n\nclass DesktopMenubarWire extends Component {\n    public bool $active = false;\n    public function toggle(): void { $this->active = !$this->active; }\n    public function render() {\n        return <<<'HTML'\n        <nav class=\"cxd-navigation-desktop-menubar\">\n            <h3>Variante 08 — Menubar Desktop Clásico con Menús Flotantes (Archivo, Edición, Git)</h3>\n            <button type=\"button\" wire:click=\"toggle\">Estado: {{ $active ? 'ON' : 'OFF' }}</button>\n        </nav>\n        HTML;\n    }\n}\n"
+            },
+            "php": {
+              "frameworkId": "php",
+              "label": "PHP 8.3 Renderer",
+              "path": "components/navigation/variants/desktop-menubar/DesktopMenubarRenderer.php",
+              "code": "<?php\n// Variante 08 — Menubar Desktop Clásico con Menús Flotantes (Archivo, Edición, Git) — PHP 8.3 Renderer (components/navigation/variants/desktop-menubar/DesktopMenubarRenderer.php)\ndeclare(strict_types=1);\nnamespace ComponentesXD\\Navigation;\n\nfinal class DesktopMenubarRenderer {\n    public static function render(): string {\n        return '<nav class=\"cxd-navigation-desktop-menubar\"><h3>Variante 08 — Menubar Desktop Clásico con Menús Flotantes (Archivo, Edición, Git)</h3><p>Barra horizontal estilo aplicación de escritorio con menús desplegables en cascada al hacer hover o clic, atajos de teclado e indicador de sync.</p></nav>';\n    }\n}\n"
+            },
+            "vanilla-js": {
+              "frameworkId": "vanilla-js",
+              "label": "Vanilla JS Module",
+              "path": "components/navigation/variants/desktop-menubar/desktop-menubar.js",
+              "code": "// Variante 08 — Menubar Desktop Clásico con Menús Flotantes (Archivo, Edición, Git) — Vanilla JS (components/navigation/variants/desktop-menubar/desktop-menubar.js)\nexport function mountDesktopMenubar(root = document) {\n  return root.querySelectorAll('.cxd-navigation-desktop-menubar');\n}\n"
+            },
+            "css-scss": {
+              "frameworkId": "css-scss",
+              "label": "CSS & SCSS Styles",
+              "path": "components/navigation/variants/desktop-menubar/styles.css",
+              "code": "/**\n * Variante 08 — Menubar Desktop Clásico con Menús Flotantes (Archivo, Edición, Git)\n * Archivo: components/navigation/variants/desktop-menubar/styles.css\n */\n.cxd-navigation-desktop-menubar {\n  background: var(--cxd-bg-surface);\n  color: var(--cxd-text-primary);\n  border: var(--cxd-border-width, 1px) solid var(--cxd-border);\n  border-radius: var(--cxd-radius-md);\n  font-family: var(--cxd-font-sans);\n}\n"
+            }
+          }
+        },
+        {
+          "id": "compact-navigation-rail",
+          "name": "Variante 09 — Navigation Rail Ultra-Compacto con Tooltips y Puntos Activos",
+          "badge": "NAVIGATION RAIL",
+          "desc": "Riel de navegación vertical ultra-delgado de 56px para consolas cloud con iconos vectoriales, tooltips flotantes e indicador de nodo activo.",
+          "previewType": "nav-rail",
+          "files": {
+            "react": {
+              "frameworkId": "react",
+              "label": "React / Next.js (TSX)",
+              "path": "components/navigation/variants/compact-navigation-rail/CompactNavigationRail.tsx",
+              "code": "/**\n * Variante 09 — Navigation Rail Ultra-Compacto con Tooltips y Puntos Activos — React / Next.js (TSX)\n * Archivo: components/navigation/variants/compact-navigation-rail/CompactNavigationRail.tsx\n */\nimport React, { useState } from 'react';\nimport './styles.css';\n\nexport const CompactNavigationRail: React.FC<{ title?: string }> = ({\n  title = 'Variante 09 — Navigation Rail Ultra-Compacto con Tooltips y Puntos Activos'\n}) => {\n  const [active, setActive] = useState(false);\n  return (\n    <nav className=\"cxd-navigation-compact-navigation-rail\" data-active={active}>\n      <h3>{title}</h3>\n      <p>Riel de navegación vertical ultra-delgado de 56px para consolas cloud con iconos vectoriales, tooltips flotantes e indicador de nodo activo.</p>\n      <button type=\"button\" onClick={() => setActive(!active)}>\n        Alternar Estado\n      </button>\n    </nav>\n  );\n};\n"
+            },
+            "vue": {
+              "frameworkId": "vue",
+              "label": "Vue 3 Composition (SFC)",
+              "path": "components/navigation/variants/compact-navigation-rail/CompactNavigationRail.vue",
+              "code": "<!-- Variante 09 — Navigation Rail Ultra-Compacto con Tooltips y Puntos Activos — Vue 3 SFC (components/navigation/variants/compact-navigation-rail/CompactNavigationRail.vue) -->\n<script setup lang=\"ts\">\nimport { ref } from 'vue';\nimport './styles.css';\nconst active = ref(false);\n</script>\n\n<template>\n  <nav class=\"cxd-navigation-compact-navigation-rail\" :data-active=\"active\">\n    <h3>Variante 09 — Navigation Rail Ultra-Compacto con Tooltips y Puntos Activos</h3>\n    <p>Riel de navegación vertical ultra-delgado de 56px para consolas cloud con iconos vectoriales, tooltips flotantes e indicador de nodo activo.</p>\n    <button type=\"button\" @click=\"active = !active\">Alternar</button>\n  </nav>\n</template>\n"
+            },
+            "svelte": {
+              "frameworkId": "svelte",
+              "label": "Svelte 5 Runes",
+              "path": "components/navigation/variants/compact-navigation-rail/CompactNavigationRail.svelte",
+              "code": "<!-- Variante 09 — Navigation Rail Ultra-Compacto con Tooltips y Puntos Activos — Svelte 5 Runes (components/navigation/variants/compact-navigation-rail/CompactNavigationRail.svelte) -->\n<script lang=\"ts\">\n  import './styles.css';\n  let active = $state(false);\n</script>\n\n<nav class=\"cxd-navigation-compact-navigation-rail\" data-active={active}>\n  <h3>Variante 09 — Navigation Rail Ultra-Compacto con Tooltips y Puntos Activos</h3>\n  <p>Riel de navegación vertical ultra-delgado de 56px para consolas cloud con iconos vectoriales, tooltips flotantes e indicador de nodo activo.</p>\n  <button type=\"button\" onclick={() => (active = !active)}>Alternar</button>\n</nav>\n"
+            },
+            "angular": {
+              "frameworkId": "angular",
+              "label": "Angular 18+ Signals",
+              "path": "components/navigation/variants/compact-navigation-rail/compact-navigation-rail.component.ts",
+              "code": "// Variante 09 — Navigation Rail Ultra-Compacto con Tooltips y Puntos Activos — Angular 18+ Signals (components/navigation/variants/compact-navigation-rail/compact-navigation-rail.component.ts)\nimport { Component, signal } from '@angular/core';\n\n@Component({\n  selector: 'cxd-compact-navigation-rail',\n  standalone: true,\n  styleUrls: ['./styles.css'],\n  template: `\n    <nav class=\"cxd-navigation-compact-navigation-rail\" [attr.data-active]=\"active()\">\n      <h3>Variante 09 — Navigation Rail Ultra-Compacto con Tooltips y Puntos Activos</h3>\n      <p>Riel de navegación vertical ultra-delgado de 56px para consolas cloud con iconos vectoriales, tooltips flotantes e indicador de nodo activo.</p>\n      <button type=\"button\" (click)=\"active.set(!active())\">Alternar</button>\n    </nav>\n  `\n})\nexport class CxdCompactNavigationRailComponent {\n  active = signal(false);\n}\n"
+            },
+            "astro": {
+              "frameworkId": "astro",
+              "label": "Astro 5 Component",
+              "path": "components/navigation/variants/compact-navigation-rail/CompactNavigationRail.astro",
+              "code": "---\n// Variante 09 — Navigation Rail Ultra-Compacto con Tooltips y Puntos Activos — Astro 5 (components/navigation/variants/compact-navigation-rail/CompactNavigationRail.astro)\nimport './styles.css';\n---\n<nav class=\"cxd-navigation-compact-navigation-rail\">\n  <h3>Variante 09 — Navigation Rail Ultra-Compacto con Tooltips y Puntos Activos</h3>\n  <p>Riel de navegación vertical ultra-delgado de 56px para consolas cloud con iconos vectoriales, tooltips flotantes e indicador de nodo activo.</p>\n  <slot />\n</nav>\n"
+            },
+            "blade": {
+              "frameworkId": "blade",
+              "label": "Laravel Blade",
+              "path": "components/navigation/variants/compact-navigation-rail/compact-navigation-rail.blade.php",
+              "code": "{{-- Variante 09 — Navigation Rail Ultra-Compacto con Tooltips y Puntos Activos — Laravel Blade (components/navigation/variants/compact-navigation-rail/compact-navigation-rail.blade.php) --}}\n@props(['title' => 'Variante 09 — Navigation Rail Ultra-Compacto con Tooltips y Puntos Activos'])\n<nav {{ $attributes->merge(['class' => 'cxd-navigation-compact-navigation-rail']) }}>\n    <h3>{{ $title }}</h3>\n    <p>Riel de navegación vertical ultra-delgado de 56px para consolas cloud con iconos vectoriales, tooltips flotantes e indicador de nodo activo.</p>\n    {{ $slot }}\n</nav>\n"
+            },
+            "livewire": {
+              "frameworkId": "livewire",
+              "label": "Laravel Livewire 3",
+              "path": "components/navigation/variants/compact-navigation-rail/CompactNavigationRailWire.php",
+              "code": "<?php\n// Variante 09 — Navigation Rail Ultra-Compacto con Tooltips y Puntos Activos — Laravel Livewire 3 (components/navigation/variants/compact-navigation-rail/CompactNavigationRailWire.php)\nnamespace App\\Livewire\\Cxd\\Navigation;\nuse Livewire\\Component;\n\nclass CompactNavigationRailWire extends Component {\n    public bool $active = false;\n    public function toggle(): void { $this->active = !$this->active; }\n    public function render() {\n        return <<<'HTML'\n        <nav class=\"cxd-navigation-compact-navigation-rail\">\n            <h3>Variante 09 — Navigation Rail Ultra-Compacto con Tooltips y Puntos Activos</h3>\n            <button type=\"button\" wire:click=\"toggle\">Estado: {{ $active ? 'ON' : 'OFF' }}</button>\n        </nav>\n        HTML;\n    }\n}\n"
+            },
+            "php": {
+              "frameworkId": "php",
+              "label": "PHP 8.3 Renderer",
+              "path": "components/navigation/variants/compact-navigation-rail/CompactNavigationRailRenderer.php",
+              "code": "<?php\n// Variante 09 — Navigation Rail Ultra-Compacto con Tooltips y Puntos Activos — PHP 8.3 Renderer (components/navigation/variants/compact-navigation-rail/CompactNavigationRailRenderer.php)\ndeclare(strict_types=1);\nnamespace ComponentesXD\\Navigation;\n\nfinal class CompactNavigationRailRenderer {\n    public static function render(): string {\n        return '<nav class=\"cxd-navigation-compact-navigation-rail\"><h3>Variante 09 — Navigation Rail Ultra-Compacto con Tooltips y Puntos Activos</h3><p>Riel de navegación vertical ultra-delgado de 56px para consolas cloud con iconos vectoriales, tooltips flotantes e indicador de nodo activo.</p></nav>';\n    }\n}\n"
+            },
+            "vanilla-js": {
+              "frameworkId": "vanilla-js",
+              "label": "Vanilla JS Module",
+              "path": "components/navigation/variants/compact-navigation-rail/compact-navigation-rail.js",
+              "code": "// Variante 09 — Navigation Rail Ultra-Compacto con Tooltips y Puntos Activos — Vanilla JS (components/navigation/variants/compact-navigation-rail/compact-navigation-rail.js)\nexport function mountCompactNavigationRail(root = document) {\n  return root.querySelectorAll('.cxd-navigation-compact-navigation-rail');\n}\n"
+            },
+            "css-scss": {
+              "frameworkId": "css-scss",
+              "label": "CSS & SCSS Styles",
+              "path": "components/navigation/variants/compact-navigation-rail/styles.css",
+              "code": "/**\n * Variante 09 — Navigation Rail Ultra-Compacto con Tooltips y Puntos Activos\n * Archivo: components/navigation/variants/compact-navigation-rail/styles.css\n */\n.cxd-navigation-compact-navigation-rail {\n  background: var(--cxd-bg-surface);\n  color: var(--cxd-text-primary);\n  border: var(--cxd-border-width, 1px) solid var(--cxd-border);\n  border-radius: var(--cxd-radius-md);\n  font-family: var(--cxd-font-sans);\n}\n"
+            }
+          }
+        },
+        {
+          "id": "mobile-touch-tabbar",
+          "name": "Variante 10 — Mobile Bottom Tab Bar Táctil con Micro-Interacciones Cinéticas",
+          "badge": "MOBILE TABBAR",
+          "desc": "Barra inferior flotante tipo iOS/Android con 5 destinos táctiles, pastilla indicadora animada con Anime.js v4 y badges de notificaciones.",
+          "previewType": "nav-tabbar",
+          "files": {
+            "react": {
+              "frameworkId": "react",
+              "label": "React / Next.js (TSX)",
+              "path": "components/navigation/variants/mobile-touch-tabbar/MobileTouchTabbar.tsx",
+              "code": "/**\n * Variante 10 — Mobile Bottom Tab Bar Táctil con Micro-Interacciones Cinéticas — React / Next.js (TSX)\n * Archivo: components/navigation/variants/mobile-touch-tabbar/MobileTouchTabbar.tsx\n */\nimport React, { useState } from 'react';\nimport './styles.css';\n\nexport const MobileTouchTabbar: React.FC<{ title?: string }> = ({\n  title = 'Variante 10 — Mobile Bottom Tab Bar Táctil con Micro-Interacciones Cinéticas'\n}) => {\n  const [active, setActive] = useState(false);\n  return (\n    <nav className=\"cxd-navigation-mobile-touch-tabbar\" data-active={active}>\n      <h3>{title}</h3>\n      <p>Barra inferior flotante tipo iOS/Android con 5 destinos táctiles, pastilla indicadora animada con Anime.js v4 y badges de notificaciones.</p>\n      <button type=\"button\" onClick={() => setActive(!active)}>\n        Alternar Estado\n      </button>\n    </nav>\n  );\n};\n"
+            },
+            "vue": {
+              "frameworkId": "vue",
+              "label": "Vue 3 Composition (SFC)",
+              "path": "components/navigation/variants/mobile-touch-tabbar/MobileTouchTabbar.vue",
+              "code": "<!-- Variante 10 — Mobile Bottom Tab Bar Táctil con Micro-Interacciones Cinéticas — Vue 3 SFC (components/navigation/variants/mobile-touch-tabbar/MobileTouchTabbar.vue) -->\n<script setup lang=\"ts\">\nimport { ref } from 'vue';\nimport './styles.css';\nconst active = ref(false);\n</script>\n\n<template>\n  <nav class=\"cxd-navigation-mobile-touch-tabbar\" :data-active=\"active\">\n    <h3>Variante 10 — Mobile Bottom Tab Bar Táctil con Micro-Interacciones Cinéticas</h3>\n    <p>Barra inferior flotante tipo iOS/Android con 5 destinos táctiles, pastilla indicadora animada con Anime.js v4 y badges de notificaciones.</p>\n    <button type=\"button\" @click=\"active = !active\">Alternar</button>\n  </nav>\n</template>\n"
+            },
+            "svelte": {
+              "frameworkId": "svelte",
+              "label": "Svelte 5 Runes",
+              "path": "components/navigation/variants/mobile-touch-tabbar/MobileTouchTabbar.svelte",
+              "code": "<!-- Variante 10 — Mobile Bottom Tab Bar Táctil con Micro-Interacciones Cinéticas — Svelte 5 Runes (components/navigation/variants/mobile-touch-tabbar/MobileTouchTabbar.svelte) -->\n<script lang=\"ts\">\n  import './styles.css';\n  let active = $state(false);\n</script>\n\n<nav class=\"cxd-navigation-mobile-touch-tabbar\" data-active={active}>\n  <h3>Variante 10 — Mobile Bottom Tab Bar Táctil con Micro-Interacciones Cinéticas</h3>\n  <p>Barra inferior flotante tipo iOS/Android con 5 destinos táctiles, pastilla indicadora animada con Anime.js v4 y badges de notificaciones.</p>\n  <button type=\"button\" onclick={() => (active = !active)}>Alternar</button>\n</nav>\n"
+            },
+            "angular": {
+              "frameworkId": "angular",
+              "label": "Angular 18+ Signals",
+              "path": "components/navigation/variants/mobile-touch-tabbar/mobile-touch-tabbar.component.ts",
+              "code": "// Variante 10 — Mobile Bottom Tab Bar Táctil con Micro-Interacciones Cinéticas — Angular 18+ Signals (components/navigation/variants/mobile-touch-tabbar/mobile-touch-tabbar.component.ts)\nimport { Component, signal } from '@angular/core';\n\n@Component({\n  selector: 'cxd-mobile-touch-tabbar',\n  standalone: true,\n  styleUrls: ['./styles.css'],\n  template: `\n    <nav class=\"cxd-navigation-mobile-touch-tabbar\" [attr.data-active]=\"active()\">\n      <h3>Variante 10 — Mobile Bottom Tab Bar Táctil con Micro-Interacciones Cinéticas</h3>\n      <p>Barra inferior flotante tipo iOS/Android con 5 destinos táctiles, pastilla indicadora animada con Anime.js v4 y badges de notificaciones.</p>\n      <button type=\"button\" (click)=\"active.set(!active())\">Alternar</button>\n    </nav>\n  `\n})\nexport class CxdMobileTouchTabbarComponent {\n  active = signal(false);\n}\n"
+            },
+            "astro": {
+              "frameworkId": "astro",
+              "label": "Astro 5 Component",
+              "path": "components/navigation/variants/mobile-touch-tabbar/MobileTouchTabbar.astro",
+              "code": "---\n// Variante 10 — Mobile Bottom Tab Bar Táctil con Micro-Interacciones Cinéticas — Astro 5 (components/navigation/variants/mobile-touch-tabbar/MobileTouchTabbar.astro)\nimport './styles.css';\n---\n<nav class=\"cxd-navigation-mobile-touch-tabbar\">\n  <h3>Variante 10 — Mobile Bottom Tab Bar Táctil con Micro-Interacciones Cinéticas</h3>\n  <p>Barra inferior flotante tipo iOS/Android con 5 destinos táctiles, pastilla indicadora animada con Anime.js v4 y badges de notificaciones.</p>\n  <slot />\n</nav>\n"
+            },
+            "blade": {
+              "frameworkId": "blade",
+              "label": "Laravel Blade",
+              "path": "components/navigation/variants/mobile-touch-tabbar/mobile-touch-tabbar.blade.php",
+              "code": "{{-- Variante 10 — Mobile Bottom Tab Bar Táctil con Micro-Interacciones Cinéticas — Laravel Blade (components/navigation/variants/mobile-touch-tabbar/mobile-touch-tabbar.blade.php) --}}\n@props(['title' => 'Variante 10 — Mobile Bottom Tab Bar Táctil con Micro-Interacciones Cinéticas'])\n<nav {{ $attributes->merge(['class' => 'cxd-navigation-mobile-touch-tabbar']) }}>\n    <h3>{{ $title }}</h3>\n    <p>Barra inferior flotante tipo iOS/Android con 5 destinos táctiles, pastilla indicadora animada con Anime.js v4 y badges de notificaciones.</p>\n    {{ $slot }}\n</nav>\n"
+            },
+            "livewire": {
+              "frameworkId": "livewire",
+              "label": "Laravel Livewire 3",
+              "path": "components/navigation/variants/mobile-touch-tabbar/MobileTouchTabbarWire.php",
+              "code": "<?php\n// Variante 10 — Mobile Bottom Tab Bar Táctil con Micro-Interacciones Cinéticas — Laravel Livewire 3 (components/navigation/variants/mobile-touch-tabbar/MobileTouchTabbarWire.php)\nnamespace App\\Livewire\\Cxd\\Navigation;\nuse Livewire\\Component;\n\nclass MobileTouchTabbarWire extends Component {\n    public bool $active = false;\n    public function toggle(): void { $this->active = !$this->active; }\n    public function render() {\n        return <<<'HTML'\n        <nav class=\"cxd-navigation-mobile-touch-tabbar\">\n            <h3>Variante 10 — Mobile Bottom Tab Bar Táctil con Micro-Interacciones Cinéticas</h3>\n            <button type=\"button\" wire:click=\"toggle\">Estado: {{ $active ? 'ON' : 'OFF' }}</button>\n        </nav>\n        HTML;\n    }\n}\n"
+            },
+            "php": {
+              "frameworkId": "php",
+              "label": "PHP 8.3 Renderer",
+              "path": "components/navigation/variants/mobile-touch-tabbar/MobileTouchTabbarRenderer.php",
+              "code": "<?php\n// Variante 10 — Mobile Bottom Tab Bar Táctil con Micro-Interacciones Cinéticas — PHP 8.3 Renderer (components/navigation/variants/mobile-touch-tabbar/MobileTouchTabbarRenderer.php)\ndeclare(strict_types=1);\nnamespace ComponentesXD\\Navigation;\n\nfinal class MobileTouchTabbarRenderer {\n    public static function render(): string {\n        return '<nav class=\"cxd-navigation-mobile-touch-tabbar\"><h3>Variante 10 — Mobile Bottom Tab Bar Táctil con Micro-Interacciones Cinéticas</h3><p>Barra inferior flotante tipo iOS/Android con 5 destinos táctiles, pastilla indicadora animada con Anime.js v4 y badges de notificaciones.</p></nav>';\n    }\n}\n"
+            },
+            "vanilla-js": {
+              "frameworkId": "vanilla-js",
+              "label": "Vanilla JS Module",
+              "path": "components/navigation/variants/mobile-touch-tabbar/mobile-touch-tabbar.js",
+              "code": "// Variante 10 — Mobile Bottom Tab Bar Táctil con Micro-Interacciones Cinéticas — Vanilla JS (components/navigation/variants/mobile-touch-tabbar/mobile-touch-tabbar.js)\nexport function mountMobileTouchTabbar(root = document) {\n  return root.querySelectorAll('.cxd-navigation-mobile-touch-tabbar');\n}\n"
+            },
+            "css-scss": {
+              "frameworkId": "css-scss",
+              "label": "CSS & SCSS Styles",
+              "path": "components/navigation/variants/mobile-touch-tabbar/styles.css",
+              "code": "/**\n * Variante 10 — Mobile Bottom Tab Bar Táctil con Micro-Interacciones Cinéticas\n * Archivo: components/navigation/variants/mobile-touch-tabbar/styles.css\n */\n.cxd-navigation-mobile-touch-tabbar {\n  background: var(--cxd-bg-surface);\n  color: var(--cxd-text-primary);\n  border: var(--cxd-border-width, 1px) solid var(--cxd-border);\n  border-radius: var(--cxd-radius-md);\n  font-family: var(--cxd-font-sans);\n}\n"
             }
           }
         }
