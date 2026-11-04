@@ -1,10 +1,10 @@
 <?php
-// Variante 05 — Microservicio Ultra-Rápido con Bun Alpine — PHP 8.3 Renderer (components/docker/variants/bun-microservice/BunMicroserviceRenderer.php)
 declare(strict_types=1);
-namespace ComponentesXD\Docker;
-
-final class BunMicroserviceRenderer {
-    public static function render(): string {
-        return '<div class="cxd-docker-bun-microservice"><h3>Variante 05 — Microservicio Ultra-Rápido con Bun Alpine</h3><p>Ejecución directa de TypeScript con arranque en milisegundos y consumo mínimo de RAM.</p></div>';
-    }
-}
+// Incluye styles.css y ajusta la ruta del módulo.
+function renderBunMicroservice(): string { return <<<'HTML'
+<section class="cxd-docker-flow" data-cxd-control="bun-microservice"><h3>Microservicio Bun</h3><ol class="cxd-docker-flow__stages" data-stages><li class="cxd-docker-flow__stage" data-stage aria-current="true">Resolver lockfile</li><li class="cxd-docker-flow__stage" data-stage aria-current="false">Ejecutar TypeScript nativo</li><li class="cxd-docker-flow__stage" data-stage aria-current="false">Exponer endpoint HTTP</li></ol><div class="cxd-docker-flow__actions"><button type="button" data-run>Simular siguiente salto</button><button type="button" data-reset>Reiniciar topología</button></div><span role="status" aria-live="polite">Listo para simular la topología.</span></section>
+<script type="module">
+import { mountBunMicroservice } from '/assets/bun-microservice.js';
+document.querySelectorAll('[data-cxd-control="bun-microservice"]:not([data-ready])').forEach(root => { root.dataset.ready = 'true'; mountBunMicroservice(root); });
+</script>
+HTML; }

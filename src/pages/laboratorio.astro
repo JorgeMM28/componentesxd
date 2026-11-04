@@ -31,6 +31,7 @@ import Layout from '../layouts/Layout.astro';
   const get = (id: string) => document.getElementById(id) as HTMLInputElement;
   const preview = get('lab-preview');
   const output = get('lab-output');
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   let split: ReturnType<typeof splitText> | null = null;
   let animation: { pause: () => unknown } | null = null;
   function reset() { animation?.pause(); animation = null; split?.revert(); split = null; }
@@ -63,6 +64,11 @@ import Layout from '../layouts/Layout.astro';
     update();
     const mode = get('lab-motion').value;
     if (mode === 'none') return;
+    if (reducedMotion.matches) {
+      get('lab-motion-status').textContent = 'Movimiento reducido activo: se mantiene una vista estática.';
+      return;
+    }
+    get('lab-motion-status').textContent = '';
     // scrambleText writes HTML: use the character reveal for markup-like user input.
     if (mode === 'scramble' && !/[<>&]/.test(preview.textContent || '')) { animation = animate(preview, { innerHTML: scrambleText({ text: preview.textContent || '' }), duration: 1200 }); return; }
     split = splitText(preview, { lines: mode === 'lines', words: mode === 'words', chars: mode === 'chars' || mode === 'scramble' });

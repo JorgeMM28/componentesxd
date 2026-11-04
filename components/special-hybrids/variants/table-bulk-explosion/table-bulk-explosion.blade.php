@@ -1,7 +1,6 @@
-{{-- Variante 07 — Tabla Multi-Selección + Dock Flotante + Purga/Restauración Animada — Laravel Blade (components/special-hybrids/variants/table-bulk-explosion/table-bulk-explosion.blade.php) --}}
-@props(['title' => 'Variante 07 — Tabla Multi-Selección + Dock Flotante + Purga/Restauración Animada'])
-<div {{ $attributes->merge(['class' => 'cxd-special-hybrids-table-bulk-explosion']) }}>
-    <h3>{{ $title }}</h3>
-    <p>Marca varias filas para desplegar la barra de acción y ejecuta purga en cascada o restauración completa con Anime.js.</p>
-    {{ $slot }}
-</div>
+{{-- Incluye styles.css y ajusta la ruta del módulo. --}}
+<div class="cxd-special" data-cxd-control="table-bulk-explosion"><h3>Selección masiva</h3><table><thead><tr><th>Seleccionar</th><th>Recurso</th><th>Estado</th></tr></thead><tbody data-rows></tbody></table><div class="cxd-special__actions"><button type="button" data-purge>Eliminar selección</button><button type="button" data-reset>Restaurar todo</button></div><span role="status"></span></div>
+<script type="module">
+import { mountTableBulkExplosion } from '/assets/table-bulk-explosion.js';
+document.querySelectorAll('[data-cxd-control="table-bulk-explosion"]:not([data-ready])').forEach(root => { root.dataset.ready = 'true'; mountTableBulkExplosion(root); });
+</script>

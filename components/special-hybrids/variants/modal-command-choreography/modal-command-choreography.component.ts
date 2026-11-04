@@ -1,18 +1,4 @@
-// Variante 15 — Command Palette + Consola de Ejecución Paso a Paso Animada — Angular 18+ Signals (components/special-hybrids/variants/modal-command-choreography/modal-command-choreography.component.ts)
-import { Component, signal } from '@angular/core';
-
-@Component({
-  selector: 'cxd-modal-command-choreography',
-  standalone: true,
-  styleUrls: ['./styles.css'],
-  template: `
-    <div class="cxd-special-hybrids-modal-command-choreography" [attr.data-active]="active()">
-      <h3>Variante 15 — Command Palette + Consola de Ejecución Paso a Paso Animada</h3>
-      <p>Dispara cualquier comando de la lista para ejecutar una secuencia de terminal animada en tiempo real.</p>
-      <button type="button" (click)="active.set(!active())">Alternar</button>
-    </div>
-  `
-})
-export class CxdModalCommandChoreographyComponent {
-  active = signal(false);
-}
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import { mountModalCommandChoreography } from './modal-command-choreography.js';
+@Component({ selector:'cxd-modal-command-choreography', standalone:true, styleUrls:['./styles.css'], template:`<div class="cxd-special" data-cxd-control="modal-command-choreography" #root><h3>Consola de comandos</h3><div class="cxd-special__scene" data-scene><small data-phase>LISTO</small><strong data-value>0 / 3</strong><p data-copy>Demostración autónoma: ejecuta la acción para actualizar el escenario.</p><div class="cxd-special__progress"><span data-progress></span></div></div><div class="cxd-special__actions"><button type="button" data-run>Ejecutar comando</button><button type="button" data-reset>Reiniciar</button></div><span role="status">Consola lista</span></div>` })
+export class ModalCommandChoreographyComponent implements AfterViewInit, OnDestroy { @ViewChild('root') root!: ElementRef<HTMLElement>; private unmount?: () => void; ngAfterViewInit() { this.unmount = mountModalCommandChoreography(this.root.nativeElement); } ngOnDestroy() { this.unmount?.(); } }

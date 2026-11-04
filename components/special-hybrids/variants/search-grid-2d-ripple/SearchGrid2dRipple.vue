@@ -1,14 +1,7 @@
-<!-- Variante 14 — Buscador de Nodos + Matriz 2D con Onda Radial (stagger grid) — Vue 3 SFC (components/special-hybrids/variants/search-grid-2d-ripple/SearchGrid2dRipple.vue) -->
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
+import { mountSearchGrid2dRipple } from './search-grid-2d-ripple.js';
 import './styles.css';
-const active = ref(false);
+const root = ref<HTMLElement | null>(null); let unmount: (() => void) | undefined; onMounted(() => { if (root.value) unmount = mountSearchGrid2dRipple(root.value); }); onUnmounted(() => unmount?.());
 </script>
-
-<template>
-  <div class="cxd-special-hybrids-search-grid-2d-ripple" :data-active="active">
-    <h3>Variante 14 — Buscador de Nodos + Matriz 2D con Onda Radial (stagger grid)</h3>
-    <p>Haz clic en cualquier nodo del cluster o filtra por estado para expandir una onda 2D desde ese punto exacto.</p>
-    <button type="button" @click="active = !active">Alternar</button>
-  </div>
-</template>
+<template><div class="cxd-special" data-cxd-control="search-grid-2d-ripple" ref="root"><h3>Buscador de nodos</h3><div class="cxd-special__scene" data-scene><small data-phase>LISTO</small><strong data-value>0 / 3</strong><p data-copy>Demostración autónoma: ejecuta la acción para actualizar el escenario.</p><div class="cxd-special__progress"><span data-progress></span></div></div><div class="cxd-special__actions"><button type="button" data-run>Propagar onda</button><button type="button" data-reset>Reiniciar</button></div><span role="status">Matriz restaurada</span></div></template>

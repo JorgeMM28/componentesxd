@@ -1,10 +1,10 @@
 <?php
-// Variante 21 — Escenario Relojería Cinética & Onda Radial (Inspirado en el Hero Oficial de Anime.js v4) — PHP 8.3 Renderer (components/special-hybrids/variants/anime-hero-clockwork/AnimeHeroClockworkRenderer.php)
 declare(strict_types=1);
-namespace ComponentesXD\SpecialHybrids;
-
-final class AnimeHeroClockworkRenderer {
-    public static function render(): string {
-        return '<div class="cxd-special-hybrids-anime-hero-clockwork"><h3>Variante 21 — Escenario Relojería Cinética & Onda Radial (Inspirado en el Hero Oficial de Anime.js v4)</h3><p>36 vectores radiales concéntricos, anillos orbitales y matriz sincronizada que ejecutan coreografías de relojería, explosión solar, vórtice espiral y pulso cuántico.</p></div>';
-    }
-}
+// Incluye styles.css y ajusta la ruta del módulo.
+function renderAnimeHeroClockwork(): string { return <<<'HTML'
+<div class="cxd-special" data-cxd-control="anime-hero-clockwork"><h3>Relojería cinética</h3><div class="cxd-special__scene" data-scene><small data-phase>LISTO</small><strong data-value>0 / 3</strong><p data-copy>Demostración autónoma: ejecuta la acción para actualizar el escenario.</p><div class="cxd-special__progress"><span data-progress></span></div></div><div class="cxd-special__actions"><button type="button" data-run>Iniciar coreografía</button><button type="button" data-reset>Reiniciar</button></div><span role="status">Escenario reiniciado</span></div>
+<script type="module">
+import { mountAnimeHeroClockwork } from '/assets/anime-hero-clockwork.js';
+document.querySelectorAll('[data-cxd-control="anime-hero-clockwork"]:not([data-ready])').forEach(root => { root.dataset.ready = 'true'; mountAnimeHeroClockwork(root); });
+</script>
+HTML; }

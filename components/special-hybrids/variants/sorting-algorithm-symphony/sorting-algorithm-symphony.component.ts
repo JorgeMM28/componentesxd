@@ -1,18 +1,4 @@
-// Variante 24 — Visualizador Paso a Paso de Algoritmos de Ordenamiento (QuickSort, BubbleSort, SelectionSort, InsertionSort) — Angular 18+ Signals (components/special-hybrids/variants/sorting-algorithm-symphony/sorting-algorithm-symphony.component.ts)
-import { Component, signal } from '@angular/core';
-
-@Component({
-  selector: 'cxd-sorting-algorithm-symphony',
-  standalone: true,
-  styleUrls: ['./styles.css'],
-  template: `
-    <div class="cxd-special-hybrids-sorting-algorithm-symphony" [attr.data-active]="active()">
-      <h3>Variante 24 — Visualizador Paso a Paso de Algoritmos de Ordenamiento (QuickSort, BubbleSort, SelectionSort, InsertionSort)</h3>
-      <p>28 columnas de datos con comparación e intercambio paso a paso en vivo, resaltado de pivotes activos, contadores en tiempo real y barrido verde de verificación final.</p>
-      <button type="button" (click)="active.set(!active())">Alternar</button>
-    </div>
-  `
-})
-export class CxdSortingAlgorithmSymphonyComponent {
-  active = signal(false);
-}
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import { mountSortingAlgorithmSymphony } from './sorting-algorithm-symphony.js';
+@Component({ selector:'cxd-sorting-algorithm-symphony', standalone:true, styleUrls:['./styles.css'], template:`<div class="cxd-special" data-cxd-control="sorting-algorithm-symphony" #root><h3>Sinfonía de ordenamiento</h3><div class="cxd-special__scene" data-scene><small data-phase>LISTO</small><strong data-value>0 / 3</strong><p data-copy>Demostración autónoma: ejecuta la acción para actualizar el escenario.</p><div class="cxd-special__progress"><span data-progress></span></div></div><div class="cxd-special__actions"><button type="button" data-run>Ordenar columnas</button><button type="button" data-reset>Reiniciar</button></div><span role="status">Valores mezclados</span></div>` })
+export class SortingAlgorithmSymphonyComponent implements AfterViewInit, OnDestroy { @ViewChild('root') root!: ElementRef<HTMLElement>; private unmount?: () => void; ngAfterViewInit() { this.unmount = mountSortingAlgorithmSymphony(this.root.nativeElement); } ngOnDestroy() { this.unmount?.(); } }

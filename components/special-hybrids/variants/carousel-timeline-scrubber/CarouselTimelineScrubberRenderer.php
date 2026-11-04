@@ -1,10 +1,10 @@
 <?php
-// Variante 13 — Carrusel Cinético Controlado por Slider Scrubber (timeline.seek) — PHP 8.3 Renderer (components/special-hybrids/variants/carousel-timeline-scrubber/CarouselTimelineScrubberRenderer.php)
 declare(strict_types=1);
-namespace ComponentesXD\SpecialHybrids;
-
-final class CarouselTimelineScrubberRenderer {
-    public static function render(): string {
-        return '<div class="cxd-special-hybrids-carousel-timeline-scrubber"><h3>Variante 13 — Carrusel Cinético Controlado por Slider Scrubber (timeline.seek)</h3><p>Arrastra la barra de tiempo para controlar manualmente la posición, rotación y escala de todo el carrusel.</p></div>';
-    }
-}
+// Incluye styles.css y ajusta la ruta del módulo.
+function renderCarouselTimelineScrubber(): string { return <<<'HTML'
+<div class="cxd-special" data-cxd-control="carousel-timeline-scrubber"><h3>Línea de tiempo</h3><div class="cxd-special__scene" data-scene><small data-phase>LISTO</small><strong data-value>0 / 3</strong><p data-copy>Demostración autónoma: ejecuta la acción para actualizar el escenario.</p><div class="cxd-special__progress"><span data-progress></span></div></div><div class="cxd-special__actions"><button type="button" data-run>Avanzar escena</button><button type="button" data-reset>Reiniciar</button></div><span role="status">Escena inicial</span></div>
+<script type="module">
+import { mountCarouselTimelineScrubber } from '/assets/carousel-timeline-scrubber.js';
+document.querySelectorAll('[data-cxd-control="carousel-timeline-scrubber"]:not([data-ready])').forEach(root => { root.dataset.ready = 'true'; mountCarouselTimelineScrubber(root); });
+</script>
+HTML; }

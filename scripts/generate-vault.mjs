@@ -20,6 +20,8 @@ import { navigationCode } from './navigation-code.mjs';
 import { accordionCode } from './accordion-code.mjs';
 import { tableCode } from './table-code.mjs';
 import { carouselCode } from './carousel-code.mjs';
+import { specialCode } from './special-code.mjs';
+import { dockerCode } from './docker-code.mjs';
 
 const ROOT = process.cwd();
 
@@ -234,7 +236,7 @@ export const COMPONENT_CATEGORIES = [
     slug: 'special-hybrids',
     code: 'CAT-12',
     name: 'Componentes Especiales Combinados (UI + Anime.js v4 en Vivo)',
-    shortDesc: '30 super-componentes híbridos que combinan Tablas en tiempo real, Step-by-Step con Carrusel 3D, Formularios con SVG Drawable, Kanban con Física Spring, Skeletons Hidratables y Timers SLA.',
+    shortDesc: '50 super-componentes híbridos que combinan flujos de trabajo reales, datos interactivos y movimiento con Anime.js v4; cada uno exporta adaptadores funcionales para las diez tecnologías.',
     icon: 'sparkles',
     variants: [
       { id: 'stepper-carousel-wizard', name: 'Variante 01 — Step-by-Step Wizard + Carrusel 3D Sincronizado + Timeline', badge: 'STEPPER + CAROUSEL', desc: 'Asistente paso a paso donde avanzar o retroceder sincroniza la barra de progreso superior, desliza el carrusel 3D y anima los sub-elementos con stagger.', previewType: 'hybrid-01' },
@@ -266,7 +268,27 @@ export const COMPONENT_CATEGORIES = [
       { id: 'isometric-3d-city-cluster', name: 'Variante 27 — Ciudadela Isométrica 3D de Servidores con Onda Espacial 4×4', badge: 'ISOMETRIC 3D MATRIX', desc: '16 torres tridimensionales en perspectiva isométrica real que modulan su elevación Z con stagger 2D radial.', previewType: 'hybrid-27' },
       { id: 'audio-synth-spectrum-analyzer', name: 'Variante 28 — Analizador de Espectro de 28 Bandas + Osciloscopio Vectorial en Vivo', badge: 'SPECTRUM ANALYZER', desc: 'Alterna entre perfiles acústicos (Sub-Bass, Cyberpunk Arp, Harmonics) animando las frecuencias y la onda sinusoidal.', previewType: 'hybrid-28' },
       { id: 'git-branch-commit-visualizer', name: 'Variante 29 — Diagrama Interactivo de Grafo Git Multirama (main, develop, feat/anime, Tags & Merge Curves SVG)', badge: 'GIT GRAPH DIAGRAM', desc: 'Diagrama vectorial de gran formato con 3 carriles de ramas, curvas Bezier autodibujables (svg.createDrawable), etiquetas de versión (v4.0 a v4.x), creación de commits, merges e inspector de SHA en vivo.', previewType: 'hybrid-29' },
-      { id: 'cyber-radar-threat-sonar', name: 'Variante 30 — Radar Sonar Táctico de 360° con Detección e Intercepción de Objetivos', badge: 'TACTICAL RADAR 360', desc: 'Barrido rotatorio continuo con coordenadas polares, detección de objetivos y lanzamiento de vectores de intercepción.', previewType: 'hybrid-30' }
+      { id: 'cyber-radar-threat-sonar', name: 'Variante 30 — Radar Sonar Táctico de 360° con Detección e Intercepción de Objetivos', badge: 'TACTICAL RADAR 360', desc: 'Barrido rotatorio continuo con coordenadas polares, detección de objetivos y lanzamiento de vectores de intercepción.', previewType: 'hybrid-30' },
+      { id: 'agenda-reservations', name: 'Variante 31 — Agenda con Reservas y Disponibilidad en Vivo', badge: 'AGENDA + BOOKINGS', desc: 'Selecciona una franja disponible, confirma la reserva y observa su estado actualizado en el calendario.', previewType: 'hybrid-new-agenda' },
+      { id: 'flow-editor', name: 'Variante 32 — Editor de Flujo con Pasos Conectables', badge: 'FLOW EDITOR', desc: 'Conecta pasos de automatización y actualiza el progreso del flujo con retroalimentación visual.', previewType: 'hybrid-new-flow' },
+      { id: 'query-builder', name: 'Variante 33 — Constructor Visual de Consultas', badge: 'QUERY BUILDER', desc: 'Construye y ejecuta una consulta de ejemplo con una respuesta simulada y trazable.', previewType: 'hybrid-new-query' },
+      { id: 'server-monitor', name: 'Variante 34 — Monitor de Servidores y Alertas', badge: 'SERVER MONITOR', desc: 'Refresca métricas de nodos, señaliza incidencias y conserva una alternativa para movimiento reducido.', previewType: 'hybrid-new-server' },
+      { id: 'mail-inbox', name: 'Variante 35 — Bandeja de Correo con Archivo Rápido', badge: 'MAIL INBOX', desc: 'Procesa mensajes de una bandeja autónoma mediante archivo y restauración sin depender de servicios externos.', previewType: 'hybrid-new-mail' },
+      { id: 'media-player', name: 'Variante 36 — Reproductor Multimedia con Estado de Pista', badge: 'MEDIA PLAYER', desc: 'Controla una pista de demostración, su progreso y los estados de reproducción de forma accesible.', previewType: 'hybrid-new-media' },
+      { id: 'inventory-board', name: 'Variante 37 — Tablero de Inventario Reabastecible', badge: 'INVENTORY BOARD', desc: 'Actualiza existencias de ejemplo y muestra el avance de reposición de cada artículo.', previewType: 'hybrid-new-inventory' },
+      { id: 'order-tracker', name: 'Variante 38 — Seguimiento de Pedidos por Etapas', badge: 'ORDER TRACKER', desc: 'Avanza un pedido entre preparación, tránsito y entrega con una línea de estado clara.', previewType: 'hybrid-new-orders' },
+      { id: 'seat-map', name: 'Variante 39 — Mapa de Asientos Reservables', badge: 'SEAT MAP', desc: 'Elige un asiento disponible, confirma la reserva y restablece el mapa de demostración.', previewType: 'hybrid-new-seats' },
+      { id: 'event-calendar', name: 'Variante 40 — Calendario de Eventos con Alta Rápida', badge: 'EVENT CALENDAR', desc: 'Añade un evento de ejemplo al calendario y obtiene una confirmación visible y anunciada.', previewType: 'hybrid-new-events' },
+      { id: 'permissions-panel', name: 'Variante 41 — Panel de Permisos por Rol', badge: 'PERMISSIONS', desc: 'Aplica cambios de permisos simulados y conserva el estado inicial mediante reinicio.', previewType: 'hybrid-new-permissions' },
+      { id: 'survey-builder', name: 'Variante 42 — Constructor de Encuestas', badge: 'SURVEY BUILDER', desc: 'Añade preguntas a una encuesta de ejemplo y actualiza su progreso de composición.', previewType: 'hybrid-new-survey' },
+      { id: 'downloads-center', name: 'Variante 43 — Centro de Descargas con Progreso', badge: 'DOWNLOADS', desc: 'Inicia una descarga simulada, comunica su finalización y permite volver al estado limpio.', previewType: 'hybrid-new-downloads' },
+      { id: 'product-comparator', name: 'Variante 44 — Comparador de Productos', badge: 'PRODUCT COMPARE', desc: 'Compara una selección de ejemplo y revela su estado en un panel claro y accesible.', previewType: 'hybrid-new-products' },
+      { id: 'expense-monitor', name: 'Variante 45 — Monitor de Gastos y Presupuesto', badge: 'EXPENSE MONITOR', desc: 'Registra gastos de muestra y actualiza el presupuesto disponible con señalización inmediata.', previewType: 'hybrid-new-expenses' },
+      { id: 'chart-editor', name: 'Variante 46 — Editor de Gráficos Configurable', badge: 'CHART EDITOR', desc: 'Cambia la visualización de datos de ejemplo y comunica el tipo activo al usuario.', previewType: 'hybrid-new-charts' },
+      { id: 'file-explorer', name: 'Variante 47 — Explorador de Archivos con Vista Previa', badge: 'FILE EXPLORER', desc: 'Abre un archivo de ejemplo y actualiza la vista previa sin rutas ni persistencia externas.', previewType: 'hybrid-new-files' },
+      { id: 'deploy-console', name: 'Variante 48 — Consola de Despliegues', badge: 'DEPLOY CONSOLE', desc: 'Lanza una versión de demostración y refleja el resultado del flujo de despliegue.', previewType: 'hybrid-new-deploy' },
+      { id: 'queue-simulator', name: 'Variante 49 — Simulador de Colas', badge: 'QUEUE SIMULATOR', desc: 'Procesa elementos de una cola y representa su progreso operativo paso a paso.', previewType: 'hybrid-new-queue' },
+      { id: 'goals-board', name: 'Variante 50 — Tablero de Objetivos e Hitos', badge: 'GOALS BOARD', desc: 'Completa hitos de demostración y visualiza el avance acumulado hacia un objetivo.', previewType: 'hybrid-new-goals' }
     ]
   }
 ];
@@ -408,6 +430,8 @@ function toPascalCase(str) {
 }
 
 function generateFrameworkCode(cat, variant, fw) {
+  if (cat.slug === 'special-hybrids') { const code = specialCode(variant.id, fw.id); if (code !== undefined) return code; }
+  if (cat.slug === 'docker') { const code = dockerCode(variant.id, fw.id); if (code !== undefined) return code; }
   if (cat.slug === 'carousels') { const code = carouselCode(variant.id, fw.id); if (code !== undefined) return code; }
   if (cat.slug === 'tables') { const code = tableCode(variant.id, fw.id); if (code !== undefined) return code; }
   if (cat.slug === 'accordions-tabs') { const code = accordionCode(variant.id, fw.id); if (code !== undefined) return code; }

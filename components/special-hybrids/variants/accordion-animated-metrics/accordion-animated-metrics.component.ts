@@ -1,18 +1,4 @@
-// Variante 18 — Acordeón Técnico + Telemetría que Anima de 0% a 100% al Expandir — Angular 18+ Signals (components/special-hybrids/variants/accordion-animated-metrics/accordion-animated-metrics.component.ts)
-import { Component, signal } from '@angular/core';
-
-@Component({
-  selector: 'cxd-accordion-animated-metrics',
-  standalone: true,
-  styleUrls: ['./styles.css'],
-  template: `
-    <div class="cxd-special-hybrids-accordion-animated-metrics" [attr.data-active]="active()">
-      <h3>Variante 18 — Acordeón Técnico + Telemetría que Anima de 0% a 100% al Expandir</h3>
-      <p>Cada vez que abres una sección del acordeón, sus barras y métricas internas se animan dinámicamente.</p>
-      <button type="button" (click)="active.set(!active())">Alternar</button>
-    </div>
-  `
-})
-export class CxdAccordionAnimatedMetricsComponent {
-  active = signal(false);
-}
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import { mountAccordionAnimatedMetrics } from './accordion-animated-metrics.js';
+@Component({ selector:'cxd-accordion-animated-metrics', standalone:true, styleUrls:['./styles.css'], template:`<div class="cxd-special" data-cxd-control="accordion-animated-metrics" #root><h3>Métricas de servicio</h3><div class="cxd-special__scene" data-scene><small data-phase>LISTO</small><strong data-value>0 / 3</strong><p data-copy>Demostración autónoma: ejecuta la acción para actualizar el escenario.</p><div class="cxd-special__progress"><span data-progress></span></div></div><div class="cxd-special__actions"><button type="button" data-run>Expandir métrica</button><button type="button" data-reset>Reiniciar</button></div><span role="status">Métricas contraídas</span></div>` })
+export class AccordionAnimatedMetricsComponent implements AfterViewInit, OnDestroy { @ViewChild('root') root!: ElementRef<HTMLElement>; private unmount?: () => void; ngAfterViewInit() { this.unmount = mountAccordionAnimatedMetrics(this.root.nativeElement); } ngOnDestroy() { this.unmount?.(); } }

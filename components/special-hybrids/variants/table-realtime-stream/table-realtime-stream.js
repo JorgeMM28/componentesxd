@@ -1,4 +1,12 @@
-// Variante 02 — Tabla Reactiva + Formulario de Inserción/Eliminación en Tiempo Real con Anime.js — Vanilla JS (components/special-hybrids/variants/table-realtime-stream/table-realtime-stream.js)
-export function mountTableRealtimeStream(root = document) {
-  return root.querySelectorAll('.cxd-special-hybrids-table-realtime-stream');
+// Copia styles.css. La función devuelve un desmontador.
+import { animate, stagger, createSpring } from 'animejs';
+export function mountTableRealtimeStream(root) {
+  const controller = new AbortController(); const signal = controller.signal; let timer;
+  let motion;const reduced=window.matchMedia('(prefers-reduced-motion: reduce)');const run=(target,options)=>{motion?.pause();if(!reduced.matches)motion=animate(target,options);};signal.addEventListener('abort',()=>motion?.pause(),{once:true});const rows=root.querySelector('[data-rows]');const form=root.querySelector('[data-form]');const status=root.querySelector('[data-total]');const sync=()=>{const items=Array.from(rows.querySelectorAll('tr'));const total=items.reduce((sum,row)=>sum+Number(row.dataset.value),0);status.textContent=items.length+' registros · total '+total;};form.addEventListener('submit',event=>{event.preventDefault();if(!form.reportValidity())return;const data=new FormData(form);const name=String(data.get('name')||'').trim();const value=Number(data.get('value'));if(!name||!Number.isFinite(value)||value<0)return;const row=document.createElement('tr');row.dataset.value=String(value);const nameCell=document.createElement('td');nameCell.textContent=name;const valueCell=document.createElement('td');valueCell.textContent=String(value);const actions=document.createElement('td');const remove=document.createElement('button');remove.type='button';remove.textContent='Eliminar';remove.setAttribute('aria-label','Eliminar '+name);remove.dataset.remove='';actions.append(remove);row.append(nameCell,valueCell,actions);rows.append(row);sync();run(row,{opacity:[0,1],y:[-12,0],ease:createSpring({stiffness:180,damping:18})});form.reset();},{signal});rows.addEventListener('click',event=>{const button=event.target.closest('[data-remove]');if(!button)return;button.closest('tr')?.remove();sync();},{signal});sync();
+  return () => { controller.abort(); clearTimeout(timer); };
 }
+// Montaje: document.querySelectorAll('[data-cxd-control="table-realtime-stream"]').forEach(mountTableRealtimeStream);
+// HTML:
+/*
+<div class="cxd-special" data-cxd-control="table-realtime-stream"><h3>Registros en directo</h3><form data-form><label>Nombre <input name="name" required maxlength="40" /></label><label>Valor <input name="value" type="number" min="0" max="9999" required /></label><button type="submit">Agregar registro</button></form><table><thead><tr><th>Nombre</th><th>Valor</th><th>Acción</th></tr></thead><tbody data-rows></tbody></table><span role="status" data-total>0 registros · total 0</span></div>
+*/

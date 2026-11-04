@@ -1,9 +1,8 @@
 ---
-// Variante 25 — Grafo de Red Neuronal Multicapa con Sinapsis SVG y Propagación Softmax — Astro 5 (components/special-hybrids/variants/neural-network-graph-propagator/NeuralNetworkGraphPropagator.astro)
 import './styles.css';
 ---
-<div class="cxd-special-hybrids-neural-network-graph-propagator">
-  <h3>Variante 25 — Grafo de Red Neuronal Multicapa con Sinapsis SVG y Propagación Softmax</h3>
-  <p>Dispara una inferencia para ver los tensores viajar por las 15 sinapsis SVG a través de las capas ocultas hasta calcular la predicción final.</p>
-  <slot />
-</div>
+<div class="cxd-special" data-cxd-control="neural-network-graph-propagator"><h3>Red neuronal</h3><div class="cxd-special__scene" data-scene><small data-phase>LISTO</small><strong data-value>0 / 3</strong><p data-copy>Demostración autónoma: ejecuta la acción para actualizar el escenario.</p><div class="cxd-special__progress"><span data-progress></span></div></div><div class="cxd-special__actions"><button type="button" data-run>Ejecutar inferencia</button><button type="button" data-reset>Reiniciar</button></div><span role="status">Red preparada</span></div>
+<script>
+import { mountNeuralNetworkGraphPropagator } from './neural-network-graph-propagator.js';
+document.querySelectorAll('[data-cxd-control="neural-network-graph-propagator"]:not([data-ready])').forEach(root => { root.dataset.ready = 'true'; mountNeuralNetworkGraphPropagator(root); });
+</script>

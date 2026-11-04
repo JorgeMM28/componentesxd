@@ -1,18 +1,4 @@
-// Variante 07 — Tabla Multi-Selección + Dock Flotante + Purga/Restauración Animada — Angular 18+ Signals (components/special-hybrids/variants/table-bulk-explosion/table-bulk-explosion.component.ts)
-import { Component, signal } from '@angular/core';
-
-@Component({
-  selector: 'cxd-table-bulk-explosion',
-  standalone: true,
-  styleUrls: ['./styles.css'],
-  template: `
-    <div class="cxd-special-hybrids-table-bulk-explosion" [attr.data-active]="active()">
-      <h3>Variante 07 — Tabla Multi-Selección + Dock Flotante + Purga/Restauración Animada</h3>
-      <p>Marca varias filas para desplegar la barra de acción y ejecuta purga en cascada o restauración completa con Anime.js.</p>
-      <button type="button" (click)="active.set(!active())">Alternar</button>
-    </div>
-  `
-})
-export class CxdTableBulkExplosionComponent {
-  active = signal(false);
-}
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import { mountTableBulkExplosion } from './table-bulk-explosion.js';
+@Component({ selector:'cxd-table-bulk-explosion', standalone:true, styleUrls:['./styles.css'], template:`<div class="cxd-special" data-cxd-control="table-bulk-explosion" #root><h3>Selección masiva</h3><table><thead><tr><th>Seleccionar</th><th>Recurso</th><th>Estado</th></tr></thead><tbody data-rows></tbody></table><div class="cxd-special__actions"><button type="button" data-purge>Eliminar selección</button><button type="button" data-reset>Restaurar todo</button></div><span role="status"></span></div>` })
+export class TableBulkExplosionComponent implements AfterViewInit, OnDestroy { @ViewChild('root') root!: ElementRef<HTMLElement>; private unmount?: () => void; ngAfterViewInit() { this.unmount = mountTableBulkExplosion(this.root.nativeElement); } ngOnDestroy() { this.unmount?.(); } }

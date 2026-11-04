@@ -1,21 +1,4 @@
-/**
- * Variante 19 — Transferencia Dual de Módulos + Sincronización Masiva en Cascada — React / Next.js (TSX)
- * Archivo: components/special-hybrids/variants/dual-transfer-stagger-sync/DualTransferStaggerSync.tsx
- */
-import React, { useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { mountDualTransferStaggerSync } from './dual-transfer-stagger-sync.js';
 import './styles.css';
-
-export const DualTransferStaggerSync: React.FC<{ title?: string }> = ({
-  title = 'Variante 19 — Transferencia Dual de Módulos + Sincronización Masiva en Cascada'
-}) => {
-  const [active, setActive] = useState(false);
-  return (
-    <div className="cxd-special-hybrids-dual-transfer-stagger-sync" data-active={active}>
-      <h3>{title}</h3>
-      <p>Mueve módulos uno por uno o transfiere todo el bloque con una animación escalonada de Anime.js.</p>
-      <button type="button" onClick={() => setActive(!active)}>
-        Alternar Estado
-      </button>
-    </div>
-  );
-};
+export function DualTransferStaggerSync() { const root = useRef<HTMLDivElement>(null); useEffect(() => root.current ? mountDualTransferStaggerSync(root.current) : undefined, []); return <div className="cxd-special" data-cxd-control="dual-transfer-stagger-sync" ref={root}><h3>Sincronizador de permisos</h3><div className="cxd-special__scene" data-scene><small data-phase>LISTO</small><strong data-value>0 / 3</strong><p data-copy>Demostración autónoma: ejecuta la acción para actualizar el escenario.</p><div className="cxd-special__progress"><span data-progress></span></div></div><div className="cxd-special__actions"><button type="button" data-run>Transferir módulo</button><button type="button" data-reset>Reiniciar</button></div><span role="status">Listas restauradas</span></div>; }

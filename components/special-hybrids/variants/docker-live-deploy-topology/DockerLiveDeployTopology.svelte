@@ -1,11 +1,6 @@
-<!-- Variante 17 — Topología Docker + Simulador de Paquetes en Red con Anime.js — Svelte 5 Runes (components/special-hybrids/variants/docker-live-deploy-topology/DockerLiveDeployTopology.svelte) -->
 <script lang="ts">
-  import './styles.css';
-  let active = $state(false);
+import { mountDockerLiveDeployTopology } from './docker-live-deploy-topology.js';
+import './styles.css';
+function control(node: HTMLElement) { return { destroy: mountDockerLiveDeployTopology(node) }; }
 </script>
-
-<div class="cxd-special-hybrids-docker-live-deploy-topology" data-active={active}>
-  <h3>Variante 17 — Topología Docker + Simulador de Paquetes en Red con Anime.js</h3>
-  <p>Envía paquetes de prueba a través del proxy, aplicación y base de datos animando cada salto y latencia.</p>
-  <button type="button" onclick={() => (active = !active)}>Alternar</button>
-</div>
+<div class="cxd-special" data-cxd-control="docker-live-deploy-topology" use:control><h3>Topología de despliegue</h3><div class="cxd-special__scene" data-scene><small data-phase>LISTO</small><strong data-value>0 / 3</strong><p data-copy>Demostración autónoma: ejecuta la acción para actualizar el escenario.</p><div class="cxd-special__progress"><span data-progress></span></div></div><div class="cxd-special__actions"><button type="button" data-run>Enviar paquete</button><button type="button" data-reset>Reiniciar</button></div><span role="status">Red en espera</span></div>

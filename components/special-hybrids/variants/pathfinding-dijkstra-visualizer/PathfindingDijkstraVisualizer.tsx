@@ -1,21 +1,4 @@
-/**
- * Variante 23 — Laberinto Interactivo de Alta Densidad (24×10 = 240 Micro-Celdas) con Algoritmo A* / BFS de Ruta Larga — React / Next.js (TSX)
- * Archivo: components/special-hybrids/variants/pathfinding-dijkstra-visualizer/PathfindingDijkstraVisualizer.tsx
- */
-import React, { useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { mountPathfindingDijkstraVisualizer } from './pathfinding-dijkstra-visualizer.js';
 import './styles.css';
-
-export const PathfindingDijkstraVisualizer: React.FC<{ title?: string }> = ({
-  title = 'Variante 23 — Laberinto Interactivo de Alta Densidad (24×10 = 240 Micro-Celdas) con Algoritmo A* / BFS de Ruta Larga'
-}) => {
-  const [active, setActive] = useState(false);
-  return (
-    <div className="cxd-special-hybrids-pathfinding-dijkstra-visualizer" data-active={active}>
-      <h3>{title}</h3>
-      <p>Matriz densa de 240 micro-recuadros con generador de laberinto serpenteante de 55+ pasos, creación manual de muros y onda de exploración animada con Anime.js v4.</p>
-      <button type="button" onClick={() => setActive(!active)}>
-        Alternar Estado
-      </button>
-    </div>
-  );
-};
+export function PathfindingDijkstraVisualizer() { const root = useRef<HTMLDivElement>(null); useEffect(() => root.current ? mountPathfindingDijkstraVisualizer(root.current) : undefined, []); return <div className="cxd-special" data-cxd-control="pathfinding-dijkstra-visualizer" ref={root}><h3>Explorador de rutas</h3><div className="cxd-special__scene" data-scene><small data-phase>LISTO</small><strong data-value>0 / 3</strong><p data-copy>Demostración autónoma: ejecuta la acción para actualizar el escenario.</p><div className="cxd-special__progress"><span data-progress></span></div></div><div className="cxd-special__actions"><button type="button" data-run>Buscar ruta</button><button type="button" data-reset>Reiniciar</button></div><span role="status">Laberinto restaurado</span></div>; }

@@ -1,11 +1,6 @@
-<!-- Variante 05 — Microservicio Ultra-Rápido con Bun Alpine — Svelte 5 Runes (components/docker/variants/bun-microservice/BunMicroservice.svelte) -->
 <script lang="ts">
-  import './styles.css';
-  let active = $state(false);
+import { mountBunMicroservice } from './bun-microservice.js';
+import './styles.css';
+function control(node: HTMLElement) { return { destroy: mountBunMicroservice(node) }; }
 </script>
-
-<div class="cxd-docker-bun-microservice" data-active={active}>
-  <h3>Variante 05 — Microservicio Ultra-Rápido con Bun Alpine</h3>
-  <p>Ejecución directa de TypeScript con arranque en milisegundos y consumo mínimo de RAM.</p>
-  <button type="button" onclick={() => (active = !active)}>Alternar</button>
-</div>
+<section class="cxd-docker-flow" data-cxd-control="bun-microservice" use:control><h3>Microservicio Bun</h3><ol class="cxd-docker-flow__stages" data-stages><li class="cxd-docker-flow__stage" data-stage aria-current="true">Resolver lockfile</li><li class="cxd-docker-flow__stage" data-stage aria-current="false">Ejecutar TypeScript nativo</li><li class="cxd-docker-flow__stage" data-stage aria-current="false">Exponer endpoint HTTP</li></ol><div class="cxd-docker-flow__actions"><button type="button" data-run>Simular siguiente salto</button><button type="button" data-reset>Reiniciar topología</button></div><span role="status" aria-live="polite">Listo para simular la topología.</span></section>

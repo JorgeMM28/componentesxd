@@ -1,15 +1,1 @@
-/**
- * ============================================================================
- * COMPONENTESXD — COMPONENTES ESPECIALES COMBINADOS (UI + ANIME.JS V4 EN VIVO)
- * Variante 01 — Step-by-Step Wizard + Carrusel 3D Sincronizado + Timeline
- * Archivo: components/special-hybrids/variants/stepper-carousel-wizard/styles.css
- * ============================================================================
- */
-.cxd-special-hybrids-stepper-carousel-wizard {
-  background: var(--cxd-bg-surface);
-  color: var(--cxd-text-primary);
-  border: var(--cxd-border-width, 1px) solid var(--cxd-border);
-  border-radius: var(--cxd-radius-md);
-  font-family: var(--cxd-font-sans);
-  font-variant-numeric: tabular-nums;
-}
+.cxd-special{box-sizing:border-box;width:min(100%,48rem);padding:1.4rem;border:1px solid #61568a;border-radius:1.2rem;background:radial-gradient(circle at top right,#302653,#111422 65%);color:#f6f3ff;font:500 .95rem/1.5 system-ui}.cxd-special *{box-sizing:border-box}.cxd-special h3{margin:.25rem 0}.cxd-special button,.cxd-special input,.cxd-special select{font:inherit;border:1px solid #8e7cbd;border-radius:.55rem;padding:.55rem .8rem;background:#27223e;color:inherit}.cxd-special button{cursor:pointer}.cxd-special button:disabled{opacity:.45;cursor:not-allowed}.cxd-special :focus-visible{outline:3px solid #93ffe1;outline-offset:3px}.cxd-special__actions{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:1rem}.cxd-special__progress{height:.45rem;background:#332e4d;overflow:hidden;border-radius:1rem}.cxd-special__progress span{display:block;height:100%;background:linear-gradient(90deg,#a58aff,#62e8db);width:var(--progress,0%)}.cxd-special__scene{min-height:10rem;margin-top:1rem;padding:1.3rem;border:1px solid #6f6299;border-radius:1rem;background:linear-gradient(130deg,#42367a,#155866)}.cxd-special__scene strong{display:block;font-size:1.6rem}.cxd-special [role=status]{display:block;margin-top:.7rem;color:#c9bfff}.cxd-special table{width:100%;border-collapse:collapse;margin-top:1rem}.cxd-special td,.cxd-special th{text-align:left;padding:.6rem;border-bottom:1px solid #55496f}.cxd-special form{display:flex;gap:.5rem;flex-wrap:wrap}.cxd-special input{min-width:0;flex:1}.cxd-special__bar{display:block;height:.35rem;background:linear-gradient(90deg,#8a7aff,#60e7c5);width:var(--value,0%);border-radius:1rem}.cxd-special [hidden]{display:none!important}@media(max-width:500px){.cxd-special{padding:.85rem}.cxd-special td,.cxd-special th{padding:.35rem;font-size:.8rem}}@media(prefers-reduced-motion:reduce){.cxd-special *{scroll-behavior:auto!important;transition:none!important}}

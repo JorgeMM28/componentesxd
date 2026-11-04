@@ -1,0 +1,4 @@
+import { useEffect, useRef } from 'react';
+import { mountEventCalendar } from './event-calendar.js';
+import './styles.css';
+export function EventCalendar() { const root = useRef<HTMLDivElement>(null); useEffect(() => root.current ? mountEventCalendar(root.current) : undefined, []); return <div className="cxd-special" data-cxd-control="event-calendar" ref={root}><h3>Calendario de eventos</h3><div className="cxd-special__scene" data-scene><small data-phase>LISTO</small><strong data-value>0 / 3</strong><p data-copy>Demostración autónoma: ejecuta la acción para actualizar el escenario.</p><div className="cxd-special__progress"><span data-progress></span></div></div><div className="cxd-special__actions"><button type="button" data-run>Añadir evento</button><button type="button" data-reset>Reiniciar</button></div><span role="status">Calendario restaurado</span></div>; }

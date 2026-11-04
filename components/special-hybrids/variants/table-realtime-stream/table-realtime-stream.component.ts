@@ -1,18 +1,4 @@
-// Variante 02 — Tabla Reactiva + Formulario de Inserción/Eliminación en Tiempo Real con Anime.js — Angular 18+ Signals (components/special-hybrids/variants/table-realtime-stream/table-realtime-stream.component.ts)
-import { Component, signal } from '@angular/core';
-
-@Component({
-  selector: 'cxd-table-realtime-stream',
-  standalone: true,
-  styleUrls: ['./styles.css'],
-  template: `
-    <div class="cxd-special-hybrids-table-realtime-stream" [attr.data-active]="active()">
-      <h3>Variante 02 — Tabla Reactiva + Formulario de Inserción/Eliminación en Tiempo Real con Anime.js</h3>
-      <p>Agrega nuevos registros desde el formulario integrado con animación spring de entrada, recálculo de suma animada y eliminación con colapso suave.</p>
-      <button type="button" (click)="active.set(!active())">Alternar</button>
-    </div>
-  `
-})
-export class CxdTableRealtimeStreamComponent {
-  active = signal(false);
-}
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import { mountTableRealtimeStream } from './table-realtime-stream.js';
+@Component({ selector:'cxd-table-realtime-stream', standalone:true, styleUrls:['./styles.css'], template:`<div class="cxd-special" data-cxd-control="table-realtime-stream" #root><h3>Registros en directo</h3><form data-form><label>Nombre <input name="name" required maxlength="40" /></label><label>Valor <input name="value" type="number" min="0" max="9999" required /></label><button type="submit">Agregar registro</button></form><table><thead><tr><th>Nombre</th><th>Valor</th><th>Acción</th></tr></thead><tbody data-rows></tbody></table><span role="status" data-total>0 registros · total 0</span></div>` })
+export class TableRealtimeStreamComponent implements AfterViewInit, OnDestroy { @ViewChild('root') root!: ElementRef<HTMLElement>; private unmount?: () => void; ngAfterViewInit() { this.unmount = mountTableRealtimeStream(this.root.nativeElement); } ngOnDestroy() { this.unmount?.(); } }

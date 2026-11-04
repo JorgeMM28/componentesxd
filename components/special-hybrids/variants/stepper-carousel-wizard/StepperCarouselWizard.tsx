@@ -1,21 +1,4 @@
-/**
- * Variante 01 — Step-by-Step Wizard + Carrusel 3D Sincronizado + Timeline — React / Next.js (TSX)
- * Archivo: components/special-hybrids/variants/stepper-carousel-wizard/StepperCarouselWizard.tsx
- */
-import React, { useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { mountStepperCarouselWizard } from './stepper-carousel-wizard.js';
 import './styles.css';
-
-export const StepperCarouselWizard: React.FC<{ title?: string }> = ({
-  title = 'Variante 01 — Step-by-Step Wizard + Carrusel 3D Sincronizado + Timeline'
-}) => {
-  const [active, setActive] = useState(false);
-  return (
-    <div className="cxd-special-hybrids-stepper-carousel-wizard" data-active={active}>
-      <h3>{title}</h3>
-      <p>Asistente paso a paso donde avanzar o retroceder sincroniza la barra de progreso superior, desliza el carrusel 3D y anima los sub-elementos con stagger.</p>
-      <button type="button" onClick={() => setActive(!active)}>
-        Alternar Estado
-      </button>
-    </div>
-  );
-};
+export function StepperCarouselWizard() { const root = useRef<HTMLDivElement>(null); useEffect(() => root.current ? mountStepperCarouselWizard(root.current) : undefined, []); return <div className="cxd-special" data-cxd-control="stepper-carousel-wizard" ref={root}><div className="cxd-special__progress" role="progressbar" aria-label="Progreso del asistente" aria-valuemin="1" aria-valuemax="3" aria-valuenow="1"><span data-progress></span></div><div className="cxd-special__scene" data-scene><small data-kicker>PASO 01 / 03</small><strong data-title>Elige tu espacio</strong><p data-copy>Organiza tu proyecto en un entorno preparado para crecer.</p></div><div className="cxd-special__actions"><button type="button" data-prev>Anterior</button><button type="button" data-next>Siguiente</button><button type="button" data-reset>Reiniciar</button></div><span role="status"></span></div>; }

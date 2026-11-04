@@ -1,11 +1,6 @@
-<!-- Variante 20 — Tabla de Incidentes en Vivo + Cronómetro SLA (createTimer) + Resolución — Svelte 5 Runes (components/special-hybrids/variants/chrono-sla-incident-table/ChronoSlaIncidentTable.svelte) -->
 <script lang="ts">
-  import './styles.css';
-  let active = $state(false);
+import { mountChronoSlaIncidentTable } from './chrono-sla-incident-table.js';
+import './styles.css';
+function control(node: HTMLElement) { return { destroy: mountChronoSlaIncidentTable(node) }; }
 </script>
-
-<div class="cxd-special-hybrids-chrono-sla-incident-table" data-active={active}>
-  <h3>Variante 20 — Tabla de Incidentes en Vivo + Cronómetro SLA (createTimer) + Resolución</h3>
-  <p>Monitorea el tiempo transcurrido en vivo con centésimas de segundo y resuelve incidentes con animación de fila.</p>
-  <button type="button" onclick={() => (active = !active)}>Alternar</button>
-</div>
+<div class="cxd-special" data-cxd-control="chrono-sla-incident-table" use:control><h3>Incidentes SLA</h3><div class="cxd-special__scene" data-scene><small data-phase>LISTO</small><strong data-value>0 / 3</strong><p data-copy>Demostración autónoma: ejecuta la acción para actualizar el escenario.</p><div class="cxd-special__progress"><span data-progress></span></div></div><div class="cxd-special__actions"><button type="button" data-run>Resolver incidente</button><button type="button" data-reset>Reiniciar</button></div><span role="status">Incidente reabierto</span></div>

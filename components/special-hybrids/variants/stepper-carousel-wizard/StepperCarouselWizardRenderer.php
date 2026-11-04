@@ -1,10 +1,10 @@
 <?php
-// Variante 01 — Step-by-Step Wizard + Carrusel 3D Sincronizado + Timeline — PHP 8.3 Renderer (components/special-hybrids/variants/stepper-carousel-wizard/StepperCarouselWizardRenderer.php)
 declare(strict_types=1);
-namespace ComponentesXD\SpecialHybrids;
-
-final class StepperCarouselWizardRenderer {
-    public static function render(): string {
-        return '<div class="cxd-special-hybrids-stepper-carousel-wizard"><h3>Variante 01 — Step-by-Step Wizard + Carrusel 3D Sincronizado + Timeline</h3><p>Asistente paso a paso donde avanzar o retroceder sincroniza la barra de progreso superior, desliza el carrusel 3D y anima los sub-elementos con stagger.</p></div>';
-    }
-}
+// Incluye styles.css y ajusta la ruta del módulo.
+function renderStepperCarouselWizard(): string { return <<<'HTML'
+<div class="cxd-special" data-cxd-control="stepper-carousel-wizard"><div class="cxd-special__progress" role="progressbar" aria-label="Progreso del asistente" aria-valuemin="1" aria-valuemax="3" aria-valuenow="1"><span data-progress></span></div><div class="cxd-special__scene" data-scene><small data-kicker>PASO 01 / 03</small><strong data-title>Elige tu espacio</strong><p data-copy>Organiza tu proyecto en un entorno preparado para crecer.</p></div><div class="cxd-special__actions"><button type="button" data-prev>Anterior</button><button type="button" data-next>Siguiente</button><button type="button" data-reset>Reiniciar</button></div><span role="status"></span></div>
+<script type="module">
+import { mountStepperCarouselWizard } from '/assets/stepper-carousel-wizard.js';
+document.querySelectorAll('[data-cxd-control="stepper-carousel-wizard"]:not([data-ready])').forEach(root => { root.dataset.ready = 'true'; mountStepperCarouselWizard(root); });
+</script>
+HTML; }

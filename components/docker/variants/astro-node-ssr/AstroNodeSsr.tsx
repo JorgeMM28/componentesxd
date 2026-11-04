@@ -1,21 +1,4 @@
-/**
- * Variante 01 — Astro / Node 22 Alpine Multi-Stage SSR — React / Next.js (TSX)
- * Archivo: components/docker/variants/astro-node-ssr/AstroNodeSsr.tsx
- */
-import React, { useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { mountAstroNodeSsr } from './astro-node-ssr.js';
 import './styles.css';
-
-export const AstroNodeSsr: React.FC<{ title?: string }> = ({
-  title = 'Variante 01 — Astro / Node 22 Alpine Multi-Stage SSR'
-}) => {
-  const [active, setActive] = useState(false);
-  return (
-    <div className="cxd-docker-astro-node-ssr" data-active={active}>
-      <h3>{title}</h3>
-      <p>Contenedor de producción de 3 etapas (deps → builder → runner sin root) para Astro, Next o Remix.</p>
-      <button type="button" onClick={() => setActive(!active)}>
-        Alternar Estado
-      </button>
-    </div>
-  );
-};
+export function AstroNodeSsr() { const root = useRef<HTMLDivElement>(null); useEffect(() => root.current ? mountAstroNodeSsr(root.current) : undefined, []); return <section className="cxd-docker-flow" data-cxd-control="astro-node-ssr" ref={root}><h3>Astro / Node SSR</h3><ol className="cxd-docker-flow__stages" data-stages><li className="cxd-docker-flow__stage" data-stage aria-current="true">Instalar dependencias</li><li className="cxd-docker-flow__stage" data-stage aria-current="false">Compilar rutas estáticas</li><li className="cxd-docker-flow__stage" data-stage aria-current="false">Arrancar runner sin root</li></ol><div className="cxd-docker-flow__actions"><button type="button" data-run>Simular siguiente salto</button><button type="button" data-reset>Reiniciar topología</button></div><span role="status" aria-live="polite">Listo para simular la topología.</span></section>; }

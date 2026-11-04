@@ -1,10 +1,10 @@
 <?php
-// Variante 18 — Acordeón Técnico + Telemetría que Anima de 0% a 100% al Expandir — PHP 8.3 Renderer (components/special-hybrids/variants/accordion-animated-metrics/AccordionAnimatedMetricsRenderer.php)
 declare(strict_types=1);
-namespace ComponentesXD\SpecialHybrids;
-
-final class AccordionAnimatedMetricsRenderer {
-    public static function render(): string {
-        return '<div class="cxd-special-hybrids-accordion-animated-metrics"><h3>Variante 18 — Acordeón Técnico + Telemetría que Anima de 0% a 100% al Expandir</h3><p>Cada vez que abres una sección del acordeón, sus barras y métricas internas se animan dinámicamente.</p></div>';
-    }
-}
+// Incluye styles.css y ajusta la ruta del módulo.
+function renderAccordionAnimatedMetrics(): string { return <<<'HTML'
+<div class="cxd-special" data-cxd-control="accordion-animated-metrics"><h3>Métricas de servicio</h3><div class="cxd-special__scene" data-scene><small data-phase>LISTO</small><strong data-value>0 / 3</strong><p data-copy>Demostración autónoma: ejecuta la acción para actualizar el escenario.</p><div class="cxd-special__progress"><span data-progress></span></div></div><div class="cxd-special__actions"><button type="button" data-run>Expandir métrica</button><button type="button" data-reset>Reiniciar</button></div><span role="status">Métricas contraídas</span></div>
+<script type="module">
+import { mountAccordionAnimatedMetrics } from '/assets/accordion-animated-metrics.js';
+document.querySelectorAll('[data-cxd-control="accordion-animated-metrics"]:not([data-ready])').forEach(root => { root.dataset.ready = 'true'; mountAccordionAnimatedMetrics(root); });
+</script>
+HTML; }

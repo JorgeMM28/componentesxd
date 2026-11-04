@@ -1,10 +1,10 @@
 <?php
-// Variante 09 — Tablero Kanban con Física Spring + Barra de Progreso Global Animada — PHP 8.3 Renderer (components/special-hybrids/variants/kanban-spring-pipeline/KanbanSpringPipelineRenderer.php)
 declare(strict_types=1);
-namespace ComponentesXD\SpecialHybrids;
-
-final class KanbanSpringPipelineRenderer {
-    public static function render(): string {
-        return '<div class="cxd-special-hybrids-kanban-spring-pipeline"><h3>Variante 09 — Tablero Kanban con Física Spring + Barra de Progreso Global Animada</h3><p>Promueve tarjetas entre etapas disparando rebote físico y actualizando el porcentaje global del sprint.</p></div>';
-    }
-}
+// Incluye styles.css y ajusta la ruta del módulo.
+function renderKanbanSpringPipeline(): string { return <<<'HTML'
+<div class="cxd-special" data-cxd-control="kanban-spring-pipeline"><h3>Pipeline de entrega</h3><div class="cxd-special__scene" data-scene><small data-phase>LISTO</small><strong data-value>0 / 3</strong><p data-copy>Demostración autónoma: ejecuta la acción para actualizar el escenario.</p><div class="cxd-special__progress"><span data-progress></span></div></div><div class="cxd-special__actions"><button type="button" data-run>Promover tarea</button><button type="button" data-reset>Reiniciar</button></div><span role="status">Backlog restaurado</span></div>
+<script type="module">
+import { mountKanbanSpringPipeline } from '/assets/kanban-spring-pipeline.js';
+document.querySelectorAll('[data-cxd-control="kanban-spring-pipeline"]:not([data-ready])').forEach(root => { root.dataset.ready = 'true'; mountKanbanSpringPipeline(root); });
+</script>
+HTML; }

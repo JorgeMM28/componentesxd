@@ -1,18 +1,4 @@
-// Variante 27 — Ciudadela Isométrica 3D de Servidores con Onda Espacial 4×4 — Angular 18+ Signals (components/special-hybrids/variants/isometric-3d-city-cluster/isometric-3d-city-cluster.component.ts)
-import { Component, signal } from '@angular/core';
-
-@Component({
-  selector: 'cxd-isometric-3d-city-cluster',
-  standalone: true,
-  styleUrls: ['./styles.css'],
-  template: `
-    <div class="cxd-special-hybrids-isometric-3d-city-cluster" [attr.data-active]="active()">
-      <h3>Variante 27 — Ciudadela Isométrica 3D de Servidores con Onda Espacial 4×4</h3>
-      <p>16 torres tridimensionales en perspectiva isométrica real que modulan su elevación Z con stagger 2D radial.</p>
-      <button type="button" (click)="active.set(!active())">Alternar</button>
-    </div>
-  `
-})
-export class CxdIsometric3dCityClusterComponent {
-  active = signal(false);
-}
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import { mountIsometric3dCityCluster } from './isometric-3d-city-cluster.js';
+@Component({ selector:'cxd-isometric-3d-city-cluster', standalone:true, styleUrls:['./styles.css'], template:`<div class="cxd-special" data-cxd-control="isometric-3d-city-cluster" #root><h3>Clúster isométrico</h3><div class="cxd-special__scene" data-scene><small data-phase>LISTO</small><strong data-value>0 / 3</strong><p data-copy>Demostración autónoma: ejecuta la acción para actualizar el escenario.</p><div class="cxd-special__progress"><span data-progress></span></div></div><div class="cxd-special__actions"><button type="button" data-run>Distribuir carga</button><button type="button" data-reset>Reiniciar</button></div><span role="status">Clúster restaurado</span></div>` })
+export class Isometric3dCityClusterComponent implements AfterViewInit, OnDestroy { @ViewChild('root') root!: ElementRef<HTMLElement>; private unmount?: () => void; ngAfterViewInit() { this.unmount = mountIsometric3dCityCluster(this.root.nativeElement); } ngOnDestroy() { this.unmount?.(); } }

@@ -1,10 +1,10 @@
 <?php
-// Variante 10 — Bóveda PIN/OTP + Escudo Vectorial Autodibujable (svg.createDrawable) — PHP 8.3 Renderer (components/special-hybrids/variants/form-otp-svg-vault/FormOtpSvgVaultRenderer.php)
 declare(strict_types=1);
-namespace ComponentesXD\SpecialHybrids;
-
-final class FormOtpSvgVaultRenderer {
-    public static function render(): string {
-        return '<div class="cxd-special-hybrids-form-otp-svg-vault"><h3>Variante 10 — Bóveda PIN/OTP + Escudo Vectorial Autodibujable (svg.createDrawable)</h3><p>Simula la validación criptográfica trazando el circuito SVG de seguridad y animando las casillas del código.</p></div>';
-    }
-}
+// Incluye styles.css y ajusta la ruta del módulo.
+function renderFormOtpSvgVault(): string { return <<<'HTML'
+<div class="cxd-special" data-cxd-control="form-otp-svg-vault"><h3>Bóveda OTP</h3><div class="cxd-special__scene" data-scene><small data-phase>LISTO</small><strong data-value>0 / 3</strong><p data-copy>Demostración autónoma: ejecuta la acción para actualizar el escenario.</p><div class="cxd-special__progress"><span data-progress></span></div></div><div class="cxd-special__actions"><button type="button" data-run>Validar código</button><button type="button" data-reset>Reiniciar</button></div><span role="status">Esperando código</span></div>
+<script type="module">
+import { mountFormOtpSvgVault } from '/assets/form-otp-svg-vault.js';
+document.querySelectorAll('[data-cxd-control="form-otp-svg-vault"]:not([data-ready])').forEach(root => { root.dataset.ready = 'true'; mountFormOtpSvgVault(root); });
+</script>
+HTML; }

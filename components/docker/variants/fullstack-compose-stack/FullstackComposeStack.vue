@@ -1,14 +1,7 @@
-<!-- Variante 04 — Docker Compose Fullstack (App + Postgres 17 + Redis 7.4) — Vue 3 SFC (components/docker/variants/fullstack-compose-stack/FullstackComposeStack.vue) -->
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
+import { mountFullstackComposeStack } from './fullstack-compose-stack.js';
 import './styles.css';
-const active = ref(false);
+const root = ref<HTMLElement | null>(null); let unmount: (() => void) | undefined; onMounted(() => { if (root.value) unmount = mountFullstackComposeStack(root.value); }); onUnmounted(() => unmount?.());
 </script>
-
-<template>
-  <div class="cxd-docker-fullstack-compose-stack" :data-active="active">
-    <h3>Variante 04 — Docker Compose Fullstack (App + Postgres 17 + Redis 7.4)</h3>
-    <p>Orquestación completa con volúmenes persistentes y healthchecks automáticos.</p>
-    <button type="button" @click="active = !active">Alternar</button>
-  </div>
-</template>
+<template><section class="cxd-docker-flow" data-cxd-control="fullstack-compose-stack" ref="root"><h3>Compose full-stack</h3><ol class="cxd-docker-flow__stages" data-stages><li class="cxd-docker-flow__stage" data-stage aria-current="true">Esperar healthcheck de Postgres</li><li class="cxd-docker-flow__stage" data-stage aria-current="false">Conectar Redis</li><li class="cxd-docker-flow__stage" data-stage aria-current="false">Levantar aplicación</li></ol><div class="cxd-docker-flow__actions"><button type="button" data-run>Simular siguiente salto</button><button type="button" data-reset>Reiniciar topología</button></div><span role="status" aria-live="polite">Listo para simular la topología.</span></section></template>

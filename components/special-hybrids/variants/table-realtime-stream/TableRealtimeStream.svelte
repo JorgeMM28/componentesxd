@@ -1,11 +1,6 @@
-<!-- Variante 02 — Tabla Reactiva + Formulario de Inserción/Eliminación en Tiempo Real con Anime.js — Svelte 5 Runes (components/special-hybrids/variants/table-realtime-stream/TableRealtimeStream.svelte) -->
 <script lang="ts">
-  import './styles.css';
-  let active = $state(false);
+import { mountTableRealtimeStream } from './table-realtime-stream.js';
+import './styles.css';
+function control(node: HTMLElement) { return { destroy: mountTableRealtimeStream(node) }; }
 </script>
-
-<div class="cxd-special-hybrids-table-realtime-stream" data-active={active}>
-  <h3>Variante 02 — Tabla Reactiva + Formulario de Inserción/Eliminación en Tiempo Real con Anime.js</h3>
-  <p>Agrega nuevos registros desde el formulario integrado con animación spring de entrada, recálculo de suma animada y eliminación con colapso suave.</p>
-  <button type="button" onclick={() => (active = !active)}>Alternar</button>
-</div>
+<div class="cxd-special" data-cxd-control="table-realtime-stream" use:control><h3>Registros en directo</h3><form data-form><label>Nombre <input name="name" required maxlength="40" /></label><label>Valor <input name="value" type="number" min="0" max="9999" required /></label><button type="submit">Agregar registro</button></form><table><thead><tr><th>Nombre</th><th>Valor</th><th>Acción</th></tr></thead><tbody data-rows></tbody></table><span role="status" data-total>0 registros · total 0</span></div>

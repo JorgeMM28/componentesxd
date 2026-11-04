@@ -1,21 +1,4 @@
-/**
- * Variante 02 — Tabla Reactiva + Formulario de Inserción/Eliminación en Tiempo Real con Anime.js — React / Next.js (TSX)
- * Archivo: components/special-hybrids/variants/table-realtime-stream/TableRealtimeStream.tsx
- */
-import React, { useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { mountTableRealtimeStream } from './table-realtime-stream.js';
 import './styles.css';
-
-export const TableRealtimeStream: React.FC<{ title?: string }> = ({
-  title = 'Variante 02 — Tabla Reactiva + Formulario de Inserción/Eliminación en Tiempo Real con Anime.js'
-}) => {
-  const [active, setActive] = useState(false);
-  return (
-    <div className="cxd-special-hybrids-table-realtime-stream" data-active={active}>
-      <h3>{title}</h3>
-      <p>Agrega nuevos registros desde el formulario integrado con animación spring de entrada, recálculo de suma animada y eliminación con colapso suave.</p>
-      <button type="button" onClick={() => setActive(!active)}>
-        Alternar Estado
-      </button>
-    </div>
-  );
-};
+export function TableRealtimeStream() { const root = useRef<HTMLDivElement>(null); useEffect(() => root.current ? mountTableRealtimeStream(root.current) : undefined, []); return <div className="cxd-special" data-cxd-control="table-realtime-stream" ref={root}><h3>Registros en directo</h3><form data-form><label>Nombre <input name="name" required maxLength="40" /></label><label>Valor <input name="value" type="number" min="0" max="9999" required /></label><button type="submit">Agregar registro</button></form><table><thead><tr><th>Nombre</th><th>Valor</th><th>Acción</th></tr></thead><tbody data-rows></tbody></table><span role="status" data-total>0 registros · total 0</span></div>; }

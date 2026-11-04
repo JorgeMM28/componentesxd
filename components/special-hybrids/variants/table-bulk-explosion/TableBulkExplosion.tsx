@@ -1,21 +1,4 @@
-/**
- * Variante 07 — Tabla Multi-Selección + Dock Flotante + Purga/Restauración Animada — React / Next.js (TSX)
- * Archivo: components/special-hybrids/variants/table-bulk-explosion/TableBulkExplosion.tsx
- */
-import React, { useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { mountTableBulkExplosion } from './table-bulk-explosion.js';
 import './styles.css';
-
-export const TableBulkExplosion: React.FC<{ title?: string }> = ({
-  title = 'Variante 07 — Tabla Multi-Selección + Dock Flotante + Purga/Restauración Animada'
-}) => {
-  const [active, setActive] = useState(false);
-  return (
-    <div className="cxd-special-hybrids-table-bulk-explosion" data-active={active}>
-      <h3>{title}</h3>
-      <p>Marca varias filas para desplegar la barra de acción y ejecuta purga en cascada o restauración completa con Anime.js.</p>
-      <button type="button" onClick={() => setActive(!active)}>
-        Alternar Estado
-      </button>
-    </div>
-  );
-};
+export function TableBulkExplosion() { const root = useRef<HTMLDivElement>(null); useEffect(() => root.current ? mountTableBulkExplosion(root.current) : undefined, []); return <div className="cxd-special" data-cxd-control="table-bulk-explosion" ref={root}><h3>Selección masiva</h3><table><thead><tr><th>Seleccionar</th><th>Recurso</th><th>Estado</th></tr></thead><tbody data-rows></tbody></table><div className="cxd-special__actions"><button type="button" data-purge>Eliminar selección</button><button type="button" data-reset>Restaurar todo</button></div><span role="status"></span></div>; }

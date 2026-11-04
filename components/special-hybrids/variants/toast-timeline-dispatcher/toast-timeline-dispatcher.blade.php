@@ -1,7 +1,6 @@
-{{-- Variante 08 — Despachador de Toasts Apilados 3D + Cronómetro createTimer() — Laravel Blade (components/special-hybrids/variants/toast-timeline-dispatcher/toast-timeline-dispatcher.blade.php) --}}
-@props(['title' => 'Variante 08 — Despachador de Toasts Apilados 3D + Cronómetro createTimer()'])
-<div {{ $attributes->merge(['class' => 'cxd-special-hybrids-toast-timeline-dispatcher']) }}>
-    <h3>{{ $title }}</h3>
-    <p>Genera notificaciones en vivo con física elástica y cuenta regresiva precisa en milisegundos.</p>
-    {{ $slot }}
-</div>
+{{-- Incluye styles.css y ajusta la ruta del módulo. --}}
+<div class="cxd-special" data-cxd-control="toast-timeline-dispatcher"><h3>Despachador de alertas</h3><div class="cxd-special__scene" data-scene><small data-phase>LISTO</small><strong data-value>0 / 3</strong><p data-copy>Demostración autónoma: ejecuta la acción para actualizar el escenario.</p><div class="cxd-special__progress"><span data-progress></span></div></div><div class="cxd-special__actions"><button type="button" data-run>Despachar alerta</button><button type="button" data-reset>Reiniciar</button></div><span role="status">La cola está vacía</span></div>
+<script type="module">
+import { mountToastTimelineDispatcher } from '/assets/toast-timeline-dispatcher.js';
+document.querySelectorAll('[data-cxd-control="toast-timeline-dispatcher"]:not([data-ready])').forEach(root => { root.dataset.ready = 'true'; mountToastTimelineDispatcher(root); });
+</script>

@@ -1,18 +1,4 @@
-// Variante 04 — Docker Compose Fullstack (App + Postgres 17 + Redis 7.4) — Angular 18+ Signals (components/docker/variants/fullstack-compose-stack/fullstack-compose-stack.component.ts)
-import { Component, signal } from '@angular/core';
-
-@Component({
-  selector: 'cxd-fullstack-compose-stack',
-  standalone: true,
-  styleUrls: ['./styles.css'],
-  template: `
-    <div class="cxd-docker-fullstack-compose-stack" [attr.data-active]="active()">
-      <h3>Variante 04 — Docker Compose Fullstack (App + Postgres 17 + Redis 7.4)</h3>
-      <p>Orquestación completa con volúmenes persistentes y healthchecks automáticos.</p>
-      <button type="button" (click)="active.set(!active())">Alternar</button>
-    </div>
-  `
-})
-export class CxdFullstackComposeStackComponent {
-  active = signal(false);
-}
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import { mountFullstackComposeStack } from './fullstack-compose-stack.js';
+@Component({ selector:'cxd-fullstack-compose-stack', standalone:true, styleUrls:['./styles.css'], template:`<section class="cxd-docker-flow" data-cxd-control="fullstack-compose-stack" #root><h3>Compose full-stack</h3><ol class="cxd-docker-flow__stages" data-stages><li class="cxd-docker-flow__stage" data-stage aria-current="true">Esperar healthcheck de Postgres</li><li class="cxd-docker-flow__stage" data-stage aria-current="false">Conectar Redis</li><li class="cxd-docker-flow__stage" data-stage aria-current="false">Levantar aplicación</li></ol><div class="cxd-docker-flow__actions"><button type="button" data-run>Simular siguiente salto</button><button type="button" data-reset>Reiniciar topología</button></div><span role="status" aria-live="polite">Listo para simular la topología.</span></section>` })
+export class FullstackComposeStackComponent implements AfterViewInit, OnDestroy { @ViewChild('root') root!: ElementRef<HTMLElement>; private unmount?: () => void; ngAfterViewInit() { this.unmount = mountFullstackComposeStack(this.root.nativeElement); } ngOnDestroy() { this.unmount?.(); } }

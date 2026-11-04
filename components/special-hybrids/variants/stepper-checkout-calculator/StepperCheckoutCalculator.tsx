@@ -1,21 +1,4 @@
-/**
- * Variante 06 — Step-by-Step Configurador Cloud + Motor "Calculando..." en Tiempo Real — React / Next.js (TSX)
- * Archivo: components/special-hybrids/variants/stepper-checkout-calculator/StepperCheckoutCalculator.tsx
- */
-import React, { useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { mountStepperCheckoutCalculator } from './stepper-checkout-calculator.js';
 import './styles.css';
-
-export const StepperCheckoutCalculator: React.FC<{ title?: string }> = ({
-  title = 'Variante 06 — Step-by-Step Configurador Cloud + Motor "Calculando..." en Tiempo Real'
-}) => {
-  const [active, setActive] = useState(false);
-  return (
-    <div className="cxd-special-hybrids-stepper-checkout-calculator" data-active={active}>
-      <h3>{title}</h3>
-      <p>Avanza por las etapas de hardware, red y réplicas recalculando el costo mensual con animación numérica instantánea.</p>
-      <button type="button" onClick={() => setActive(!active)}>
-        Alternar Estado
-      </button>
-    </div>
-  );
-};
+export function StepperCheckoutCalculator() { const root = useRef<HTMLDivElement>(null); useEffect(() => root.current ? mountStepperCheckoutCalculator(root.current) : undefined, []); return <div className="cxd-special" data-cxd-control="stepper-checkout-calculator" ref={root}><h3>Configurador cloud</h3><div className="cxd-special__progress" role="progressbar" aria-label="Progreso" aria-valuemin="1" aria-valuemax="3" aria-valuenow="1"><span data-progress></span></div><div className="cxd-special__scene" data-scene><label>Hardware <select data-hardware><option value="20">Básico</option><option value="50">Avanzado</option><option value="90">Profesional</option></select></label><label>Red <select data-network><option value="10">Estándar</option><option value="25">Premium</option></select></label><label>Réplicas <input data-replicas type="number" min="1" max="10" defaultValue="1" /></label><strong data-total></strong></div><div className="cxd-special__actions"><button type="button" data-prev>Anterior</button><button type="button" data-next>Siguiente</button><button type="button" data-reset>Reiniciar</button></div><span role="status"></span></div>; }

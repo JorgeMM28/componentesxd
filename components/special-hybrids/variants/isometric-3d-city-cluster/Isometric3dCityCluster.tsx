@@ -1,21 +1,4 @@
-/**
- * Variante 27 — Ciudadela Isométrica 3D de Servidores con Onda Espacial 4×4 — React / Next.js (TSX)
- * Archivo: components/special-hybrids/variants/isometric-3d-city-cluster/Isometric3dCityCluster.tsx
- */
-import React, { useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { mountIsometric3dCityCluster } from './isometric-3d-city-cluster.js';
 import './styles.css';
-
-export const Isometric3dCityCluster: React.FC<{ title?: string }> = ({
-  title = 'Variante 27 — Ciudadela Isométrica 3D de Servidores con Onda Espacial 4×4'
-}) => {
-  const [active, setActive] = useState(false);
-  return (
-    <div className="cxd-special-hybrids-isometric-3d-city-cluster" data-active={active}>
-      <h3>{title}</h3>
-      <p>16 torres tridimensionales en perspectiva isométrica real que modulan su elevación Z con stagger 2D radial.</p>
-      <button type="button" onClick={() => setActive(!active)}>
-        Alternar Estado
-      </button>
-    </div>
-  );
-};
+export function Isometric3dCityCluster() { const root = useRef<HTMLDivElement>(null); useEffect(() => root.current ? mountIsometric3dCityCluster(root.current) : undefined, []); return <div className="cxd-special" data-cxd-control="isometric-3d-city-cluster" ref={root}><h3>Clúster isométrico</h3><div className="cxd-special__scene" data-scene><small data-phase>LISTO</small><strong data-value>0 / 3</strong><p data-copy>Demostración autónoma: ejecuta la acción para actualizar el escenario.</p><div className="cxd-special__progress"><span data-progress></span></div></div><div className="cxd-special__actions"><button type="button" data-run>Distribuir carga</button><button type="button" data-reset>Reiniciar</button></div><span role="status">Clúster restaurado</span></div>; }

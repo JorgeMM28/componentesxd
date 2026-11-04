@@ -1,11 +1,6 @@
-<!-- Variante 02 — Laravel 11 + Livewire 3 + PHP 8.3 FPM + OPcache — Svelte 5 Runes (components/docker/variants/laravel-livewire-fpm/LaravelLivewireFpm.svelte) -->
 <script lang="ts">
-  import './styles.css';
-  let active = $state(false);
+import { mountLaravelLivewireFpm } from './laravel-livewire-fpm.js';
+import './styles.css';
+function control(node: HTMLElement) { return { destroy: mountLaravelLivewireFpm(node) }; }
 </script>
-
-<div class="cxd-docker-laravel-livewire-fpm" data-active={active}>
-  <h3>Variante 02 — Laravel 11 + Livewire 3 + PHP 8.3 FPM + OPcache</h3>
-  <p>Imagen lista para Laravel y Blade con OPcache JIT, Redis, PostgreSQL y Composer 2.8.</p>
-  <button type="button" onclick={() => (active = !active)}>Alternar</button>
-</div>
+<section class="cxd-docker-flow" data-cxd-control="laravel-livewire-fpm" use:control><h3>Laravel + Livewire</h3><ol class="cxd-docker-flow__stages" data-stages><li class="cxd-docker-flow__stage" data-stage aria-current="true">Nginx FastCGI</li><li class="cxd-docker-flow__stage" data-stage aria-current="false">PHP-FPM con OPcache</li><li class="cxd-docker-flow__stage" data-stage aria-current="false">Worker Horizon y Redis</li></ol><div class="cxd-docker-flow__actions"><button type="button" data-run>Simular siguiente salto</button><button type="button" data-reset>Reiniciar topología</button></div><span role="status" aria-live="polite">Listo para simular la topología.</span></section>

@@ -1,14 +1,7 @@
-<!-- Variante 01 — Step-by-Step Wizard + Carrusel 3D Sincronizado + Timeline — Vue 3 SFC (components/special-hybrids/variants/stepper-carousel-wizard/StepperCarouselWizard.vue) -->
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
+import { mountStepperCarouselWizard } from './stepper-carousel-wizard.js';
 import './styles.css';
-const active = ref(false);
+const root = ref<HTMLElement | null>(null); let unmount: (() => void) | undefined; onMounted(() => { if (root.value) unmount = mountStepperCarouselWizard(root.value); }); onUnmounted(() => unmount?.());
 </script>
-
-<template>
-  <div class="cxd-special-hybrids-stepper-carousel-wizard" :data-active="active">
-    <h3>Variante 01 — Step-by-Step Wizard + Carrusel 3D Sincronizado + Timeline</h3>
-    <p>Asistente paso a paso donde avanzar o retroceder sincroniza la barra de progreso superior, desliza el carrusel 3D y anima los sub-elementos con stagger.</p>
-    <button type="button" @click="active = !active">Alternar</button>
-  </div>
-</template>
+<template><div class="cxd-special" data-cxd-control="stepper-carousel-wizard" ref="root"><div class="cxd-special__progress" role="progressbar" aria-label="Progreso del asistente" aria-valuemin="1" aria-valuemax="3" aria-valuenow="1"><span data-progress></span></div><div class="cxd-special__scene" data-scene><small data-kicker>PASO 01 / 03</small><strong data-title>Elige tu espacio</strong><p data-copy>Organiza tu proyecto en un entorno preparado para crecer.</p></div><div class="cxd-special__actions"><button type="button" data-prev>Anterior</button><button type="button" data-next>Siguiente</button><button type="button" data-reset>Reiniciar</button></div><span role="status"></span></div></template>

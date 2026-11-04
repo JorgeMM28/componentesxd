@@ -1,7 +1,6 @@
-{{-- Variante 10 — Bóveda PIN/OTP + Escudo Vectorial Autodibujable (svg.createDrawable) — Laravel Blade (components/special-hybrids/variants/form-otp-svg-vault/form-otp-svg-vault.blade.php) --}}
-@props(['title' => 'Variante 10 — Bóveda PIN/OTP + Escudo Vectorial Autodibujable (svg.createDrawable)'])
-<div {{ $attributes->merge(['class' => 'cxd-special-hybrids-form-otp-svg-vault']) }}>
-    <h3>{{ $title }}</h3>
-    <p>Simula la validación criptográfica trazando el circuito SVG de seguridad y animando las casillas del código.</p>
-    {{ $slot }}
-</div>
+{{-- Incluye styles.css y ajusta la ruta del módulo. --}}
+<div class="cxd-special" data-cxd-control="form-otp-svg-vault"><h3>Bóveda OTP</h3><div class="cxd-special__scene" data-scene><small data-phase>LISTO</small><strong data-value>0 / 3</strong><p data-copy>Demostración autónoma: ejecuta la acción para actualizar el escenario.</p><div class="cxd-special__progress"><span data-progress></span></div></div><div class="cxd-special__actions"><button type="button" data-run>Validar código</button><button type="button" data-reset>Reiniciar</button></div><span role="status">Esperando código</span></div>
+<script type="module">
+import { mountFormOtpSvgVault } from '/assets/form-otp-svg-vault.js';
+document.querySelectorAll('[data-cxd-control="form-otp-svg-vault"]:not([data-ready])').forEach(root => { root.dataset.ready = 'true'; mountFormOtpSvgVault(root); });
+</script>

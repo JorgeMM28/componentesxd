@@ -1,17 +1,11 @@
 <?php
-// Variante 19 — Transferencia Dual de Módulos + Sincronización Masiva en Cascada — Laravel Livewire 3 (components/special-hybrids/variants/dual-transfer-stagger-sync/DualTransferStaggerSyncWire.php)
-namespace App\Livewire\Cxd\SpecialHybrids;
+namespace App\Livewire;
 use Livewire\Component;
-
-class DualTransferStaggerSyncWire extends Component {
-    public bool $active = false;
-    public function toggle(): void { $this->active = !$this->active; }
-    public function render() {
-        return <<<'HTML'
-        <div class="cxd-special-hybrids-dual-transfer-stagger-sync">
-            <h3>Variante 19 — Transferencia Dual de Módulos + Sincronización Masiva en Cascada</h3>
-            <button type="button" wire:click="toggle">Estado: {{ $active ? 'ON' : 'OFF' }}</button>
-        </div>
-        HTML;
-    }
-}
+// Incluye styles.css y ajusta la ruta del módulo.
+class DualTransferStaggerSyncWire extends Component { public function render(): string { return <<<'HTML'
+<div class="cxd-special" data-cxd-control="dual-transfer-stagger-sync" wire:ignore><h3>Sincronizador de permisos</h3><div class="cxd-special__scene" data-scene><small data-phase>LISTO</small><strong data-value>0 / 3</strong><p data-copy>Demostración autónoma: ejecuta la acción para actualizar el escenario.</p><div class="cxd-special__progress"><span data-progress></span></div></div><div class="cxd-special__actions"><button type="button" data-run>Transferir módulo</button><button type="button" data-reset>Reiniciar</button></div><span role="status">Listas restauradas</span>@script
+<script>
+import('/assets/dual-transfer-stagger-sync.js').then(module => module.mountDualTransferStaggerSync($wire.$el));
+</script>
+@endscript</div>
+HTML; } }

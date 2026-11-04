@@ -1,10 +1,10 @@
 <?php
-// Variante 19 — Transferencia Dual de Módulos + Sincronización Masiva en Cascada — PHP 8.3 Renderer (components/special-hybrids/variants/dual-transfer-stagger-sync/DualTransferStaggerSyncRenderer.php)
 declare(strict_types=1);
-namespace ComponentesXD\SpecialHybrids;
-
-final class DualTransferStaggerSyncRenderer {
-    public static function render(): string {
-        return '<div class="cxd-special-hybrids-dual-transfer-stagger-sync"><h3>Variante 19 — Transferencia Dual de Módulos + Sincronización Masiva en Cascada</h3><p>Mueve módulos uno por uno o transfiere todo el bloque con una animación escalonada de Anime.js.</p></div>';
-    }
-}
+// Incluye styles.css y ajusta la ruta del módulo.
+function renderDualTransferStaggerSync(): string { return <<<'HTML'
+<div class="cxd-special" data-cxd-control="dual-transfer-stagger-sync"><h3>Sincronizador de permisos</h3><div class="cxd-special__scene" data-scene><small data-phase>LISTO</small><strong data-value>0 / 3</strong><p data-copy>Demostración autónoma: ejecuta la acción para actualizar el escenario.</p><div class="cxd-special__progress"><span data-progress></span></div></div><div class="cxd-special__actions"><button type="button" data-run>Transferir módulo</button><button type="button" data-reset>Reiniciar</button></div><span role="status">Listas restauradas</span></div>
+<script type="module">
+import { mountDualTransferStaggerSync } from '/assets/dual-transfer-stagger-sync.js';
+document.querySelectorAll('[data-cxd-control="dual-transfer-stagger-sync"]:not([data-ready])').forEach(root => { root.dataset.ready = 'true'; mountDualTransferStaggerSync(root); });
+</script>
+HTML; }

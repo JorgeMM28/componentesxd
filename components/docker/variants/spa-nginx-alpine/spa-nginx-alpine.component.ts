@@ -1,18 +1,4 @@
-// Variante 03 — React / Vue / Svelte / Angular SPA + Nginx — Angular 18+ Signals (components/docker/variants/spa-nginx-alpine/spa-nginx-alpine.component.ts)
-import { Component, signal } from '@angular/core';
-
-@Component({
-  selector: 'cxd-spa-nginx-alpine',
-  standalone: true,
-  styleUrls: ['./styles.css'],
-  template: `
-    <div class="cxd-docker-spa-nginx-alpine" [attr.data-active]="active()">
-      <h3>Variante 03 — React / Vue / Svelte / Angular SPA + Nginx</h3>
-      <p>Compilación estática servida por Nginx Alpine con compresión gzip y try_files para rutas SPA.</p>
-      <button type="button" (click)="active.set(!active())">Alternar</button>
-    </div>
-  `
-})
-export class CxdSpaNginxAlpineComponent {
-  active = signal(false);
-}
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import { mountSpaNginxAlpine } from './spa-nginx-alpine.js';
+@Component({ selector:'cxd-spa-nginx-alpine', standalone:true, styleUrls:['./styles.css'], template:`<section class="cxd-docker-flow" data-cxd-control="spa-nginx-alpine" #root><h3>SPA + Nginx</h3><ol class="cxd-docker-flow__stages" data-stages><li class="cxd-docker-flow__stage" data-stage aria-current="true">Generar bundle Vite</li><li class="cxd-docker-flow__stage" data-stage aria-current="false">Resolver rutas con try_files</li><li class="cxd-docker-flow__stage" data-stage aria-current="false">Servir assets inmutables</li></ol><div class="cxd-docker-flow__actions"><button type="button" data-run>Simular siguiente salto</button><button type="button" data-reset>Reiniciar topología</button></div><span role="status" aria-live="polite">Listo para simular la topología.</span></section>` })
+export class SpaNginxAlpineComponent implements AfterViewInit, OnDestroy { @ViewChild('root') root!: ElementRef<HTMLElement>; private unmount?: () => void; ngAfterViewInit() { this.unmount = mountSpaNginxAlpine(this.root.nativeElement); } ngOnDestroy() { this.unmount?.(); } }

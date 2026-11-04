@@ -1,21 +1,4 @@
-/**
- * Variante 12 — Tabla con Skeleton Cargando → Hidratación Real Escalonada — React / Next.js (TSX)
- * Archivo: components/special-hybrids/variants/skeleton-to-table-hydrator/SkeletonToTableHydrator.tsx
- */
-import React, { useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { mountSkeletonToTableHydrator } from './skeleton-to-table-hydrator.js';
 import './styles.css';
-
-export const SkeletonToTableHydrator: React.FC<{ title?: string }> = ({
-  title = 'Variante 12 — Tabla con Skeleton Cargando → Hidratación Real Escalonada'
-}) => {
-  const [active, setActive] = useState(false);
-  return (
-    <div className="cxd-special-hybrids-skeleton-to-table-hydrator" data-active={active}>
-      <h3>{title}</h3>
-      <p>Conmuta entre el estado de carga (Skeleton Shimmer) y la tabla hidratada con entrada escalonada por fila.</p>
-      <button type="button" onClick={() => setActive(!active)}>
-        Alternar Estado
-      </button>
-    </div>
-  );
-};
+export function SkeletonToTableHydrator() { const root = useRef<HTMLDivElement>(null); useEffect(() => root.current ? mountSkeletonToTableHydrator(root.current) : undefined, []); return <div className="cxd-special" data-cxd-control="skeleton-to-table-hydrator" ref={root}><h3>Hidratador de datos</h3><div className="cxd-special__scene" data-scene><small data-phase>LISTO</small><strong data-value>0 / 3</strong><p data-copy>Demostración autónoma: ejecuta la acción para actualizar el escenario.</p><div className="cxd-special__progress"><span data-progress></span></div></div><div className="cxd-special__actions"><button type="button" data-run>Hidratar tabla</button><button type="button" data-reset>Reiniciar</button></div><span role="status">Skeleton restaurado</span></div>; }

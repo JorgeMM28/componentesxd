@@ -1,21 +1,4 @@
-/**
- * Variante 06 — Proxy Inverso Traefik v3 con Balanceo Automático — React / Next.js (TSX)
- * Archivo: components/docker/variants/traefik-tls-proxy/TraefikTlsProxy.tsx
- */
-import React, { useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { mountTraefikTlsProxy } from './traefik-tls-proxy.js';
 import './styles.css';
-
-export const TraefikTlsProxy: React.FC<{ title?: string }> = ({
-  title = 'Variante 06 — Proxy Inverso Traefik v3 con Balanceo Automático'
-}) => {
-  const [active, setActive] = useState(false);
-  return (
-    <div className="cxd-docker-traefik-tls-proxy" data-active={active}>
-      <h3>{title}</h3>
-      <p>Enrutamiento dinámico por etiquetas de contenedor y certificados TLS automáticos.</p>
-      <button type="button" onClick={() => setActive(!active)}>
-        Alternar Estado
-      </button>
-    </div>
-  );
-};
+export function TraefikTlsProxy() { const root = useRef<HTMLDivElement>(null); useEffect(() => root.current ? mountTraefikTlsProxy(root.current) : undefined, []); return <section className="cxd-docker-flow" data-cxd-control="traefik-tls-proxy" ref={root}><h3>Traefik TLS</h3><ol className="cxd-docker-flow__stages" data-stages><li className="cxd-docker-flow__stage" data-stage aria-current="true">Resolver certificado ACME</li><li className="cxd-docker-flow__stage" data-stage aria-current="false">Balancear réplicas</li><li className="cxd-docker-flow__stage" data-stage aria-current="false">Publicar métricas</li></ol><div className="cxd-docker-flow__actions"><button type="button" data-run>Simular siguiente salto</button><button type="button" data-reset>Reiniciar topología</button></div><span role="status" aria-live="polite">Listo para simular la topología.</span></section>; }

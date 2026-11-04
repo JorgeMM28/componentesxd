@@ -1,21 +1,4 @@
-/**
- * Variante 13 — Carrusel Cinético Controlado por Slider Scrubber (timeline.seek) — React / Next.js (TSX)
- * Archivo: components/special-hybrids/variants/carousel-timeline-scrubber/CarouselTimelineScrubber.tsx
- */
-import React, { useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { mountCarouselTimelineScrubber } from './carousel-timeline-scrubber.js';
 import './styles.css';
-
-export const CarouselTimelineScrubber: React.FC<{ title?: string }> = ({
-  title = 'Variante 13 — Carrusel Cinético Controlado por Slider Scrubber (timeline.seek)'
-}) => {
-  const [active, setActive] = useState(false);
-  return (
-    <div className="cxd-special-hybrids-carousel-timeline-scrubber" data-active={active}>
-      <h3>{title}</h3>
-      <p>Arrastra la barra de tiempo para controlar manualmente la posición, rotación y escala de todo el carrusel.</p>
-      <button type="button" onClick={() => setActive(!active)}>
-        Alternar Estado
-      </button>
-    </div>
-  );
-};
+export function CarouselTimelineScrubber() { const root = useRef<HTMLDivElement>(null); useEffect(() => root.current ? mountCarouselTimelineScrubber(root.current) : undefined, []); return <div className="cxd-special" data-cxd-control="carousel-timeline-scrubber" ref={root}><h3>Línea de tiempo</h3><div className="cxd-special__scene" data-scene><small data-phase>LISTO</small><strong data-value>0 / 3</strong><p data-copy>Demostración autónoma: ejecuta la acción para actualizar el escenario.</p><div className="cxd-special__progress"><span data-progress></span></div></div><div className="cxd-special__actions"><button type="button" data-run>Avanzar escena</button><button type="button" data-reset>Reiniciar</button></div><span role="status">Escena inicial</span></div>; }

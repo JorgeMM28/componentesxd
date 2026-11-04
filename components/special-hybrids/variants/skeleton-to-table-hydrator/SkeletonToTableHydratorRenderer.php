@@ -1,10 +1,10 @@
 <?php
-// Variante 12 — Tabla con Skeleton Cargando → Hidratación Real Escalonada — PHP 8.3 Renderer (components/special-hybrids/variants/skeleton-to-table-hydrator/SkeletonToTableHydratorRenderer.php)
 declare(strict_types=1);
-namespace ComponentesXD\SpecialHybrids;
-
-final class SkeletonToTableHydratorRenderer {
-    public static function render(): string {
-        return '<div class="cxd-special-hybrids-skeleton-to-table-hydrator"><h3>Variante 12 — Tabla con Skeleton Cargando → Hidratación Real Escalonada</h3><p>Conmuta entre el estado de carga (Skeleton Shimmer) y la tabla hidratada con entrada escalonada por fila.</p></div>';
-    }
-}
+// Incluye styles.css y ajusta la ruta del módulo.
+function renderSkeletonToTableHydrator(): string { return <<<'HTML'
+<div class="cxd-special" data-cxd-control="skeleton-to-table-hydrator"><h3>Hidratador de datos</h3><div class="cxd-special__scene" data-scene><small data-phase>LISTO</small><strong data-value>0 / 3</strong><p data-copy>Demostración autónoma: ejecuta la acción para actualizar el escenario.</p><div class="cxd-special__progress"><span data-progress></span></div></div><div class="cxd-special__actions"><button type="button" data-run>Hidratar tabla</button><button type="button" data-reset>Reiniciar</button></div><span role="status">Skeleton restaurado</span></div>
+<script type="module">
+import { mountSkeletonToTableHydrator } from '/assets/skeleton-to-table-hydrator.js';
+document.querySelectorAll('[data-cxd-control="skeleton-to-table-hydrator"]:not([data-ready])').forEach(root => { root.dataset.ready = 'true'; mountSkeletonToTableHydrator(root); });
+</script>
+HTML; }

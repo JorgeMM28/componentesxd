@@ -1,4 +1,12 @@
-// Variante 03 — Tabla con Reordenamiento Coreografiado (stagger) y Barras Cinéticas — Vanilla JS (components/special-hybrids/variants/table-stagger-sorter/table-stagger-sorter.js)
-export function mountTableStaggerSorter(root = document) {
-  return root.querySelectorAll('.cxd-special-hybrids-table-stagger-sorter');
+// Copia styles.css. La función devuelve un desmontador.
+import { animate, stagger, createSpring } from 'animejs';
+export function mountTableStaggerSorter(root) {
+  const controller = new AbortController(); const signal = controller.signal; let timer;
+  let motion;const reduced=window.matchMedia('(prefers-reduced-motion: reduce)');const run=(target,options)=>{motion?.pause();if(!reduced.matches)motion=animate(target,options);};signal.addEventListener('abort',()=>motion?.pause(),{once:true});const rows=root.querySelector('[data-rows]');const select=root.querySelector('[data-sort]');const toggle=root.querySelector('[data-direction]');const status=root.querySelector('[role="status"]');let ascending=true;const render=()=>{const key=select.value;const items=Array.from(rows.querySelectorAll('tr'));items.sort((a,b)=>{const av=a.dataset[key];const bv=b.dataset[key];return (key==='name'?av.localeCompare(bv,'es'):Number(av)-Number(bv))*(ascending?1:-1);});items.forEach(row=>rows.append(row));root.querySelectorAll('[data-bar]').forEach(bar=>bar.style.setProperty('--value',bar.dataset.bar+'%'));toggle.textContent=ascending?'Orden ascendente':'Orden descendente';status.textContent='Ordenado por '+select.selectedOptions[0].textContent+' · '+(ascending?'ascendente':'descendente');run(items,{opacity:[0,1],y:[-12,0],delay:stagger(65),duration:450,ease:'outCubic'});};select.addEventListener('change',render,{signal});toggle.addEventListener('click',()=>{ascending=!ascending;render();},{signal});render();
+  return () => { controller.abort(); clearTimeout(timer); };
 }
+// Montaje: document.querySelectorAll('[data-cxd-control="table-stagger-sorter"]').forEach(mountTableStaggerSorter);
+// HTML:
+/*
+<div class="cxd-special" data-cxd-control="table-stagger-sorter"><h3>Telemetría ordenable</h3><div class="cxd-special__actions"><label>Ordenar por <select data-sort><option value="name">Nombre</option><option value="latency">Latencia</option><option value="load">Carga</option></select></label><button type="button" data-direction>Orden ascendente</button></div><table><thead><tr><th>Nodo</th><th>Latencia</th><th>Carga</th></tr></thead><tbody data-rows><tr data-name="Alfa" data-latency="42" data-load="68"><td>Alfa</td><td>42 ms</td><td>68% <span class="cxd-special__bar" data-bar="68"></span></td></tr><tr data-name="Beta" data-latency="18" data-load="35"><td>Beta</td><td>18 ms</td><td>35% <span class="cxd-special__bar" data-bar="35"></span></td></tr><tr data-name="Gamma" data-latency="76" data-load="91"><td>Gamma</td><td>76 ms</td><td>91% <span class="cxd-special__bar" data-bar="91"></span></td></tr></tbody></table><span role="status"></span></div>
+*/

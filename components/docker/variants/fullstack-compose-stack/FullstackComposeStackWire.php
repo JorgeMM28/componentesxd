@@ -1,17 +1,7 @@
 <?php
-// Variante 04 — Docker Compose Fullstack (App + Postgres 17 + Redis 7.4) — Laravel Livewire 3 (components/docker/variants/fullstack-compose-stack/FullstackComposeStackWire.php)
-namespace App\Livewire\Cxd\Docker;
+namespace App\Livewire;
 use Livewire\Component;
-
-class FullstackComposeStackWire extends Component {
-    public bool $active = false;
-    public function toggle(): void { $this->active = !$this->active; }
-    public function render() {
-        return <<<'HTML'
-        <div class="cxd-docker-fullstack-compose-stack">
-            <h3>Variante 04 — Docker Compose Fullstack (App + Postgres 17 + Redis 7.4)</h3>
-            <button type="button" wire:click="toggle">Estado: {{ $active ? 'ON' : 'OFF' }}</button>
-        </div>
-        HTML;
-    }
-}
+// Incluye styles.css y ajusta la ruta del módulo.
+class FullstackComposeStackWire extends Component { public function render(): string { return <<<'HTML'
+<section class="cxd-docker-flow" data-cxd-control="fullstack-compose-stack" wire:ignore><h3>Compose full-stack</h3><ol class="cxd-docker-flow__stages" data-stages><li class="cxd-docker-flow__stage" data-stage aria-current="true">Esperar healthcheck de Postgres</li><li class="cxd-docker-flow__stage" data-stage aria-current="false">Conectar Redis</li><li class="cxd-docker-flow__stage" data-stage aria-current="false">Levantar aplicación</li></ol><div class="cxd-docker-flow__actions"><button type="button" data-run>Simular siguiente salto</button><button type="button" data-reset>Reiniciar topología</button></div><span role="status" aria-live="polite">Listo para simular la topología.</span></section>
+HTML; } }

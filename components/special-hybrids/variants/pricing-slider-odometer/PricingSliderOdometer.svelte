@@ -1,11 +1,6 @@
-<!-- Variante 16 — Calculadora Interactiva con Slider + Odómetro + Barras Comparativas — Svelte 5 Runes (components/special-hybrids/variants/pricing-slider-odometer/PricingSliderOdometer.svelte) -->
 <script lang="ts">
-  import './styles.css';
-  let active = $state(false);
+import { mountPricingSliderOdometer } from './pricing-slider-odometer.js';
+import './styles.css';
+function control(node: HTMLElement) { return { destroy: mountPricingSliderOdometer(node) }; }
 </script>
-
-<div class="cxd-special-hybrids-pricing-slider-odometer" data-active={active}>
-  <h3>Variante 16 — Calculadora Interactiva con Slider + Odómetro + Barras Comparativas</h3>
-  <p>Ajusta el volumen de tráfico para animar simultáneamente las barras de los 3 planes y el costo estimado.</p>
-  <button type="button" onclick={() => (active = !active)}>Alternar</button>
-</div>
+<div class="cxd-special" data-cxd-control="pricing-slider-odometer" use:control><h3>Estimador de tráfico</h3><div class="cxd-special__scene" data-scene><small data-phase>LISTO</small><strong data-value>0 / 3</strong><p data-copy>Demostración autónoma: ejecuta la acción para actualizar el escenario.</p><div class="cxd-special__progress"><span data-progress></span></div></div><div class="cxd-special__actions"><button type="button" data-run>Recalcular</button><button type="button" data-reset>Reiniciar</button></div><span role="status">Estimación restaurada</span></div>

@@ -1,17 +1,11 @@
 <?php
-// Variante 02 — Tabla Reactiva + Formulario de Inserción/Eliminación en Tiempo Real con Anime.js — Laravel Livewire 3 (components/special-hybrids/variants/table-realtime-stream/TableRealtimeStreamWire.php)
-namespace App\Livewire\Cxd\SpecialHybrids;
+namespace App\Livewire;
 use Livewire\Component;
-
-class TableRealtimeStreamWire extends Component {
-    public bool $active = false;
-    public function toggle(): void { $this->active = !$this->active; }
-    public function render() {
-        return <<<'HTML'
-        <div class="cxd-special-hybrids-table-realtime-stream">
-            <h3>Variante 02 — Tabla Reactiva + Formulario de Inserción/Eliminación en Tiempo Real con Anime.js</h3>
-            <button type="button" wire:click="toggle">Estado: {{ $active ? 'ON' : 'OFF' }}</button>
-        </div>
-        HTML;
-    }
-}
+// Incluye styles.css y ajusta la ruta del módulo.
+class TableRealtimeStreamWire extends Component { public function render(): string { return <<<'HTML'
+<div class="cxd-special" data-cxd-control="table-realtime-stream" wire:ignore><h3>Registros en directo</h3><form data-form><label>Nombre <input name="name" required maxlength="40" /></label><label>Valor <input name="value" type="number" min="0" max="9999" required /></label><button type="submit">Agregar registro</button></form><table><thead><tr><th>Nombre</th><th>Valor</th><th>Acción</th></tr></thead><tbody data-rows></tbody></table><span role="status" data-total>0 registros · total 0</span>@script
+<script>
+import('/assets/table-realtime-stream.js').then(module => module.mountTableRealtimeStream($wire.$el));
+</script>
+@endscript</div>
+HTML; } }

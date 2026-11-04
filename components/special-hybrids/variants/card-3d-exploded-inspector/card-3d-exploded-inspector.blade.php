@@ -1,7 +1,6 @@
-{{-- Variante 11 — Tarjeta Inspectora + Descomposición 3D de Capas Estructurales — Laravel Blade (components/special-hybrids/variants/card-3d-exploded-inspector/card-3d-exploded-inspector.blade.php) --}}
-@props(['title' => 'Variante 11 — Tarjeta Inspectora + Descomposición 3D de Capas Estructurales'])
-<div {{ $attributes->merge(['class' => 'cxd-special-hybrids-card-3d-exploded-inspector']) }}>
-    <h3>{{ $title }}</h3>
-    <p>Alterna entre la tarjeta ensamblada funcional y su vista explotada isométrica de 4 capas en vivo.</p>
-    {{ $slot }}
-</div>
+{{-- Incluye styles.css y ajusta la ruta del módulo. --}}
+<div class="cxd-special" data-cxd-control="card-3d-exploded-inspector"><h3>Inspector de capas</h3><div class="cxd-special__scene" data-scene><small data-phase>LISTO</small><strong data-value>0 / 3</strong><p data-copy>Demostración autónoma: ejecuta la acción para actualizar el escenario.</p><div class="cxd-special__progress"><span data-progress></span></div></div><div class="cxd-special__actions"><button type="button" data-run>Separar capas</button><button type="button" data-reset>Reiniciar</button></div><span role="status">Tarjeta ensamblada</span></div>
+<script type="module">
+import { mountCard3dExplodedInspector } from '/assets/card-3d-exploded-inspector.js';
+document.querySelectorAll('[data-cxd-control="card-3d-exploded-inspector"]:not([data-ready])').forEach(root => { root.dataset.ready = 'true'; mountCard3dExplodedInspector(root); });
+</script>

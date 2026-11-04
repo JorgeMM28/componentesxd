@@ -1,17 +1,11 @@
 <?php
-// Variante 09 — Tablero Kanban con Física Spring + Barra de Progreso Global Animada — Laravel Livewire 3 (components/special-hybrids/variants/kanban-spring-pipeline/KanbanSpringPipelineWire.php)
-namespace App\Livewire\Cxd\SpecialHybrids;
+namespace App\Livewire;
 use Livewire\Component;
-
-class KanbanSpringPipelineWire extends Component {
-    public bool $active = false;
-    public function toggle(): void { $this->active = !$this->active; }
-    public function render() {
-        return <<<'HTML'
-        <div class="cxd-special-hybrids-kanban-spring-pipeline">
-            <h3>Variante 09 — Tablero Kanban con Física Spring + Barra de Progreso Global Animada</h3>
-            <button type="button" wire:click="toggle">Estado: {{ $active ? 'ON' : 'OFF' }}</button>
-        </div>
-        HTML;
-    }
-}
+// Incluye styles.css y ajusta la ruta del módulo.
+class KanbanSpringPipelineWire extends Component { public function render(): string { return <<<'HTML'
+<div class="cxd-special" data-cxd-control="kanban-spring-pipeline" wire:ignore><h3>Pipeline de entrega</h3><div class="cxd-special__scene" data-scene><small data-phase>LISTO</small><strong data-value>0 / 3</strong><p data-copy>Demostración autónoma: ejecuta la acción para actualizar el escenario.</p><div class="cxd-special__progress"><span data-progress></span></div></div><div class="cxd-special__actions"><button type="button" data-run>Promover tarea</button><button type="button" data-reset>Reiniciar</button></div><span role="status">Backlog restaurado</span>@script
+<script>
+import('/assets/kanban-spring-pipeline.js').then(module => module.mountKanbanSpringPipeline($wire.$el));
+</script>
+@endscript</div>
+HTML; } }

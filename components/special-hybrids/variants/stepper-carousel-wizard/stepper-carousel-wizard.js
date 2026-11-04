@@ -1,4 +1,12 @@
-// Variante 01 — Step-by-Step Wizard + Carrusel 3D Sincronizado + Timeline — Vanilla JS (components/special-hybrids/variants/stepper-carousel-wizard/stepper-carousel-wizard.js)
-export function mountStepperCarouselWizard(root = document) {
-  return root.querySelectorAll('.cxd-special-hybrids-stepper-carousel-wizard');
+// Copia styles.css. La función devuelve un desmontador.
+import { animate, stagger, createSpring } from 'animejs';
+export function mountStepperCarouselWizard(root) {
+  const controller = new AbortController(); const signal = controller.signal; let timer;
+  let motion;const reduced=window.matchMedia('(prefers-reduced-motion: reduce)');const run=(target,options)=>{motion?.pause();if(!reduced.matches)motion=animate(target,options);};signal.addEventListener('abort',()=>motion?.pause(),{once:true});const scenes=[['Elige tu espacio','Organiza tu proyecto en un entorno preparado para crecer.'],['Configura recursos','Selecciona la capacidad adecuada para tu equipo.'],['Todo listo','Revisa los detalles antes de lanzar tu proyecto.']];let index=0;const scene=root.querySelector('[data-scene]');const progress=root.querySelector('[data-progress]');const bar=root.querySelector('[role="progressbar"]');const prev=root.querySelector('[data-prev]');const next=root.querySelector('[data-next]');const status=root.querySelector('[role="status"]');const render=()=>{root.querySelector('[data-kicker]').textContent='PASO 0'+(index+1)+' / 03';root.querySelector('[data-title]').textContent=scenes[index][0];root.querySelector('[data-copy]').textContent=scenes[index][1];progress.style.setProperty('--progress',((index+1)/scenes.length*100)+'%');bar.setAttribute('aria-valuenow',String(index+1));prev.disabled=index===0;next.disabled=index===scenes.length-1;status.textContent='Paso '+(index+1)+' de '+scenes.length;run(scene.children,{opacity:[0,1],y:[18,0],delay:stagger(70),duration:450,ease:'outCubic'});};prev.addEventListener('click',()=>{if(index>0){index--;render();}},{signal});next.addEventListener('click',()=>{if(index<scenes.length-1){index++;render();}},{signal});root.querySelector('[data-reset]').addEventListener('click',()=>{index=0;render();},{signal});render();
+  return () => { controller.abort(); clearTimeout(timer); };
 }
+// Montaje: document.querySelectorAll('[data-cxd-control="stepper-carousel-wizard"]').forEach(mountStepperCarouselWizard);
+// HTML:
+/*
+<div class="cxd-special" data-cxd-control="stepper-carousel-wizard"><div class="cxd-special__progress" role="progressbar" aria-label="Progreso del asistente" aria-valuemin="1" aria-valuemax="3" aria-valuenow="1"><span data-progress></span></div><div class="cxd-special__scene" data-scene><small data-kicker>PASO 01 / 03</small><strong data-title>Elige tu espacio</strong><p data-copy>Organiza tu proyecto en un entorno preparado para crecer.</p></div><div class="cxd-special__actions"><button type="button" data-prev>Anterior</button><button type="button" data-next>Siguiente</button><button type="button" data-reset>Reiniciar</button></div><span role="status"></span></div>
+*/

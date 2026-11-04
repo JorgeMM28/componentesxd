@@ -1,7 +1,6 @@
-{{-- Variante 03 — React / Vue / Svelte / Angular SPA + Nginx — Laravel Blade (components/docker/variants/spa-nginx-alpine/spa-nginx-alpine.blade.php) --}}
-@props(['title' => 'Variante 03 — React / Vue / Svelte / Angular SPA + Nginx'])
-<div {{ $attributes->merge(['class' => 'cxd-docker-spa-nginx-alpine']) }}>
-    <h3>{{ $title }}</h3>
-    <p>Compilación estática servida por Nginx Alpine con compresión gzip y try_files para rutas SPA.</p>
-    {{ $slot }}
-</div>
+{{-- Incluye styles.css y ajusta la ruta del módulo. --}}
+<section class="cxd-docker-flow" data-cxd-control="spa-nginx-alpine"><h3>SPA + Nginx</h3><ol class="cxd-docker-flow__stages" data-stages><li class="cxd-docker-flow__stage" data-stage aria-current="true">Generar bundle Vite</li><li class="cxd-docker-flow__stage" data-stage aria-current="false">Resolver rutas con try_files</li><li class="cxd-docker-flow__stage" data-stage aria-current="false">Servir assets inmutables</li></ol><div class="cxd-docker-flow__actions"><button type="button" data-run>Simular siguiente salto</button><button type="button" data-reset>Reiniciar topología</button></div><span role="status" aria-live="polite">Listo para simular la topología.</span></section>
+<script type="module">
+import { mountSpaNginxAlpine } from '/assets/spa-nginx-alpine.js';
+document.querySelectorAll('[data-cxd-control="spa-nginx-alpine"]:not([data-ready])').forEach(root => { root.dataset.ready = 'true'; mountSpaNginxAlpine(root); });
+</script>

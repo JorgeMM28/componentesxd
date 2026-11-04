@@ -1,14 +1,7 @@
-<!-- Variante 06 — Step-by-Step Configurador Cloud + Motor "Calculando..." en Tiempo Real — Vue 3 SFC (components/special-hybrids/variants/stepper-checkout-calculator/StepperCheckoutCalculator.vue) -->
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
+import { mountStepperCheckoutCalculator } from './stepper-checkout-calculator.js';
 import './styles.css';
-const active = ref(false);
+const root = ref<HTMLElement | null>(null); let unmount: (() => void) | undefined; onMounted(() => { if (root.value) unmount = mountStepperCheckoutCalculator(root.value); }); onUnmounted(() => unmount?.());
 </script>
-
-<template>
-  <div class="cxd-special-hybrids-stepper-checkout-calculator" :data-active="active">
-    <h3>Variante 06 — Step-by-Step Configurador Cloud + Motor "Calculando..." en Tiempo Real</h3>
-    <p>Avanza por las etapas de hardware, red y réplicas recalculando el costo mensual con animación numérica instantánea.</p>
-    <button type="button" @click="active = !active">Alternar</button>
-  </div>
-</template>
+<template><div class="cxd-special" data-cxd-control="stepper-checkout-calculator" ref="root"><h3>Configurador cloud</h3><div class="cxd-special__progress" role="progressbar" aria-label="Progreso" aria-valuemin="1" aria-valuemax="3" aria-valuenow="1"><span data-progress></span></div><div class="cxd-special__scene" data-scene><label>Hardware <select data-hardware><option value="20">Básico</option><option value="50">Avanzado</option><option value="90">Profesional</option></select></label><label>Red <select data-network><option value="10">Estándar</option><option value="25">Premium</option></select></label><label>Réplicas <input data-replicas type="number" min="1" max="10" value="1" /></label><strong data-total></strong></div><div class="cxd-special__actions"><button type="button" data-prev>Anterior</button><button type="button" data-next>Siguiente</button><button type="button" data-reset>Reiniciar</button></div><span role="status"></span></div></template>

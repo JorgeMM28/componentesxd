@@ -1,21 +1,4 @@
-/**
- * Variante 18 — Acordeón Técnico + Telemetría que Anima de 0% a 100% al Expandir — React / Next.js (TSX)
- * Archivo: components/special-hybrids/variants/accordion-animated-metrics/AccordionAnimatedMetrics.tsx
- */
-import React, { useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { mountAccordionAnimatedMetrics } from './accordion-animated-metrics.js';
 import './styles.css';
-
-export const AccordionAnimatedMetrics: React.FC<{ title?: string }> = ({
-  title = 'Variante 18 — Acordeón Técnico + Telemetría que Anima de 0% a 100% al Expandir'
-}) => {
-  const [active, setActive] = useState(false);
-  return (
-    <div className="cxd-special-hybrids-accordion-animated-metrics" data-active={active}>
-      <h3>{title}</h3>
-      <p>Cada vez que abres una sección del acordeón, sus barras y métricas internas se animan dinámicamente.</p>
-      <button type="button" onClick={() => setActive(!active)}>
-        Alternar Estado
-      </button>
-    </div>
-  );
-};
+export function AccordionAnimatedMetrics() { const root = useRef<HTMLDivElement>(null); useEffect(() => root.current ? mountAccordionAnimatedMetrics(root.current) : undefined, []); return <div className="cxd-special" data-cxd-control="accordion-animated-metrics" ref={root}><h3>Métricas de servicio</h3><div className="cxd-special__scene" data-scene><small data-phase>LISTO</small><strong data-value>0 / 3</strong><p data-copy>Demostración autónoma: ejecuta la acción para actualizar el escenario.</p><div className="cxd-special__progress"><span data-progress></span></div></div><div className="cxd-special__actions"><button type="button" data-run>Expandir métrica</button><button type="button" data-reset>Reiniciar</button></div><span role="status">Métricas contraídas</span></div>; }

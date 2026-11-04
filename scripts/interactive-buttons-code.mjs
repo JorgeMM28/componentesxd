@@ -42,7 +42,7 @@ export function buildInteractiveAdapters(id, fw, s, css = commonCss) {
   const marker = `data-cxd-control="${id}"`;
   const markup = s.markup.replace('data-cxd-control', marker);
   const selector = `[data-cxd-control="${id}"]`;
-  const js = `// Copia styles.css. La función devuelve un desmontador.\nexport function ${s.mount}(root) {\n  const controller = new AbortController(); const signal = controller.signal; let timer;\n  ${s.body}\n  return () => { controller.abort(); clearTimeout(timer); };\n}\n// Montaje: document.querySelectorAll('${selector}').forEach(${s.mount});\n// HTML:\n/*\n${markup}\n*/\n`;
+  const js = `// Copia styles.css. La función devuelve un desmontador.\n${s.imports ? s.imports + '\n' : ''}export function ${s.mount}(root) {\n  const controller = new AbortController(); const signal = controller.signal; let timer;\n  ${s.body}\n  return () => { controller.abort(); clearTimeout(timer); };\n}\n// Montaje: document.querySelectorAll('${selector}').forEach(${s.mount});\n// HTML:\n/*\n${markup}\n*/\n`;
   const jsx = markup.replace(marker, marker + ' ref={root}').replaceAll('class=', 'className=').replace(/(<input\b[^>]*?)\bvalue=/g, '$1defaultValue=').replace(/(<input\b[^>]*?)\bchecked(?=[\s/>])/g, '$1defaultChecked').replaceAll('inputmode=', 'inputMode=').replaceAll('maxlength=', 'maxLength=').replaceAll('autocomplete=', 'autoComplete=');
   const load = `import { ${s.mount} } from './${id}.js';`;
   const init = `document.querySelectorAll('${selector}:not([data-ready])').forEach(root => { root.dataset.ready = 'true'; ${s.mount}(root); });`;

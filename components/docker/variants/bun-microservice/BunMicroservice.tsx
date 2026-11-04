@@ -1,21 +1,4 @@
-/**
- * Variante 05 — Microservicio Ultra-Rápido con Bun Alpine — React / Next.js (TSX)
- * Archivo: components/docker/variants/bun-microservice/BunMicroservice.tsx
- */
-import React, { useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { mountBunMicroservice } from './bun-microservice.js';
 import './styles.css';
-
-export const BunMicroservice: React.FC<{ title?: string }> = ({
-  title = 'Variante 05 — Microservicio Ultra-Rápido con Bun Alpine'
-}) => {
-  const [active, setActive] = useState(false);
-  return (
-    <div className="cxd-docker-bun-microservice" data-active={active}>
-      <h3>{title}</h3>
-      <p>Ejecución directa de TypeScript con arranque en milisegundos y consumo mínimo de RAM.</p>
-      <button type="button" onClick={() => setActive(!active)}>
-        Alternar Estado
-      </button>
-    </div>
-  );
-};
+export function BunMicroservice() { const root = useRef<HTMLDivElement>(null); useEffect(() => root.current ? mountBunMicroservice(root.current) : undefined, []); return <section className="cxd-docker-flow" data-cxd-control="bun-microservice" ref={root}><h3>Microservicio Bun</h3><ol className="cxd-docker-flow__stages" data-stages><li className="cxd-docker-flow__stage" data-stage aria-current="true">Resolver lockfile</li><li className="cxd-docker-flow__stage" data-stage aria-current="false">Ejecutar TypeScript nativo</li><li className="cxd-docker-flow__stage" data-stage aria-current="false">Exponer endpoint HTTP</li></ol><div className="cxd-docker-flow__actions"><button type="button" data-run>Simular siguiente salto</button><button type="button" data-reset>Reiniciar topología</button></div><span role="status" aria-live="polite">Listo para simular la topología.</span></section>; }

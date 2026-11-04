@@ -1,14 +1,7 @@
-<!-- Variante 23 — Laberinto Interactivo de Alta Densidad (24×10 = 240 Micro-Celdas) con Algoritmo A* / BFS de Ruta Larga — Vue 3 SFC (components/special-hybrids/variants/pathfinding-dijkstra-visualizer/PathfindingDijkstraVisualizer.vue) -->
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
+import { mountPathfindingDijkstraVisualizer } from './pathfinding-dijkstra-visualizer.js';
 import './styles.css';
-const active = ref(false);
+const root = ref<HTMLElement | null>(null); let unmount: (() => void) | undefined; onMounted(() => { if (root.value) unmount = mountPathfindingDijkstraVisualizer(root.value); }); onUnmounted(() => unmount?.());
 </script>
-
-<template>
-  <div class="cxd-special-hybrids-pathfinding-dijkstra-visualizer" :data-active="active">
-    <h3>Variante 23 — Laberinto Interactivo de Alta Densidad (24×10 = 240 Micro-Celdas) con Algoritmo A* / BFS de Ruta Larga</h3>
-    <p>Matriz densa de 240 micro-recuadros con generador de laberinto serpenteante de 55+ pasos, creación manual de muros y onda de exploración animada con Anime.js v4.</p>
-    <button type="button" @click="active = !active">Alternar</button>
-  </div>
-</template>
+<template><div class="cxd-special" data-cxd-control="pathfinding-dijkstra-visualizer" ref="root"><h3>Explorador de rutas</h3><div class="cxd-special__scene" data-scene><small data-phase>LISTO</small><strong data-value>0 / 3</strong><p data-copy>Demostración autónoma: ejecuta la acción para actualizar el escenario.</p><div class="cxd-special__progress"><span data-progress></span></div></div><div class="cxd-special__actions"><button type="button" data-run>Buscar ruta</button><button type="button" data-reset>Reiniciar</button></div><span role="status">Laberinto restaurado</span></div></template>

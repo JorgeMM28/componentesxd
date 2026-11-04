@@ -1,18 +1,4 @@
-// Variante 14 — Buscador de Nodos + Matriz 2D con Onda Radial (stagger grid) — Angular 18+ Signals (components/special-hybrids/variants/search-grid-2d-ripple/search-grid-2d-ripple.component.ts)
-import { Component, signal } from '@angular/core';
-
-@Component({
-  selector: 'cxd-search-grid-2d-ripple',
-  standalone: true,
-  styleUrls: ['./styles.css'],
-  template: `
-    <div class="cxd-special-hybrids-search-grid-2d-ripple" [attr.data-active]="active()">
-      <h3>Variante 14 — Buscador de Nodos + Matriz 2D con Onda Radial (stagger grid)</h3>
-      <p>Haz clic en cualquier nodo del cluster o filtra por estado para expandir una onda 2D desde ese punto exacto.</p>
-      <button type="button" (click)="active.set(!active())">Alternar</button>
-    </div>
-  `
-})
-export class CxdSearchGrid2dRippleComponent {
-  active = signal(false);
-}
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import { mountSearchGrid2dRipple } from './search-grid-2d-ripple.js';
+@Component({ selector:'cxd-search-grid-2d-ripple', standalone:true, styleUrls:['./styles.css'], template:`<div class="cxd-special" data-cxd-control="search-grid-2d-ripple" #root><h3>Buscador de nodos</h3><div class="cxd-special__scene" data-scene><small data-phase>LISTO</small><strong data-value>0 / 3</strong><p data-copy>Demostración autónoma: ejecuta la acción para actualizar el escenario.</p><div class="cxd-special__progress"><span data-progress></span></div></div><div class="cxd-special__actions"><button type="button" data-run>Propagar onda</button><button type="button" data-reset>Reiniciar</button></div><span role="status">Matriz restaurada</span></div>` })
+export class SearchGrid2dRippleComponent implements AfterViewInit, OnDestroy { @ViewChild('root') root!: ElementRef<HTMLElement>; private unmount?: () => void; ngAfterViewInit() { this.unmount = mountSearchGrid2dRipple(this.root.nativeElement); } ngOnDestroy() { this.unmount?.(); } }

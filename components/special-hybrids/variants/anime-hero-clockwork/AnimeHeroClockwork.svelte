@@ -1,11 +1,6 @@
-<!-- Variante 21 — Escenario Relojería Cinética & Onda Radial (Inspirado en el Hero Oficial de Anime.js v4) — Svelte 5 Runes (components/special-hybrids/variants/anime-hero-clockwork/AnimeHeroClockwork.svelte) -->
 <script lang="ts">
-  import './styles.css';
-  let active = $state(false);
+import { mountAnimeHeroClockwork } from './anime-hero-clockwork.js';
+import './styles.css';
+function control(node: HTMLElement) { return { destroy: mountAnimeHeroClockwork(node) }; }
 </script>
-
-<div class="cxd-special-hybrids-anime-hero-clockwork" data-active={active}>
-  <h3>Variante 21 — Escenario Relojería Cinética & Onda Radial (Inspirado en el Hero Oficial de Anime.js v4)</h3>
-  <p>36 vectores radiales concéntricos, anillos orbitales y matriz sincronizada que ejecutan coreografías de relojería, explosión solar, vórtice espiral y pulso cuántico.</p>
-  <button type="button" onclick={() => (active = !active)}>Alternar</button>
-</div>
+<div class="cxd-special" data-cxd-control="anime-hero-clockwork" use:control><h3>Relojería cinética</h3><div class="cxd-special__scene" data-scene><small data-phase>LISTO</small><strong data-value>0 / 3</strong><p data-copy>Demostración autónoma: ejecuta la acción para actualizar el escenario.</p><div class="cxd-special__progress"><span data-progress></span></div></div><div class="cxd-special__actions"><button type="button" data-run>Iniciar coreografía</button><button type="button" data-reset>Reiniciar</button></div><span role="status">Escenario reiniciado</span></div>

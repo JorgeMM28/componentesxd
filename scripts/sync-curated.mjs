@@ -13,6 +13,8 @@ import { navigationCode } from './navigation-code.mjs';
 import { accordionCode } from './accordion-code.mjs';
 import { tableCode } from './table-code.mjs';
 import { carouselCode } from './carousel-code.mjs';
+import { specialCode, specialIds } from './special-code.mjs';
+import { dockerCode, dockerIds } from './docker-code.mjs';
 const registryPath = 'src/data/vaultRegistry.json';
 const registry = JSON.parse(fs.readFileSync(registryPath, 'utf8'));
 const category = registry.componentCategories.find(item => item.slug === 'buttons');
@@ -66,6 +68,16 @@ for (const variant of tables.variants) for (const [framework, file] of Object.en
 const carousels = registry.componentCategories.find(item => item.slug === 'carousels');
 for (const variant of carousels.variants) for (const [framework, file] of Object.entries(variant.files)) {
   file.code = carouselCode(variant.id, framework);
+  fs.writeFileSync(file.path, file.code, 'utf8');
+}
+const specials = registry.componentCategories.find(item => item.slug === 'special-hybrids');
+for (const variant of specials.variants.filter(item => specialIds.includes(item.id))) for (const [framework, file] of Object.entries(variant.files)) {
+  file.code = specialCode(variant.id, framework);
+  fs.writeFileSync(file.path, file.code, 'utf8');
+}
+const docker = registry.componentCategories.find(item => item.slug === 'docker');
+for (const variant of docker.variants.filter(item => dockerIds.includes(item.id))) for (const [framework, file] of Object.entries(variant.files)) {
+  file.code = dockerCode(variant.id, framework);
   fs.writeFileSync(file.path, file.code, 'utf8');
 }
 fs.writeFileSync(registryPath, JSON.stringify(registry, null, 2) + '\n');

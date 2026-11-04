@@ -1,21 +1,4 @@
-/**
- * Variante 22 — Mapa Mundial Interactivo con Rutas de Tráfico en Vivo (svg.createMotionPath) — React / Next.js (TSX)
- * Archivo: components/special-hybrids/variants/interactive-world-telemetry-map/InteractiveWorldTelemetryMap.tsx
- */
-import React, { useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { mountInteractiveWorldTelemetryMap } from './interactive-world-telemetry-map.js';
 import './styles.css';
-
-export const InteractiveWorldTelemetryMap: React.FC<{ title?: string }> = ({
-  title = 'Variante 22 — Mapa Mundial Interactivo con Rutas de Tráfico en Vivo (svg.createMotionPath)'
-}) => {
-  const [active, setActive] = useState(false);
-  return (
-    <div className="cxd-special-hybrids-interactive-world-telemetry-map" data-active={active}>
-      <h3>{title}</h3>
-      <p>Haz clic en cualquier centro de datos (Tokyo, Frankfurt, New York, São Paulo, Sydney, SF) para redirigir los paquetes luminosos globales y disparar ondas de choque.</p>
-      <button type="button" onClick={() => setActive(!active)}>
-        Alternar Estado
-      </button>
-    </div>
-  );
-};
+export function InteractiveWorldTelemetryMap() { const root = useRef<HTMLDivElement>(null); useEffect(() => root.current ? mountInteractiveWorldTelemetryMap(root.current) : undefined, []); return <div className="cxd-special" data-cxd-control="interactive-world-telemetry-map" ref={root}><h3>Telemetría mundial</h3><div className="cxd-special__scene" data-scene><small data-phase>LISTO</small><strong data-value>0 / 3</strong><p data-copy>Demostración autónoma: ejecuta la acción para actualizar el escenario.</p><div className="cxd-special__progress"><span data-progress></span></div></div><div className="cxd-special__actions"><button type="button" data-run>Redirigir tráfico</button><button type="button" data-reset>Reiniciar</button></div><span role="status">Ruta global restaurada</span></div>; }

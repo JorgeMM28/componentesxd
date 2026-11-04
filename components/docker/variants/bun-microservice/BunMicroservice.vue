@@ -1,14 +1,7 @@
-<!-- Variante 05 — Microservicio Ultra-Rápido con Bun Alpine — Vue 3 SFC (components/docker/variants/bun-microservice/BunMicroservice.vue) -->
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
+import { mountBunMicroservice } from './bun-microservice.js';
 import './styles.css';
-const active = ref(false);
+const root = ref<HTMLElement | null>(null); let unmount: (() => void) | undefined; onMounted(() => { if (root.value) unmount = mountBunMicroservice(root.value); }); onUnmounted(() => unmount?.());
 </script>
-
-<template>
-  <div class="cxd-docker-bun-microservice" :data-active="active">
-    <h3>Variante 05 — Microservicio Ultra-Rápido con Bun Alpine</h3>
-    <p>Ejecución directa de TypeScript con arranque en milisegundos y consumo mínimo de RAM.</p>
-    <button type="button" @click="active = !active">Alternar</button>
-  </div>
-</template>
+<template><section class="cxd-docker-flow" data-cxd-control="bun-microservice" ref="root"><h3>Microservicio Bun</h3><ol class="cxd-docker-flow__stages" data-stages><li class="cxd-docker-flow__stage" data-stage aria-current="true">Resolver lockfile</li><li class="cxd-docker-flow__stage" data-stage aria-current="false">Ejecutar TypeScript nativo</li><li class="cxd-docker-flow__stage" data-stage aria-current="false">Exponer endpoint HTTP</li></ol><div class="cxd-docker-flow__actions"><button type="button" data-run>Simular siguiente salto</button><button type="button" data-reset>Reiniciar topología</button></div><span role="status" aria-live="polite">Listo para simular la topología.</span></section></template>

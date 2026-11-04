@@ -1,21 +1,4 @@
-/**
- * Variante 03 — Tabla con Reordenamiento Coreografiado (stagger) y Barras Cinéticas — React / Next.js (TSX)
- * Archivo: components/special-hybrids/variants/table-stagger-sorter/TableStaggerSorter.tsx
- */
-import React, { useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { mountTableStaggerSorter } from './table-stagger-sorter.js';
 import './styles.css';
-
-export const TableStaggerSorter: React.FC<{ title?: string }> = ({
-  title = 'Variante 03 — Tabla con Reordenamiento Coreografiado (stagger) y Barras Cinéticas'
-}) => {
-  const [active, setActive] = useState(false);
-  return (
-    <div className="cxd-special-hybrids-table-stagger-sorter" data-active={active}>
-      <h3>{title}</h3>
-      <p>Ordena por latencia, carga o nombre y observa cómo todas las filas y sus barras internas se reacomodan con una onda escalonada.</p>
-      <button type="button" onClick={() => setActive(!active)}>
-        Alternar Estado
-      </button>
-    </div>
-  );
-};
+export function TableStaggerSorter() { const root = useRef<HTMLDivElement>(null); useEffect(() => root.current ? mountTableStaggerSorter(root.current) : undefined, []); return <div className="cxd-special" data-cxd-control="table-stagger-sorter" ref={root}><h3>Telemetría ordenable</h3><div className="cxd-special__actions"><label>Ordenar por <select data-sort><option value="name">Nombre</option><option value="latency">Latencia</option><option value="load">Carga</option></select></label><button type="button" data-direction>Orden ascendente</button></div><table><thead><tr><th>Nodo</th><th>Latencia</th><th>Carga</th></tr></thead><tbody data-rows><tr data-name="Alfa" data-latency="42" data-load="68"><td>Alfa</td><td>42 ms</td><td>68% <span className="cxd-special__bar" data-bar="68"></span></td></tr><tr data-name="Beta" data-latency="18" data-load="35"><td>Beta</td><td>18 ms</td><td>35% <span className="cxd-special__bar" data-bar="35"></span></td></tr><tr data-name="Gamma" data-latency="76" data-load="91"><td>Gamma</td><td>76 ms</td><td>91% <span className="cxd-special__bar" data-bar="91"></span></td></tr></tbody></table><span role="status"></span></div>; }

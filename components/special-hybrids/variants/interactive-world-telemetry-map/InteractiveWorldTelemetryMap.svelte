@@ -1,11 +1,6 @@
-<!-- Variante 22 — Mapa Mundial Interactivo con Rutas de Tráfico en Vivo (svg.createMotionPath) — Svelte 5 Runes (components/special-hybrids/variants/interactive-world-telemetry-map/InteractiveWorldTelemetryMap.svelte) -->
 <script lang="ts">
-  import './styles.css';
-  let active = $state(false);
+import { mountInteractiveWorldTelemetryMap } from './interactive-world-telemetry-map.js';
+import './styles.css';
+function control(node: HTMLElement) { return { destroy: mountInteractiveWorldTelemetryMap(node) }; }
 </script>
-
-<div class="cxd-special-hybrids-interactive-world-telemetry-map" data-active={active}>
-  <h3>Variante 22 — Mapa Mundial Interactivo con Rutas de Tráfico en Vivo (svg.createMotionPath)</h3>
-  <p>Haz clic en cualquier centro de datos (Tokyo, Frankfurt, New York, São Paulo, Sydney, SF) para redirigir los paquetes luminosos globales y disparar ondas de choque.</p>
-  <button type="button" onclick={() => (active = !active)}>Alternar</button>
-</div>
+<div class="cxd-special" data-cxd-control="interactive-world-telemetry-map" use:control><h3>Telemetría mundial</h3><div class="cxd-special__scene" data-scene><small data-phase>LISTO</small><strong data-value>0 / 3</strong><p data-copy>Demostración autónoma: ejecuta la acción para actualizar el escenario.</p><div class="cxd-special__progress"><span data-progress></span></div></div><div class="cxd-special__actions"><button type="button" data-run>Redirigir tráfico</button><button type="button" data-reset>Reiniciar</button></div><span role="status">Ruta global restaurada</span></div>

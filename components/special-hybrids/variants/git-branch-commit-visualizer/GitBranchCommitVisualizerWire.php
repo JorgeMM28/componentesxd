@@ -1,17 +1,11 @@
 <?php
-// Variante 29 — Diagrama Interactivo de Grafo Git Multirama (main, develop, feat/anime, Tags & Merge Curves SVG) — Laravel Livewire 3 (components/special-hybrids/variants/git-branch-commit-visualizer/GitBranchCommitVisualizerWire.php)
-namespace App\Livewire\Cxd\SpecialHybrids;
+namespace App\Livewire;
 use Livewire\Component;
-
-class GitBranchCommitVisualizerWire extends Component {
-    public bool $active = false;
-    public function toggle(): void { $this->active = !$this->active; }
-    public function render() {
-        return <<<'HTML'
-        <div class="cxd-special-hybrids-git-branch-commit-visualizer">
-            <h3>Variante 29 — Diagrama Interactivo de Grafo Git Multirama (main, develop, feat/anime, Tags & Merge Curves SVG)</h3>
-            <button type="button" wire:click="toggle">Estado: {{ $active ? 'ON' : 'OFF' }}</button>
-        </div>
-        HTML;
-    }
-}
+// Incluye styles.css y ajusta la ruta del módulo.
+class GitBranchCommitVisualizerWire extends Component { public function render(): string { return <<<'HTML'
+<div class="cxd-special" data-cxd-control="git-branch-commit-visualizer" wire:ignore><h3>Grafo de ramas</h3><div class="cxd-special__scene" data-scene><small data-phase>LISTO</small><strong data-value>0 / 3</strong><p data-copy>Demostración autónoma: ejecuta la acción para actualizar el escenario.</p><div class="cxd-special__progress"><span data-progress></span></div></div><div class="cxd-special__actions"><button type="button" data-run>Crear commit</button><button type="button" data-reset>Reiniciar</button></div><span role="status">Rama restaurada</span>@script
+<script>
+import('/assets/git-branch-commit-visualizer.js').then(module => module.mountGitBranchCommitVisualizer($wire.$el));
+</script>
+@endscript</div>
+HTML; } }

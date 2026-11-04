@@ -1,18 +1,4 @@
-// Variante 04 — Carrusel de Escenas + Transformación Geométrica SVG (svg.morphTo) — Angular 18+ Signals (components/special-hybrids/variants/carousel-svg-morph-showcase/carousel-svg-morph-showcase.component.ts)
-import { Component, signal } from '@angular/core';
-
-@Component({
-  selector: 'cxd-carousel-svg-morph-showcase',
-  standalone: true,
-  styleUrls: ['./styles.css'],
-  template: `
-    <div class="cxd-special-hybrids-carousel-svg-morph-showcase" [attr.data-active]="active()">
-      <h3>Variante 04 — Carrusel de Escenas + Transformación Geométrica SVG (svg.morphTo)</h3>
-      <p>Cada diapositiva del carrusel transforma los vértices del polígono vectorial central e interpola las métricas del sistema.</p>
-      <button type="button" (click)="active.set(!active())">Alternar</button>
-    </div>
-  `
-})
-export class CxdCarouselSvgMorphShowcaseComponent {
-  active = signal(false);
-}
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import { mountCarouselSvgMorphShowcase } from './carousel-svg-morph-showcase.js';
+@Component({ selector:'cxd-carousel-svg-morph-showcase', standalone:true, styleUrls:['./styles.css'], template:`<div class="cxd-special" data-cxd-control="carousel-svg-morph-showcase" #root><h3>Carrusel de escenas SVG</h3><div class="cxd-special__scene"><svg viewBox="0 0 120 120" width="120" height="120" aria-hidden="true"><polygon data-shape points="60,10 110,60 60,110 10,60" fill="#9b82ff"></polygon></svg><strong data-title></strong><p data-copy></p></div><div class="cxd-special__actions"><button type="button" data-prev>Anterior</button><button type="button" data-next>Siguiente</button><button type="button" data-reset>Reiniciar</button></div><span role="status"></span></div>` })
+export class CarouselSvgMorphShowcaseComponent implements AfterViewInit, OnDestroy { @ViewChild('root') root!: ElementRef<HTMLElement>; private unmount?: () => void; ngAfterViewInit() { this.unmount = mountCarouselSvgMorphShowcase(this.root.nativeElement); } ngOnDestroy() { this.unmount?.(); } }

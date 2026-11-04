@@ -1,14 +1,7 @@
-<!-- Variante 13 — Carrusel Cinético Controlado por Slider Scrubber (timeline.seek) — Vue 3 SFC (components/special-hybrids/variants/carousel-timeline-scrubber/CarouselTimelineScrubber.vue) -->
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
+import { mountCarouselTimelineScrubber } from './carousel-timeline-scrubber.js';
 import './styles.css';
-const active = ref(false);
+const root = ref<HTMLElement | null>(null); let unmount: (() => void) | undefined; onMounted(() => { if (root.value) unmount = mountCarouselTimelineScrubber(root.value); }); onUnmounted(() => unmount?.());
 </script>
-
-<template>
-  <div class="cxd-special-hybrids-carousel-timeline-scrubber" :data-active="active">
-    <h3>Variante 13 — Carrusel Cinético Controlado por Slider Scrubber (timeline.seek)</h3>
-    <p>Arrastra la barra de tiempo para controlar manualmente la posición, rotación y escala de todo el carrusel.</p>
-    <button type="button" @click="active = !active">Alternar</button>
-  </div>
-</template>
+<template><div class="cxd-special" data-cxd-control="carousel-timeline-scrubber" ref="root"><h3>Línea de tiempo</h3><div class="cxd-special__scene" data-scene><small data-phase>LISTO</small><strong data-value>0 / 3</strong><p data-copy>Demostración autónoma: ejecuta la acción para actualizar el escenario.</p><div class="cxd-special__progress"><span data-progress></span></div></div><div class="cxd-special__actions"><button type="button" data-run>Avanzar escena</button><button type="button" data-reset>Reiniciar</button></div><span role="status">Escena inicial</span></div></template>

@@ -1,17 +1,11 @@
 <?php
-// Variante 08 — Despachador de Toasts Apilados 3D + Cronómetro createTimer() — Laravel Livewire 3 (components/special-hybrids/variants/toast-timeline-dispatcher/ToastTimelineDispatcherWire.php)
-namespace App\Livewire\Cxd\SpecialHybrids;
+namespace App\Livewire;
 use Livewire\Component;
-
-class ToastTimelineDispatcherWire extends Component {
-    public bool $active = false;
-    public function toggle(): void { $this->active = !$this->active; }
-    public function render() {
-        return <<<'HTML'
-        <div class="cxd-special-hybrids-toast-timeline-dispatcher">
-            <h3>Variante 08 — Despachador de Toasts Apilados 3D + Cronómetro createTimer()</h3>
-            <button type="button" wire:click="toggle">Estado: {{ $active ? 'ON' : 'OFF' }}</button>
-        </div>
-        HTML;
-    }
-}
+// Incluye styles.css y ajusta la ruta del módulo.
+class ToastTimelineDispatcherWire extends Component { public function render(): string { return <<<'HTML'
+<div class="cxd-special" data-cxd-control="toast-timeline-dispatcher" wire:ignore><h3>Despachador de alertas</h3><div class="cxd-special__scene" data-scene><small data-phase>LISTO</small><strong data-value>0 / 3</strong><p data-copy>Demostración autónoma: ejecuta la acción para actualizar el escenario.</p><div class="cxd-special__progress"><span data-progress></span></div></div><div class="cxd-special__actions"><button type="button" data-run>Despachar alerta</button><button type="button" data-reset>Reiniciar</button></div><span role="status">La cola está vacía</span>@script
+<script>
+import('/assets/toast-timeline-dispatcher.js').then(module => module.mountToastTimelineDispatcher($wire.$el));
+</script>
+@endscript</div>
+HTML; } }

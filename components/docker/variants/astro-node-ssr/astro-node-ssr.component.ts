@@ -1,18 +1,4 @@
-// Variante 01 — Astro / Node 22 Alpine Multi-Stage SSR — Angular 18+ Signals (components/docker/variants/astro-node-ssr/astro-node-ssr.component.ts)
-import { Component, signal } from '@angular/core';
-
-@Component({
-  selector: 'cxd-astro-node-ssr',
-  standalone: true,
-  styleUrls: ['./styles.css'],
-  template: `
-    <div class="cxd-docker-astro-node-ssr" [attr.data-active]="active()">
-      <h3>Variante 01 — Astro / Node 22 Alpine Multi-Stage SSR</h3>
-      <p>Contenedor de producción de 3 etapas (deps → builder → runner sin root) para Astro, Next o Remix.</p>
-      <button type="button" (click)="active.set(!active())">Alternar</button>
-    </div>
-  `
-})
-export class CxdAstroNodeSsrComponent {
-  active = signal(false);
-}
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import { mountAstroNodeSsr } from './astro-node-ssr.js';
+@Component({ selector:'cxd-astro-node-ssr', standalone:true, styleUrls:['./styles.css'], template:`<section class="cxd-docker-flow" data-cxd-control="astro-node-ssr" #root><h3>Astro / Node SSR</h3><ol class="cxd-docker-flow__stages" data-stages><li class="cxd-docker-flow__stage" data-stage aria-current="true">Instalar dependencias</li><li class="cxd-docker-flow__stage" data-stage aria-current="false">Compilar rutas estáticas</li><li class="cxd-docker-flow__stage" data-stage aria-current="false">Arrancar runner sin root</li></ol><div class="cxd-docker-flow__actions"><button type="button" data-run>Simular siguiente salto</button><button type="button" data-reset>Reiniciar topología</button></div><span role="status" aria-live="polite">Listo para simular la topología.</span></section>` })
+export class AstroNodeSsrComponent implements AfterViewInit, OnDestroy { @ViewChild('root') root!: ElementRef<HTMLElement>; private unmount?: () => void; ngAfterViewInit() { this.unmount = mountAstroNodeSsr(this.root.nativeElement); } ngOnDestroy() { this.unmount?.(); } }

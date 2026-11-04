@@ -1,21 +1,4 @@
-/**
- * Variante 20 — Tabla de Incidentes en Vivo + Cronómetro SLA (createTimer) + Resolución — React / Next.js (TSX)
- * Archivo: components/special-hybrids/variants/chrono-sla-incident-table/ChronoSlaIncidentTable.tsx
- */
-import React, { useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { mountChronoSlaIncidentTable } from './chrono-sla-incident-table.js';
 import './styles.css';
-
-export const ChronoSlaIncidentTable: React.FC<{ title?: string }> = ({
-  title = 'Variante 20 — Tabla de Incidentes en Vivo + Cronómetro SLA (createTimer) + Resolución'
-}) => {
-  const [active, setActive] = useState(false);
-  return (
-    <div className="cxd-special-hybrids-chrono-sla-incident-table" data-active={active}>
-      <h3>{title}</h3>
-      <p>Monitorea el tiempo transcurrido en vivo con centésimas de segundo y resuelve incidentes con animación de fila.</p>
-      <button type="button" onClick={() => setActive(!active)}>
-        Alternar Estado
-      </button>
-    </div>
-  );
-};
+export function ChronoSlaIncidentTable() { const root = useRef<HTMLDivElement>(null); useEffect(() => root.current ? mountChronoSlaIncidentTable(root.current) : undefined, []); return <div className="cxd-special" data-cxd-control="chrono-sla-incident-table" ref={root}><h3>Incidentes SLA</h3><div className="cxd-special__scene" data-scene><small data-phase>LISTO</small><strong data-value>0 / 3</strong><p data-copy>Demostración autónoma: ejecuta la acción para actualizar el escenario.</p><div className="cxd-special__progress"><span data-progress></span></div></div><div className="cxd-special__actions"><button type="button" data-run>Resolver incidente</button><button type="button" data-reset>Reiniciar</button></div><span role="status">Incidente reabierto</span></div>; }

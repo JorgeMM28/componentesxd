@@ -1,15 +1,1 @@
-/**
- * ============================================================================
- * COMPONENTESXD — DOCKERFILES Y ORQUESTACIÓN DE CONTENEDORES
- * Variante 04 — Docker Compose Fullstack (App + Postgres 17 + Redis 7.4)
- * Archivo: components/docker/variants/fullstack-compose-stack/styles.css
- * ============================================================================
- */
-.cxd-docker-fullstack-compose-stack {
-  background: var(--cxd-bg-surface);
-  color: var(--cxd-text-primary);
-  border: var(--cxd-border-width, 1px) solid var(--cxd-border);
-  border-radius: var(--cxd-radius-md);
-  font-family: var(--cxd-font-sans);
-  font-variant-numeric: tabular-nums;
-}
+.cxd-docker-flow{box-sizing:border-box;width:min(100%,46rem);padding:1.25rem;border:1px solid #506777;border-radius:1rem;background:linear-gradient(135deg,#0d1c27,#142837);color:#edf8ff;font:500 .92rem/1.5 system-ui}.cxd-docker-flow *{box-sizing:border-box}.cxd-docker-flow h3{margin:0}.cxd-docker-flow__stages{display:grid;gap:.65rem;margin:1rem 0;padding:0;list-style:none;counter-reset:stage}.cxd-docker-flow__stage{display:flex;gap:.65rem;align-items:center;padding:.7rem .8rem;border:1px solid #496373;border-radius:.7rem;background:#10212d}.cxd-docker-flow__stage::before{counter-increment:stage;content:counter(stage,decimal-leading-zero);font:700 .72rem ui-monospace,monospace;color:#8af1da}.cxd-docker-flow__stage[aria-current=true]{border-color:#8af1da;background:#15443f;color:#fff}.cxd-docker-flow__actions{display:flex;flex-wrap:wrap;gap:.55rem}.cxd-docker-flow button{font:inherit;color:inherit;border:1px solid #6d96a9;border-radius:.55rem;padding:.55rem .8rem;background:#183544;cursor:pointer}.cxd-docker-flow button:hover{background:#245068}.cxd-docker-flow button:focus-visible{outline:3px solid #8af1da;outline-offset:3px}.cxd-docker-flow [role=status]{display:block;margin-top:.75rem;color:#b8d9e8}@media (max-width:500px){.cxd-docker-flow{padding:.85rem}.cxd-docker-flow__stage{align-items:flex-start}}@media (prefers-reduced-motion:reduce){.cxd-docker-flow *{transition:none!important;scroll-behavior:auto!important}}

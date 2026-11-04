@@ -1,17 +1,11 @@
 <?php
-// Variante 21 — Escenario Relojería Cinética & Onda Radial (Inspirado en el Hero Oficial de Anime.js v4) — Laravel Livewire 3 (components/special-hybrids/variants/anime-hero-clockwork/AnimeHeroClockworkWire.php)
-namespace App\Livewire\Cxd\SpecialHybrids;
+namespace App\Livewire;
 use Livewire\Component;
-
-class AnimeHeroClockworkWire extends Component {
-    public bool $active = false;
-    public function toggle(): void { $this->active = !$this->active; }
-    public function render() {
-        return <<<'HTML'
-        <div class="cxd-special-hybrids-anime-hero-clockwork">
-            <h3>Variante 21 — Escenario Relojería Cinética & Onda Radial (Inspirado en el Hero Oficial de Anime.js v4)</h3>
-            <button type="button" wire:click="toggle">Estado: {{ $active ? 'ON' : 'OFF' }}</button>
-        </div>
-        HTML;
-    }
-}
+// Incluye styles.css y ajusta la ruta del módulo.
+class AnimeHeroClockworkWire extends Component { public function render(): string { return <<<'HTML'
+<div class="cxd-special" data-cxd-control="anime-hero-clockwork" wire:ignore><h3>Relojería cinética</h3><div class="cxd-special__scene" data-scene><small data-phase>LISTO</small><strong data-value>0 / 3</strong><p data-copy>Demostración autónoma: ejecuta la acción para actualizar el escenario.</p><div class="cxd-special__progress"><span data-progress></span></div></div><div class="cxd-special__actions"><button type="button" data-run>Iniciar coreografía</button><button type="button" data-reset>Reiniciar</button></div><span role="status">Escenario reiniciado</span>@script
+<script>
+import('/assets/anime-hero-clockwork.js').then(module => module.mountAnimeHeroClockwork($wire.$el));
+</script>
+@endscript</div>
+HTML; } }

@@ -1,18 +1,4 @@
-// Variante 12 — Tabla con Skeleton Cargando → Hidratación Real Escalonada — Angular 18+ Signals (components/special-hybrids/variants/skeleton-to-table-hydrator/skeleton-to-table-hydrator.component.ts)
-import { Component, signal } from '@angular/core';
-
-@Component({
-  selector: 'cxd-skeleton-to-table-hydrator',
-  standalone: true,
-  styleUrls: ['./styles.css'],
-  template: `
-    <div class="cxd-special-hybrids-skeleton-to-table-hydrator" [attr.data-active]="active()">
-      <h3>Variante 12 — Tabla con Skeleton Cargando → Hidratación Real Escalonada</h3>
-      <p>Conmuta entre el estado de carga (Skeleton Shimmer) y la tabla hidratada con entrada escalonada por fila.</p>
-      <button type="button" (click)="active.set(!active())">Alternar</button>
-    </div>
-  `
-})
-export class CxdSkeletonToTableHydratorComponent {
-  active = signal(false);
-}
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import { mountSkeletonToTableHydrator } from './skeleton-to-table-hydrator.js';
+@Component({ selector:'cxd-skeleton-to-table-hydrator', standalone:true, styleUrls:['./styles.css'], template:`<div class="cxd-special" data-cxd-control="skeleton-to-table-hydrator" #root><h3>Hidratador de datos</h3><div class="cxd-special__scene" data-scene><small data-phase>LISTO</small><strong data-value>0 / 3</strong><p data-copy>Demostración autónoma: ejecuta la acción para actualizar el escenario.</p><div class="cxd-special__progress"><span data-progress></span></div></div><div class="cxd-special__actions"><button type="button" data-run>Hidratar tabla</button><button type="button" data-reset>Reiniciar</button></div><span role="status">Skeleton restaurado</span></div>` })
+export class SkeletonToTableHydratorComponent implements AfterViewInit, OnDestroy { @ViewChild('root') root!: ElementRef<HTMLElement>; private unmount?: () => void; ngAfterViewInit() { this.unmount = mountSkeletonToTableHydrator(this.root.nativeElement); } ngOnDestroy() { this.unmount?.(); } }

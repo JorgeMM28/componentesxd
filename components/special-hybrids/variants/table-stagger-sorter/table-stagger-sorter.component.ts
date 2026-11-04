@@ -1,18 +1,4 @@
-// Variante 03 — Tabla con Reordenamiento Coreografiado (stagger) y Barras Cinéticas — Angular 18+ Signals (components/special-hybrids/variants/table-stagger-sorter/table-stagger-sorter.component.ts)
-import { Component, signal } from '@angular/core';
-
-@Component({
-  selector: 'cxd-table-stagger-sorter',
-  standalone: true,
-  styleUrls: ['./styles.css'],
-  template: `
-    <div class="cxd-special-hybrids-table-stagger-sorter" [attr.data-active]="active()">
-      <h3>Variante 03 — Tabla con Reordenamiento Coreografiado (stagger) y Barras Cinéticas</h3>
-      <p>Ordena por latencia, carga o nombre y observa cómo todas las filas y sus barras internas se reacomodan con una onda escalonada.</p>
-      <button type="button" (click)="active.set(!active())">Alternar</button>
-    </div>
-  `
-})
-export class CxdTableStaggerSorterComponent {
-  active = signal(false);
-}
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import { mountTableStaggerSorter } from './table-stagger-sorter.js';
+@Component({ selector:'cxd-table-stagger-sorter', standalone:true, styleUrls:['./styles.css'], template:`<div class="cxd-special" data-cxd-control="table-stagger-sorter" #root><h3>Telemetría ordenable</h3><div class="cxd-special__actions"><label>Ordenar por <select data-sort><option value="name">Nombre</option><option value="latency">Latencia</option><option value="load">Carga</option></select></label><button type="button" data-direction>Orden ascendente</button></div><table><thead><tr><th>Nodo</th><th>Latencia</th><th>Carga</th></tr></thead><tbody data-rows><tr data-name="Alfa" data-latency="42" data-load="68"><td>Alfa</td><td>42 ms</td><td>68% <span class="cxd-special__bar" data-bar="68"></span></td></tr><tr data-name="Beta" data-latency="18" data-load="35"><td>Beta</td><td>18 ms</td><td>35% <span class="cxd-special__bar" data-bar="35"></span></td></tr><tr data-name="Gamma" data-latency="76" data-load="91"><td>Gamma</td><td>76 ms</td><td>91% <span class="cxd-special__bar" data-bar="91"></span></td></tr></tbody></table><span role="status"></span></div>` })
+export class TableStaggerSorterComponent implements AfterViewInit, OnDestroy { @ViewChild('root') root!: ElementRef<HTMLElement>; private unmount?: () => void; ngAfterViewInit() { this.unmount = mountTableStaggerSorter(this.root.nativeElement); } ngOnDestroy() { this.unmount?.(); } }

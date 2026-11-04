@@ -1,21 +1,4 @@
-/**
- * Variante 02 — Laravel 11 + Livewire 3 + PHP 8.3 FPM + OPcache — React / Next.js (TSX)
- * Archivo: components/docker/variants/laravel-livewire-fpm/LaravelLivewireFpm.tsx
- */
-import React, { useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { mountLaravelLivewireFpm } from './laravel-livewire-fpm.js';
 import './styles.css';
-
-export const LaravelLivewireFpm: React.FC<{ title?: string }> = ({
-  title = 'Variante 02 — Laravel 11 + Livewire 3 + PHP 8.3 FPM + OPcache'
-}) => {
-  const [active, setActive] = useState(false);
-  return (
-    <div className="cxd-docker-laravel-livewire-fpm" data-active={active}>
-      <h3>{title}</h3>
-      <p>Imagen lista para Laravel y Blade con OPcache JIT, Redis, PostgreSQL y Composer 2.8.</p>
-      <button type="button" onClick={() => setActive(!active)}>
-        Alternar Estado
-      </button>
-    </div>
-  );
-};
+export function LaravelLivewireFpm() { const root = useRef<HTMLDivElement>(null); useEffect(() => root.current ? mountLaravelLivewireFpm(root.current) : undefined, []); return <section className="cxd-docker-flow" data-cxd-control="laravel-livewire-fpm" ref={root}><h3>Laravel + Livewire</h3><ol className="cxd-docker-flow__stages" data-stages><li className="cxd-docker-flow__stage" data-stage aria-current="true">Nginx FastCGI</li><li className="cxd-docker-flow__stage" data-stage aria-current="false">PHP-FPM con OPcache</li><li className="cxd-docker-flow__stage" data-stage aria-current="false">Worker Horizon y Redis</li></ol><div className="cxd-docker-flow__actions"><button type="button" data-run>Simular siguiente salto</button><button type="button" data-reset>Reiniciar topología</button></div><span role="status" aria-live="polite">Listo para simular la topología.</span></section>; }

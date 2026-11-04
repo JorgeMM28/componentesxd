@@ -1,18 +1,4 @@
-// Variante 06 — Step-by-Step Configurador Cloud + Motor "Calculando..." en Tiempo Real — Angular 18+ Signals (components/special-hybrids/variants/stepper-checkout-calculator/stepper-checkout-calculator.component.ts)
-import { Component, signal } from '@angular/core';
-
-@Component({
-  selector: 'cxd-stepper-checkout-calculator',
-  standalone: true,
-  styleUrls: ['./styles.css'],
-  template: `
-    <div class="cxd-special-hybrids-stepper-checkout-calculator" [attr.data-active]="active()">
-      <h3>Variante 06 — Step-by-Step Configurador Cloud + Motor "Calculando..." en Tiempo Real</h3>
-      <p>Avanza por las etapas de hardware, red y réplicas recalculando el costo mensual con animación numérica instantánea.</p>
-      <button type="button" (click)="active.set(!active())">Alternar</button>
-    </div>
-  `
-})
-export class CxdStepperCheckoutCalculatorComponent {
-  active = signal(false);
-}
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import { mountStepperCheckoutCalculator } from './stepper-checkout-calculator.js';
+@Component({ selector:'cxd-stepper-checkout-calculator', standalone:true, styleUrls:['./styles.css'], template:`<div class="cxd-special" data-cxd-control="stepper-checkout-calculator" #root><h3>Configurador cloud</h3><div class="cxd-special__progress" role="progressbar" aria-label="Progreso" aria-valuemin="1" aria-valuemax="3" aria-valuenow="1"><span data-progress></span></div><div class="cxd-special__scene" data-scene><label>Hardware <select data-hardware><option value="20">Básico</option><option value="50">Avanzado</option><option value="90">Profesional</option></select></label><label>Red <select data-network><option value="10">Estándar</option><option value="25">Premium</option></select></label><label>Réplicas <input data-replicas type="number" min="1" max="10" value="1" /></label><strong data-total></strong></div><div class="cxd-special__actions"><button type="button" data-prev>Anterior</button><button type="button" data-next>Siguiente</button><button type="button" data-reset>Reiniciar</button></div><span role="status"></span></div>` })
+export class StepperCheckoutCalculatorComponent implements AfterViewInit, OnDestroy { @ViewChild('root') root!: ElementRef<HTMLElement>; private unmount?: () => void; ngAfterViewInit() { this.unmount = mountStepperCheckoutCalculator(this.root.nativeElement); } ngOnDestroy() { this.unmount?.(); } }

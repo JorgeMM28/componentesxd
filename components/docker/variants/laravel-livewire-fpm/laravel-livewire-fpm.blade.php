@@ -1,7 +1,6 @@
-{{-- Variante 02 — Laravel 11 + Livewire 3 + PHP 8.3 FPM + OPcache — Laravel Blade (components/docker/variants/laravel-livewire-fpm/laravel-livewire-fpm.blade.php) --}}
-@props(['title' => 'Variante 02 — Laravel 11 + Livewire 3 + PHP 8.3 FPM + OPcache'])
-<div {{ $attributes->merge(['class' => 'cxd-docker-laravel-livewire-fpm']) }}>
-    <h3>{{ $title }}</h3>
-    <p>Imagen lista para Laravel y Blade con OPcache JIT, Redis, PostgreSQL y Composer 2.8.</p>
-    {{ $slot }}
-</div>
+{{-- Incluye styles.css y ajusta la ruta del módulo. --}}
+<section class="cxd-docker-flow" data-cxd-control="laravel-livewire-fpm"><h3>Laravel + Livewire</h3><ol class="cxd-docker-flow__stages" data-stages><li class="cxd-docker-flow__stage" data-stage aria-current="true">Nginx FastCGI</li><li class="cxd-docker-flow__stage" data-stage aria-current="false">PHP-FPM con OPcache</li><li class="cxd-docker-flow__stage" data-stage aria-current="false">Worker Horizon y Redis</li></ol><div class="cxd-docker-flow__actions"><button type="button" data-run>Simular siguiente salto</button><button type="button" data-reset>Reiniciar topología</button></div><span role="status" aria-live="polite">Listo para simular la topología.</span></section>
+<script type="module">
+import { mountLaravelLivewireFpm } from '/assets/laravel-livewire-fpm.js';
+document.querySelectorAll('[data-cxd-control="laravel-livewire-fpm"]:not([data-ready])').forEach(root => { root.dataset.ready = 'true'; mountLaravelLivewireFpm(root); });
+</script>

@@ -1,18 +1,4 @@
-// Variante 09 — Tablero Kanban con Física Spring + Barra de Progreso Global Animada — Angular 18+ Signals (components/special-hybrids/variants/kanban-spring-pipeline/kanban-spring-pipeline.component.ts)
-import { Component, signal } from '@angular/core';
-
-@Component({
-  selector: 'cxd-kanban-spring-pipeline',
-  standalone: true,
-  styleUrls: ['./styles.css'],
-  template: `
-    <div class="cxd-special-hybrids-kanban-spring-pipeline" [attr.data-active]="active()">
-      <h3>Variante 09 — Tablero Kanban con Física Spring + Barra de Progreso Global Animada</h3>
-      <p>Promueve tarjetas entre etapas disparando rebote físico y actualizando el porcentaje global del sprint.</p>
-      <button type="button" (click)="active.set(!active())">Alternar</button>
-    </div>
-  `
-})
-export class CxdKanbanSpringPipelineComponent {
-  active = signal(false);
-}
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import { mountKanbanSpringPipeline } from './kanban-spring-pipeline.js';
+@Component({ selector:'cxd-kanban-spring-pipeline', standalone:true, styleUrls:['./styles.css'], template:`<div class="cxd-special" data-cxd-control="kanban-spring-pipeline" #root><h3>Pipeline de entrega</h3><div class="cxd-special__scene" data-scene><small data-phase>LISTO</small><strong data-value>0 / 3</strong><p data-copy>Demostración autónoma: ejecuta la acción para actualizar el escenario.</p><div class="cxd-special__progress"><span data-progress></span></div></div><div class="cxd-special__actions"><button type="button" data-run>Promover tarea</button><button type="button" data-reset>Reiniciar</button></div><span role="status">Backlog restaurado</span></div>` })
+export class KanbanSpringPipelineComponent implements AfterViewInit, OnDestroy { @ViewChild('root') root!: ElementRef<HTMLElement>; private unmount?: () => void; ngAfterViewInit() { this.unmount = mountKanbanSpringPipeline(this.root.nativeElement); } ngOnDestroy() { this.unmount?.(); } }

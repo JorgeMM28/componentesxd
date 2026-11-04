@@ -1,17 +1,11 @@
 <?php
-// Variante 04 — Carrusel de Escenas + Transformación Geométrica SVG (svg.morphTo) — Laravel Livewire 3 (components/special-hybrids/variants/carousel-svg-morph-showcase/CarouselSvgMorphShowcaseWire.php)
-namespace App\Livewire\Cxd\SpecialHybrids;
+namespace App\Livewire;
 use Livewire\Component;
-
-class CarouselSvgMorphShowcaseWire extends Component {
-    public bool $active = false;
-    public function toggle(): void { $this->active = !$this->active; }
-    public function render() {
-        return <<<'HTML'
-        <div class="cxd-special-hybrids-carousel-svg-morph-showcase">
-            <h3>Variante 04 — Carrusel de Escenas + Transformación Geométrica SVG (svg.morphTo)</h3>
-            <button type="button" wire:click="toggle">Estado: {{ $active ? 'ON' : 'OFF' }}</button>
-        </div>
-        HTML;
-    }
-}
+// Incluye styles.css y ajusta la ruta del módulo.
+class CarouselSvgMorphShowcaseWire extends Component { public function render(): string { return <<<'HTML'
+<div class="cxd-special" data-cxd-control="carousel-svg-morph-showcase" wire:ignore><h3>Carrusel de escenas SVG</h3><div class="cxd-special__scene"><svg viewBox="0 0 120 120" width="120" height="120" aria-hidden="true"><polygon data-shape points="60,10 110,60 60,110 10,60" fill="#9b82ff"></polygon></svg><strong data-title></strong><p data-copy></p></div><div class="cxd-special__actions"><button type="button" data-prev>Anterior</button><button type="button" data-next>Siguiente</button><button type="button" data-reset>Reiniciar</button></div><span role="status"></span>@script
+<script>
+import('/assets/carousel-svg-morph-showcase.js').then(module => module.mountCarouselSvgMorphShowcase($wire.$el));
+</script>
+@endscript</div>
+HTML; } }

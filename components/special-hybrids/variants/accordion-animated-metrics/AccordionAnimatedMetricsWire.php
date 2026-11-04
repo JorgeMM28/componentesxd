@@ -1,17 +1,11 @@
 <?php
-// Variante 18 — Acordeón Técnico + Telemetría que Anima de 0% a 100% al Expandir — Laravel Livewire 3 (components/special-hybrids/variants/accordion-animated-metrics/AccordionAnimatedMetricsWire.php)
-namespace App\Livewire\Cxd\SpecialHybrids;
+namespace App\Livewire;
 use Livewire\Component;
-
-class AccordionAnimatedMetricsWire extends Component {
-    public bool $active = false;
-    public function toggle(): void { $this->active = !$this->active; }
-    public function render() {
-        return <<<'HTML'
-        <div class="cxd-special-hybrids-accordion-animated-metrics">
-            <h3>Variante 18 — Acordeón Técnico + Telemetría que Anima de 0% a 100% al Expandir</h3>
-            <button type="button" wire:click="toggle">Estado: {{ $active ? 'ON' : 'OFF' }}</button>
-        </div>
-        HTML;
-    }
-}
+// Incluye styles.css y ajusta la ruta del módulo.
+class AccordionAnimatedMetricsWire extends Component { public function render(): string { return <<<'HTML'
+<div class="cxd-special" data-cxd-control="accordion-animated-metrics" wire:ignore><h3>Métricas de servicio</h3><div class="cxd-special__scene" data-scene><small data-phase>LISTO</small><strong data-value>0 / 3</strong><p data-copy>Demostración autónoma: ejecuta la acción para actualizar el escenario.</p><div class="cxd-special__progress"><span data-progress></span></div></div><div class="cxd-special__actions"><button type="button" data-run>Expandir métrica</button><button type="button" data-reset>Reiniciar</button></div><span role="status">Métricas contraídas</span>@script
+<script>
+import('/assets/accordion-animated-metrics.js').then(module => module.mountAccordionAnimatedMetrics($wire.$el));
+</script>
+@endscript</div>
+HTML; } }

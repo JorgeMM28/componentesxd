@@ -1,17 +1,11 @@
 <?php
-// Variante 25 — Grafo de Red Neuronal Multicapa con Sinapsis SVG y Propagación Softmax — Laravel Livewire 3 (components/special-hybrids/variants/neural-network-graph-propagator/NeuralNetworkGraphPropagatorWire.php)
-namespace App\Livewire\Cxd\SpecialHybrids;
+namespace App\Livewire;
 use Livewire\Component;
-
-class NeuralNetworkGraphPropagatorWire extends Component {
-    public bool $active = false;
-    public function toggle(): void { $this->active = !$this->active; }
-    public function render() {
-        return <<<'HTML'
-        <div class="cxd-special-hybrids-neural-network-graph-propagator">
-            <h3>Variante 25 — Grafo de Red Neuronal Multicapa con Sinapsis SVG y Propagación Softmax</h3>
-            <button type="button" wire:click="toggle">Estado: {{ $active ? 'ON' : 'OFF' }}</button>
-        </div>
-        HTML;
-    }
-}
+// Incluye styles.css y ajusta la ruta del módulo.
+class NeuralNetworkGraphPropagatorWire extends Component { public function render(): string { return <<<'HTML'
+<div class="cxd-special" data-cxd-control="neural-network-graph-propagator" wire:ignore><h3>Red neuronal</h3><div class="cxd-special__scene" data-scene><small data-phase>LISTO</small><strong data-value>0 / 3</strong><p data-copy>Demostración autónoma: ejecuta la acción para actualizar el escenario.</p><div class="cxd-special__progress"><span data-progress></span></div></div><div class="cxd-special__actions"><button type="button" data-run>Ejecutar inferencia</button><button type="button" data-reset>Reiniciar</button></div><span role="status">Red preparada</span>@script
+<script>
+import('/assets/neural-network-graph-propagator.js').then(module => module.mountNeuralNetworkGraphPropagator($wire.$el));
+</script>
+@endscript</div>
+HTML; } }

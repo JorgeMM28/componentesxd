@@ -1,18 +1,4 @@
-// Variante 25 — Grafo de Red Neuronal Multicapa con Sinapsis SVG y Propagación Softmax — Angular 18+ Signals (components/special-hybrids/variants/neural-network-graph-propagator/neural-network-graph-propagator.component.ts)
-import { Component, signal } from '@angular/core';
-
-@Component({
-  selector: 'cxd-neural-network-graph-propagator',
-  standalone: true,
-  styleUrls: ['./styles.css'],
-  template: `
-    <div class="cxd-special-hybrids-neural-network-graph-propagator" [attr.data-active]="active()">
-      <h3>Variante 25 — Grafo de Red Neuronal Multicapa con Sinapsis SVG y Propagación Softmax</h3>
-      <p>Dispara una inferencia para ver los tensores viajar por las 15 sinapsis SVG a través de las capas ocultas hasta calcular la predicción final.</p>
-      <button type="button" (click)="active.set(!active())">Alternar</button>
-    </div>
-  `
-})
-export class CxdNeuralNetworkGraphPropagatorComponent {
-  active = signal(false);
-}
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import { mountNeuralNetworkGraphPropagator } from './neural-network-graph-propagator.js';
+@Component({ selector:'cxd-neural-network-graph-propagator', standalone:true, styleUrls:['./styles.css'], template:`<div class="cxd-special" data-cxd-control="neural-network-graph-propagator" #root><h3>Red neuronal</h3><div class="cxd-special__scene" data-scene><small data-phase>LISTO</small><strong data-value>0 / 3</strong><p data-copy>Demostración autónoma: ejecuta la acción para actualizar el escenario.</p><div class="cxd-special__progress"><span data-progress></span></div></div><div class="cxd-special__actions"><button type="button" data-run>Ejecutar inferencia</button><button type="button" data-reset>Reiniciar</button></div><span role="status">Red preparada</span></div>` })
+export class NeuralNetworkGraphPropagatorComponent implements AfterViewInit, OnDestroy { @ViewChild('root') root!: ElementRef<HTMLElement>; private unmount?: () => void; ngAfterViewInit() { this.unmount = mountNeuralNetworkGraphPropagator(this.root.nativeElement); } ngOnDestroy() { this.unmount?.(); } }

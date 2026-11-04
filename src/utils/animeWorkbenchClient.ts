@@ -114,6 +114,7 @@ export function initAnimeCategoryWorkbench() {
     let stepIndex = 0;
     let manuallyPaused = false;
     let started = false;
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
     type Playback = { pause: () => unknown; play?: () => unknown; reverse?: () => unknown; cancel?: () => unknown };
     let running: Playback[] = [];
     // Track every instance, including independent animations inside the same stage.
@@ -121,11 +122,23 @@ export function initAnimeCategoryWorkbench() {
     const animate: typeof animeAnimate = (...args) => track(animeAnimate(...args));
     const createTimeline: typeof animeTimeline = (...args) => track(animeTimeline(...args));
     const createTimer: typeof animeTimer = (...args) => track(animeTimer(...args));
-
-    function launchAnimation(customOrigin: 'center' | 'first' | 'last' | number = 'center') {
+    const stopAnimations = () => {
       running.forEach(instance => instance.cancel ? instance.cancel() : instance.pause());
       running = [];
       activeAnim = null;
+    };
+    const showReducedMotionState = () => {
+      stopAnimations();
+      block.dataset.motion = 'reduced';
+    };
+
+    function launchAnimation(customOrigin: 'center' | 'first' | 'last' | number = 'center') {
+      if (reducedMotion.matches) {
+        showReducedMotionState();
+        return;
+      }
+      stopAnimations();
+      delete block.dataset.motion;
       const duration = Math.max(200, Math.round(baseDuration / currentSpeed));
       const els = block.querySelectorAll<HTMLElement>('[data-anim-el]');
 
@@ -568,7 +581,7 @@ export function initAnimeCategoryWorkbench() {
       }
     }
 
-    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    if (!reducedMotion.matches) {
       const observer = new IntersectionObserver(entries => {
         for (const entry of entries) {
           if (entry.isIntersecting && !manuallyPaused) {
@@ -581,6 +594,15 @@ export function initAnimeCategoryWorkbench() {
       }, { rootMargin: '120px' });
       observer.observe(block);
     }
+
+    reducedMotion.addEventListener('change', event => {
+      if (event.matches) {
+        showReducedMotionState();
+        return;
+      }
+      delete block.dataset.motion;
+      if (started && !manuallyPaused) launchAnimation();
+    });
 
     // Controles de Reproducción
     block.querySelector('[data-anim-play]')?.addEventListener('click', () => { manuallyPaused = false; started = true; launchAnimation(); });

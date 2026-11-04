@@ -1,21 +1,4 @@
-/**
- * Variante 17 — Topología Docker + Simulador de Paquetes en Red con Anime.js — React / Next.js (TSX)
- * Archivo: components/special-hybrids/variants/docker-live-deploy-topology/DockerLiveDeployTopology.tsx
- */
-import React, { useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { mountDockerLiveDeployTopology } from './docker-live-deploy-topology.js';
 import './styles.css';
-
-export const DockerLiveDeployTopology: React.FC<{ title?: string }> = ({
-  title = 'Variante 17 — Topología Docker + Simulador de Paquetes en Red con Anime.js'
-}) => {
-  const [active, setActive] = useState(false);
-  return (
-    <div className="cxd-special-hybrids-docker-live-deploy-topology" data-active={active}>
-      <h3>{title}</h3>
-      <p>Envía paquetes de prueba a través del proxy, aplicación y base de datos animando cada salto y latencia.</p>
-      <button type="button" onClick={() => setActive(!active)}>
-        Alternar Estado
-      </button>
-    </div>
-  );
-};
+export function DockerLiveDeployTopology() { const root = useRef<HTMLDivElement>(null); useEffect(() => root.current ? mountDockerLiveDeployTopology(root.current) : undefined, []); return <div className="cxd-special" data-cxd-control="docker-live-deploy-topology" ref={root}><h3>Topología de despliegue</h3><div className="cxd-special__scene" data-scene><small data-phase>LISTO</small><strong data-value>0 / 3</strong><p data-copy>Demostración autónoma: ejecuta la acción para actualizar el escenario.</p><div className="cxd-special__progress"><span data-progress></span></div></div><div className="cxd-special__actions"><button type="button" data-run>Enviar paquete</button><button type="button" data-reset>Reiniciar</button></div><span role="status">Red en espera</span></div>; }

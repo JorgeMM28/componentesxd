@@ -1,8 +1,8 @@
 # COMPONENTESXD // Multi-Framework UI & Anime.js v4 Architectural Vault
 
-> **Estado del catálogo:** algunas implementaciones generadas son plantillas iniciales y aún no reproducen la vista previa. Verifica y adapta el código antes de integrarlo. El laboratorio de estilos, degradados y tipografía está disponible en `/laboratorio`.
+> **Estado del catálogo:** las vistas previas, el registro y los diez adaptadores exportables de cada variante se generan desde las mismas fuentes mantenibles. El laboratorio de estilos, degradados y tipografía está disponible en `/laboratorio`.
 
-> **Bóveda de interfaces y ejemplos de animación**: **1,160 archivos generados** (**116 variantes** × **10 tecnologías**), **12 interfaces arquitectónicas completas**, **48 animaciones interactivas de Anime.js v4** organizadas según la documentación oficial ([documentación de Anime.js](https://animejs.com/documentation/)) y un **sitio multi-página en Astro 5** con **Top Navbar estilo Microsoft (Mega-Menu Cascada)**.
+> **Bóveda de interfaces y ejemplos de animación**: **1,360 archivos generados** (**136 variantes** × **10 tecnologías**), **12 interfaces arquitectónicas completas**, **48 animaciones interactivas de Anime.js v4** organizadas según la documentación oficial ([documentación de Anime.js](https://animejs.com/documentation/)) y un **sitio multi-página en Astro 5** con **Top Navbar estilo Microsoft (Mega-Menu Cascada)**.
 
 ---
 
@@ -11,7 +11,7 @@
 El sitio (`src/pages/`) está estructurado con **26 páginas estáticas** y una **barra de navegación superior (Top Navbar)** con menú desplegable multinivel estilo Microsoft (impulsado por **Anime.js v4**):
 
 1. **Top Navbar con Mega-Menu Cascada (`src/layouts/Layout.astro`)**:
-   - **Componentes (116)**: Al seleccionar o pasar el cursor sobre cualquier apartado (ej. *Tablas*, *Toasters*, *Botones*, *Formularios*), el panel derecho despliega instantáneamente todas sus variantes con enlaces directos (`#ancla`) a su bloque en la página.
+   - **Componentes (136)**: Al seleccionar o pasar el cursor sobre cualquier apartado (ej. *Tablas*, *Toasters*, *Botones*, *Formularios*), el panel derecho despliega instantáneamente todas sus variantes con enlaces directos (`#ancla`) a su bloque en la página.
    - **Animaciones Anime.js (48)**: Muestra los 8 capítulos oficiales de Anime.js v4 a la izquierda y sus 6 escenarios en vivo a la derecha.
    - **Interfaces (12)**: Selector visual con previsualización cromática para conmutar en tiempo real cualquiera de los 12 sistemas de diseño en todo el sitio.
 2. **Distribución Apilada de Ancho Completo (Full-Width Stacked Variants)**:
@@ -22,7 +22,7 @@ El sitio (`src/pages/`) está estructurado con **26 páginas estáticas** y una 
 
 ## Catálogo de componentes
 
-Las vistas previas se agrupan por categoría. Los archivos generados son puntos de partida y deben revisarse antes de usarse; algunas implementaciones todavía no reproducen la demostración.
+Las vistas previas se agrupan por categoría. Cada variante mantiene alineada su demostración, el selector de tecnología y sus diez exportaciones; antes de producción, adapta únicamente las rutas de importación y los datos de tu aplicación.
 
 ### Tablas de Datos (`tables` · 10 variantes)
 
@@ -68,9 +68,9 @@ Las vistas previas se agrupan por categoría. Los archivos generados son puntos 
 
 `accordion-exclusive`, `accordion-multi-bento`, `before-after-split`, `kanban-mini-board`, `segmented-pricing-toggle`, `file-tree-inspector`, `transfer-dual-list`, `calendar-slot-Matrix`.
 
-### Componentes Especiales Combinados (UI + Anime.js v4 en Vivo) (`special-hybrids` · 30 variantes)
+### Componentes Especiales Combinados (UI + Anime.js v4 en Vivo) (`special-hybrids` · 50 variantes)
 
-`stepper-carousel-wizard`, `table-realtime-stream`, `table-stagger-sorter`, `carousel-svg-morph-showcase`, `carousel-spring-physics-deck`, `stepper-checkout-calculator`, `table-bulk-explosion`, `toast-timeline-dispatcher`, `kanban-spring-pipeline`, `form-otp-svg-vault`, `card-3d-exploded-inspector`, `skeleton-to-table-hydrator`, `carousel-timeline-scrubber`, `search-grid-2d-ripple`, `modal-command-choreography`, `pricing-slider-odometer`, `docker-live-deploy-topology`, `accordion-animated-metrics`, `dual-transfer-stagger-sync`, `chrono-sla-incident-table`, `anime-hero-clockwork`, `interactive-world-telemetry-map`, `pathfinding-dijkstra-visualizer`, `sorting-algorithm-symphony`, `neural-network-graph-propagator`, `orbital-solar-gravity-sim`, `isometric-3d-city-cluster`, `audio-synth-spectrum-analyzer`, `git-branch-commit-visualizer`, `cyber-radar-threat-sonar`.
+`stepper-carousel-wizard`, `table-realtime-stream`, `table-stagger-sorter`, `carousel-svg-morph-showcase`, `carousel-spring-physics-deck`, `stepper-checkout-calculator`, `table-bulk-explosion`, `toast-timeline-dispatcher`, `kanban-spring-pipeline`, `form-otp-svg-vault`, `card-3d-exploded-inspector`, `skeleton-to-table-hydrator`, `carousel-timeline-scrubber`, `search-grid-2d-ripple`, `modal-command-choreography`, `pricing-slider-odometer`, `docker-live-deploy-topology`, `accordion-animated-metrics`, `dual-transfer-stagger-sync`, `chrono-sla-incident-table`, `anime-hero-clockwork`, `interactive-world-telemetry-map`, `pathfinding-dijkstra-visualizer`, `sorting-algorithm-symphony`, `neural-network-graph-propagator`, `orbital-solar-gravity-sim`, `isometric-3d-city-cluster`, `audio-synth-spectrum-analyzer`, `git-branch-commit-visualizer`, `cyber-radar-threat-sonar`, `agenda-reservations`, `flow-editor`, `query-builder`, `server-monitor`, `mail-inbox`, `media-player`, `inventory-board`, `order-tracker`, `seat-map`, `event-calendar`, `permissions-panel`, `survey-builder`, `downloads-center`, `product-comparator`, `expense-monitor`, `chart-editor`, `file-explorer`, `deploy-console`, `queue-simulator`, `goals-board`.
 
 ---
 
@@ -94,7 +94,7 @@ Basada en la documentación oficial de **Anime.js v4** ([documentación de Anime
 ## Comandos del Proyecto
 
 ```bash
-# Regenerar los 1,160 archivos de componentes y 48 módulos de animación
+# Regenerar los 1,360 archivos de componentes y 48 módulos de animación
 npm run generate:vault
 
 # Sincronizar solo los adaptadores mantenidos de botones, notificaciones, formularios, tarjetas, telemetría, diálogos, navegación, acordeones y tablas

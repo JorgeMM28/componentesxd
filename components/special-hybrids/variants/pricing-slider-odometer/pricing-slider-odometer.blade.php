@@ -1,7 +1,6 @@
-{{-- Variante 16 — Calculadora Interactiva con Slider + Odómetro + Barras Comparativas — Laravel Blade (components/special-hybrids/variants/pricing-slider-odometer/pricing-slider-odometer.blade.php) --}}
-@props(['title' => 'Variante 16 — Calculadora Interactiva con Slider + Odómetro + Barras Comparativas'])
-<div {{ $attributes->merge(['class' => 'cxd-special-hybrids-pricing-slider-odometer']) }}>
-    <h3>{{ $title }}</h3>
-    <p>Ajusta el volumen de tráfico para animar simultáneamente las barras de los 3 planes y el costo estimado.</p>
-    {{ $slot }}
-</div>
+{{-- Incluye styles.css y ajusta la ruta del módulo. --}}
+<div class="cxd-special" data-cxd-control="pricing-slider-odometer"><h3>Estimador de tráfico</h3><div class="cxd-special__scene" data-scene><small data-phase>LISTO</small><strong data-value>0 / 3</strong><p data-copy>Demostración autónoma: ejecuta la acción para actualizar el escenario.</p><div class="cxd-special__progress"><span data-progress></span></div></div><div class="cxd-special__actions"><button type="button" data-run>Recalcular</button><button type="button" data-reset>Reiniciar</button></div><span role="status">Estimación restaurada</span></div>
+<script type="module">
+import { mountPricingSliderOdometer } from '/assets/pricing-slider-odometer.js';
+document.querySelectorAll('[data-cxd-control="pricing-slider-odometer"]:not([data-ready])').forEach(root => { root.dataset.ready = 'true'; mountPricingSliderOdometer(root); });
+</script>

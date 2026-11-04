@@ -1,18 +1,4 @@
-// Variante 05 — Carrusel Mazo 3D con Física de Resorte (createSpring) + Odómetro — Angular 18+ Signals (components/special-hybrids/variants/carousel-spring-physics-deck/carousel-spring-physics-deck.component.ts)
-import { Component, signal } from '@angular/core';
-
-@Component({
-  selector: 'cxd-carousel-spring-physics-deck',
-  standalone: true,
-  styleUrls: ['./styles.css'],
-  template: `
-    <div class="cxd-special-hybrids-carousel-spring-physics-deck" [attr.data-active]="active()">
-      <h3>Variante 05 — Carrusel Mazo 3D con Física de Resorte (createSpring) + Odómetro</h3>
-      <p>Rota las tarjetas en el eje Z con física real de resorte mientras el contador financiero interpola el valor del nodo activo.</p>
-      <button type="button" (click)="active.set(!active())">Alternar</button>
-    </div>
-  `
-})
-export class CxdCarouselSpringPhysicsDeckComponent {
-  active = signal(false);
-}
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import { mountCarouselSpringPhysicsDeck } from './carousel-spring-physics-deck.js';
+@Component({ selector:'cxd-carousel-spring-physics-deck', standalone:true, styleUrls:['./styles.css'], template:`<div class="cxd-special" data-cxd-control="carousel-spring-physics-deck" #root><h3>Mazo de inversiones</h3><div class="cxd-special__scene" data-card><small data-label></small><strong data-value></strong><p data-copy></p></div><div class="cxd-special__actions"><button type="button" data-prev>Anterior</button><button type="button" data-next>Siguiente</button><button type="button" data-reset>Reiniciar</button></div><span role="status"></span></div>` })
+export class CarouselSpringPhysicsDeckComponent implements AfterViewInit, OnDestroy { @ViewChild('root') root!: ElementRef<HTMLElement>; private unmount?: () => void; ngAfterViewInit() { this.unmount = mountCarouselSpringPhysicsDeck(this.root.nativeElement); } ngOnDestroy() { this.unmount?.(); } }

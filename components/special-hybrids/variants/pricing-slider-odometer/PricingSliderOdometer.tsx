@@ -1,21 +1,4 @@
-/**
- * Variante 16 — Calculadora Interactiva con Slider + Odómetro + Barras Comparativas — React / Next.js (TSX)
- * Archivo: components/special-hybrids/variants/pricing-slider-odometer/PricingSliderOdometer.tsx
- */
-import React, { useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { mountPricingSliderOdometer } from './pricing-slider-odometer.js';
 import './styles.css';
-
-export const PricingSliderOdometer: React.FC<{ title?: string }> = ({
-  title = 'Variante 16 — Calculadora Interactiva con Slider + Odómetro + Barras Comparativas'
-}) => {
-  const [active, setActive] = useState(false);
-  return (
-    <div className="cxd-special-hybrids-pricing-slider-odometer" data-active={active}>
-      <h3>{title}</h3>
-      <p>Ajusta el volumen de tráfico para animar simultáneamente las barras de los 3 planes y el costo estimado.</p>
-      <button type="button" onClick={() => setActive(!active)}>
-        Alternar Estado
-      </button>
-    </div>
-  );
-};
+export function PricingSliderOdometer() { const root = useRef<HTMLDivElement>(null); useEffect(() => root.current ? mountPricingSliderOdometer(root.current) : undefined, []); return <div className="cxd-special" data-cxd-control="pricing-slider-odometer" ref={root}><h3>Estimador de tráfico</h3><div className="cxd-special__scene" data-scene><small data-phase>LISTO</small><strong data-value>0 / 3</strong><p data-copy>Demostración autónoma: ejecuta la acción para actualizar el escenario.</p><div className="cxd-special__progress"><span data-progress></span></div></div><div className="cxd-special__actions"><button type="button" data-run>Recalcular</button><button type="button" data-reset>Reiniciar</button></div><span role="status">Estimación restaurada</span></div>; }

@@ -1,17 +1,11 @@
 <?php
-// Variante 16 — Calculadora Interactiva con Slider + Odómetro + Barras Comparativas — Laravel Livewire 3 (components/special-hybrids/variants/pricing-slider-odometer/PricingSliderOdometerWire.php)
-namespace App\Livewire\Cxd\SpecialHybrids;
+namespace App\Livewire;
 use Livewire\Component;
-
-class PricingSliderOdometerWire extends Component {
-    public bool $active = false;
-    public function toggle(): void { $this->active = !$this->active; }
-    public function render() {
-        return <<<'HTML'
-        <div class="cxd-special-hybrids-pricing-slider-odometer">
-            <h3>Variante 16 — Calculadora Interactiva con Slider + Odómetro + Barras Comparativas</h3>
-            <button type="button" wire:click="toggle">Estado: {{ $active ? 'ON' : 'OFF' }}</button>
-        </div>
-        HTML;
-    }
-}
+// Incluye styles.css y ajusta la ruta del módulo.
+class PricingSliderOdometerWire extends Component { public function render(): string { return <<<'HTML'
+<div class="cxd-special" data-cxd-control="pricing-slider-odometer" wire:ignore><h3>Estimador de tráfico</h3><div class="cxd-special__scene" data-scene><small data-phase>LISTO</small><strong data-value>0 / 3</strong><p data-copy>Demostración autónoma: ejecuta la acción para actualizar el escenario.</p><div class="cxd-special__progress"><span data-progress></span></div></div><div class="cxd-special__actions"><button type="button" data-run>Recalcular</button><button type="button" data-reset>Reiniciar</button></div><span role="status">Estimación restaurada</span>@script
+<script>
+import('/assets/pricing-slider-odometer.js').then(module => module.mountPricingSliderOdometer($wire.$el));
+</script>
+@endscript</div>
+HTML; } }

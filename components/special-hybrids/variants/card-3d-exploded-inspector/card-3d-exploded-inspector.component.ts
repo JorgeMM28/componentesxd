@@ -1,18 +1,4 @@
-// Variante 11 — Tarjeta Inspectora + Descomposición 3D de Capas Estructurales — Angular 18+ Signals (components/special-hybrids/variants/card-3d-exploded-inspector/card-3d-exploded-inspector.component.ts)
-import { Component, signal } from '@angular/core';
-
-@Component({
-  selector: 'cxd-card-3d-exploded-inspector',
-  standalone: true,
-  styleUrls: ['./styles.css'],
-  template: `
-    <div class="cxd-special-hybrids-card-3d-exploded-inspector" [attr.data-active]="active()">
-      <h3>Variante 11 — Tarjeta Inspectora + Descomposición 3D de Capas Estructurales</h3>
-      <p>Alterna entre la tarjeta ensamblada funcional y su vista explotada isométrica de 4 capas en vivo.</p>
-      <button type="button" (click)="active.set(!active())">Alternar</button>
-    </div>
-  `
-})
-export class CxdCard3dExplodedInspectorComponent {
-  active = signal(false);
-}
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import { mountCard3dExplodedInspector } from './card-3d-exploded-inspector.js';
+@Component({ selector:'cxd-card-3d-exploded-inspector', standalone:true, styleUrls:['./styles.css'], template:`<div class="cxd-special" data-cxd-control="card-3d-exploded-inspector" #root><h3>Inspector de capas</h3><div class="cxd-special__scene" data-scene><small data-phase>LISTO</small><strong data-value>0 / 3</strong><p data-copy>Demostración autónoma: ejecuta la acción para actualizar el escenario.</p><div class="cxd-special__progress"><span data-progress></span></div></div><div class="cxd-special__actions"><button type="button" data-run>Separar capas</button><button type="button" data-reset>Reiniciar</button></div><span role="status">Tarjeta ensamblada</span></div>` })
+export class Card3dExplodedInspectorComponent implements AfterViewInit, OnDestroy { @ViewChild('root') root!: ElementRef<HTMLElement>; private unmount?: () => void; ngAfterViewInit() { this.unmount = mountCard3dExplodedInspector(this.root.nativeElement); } ngOnDestroy() { this.unmount?.(); } }

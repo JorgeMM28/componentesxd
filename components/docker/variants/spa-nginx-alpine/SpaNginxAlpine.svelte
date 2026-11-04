@@ -1,11 +1,6 @@
-<!-- Variante 03 — React / Vue / Svelte / Angular SPA + Nginx — Svelte 5 Runes (components/docker/variants/spa-nginx-alpine/SpaNginxAlpine.svelte) -->
 <script lang="ts">
-  import './styles.css';
-  let active = $state(false);
+import { mountSpaNginxAlpine } from './spa-nginx-alpine.js';
+import './styles.css';
+function control(node: HTMLElement) { return { destroy: mountSpaNginxAlpine(node) }; }
 </script>
-
-<div class="cxd-docker-spa-nginx-alpine" data-active={active}>
-  <h3>Variante 03 — React / Vue / Svelte / Angular SPA + Nginx</h3>
-  <p>Compilación estática servida por Nginx Alpine con compresión gzip y try_files para rutas SPA.</p>
-  <button type="button" onclick={() => (active = !active)}>Alternar</button>
-</div>
+<section class="cxd-docker-flow" data-cxd-control="spa-nginx-alpine" use:control><h3>SPA + Nginx</h3><ol class="cxd-docker-flow__stages" data-stages><li class="cxd-docker-flow__stage" data-stage aria-current="true">Generar bundle Vite</li><li class="cxd-docker-flow__stage" data-stage aria-current="false">Resolver rutas con try_files</li><li class="cxd-docker-flow__stage" data-stage aria-current="false">Servir assets inmutables</li></ol><div class="cxd-docker-flow__actions"><button type="button" data-run>Simular siguiente salto</button><button type="button" data-reset>Reiniciar topología</button></div><span role="status" aria-live="polite">Listo para simular la topología.</span></section>

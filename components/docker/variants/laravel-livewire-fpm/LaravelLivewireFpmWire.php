@@ -1,17 +1,7 @@
 <?php
-// Variante 02 — Laravel 11 + Livewire 3 + PHP 8.3 FPM + OPcache — Laravel Livewire 3 (components/docker/variants/laravel-livewire-fpm/LaravelLivewireFpmWire.php)
-namespace App\Livewire\Cxd\Docker;
+namespace App\Livewire;
 use Livewire\Component;
-
-class LaravelLivewireFpmWire extends Component {
-    public bool $active = false;
-    public function toggle(): void { $this->active = !$this->active; }
-    public function render() {
-        return <<<'HTML'
-        <div class="cxd-docker-laravel-livewire-fpm">
-            <h3>Variante 02 — Laravel 11 + Livewire 3 + PHP 8.3 FPM + OPcache</h3>
-            <button type="button" wire:click="toggle">Estado: {{ $active ? 'ON' : 'OFF' }}</button>
-        </div>
-        HTML;
-    }
-}
+// Incluye styles.css y ajusta la ruta del módulo.
+class LaravelLivewireFpmWire extends Component { public function render(): string { return <<<'HTML'
+<section class="cxd-docker-flow" data-cxd-control="laravel-livewire-fpm" wire:ignore><h3>Laravel + Livewire</h3><ol class="cxd-docker-flow__stages" data-stages><li class="cxd-docker-flow__stage" data-stage aria-current="true">Nginx FastCGI</li><li class="cxd-docker-flow__stage" data-stage aria-current="false">PHP-FPM con OPcache</li><li class="cxd-docker-flow__stage" data-stage aria-current="false">Worker Horizon y Redis</li></ol><div class="cxd-docker-flow__actions"><button type="button" data-run>Simular siguiente salto</button><button type="button" data-reset>Reiniciar topología</button></div><span role="status" aria-live="polite">Listo para simular la topología.</span></section>
+HTML; } }

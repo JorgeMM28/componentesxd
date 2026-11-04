@@ -1,17 +1,11 @@
 <?php
-// Variante 26 — Sistema Solar Animado Completo (Sol + 8 Planetas + Luna + Cinturón de Asteroides + Saturno) — Laravel Livewire 3 (components/special-hybrids/variants/orbital-solar-gravity-sim/OrbitalSolarGravitySimWire.php)
-namespace App\Livewire\Cxd\SpecialHybrids;
+namespace App\Livewire;
 use Livewire\Component;
-
-class OrbitalSolarGravitySimWire extends Component {
-    public bool $active = false;
-    public function toggle(): void { $this->active = !$this->active; }
-    public function render() {
-        return <<<'HTML'
-        <div class="cxd-special-hybrids-orbital-solar-gravity-sim">
-            <h3>Variante 26 — Sistema Solar Animado Completo (Sol + 8 Planetas + Luna + Cinturón de Asteroides + Saturno)</h3>
-            <button type="button" wire:click="toggle">Estado: {{ $active ? 'ON' : 'OFF' }}</button>
-        </div>
-        HTML;
-    }
-}
+// Incluye styles.css y ajusta la ruta del módulo.
+class OrbitalSolarGravitySimWire extends Component { public function render(): string { return <<<'HTML'
+<div class="cxd-special" data-cxd-control="orbital-solar-gravity-sim" wire:ignore><h3>Simulador orbital</h3><div class="cxd-special__scene" data-scene><small data-phase>LISTO</small><strong data-value>0 / 3</strong><p data-copy>Demostración autónoma: ejecuta la acción para actualizar el escenario.</p><div class="cxd-special__progress"><span data-progress></span></div></div><div class="cxd-special__actions"><button type="button" data-run>Acelerar órbitas</button><button type="button" data-reset>Reiniciar</button></div><span role="status">Tiempo normal</span>@script
+<script>
+import('/assets/orbital-solar-gravity-sim.js').then(module => module.mountOrbitalSolarGravitySim($wire.$el));
+</script>
+@endscript</div>
+HTML; } }

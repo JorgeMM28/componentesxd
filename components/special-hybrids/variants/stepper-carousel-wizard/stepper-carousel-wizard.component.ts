@@ -1,18 +1,4 @@
-// Variante 01 — Step-by-Step Wizard + Carrusel 3D Sincronizado + Timeline — Angular 18+ Signals (components/special-hybrids/variants/stepper-carousel-wizard/stepper-carousel-wizard.component.ts)
-import { Component, signal } from '@angular/core';
-
-@Component({
-  selector: 'cxd-stepper-carousel-wizard',
-  standalone: true,
-  styleUrls: ['./styles.css'],
-  template: `
-    <div class="cxd-special-hybrids-stepper-carousel-wizard" [attr.data-active]="active()">
-      <h3>Variante 01 — Step-by-Step Wizard + Carrusel 3D Sincronizado + Timeline</h3>
-      <p>Asistente paso a paso donde avanzar o retroceder sincroniza la barra de progreso superior, desliza el carrusel 3D y anima los sub-elementos con stagger.</p>
-      <button type="button" (click)="active.set(!active())">Alternar</button>
-    </div>
-  `
-})
-export class CxdStepperCarouselWizardComponent {
-  active = signal(false);
-}
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import { mountStepperCarouselWizard } from './stepper-carousel-wizard.js';
+@Component({ selector:'cxd-stepper-carousel-wizard', standalone:true, styleUrls:['./styles.css'], template:`<div class="cxd-special" data-cxd-control="stepper-carousel-wizard" #root><div class="cxd-special__progress" role="progressbar" aria-label="Progreso del asistente" aria-valuemin="1" aria-valuemax="3" aria-valuenow="1"><span data-progress></span></div><div class="cxd-special__scene" data-scene><small data-kicker>PASO 01 / 03</small><strong data-title>Elige tu espacio</strong><p data-copy>Organiza tu proyecto en un entorno preparado para crecer.</p></div><div class="cxd-special__actions"><button type="button" data-prev>Anterior</button><button type="button" data-next>Siguiente</button><button type="button" data-reset>Reiniciar</button></div><span role="status"></span></div>` })
+export class StepperCarouselWizardComponent implements AfterViewInit, OnDestroy { @ViewChild('root') root!: ElementRef<HTMLElement>; private unmount?: () => void; ngAfterViewInit() { this.unmount = mountStepperCarouselWizard(this.root.nativeElement); } ngOnDestroy() { this.unmount?.(); } }

@@ -1,4 +1,12 @@
-// Variante 30 — Radar Sonar Táctico de 360° con Detección e Intercepción de Objetivos — Vanilla JS (components/special-hybrids/variants/cyber-radar-threat-sonar/cyber-radar-threat-sonar.js)
-export function mountCyberRadarThreatSonar(root = document) {
-  return root.querySelectorAll('.cxd-special-hybrids-cyber-radar-threat-sonar');
+// Copia styles.css. La función devuelve un desmontador.
+import { animate, stagger, createSpring } from 'animejs';
+export function mountCyberRadarThreatSonar(root) {
+  const controller = new AbortController(); const signal = controller.signal; let timer;
+  let motion;const reduced=window.matchMedia('(prefers-reduced-motion: reduce)');const run=(target,options)=>{motion?.pause();if(!reduced.matches)motion=animate(target,options);};signal.addEventListener('abort',()=>motion?.pause(),{once:true});let count=0;const scene=root.querySelector('[data-scene]');const value=root.querySelector('[data-value]');const progress=root.querySelector('[data-progress]');const status=root.querySelector('[role="status"]');const render=(message)=>{value.textContent=count+' / 3';progress.style.setProperty('--progress',(count/3*100)+'%');root.querySelector('[data-phase]').textContent=count===3?'COMPLETO':'EN CURSO';status.textContent=message;run(scene.children,{opacity:[0,1],y:[16,0],delay:stagger(55),duration:380,ease:'outCubic'});};root.querySelector('[data-run]').addEventListener('click',()=>{count=count===3?1:count+1;render(count===3?'Objetivo interceptado': 'Interceptar objetivo: paso '+count+' de 3');},{signal});root.querySelector('[data-reset]').addEventListener('click',()=>{count=0;render('Barrido reiniciado');},{signal});render('Barrido reiniciado');
+  return () => { controller.abort(); clearTimeout(timer); };
 }
+// Montaje: document.querySelectorAll('[data-cxd-control="cyber-radar-threat-sonar"]').forEach(mountCyberRadarThreatSonar);
+// HTML:
+/*
+<div class="cxd-special" data-cxd-control="cyber-radar-threat-sonar"><h3>Radar táctico</h3><div class="cxd-special__scene" data-scene><small data-phase>LISTO</small><strong data-value>0 / 3</strong><p data-copy>Demostración autónoma: ejecuta la acción para actualizar el escenario.</p><div class="cxd-special__progress"><span data-progress></span></div></div><div class="cxd-special__actions"><button type="button" data-run>Interceptar objetivo</button><button type="button" data-reset>Reiniciar</button></div><span role="status">Barrido reiniciado</span></div>
+*/

@@ -4,6 +4,7 @@ import { readFileSync } from 'node:fs';
 const preview = readFileSync('src/components/LiveComponentPreview.astro', 'utf8');
 const workbench = readFileSync('src/components/ComponentWorkbench.astro', 'utf8');
 const anime = readFileSync('src/utils/animeWorkbenchClient.ts', 'utf8');
+const laboratory = readFileSync('src/pages/laboratorio.astro', 'utf8');
 
 test('los controles de botones usan los mismos atributos que sus manejadores', () => {
   for (const attribute of ['data-pill-btn', 'data-pill-status', 'data-styleless-btn', 'data-styleless-status', 'data-fab-toggle', 'data-fab-action', 'data-fab-readout', 'data-hold-pct', 'data-split-mode-sel', 'data-split-exec', 'data-seg-val', 'data-seg-output', 'data-push-3d', 'data-push-toggle']) {
@@ -33,6 +34,24 @@ test('las cifras del registro corresponden a los datos publicados', async () => 
   assert.equal(registry.stats.componentVariantsCount, variants.length);
   assert.equal(registry.stats.totalComponentFiles, variants.reduce((sum, variant) => sum + Object.keys(variant.files).length, 0));
   assert.equal(registry.stats.animationPresetsCount, registry.animationCategories.reduce((sum, category) => sum + category.presets.length, 0));
+});
+
+test('cada variante publicada tiene una vista previa declarada y evita la plantilla genérica', () => {
+  const registry = JSON.parse(readFileSync('src/data/vaultRegistry.json', 'utf8'));
+  for (const category of registry.componentCategories) for (const variant of category.variants) {
+    const previewIsDeclared = variant.previewType.startsWith('hybrid-new-') || preview.includes(`previewType === '${variant.previewType}'`);
+    assert.ok(previewIsDeclared, `${category.slug}/${variant.id} no tiene una vista previa`);
+    for (const file of Object.values(variant.files)) assert.doesNotMatch(file.code, /Alternar Estado/, file.path);
+  }
+});
+
+test('el catálogo declara alternativas de movimiento reducido en las vistas y adaptadores interactivos', () => {
+  const styles = [preview, workbench, anime].join('\n');
+  assert.match(styles, /prefers-reduced-motion:\s*reduce/);
+  assert.match(anime, /reducedMotion\.matches/);
+  assert.match(workbench, /reducedMotion\.matches/);
+  assert.match(laboratory, /prefers-reduced-motion:\s*reduce/);
+  assert.match(laboratory, /Movimiento reducido activo/);
 });
 
 test('el botón moderno Vanilla actualiza selección, estado y permite desmontar', async () => {
@@ -191,6 +210,46 @@ test('las ocho exportaciones de carrusel se regeneran desde su fuente', async ()
   assert.equal(variants.length, 8);
   for (const variant of variants) for (const [framework, file] of Object.entries(variant.files)) {
     assert.equal(file.code, carouselCode(variant.id, framework), file.path);
+  }
+});
+
+test('las topologías Docker exportan controles funcionales y no plantillas genéricas', async () => {
+  const { dockerCode, dockerIds } = await import('../scripts/docker-code.mjs');
+  const ts = (await import('typescript')).default;
+  const registry = JSON.parse(readFileSync('src/data/vaultRegistry.json', 'utf8'));
+  const variants = registry.componentCategories.find(category => category.slug === 'docker').variants;
+  assert.deepEqual(variants.map(variant => variant.id), dockerIds);
+  for (const variant of variants) {
+    for (const [framework, file] of Object.entries(variant.files)) {
+      assert.equal(file.code, dockerCode(variant.id, framework), file.path);
+      assert.doesNotMatch(file.code, /Alternar Estado/);
+    }
+    for (const framework of ['react', 'angular']) {
+      const file = variant.files[framework];
+      const result = ts.transpileModule(file.code, { fileName: file.path, reportDiagnostics: true, compilerOptions: { target: ts.ScriptTarget.ES2022, jsx: ts.JsxEmit.ReactJSX, experimentalDecorators: true } });
+      assert.deepEqual((result.diagnostics || []).filter(item => item.category === ts.DiagnosticCategory.Error), [], file.path);
+    }
+  }
+});
+
+test('los especiales implementados se regeneran y sus adaptadores se analizan', async () => {
+  const { specialCode, specialIds } = await import('../scripts/special-code.mjs');
+  const ts = (await import('typescript')).default;
+  const { transform } = await import('@astrojs/compiler');
+  const registry = JSON.parse(readFileSync('src/data/vaultRegistry.json', 'utf8'));
+  const variants = registry.componentCategories.find(category => category.slug === 'special-hybrids').variants.filter(variant => specialIds.includes(variant.id));
+  assert.equal(specialIds.length, 50);
+  assert.equal(variants.length, specialIds.length);
+  for (const variant of variants) {
+    assert.equal(Object.keys(variant.files).length, 10, `${variant.id} debe exponer diez adaptadores`);
+    for (const [framework, file] of Object.entries(variant.files)) assert.equal(file.code, specialCode(variant.id, framework), file.path);
+    for (const framework of ['react', 'angular']) {
+      const file = variant.files[framework];
+      const result = ts.transpileModule(file.code, { fileName: file.path, reportDiagnostics: true, compilerOptions: { target: ts.ScriptTarget.ES2022, jsx: ts.JsxEmit.ReactJSX, experimentalDecorators: true } });
+      assert.deepEqual((result.diagnostics || []).filter(item => item.category === ts.DiagnosticCategory.Error), [], file.path);
+    }
+    const file = variant.files.astro;
+    assert.deepEqual((await transform(file.code, { filename: file.path })).diagnostics.filter(item => item.severity === 1), [], file.path);
   }
 });
 

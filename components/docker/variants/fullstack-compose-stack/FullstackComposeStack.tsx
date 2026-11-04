@@ -1,21 +1,4 @@
-/**
- * Variante 04 — Docker Compose Fullstack (App + Postgres 17 + Redis 7.4) — React / Next.js (TSX)
- * Archivo: components/docker/variants/fullstack-compose-stack/FullstackComposeStack.tsx
- */
-import React, { useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { mountFullstackComposeStack } from './fullstack-compose-stack.js';
 import './styles.css';
-
-export const FullstackComposeStack: React.FC<{ title?: string }> = ({
-  title = 'Variante 04 — Docker Compose Fullstack (App + Postgres 17 + Redis 7.4)'
-}) => {
-  const [active, setActive] = useState(false);
-  return (
-    <div className="cxd-docker-fullstack-compose-stack" data-active={active}>
-      <h3>{title}</h3>
-      <p>Orquestación completa con volúmenes persistentes y healthchecks automáticos.</p>
-      <button type="button" onClick={() => setActive(!active)}>
-        Alternar Estado
-      </button>
-    </div>
-  );
-};
+export function FullstackComposeStack() { const root = useRef<HTMLDivElement>(null); useEffect(() => root.current ? mountFullstackComposeStack(root.current) : undefined, []); return <section className="cxd-docker-flow" data-cxd-control="fullstack-compose-stack" ref={root}><h3>Compose full-stack</h3><ol className="cxd-docker-flow__stages" data-stages><li className="cxd-docker-flow__stage" data-stage aria-current="true">Esperar healthcheck de Postgres</li><li className="cxd-docker-flow__stage" data-stage aria-current="false">Conectar Redis</li><li className="cxd-docker-flow__stage" data-stage aria-current="false">Levantar aplicación</li></ol><div className="cxd-docker-flow__actions"><button type="button" data-run>Simular siguiente salto</button><button type="button" data-reset>Reiniciar topología</button></div><span role="status" aria-live="polite">Listo para simular la topología.</span></section>; }

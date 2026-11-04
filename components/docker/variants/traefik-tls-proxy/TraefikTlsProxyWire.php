@@ -1,17 +1,7 @@
 <?php
-// Variante 06 — Proxy Inverso Traefik v3 con Balanceo Automático — Laravel Livewire 3 (components/docker/variants/traefik-tls-proxy/TraefikTlsProxyWire.php)
-namespace App\Livewire\Cxd\Docker;
+namespace App\Livewire;
 use Livewire\Component;
-
-class TraefikTlsProxyWire extends Component {
-    public bool $active = false;
-    public function toggle(): void { $this->active = !$this->active; }
-    public function render() {
-        return <<<'HTML'
-        <div class="cxd-docker-traefik-tls-proxy">
-            <h3>Variante 06 — Proxy Inverso Traefik v3 con Balanceo Automático</h3>
-            <button type="button" wire:click="toggle">Estado: {{ $active ? 'ON' : 'OFF' }}</button>
-        </div>
-        HTML;
-    }
-}
+// Incluye styles.css y ajusta la ruta del módulo.
+class TraefikTlsProxyWire extends Component { public function render(): string { return <<<'HTML'
+<section class="cxd-docker-flow" data-cxd-control="traefik-tls-proxy" wire:ignore><h3>Traefik TLS</h3><ol class="cxd-docker-flow__stages" data-stages><li class="cxd-docker-flow__stage" data-stage aria-current="true">Resolver certificado ACME</li><li class="cxd-docker-flow__stage" data-stage aria-current="false">Balancear réplicas</li><li class="cxd-docker-flow__stage" data-stage aria-current="false">Publicar métricas</li></ol><div class="cxd-docker-flow__actions"><button type="button" data-run>Simular siguiente salto</button><button type="button" data-reset>Reiniciar topología</button></div><span role="status" aria-live="polite">Listo para simular la topología.</span></section>
+HTML; } }

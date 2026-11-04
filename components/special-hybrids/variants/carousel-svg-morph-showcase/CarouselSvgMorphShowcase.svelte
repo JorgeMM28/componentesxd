@@ -1,11 +1,6 @@
-<!-- Variante 04 — Carrusel de Escenas + Transformación Geométrica SVG (svg.morphTo) — Svelte 5 Runes (components/special-hybrids/variants/carousel-svg-morph-showcase/CarouselSvgMorphShowcase.svelte) -->
 <script lang="ts">
-  import './styles.css';
-  let active = $state(false);
+import { mountCarouselSvgMorphShowcase } from './carousel-svg-morph-showcase.js';
+import './styles.css';
+function control(node: HTMLElement) { return { destroy: mountCarouselSvgMorphShowcase(node) }; }
 </script>
-
-<div class="cxd-special-hybrids-carousel-svg-morph-showcase" data-active={active}>
-  <h3>Variante 04 — Carrusel de Escenas + Transformación Geométrica SVG (svg.morphTo)</h3>
-  <p>Cada diapositiva del carrusel transforma los vértices del polígono vectorial central e interpola las métricas del sistema.</p>
-  <button type="button" onclick={() => (active = !active)}>Alternar</button>
-</div>
+<div class="cxd-special" data-cxd-control="carousel-svg-morph-showcase" use:control><h3>Carrusel de escenas SVG</h3><div class="cxd-special__scene"><svg viewBox="0 0 120 120" width="120" height="120" aria-hidden="true"><polygon data-shape points="60,10 110,60 60,110 10,60" fill="#9b82ff"></polygon></svg><strong data-title></strong><p data-copy></p></div><div class="cxd-special__actions"><button type="button" data-prev>Anterior</button><button type="button" data-next>Siguiente</button><button type="button" data-reset>Reiniciar</button></div><span role="status"></span></div>

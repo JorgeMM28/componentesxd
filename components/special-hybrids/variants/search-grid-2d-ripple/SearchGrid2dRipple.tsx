@@ -1,21 +1,4 @@
-/**
- * Variante 14 — Buscador de Nodos + Matriz 2D con Onda Radial (stagger grid) — React / Next.js (TSX)
- * Archivo: components/special-hybrids/variants/search-grid-2d-ripple/SearchGrid2dRipple.tsx
- */
-import React, { useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { mountSearchGrid2dRipple } from './search-grid-2d-ripple.js';
 import './styles.css';
-
-export const SearchGrid2dRipple: React.FC<{ title?: string }> = ({
-  title = 'Variante 14 — Buscador de Nodos + Matriz 2D con Onda Radial (stagger grid)'
-}) => {
-  const [active, setActive] = useState(false);
-  return (
-    <div className="cxd-special-hybrids-search-grid-2d-ripple" data-active={active}>
-      <h3>{title}</h3>
-      <p>Haz clic en cualquier nodo del cluster o filtra por estado para expandir una onda 2D desde ese punto exacto.</p>
-      <button type="button" onClick={() => setActive(!active)}>
-        Alternar Estado
-      </button>
-    </div>
-  );
-};
+export function SearchGrid2dRipple() { const root = useRef<HTMLDivElement>(null); useEffect(() => root.current ? mountSearchGrid2dRipple(root.current) : undefined, []); return <div className="cxd-special" data-cxd-control="search-grid-2d-ripple" ref={root}><h3>Buscador de nodos</h3><div className="cxd-special__scene" data-scene><small data-phase>LISTO</small><strong data-value>0 / 3</strong><p data-copy>Demostración autónoma: ejecuta la acción para actualizar el escenario.</p><div className="cxd-special__progress"><span data-progress></span></div></div><div className="cxd-special__actions"><button type="button" data-run>Propagar onda</button><button type="button" data-reset>Reiniciar</button></div><span role="status">Matriz restaurada</span></div>; }

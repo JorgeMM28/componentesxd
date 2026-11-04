@@ -1,21 +1,4 @@
-/**
- * Variante 05 — Carrusel Mazo 3D con Física de Resorte (createSpring) + Odómetro — React / Next.js (TSX)
- * Archivo: components/special-hybrids/variants/carousel-spring-physics-deck/CarouselSpringPhysicsDeck.tsx
- */
-import React, { useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { mountCarouselSpringPhysicsDeck } from './carousel-spring-physics-deck.js';
 import './styles.css';
-
-export const CarouselSpringPhysicsDeck: React.FC<{ title?: string }> = ({
-  title = 'Variante 05 — Carrusel Mazo 3D con Física de Resorte (createSpring) + Odómetro'
-}) => {
-  const [active, setActive] = useState(false);
-  return (
-    <div className="cxd-special-hybrids-carousel-spring-physics-deck" data-active={active}>
-      <h3>{title}</h3>
-      <p>Rota las tarjetas en el eje Z con física real de resorte mientras el contador financiero interpola el valor del nodo activo.</p>
-      <button type="button" onClick={() => setActive(!active)}>
-        Alternar Estado
-      </button>
-    </div>
-  );
-};
+export function CarouselSpringPhysicsDeck() { const root = useRef<HTMLDivElement>(null); useEffect(() => root.current ? mountCarouselSpringPhysicsDeck(root.current) : undefined, []); return <div className="cxd-special" data-cxd-control="carousel-spring-physics-deck" ref={root}><h3>Mazo de inversiones</h3><div className="cxd-special__scene" data-card><small data-label></small><strong data-value></strong><p data-copy></p></div><div className="cxd-special__actions"><button type="button" data-prev>Anterior</button><button type="button" data-next>Siguiente</button><button type="button" data-reset>Reiniciar</button></div><span role="status"></span></div>; }

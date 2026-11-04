@@ -1,21 +1,4 @@
-/**
- * Variante 11 — Tarjeta Inspectora + Descomposición 3D de Capas Estructurales — React / Next.js (TSX)
- * Archivo: components/special-hybrids/variants/card-3d-exploded-inspector/Card3dExplodedInspector.tsx
- */
-import React, { useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { mountCard3dExplodedInspector } from './card-3d-exploded-inspector.js';
 import './styles.css';
-
-export const Card3dExplodedInspector: React.FC<{ title?: string }> = ({
-  title = 'Variante 11 — Tarjeta Inspectora + Descomposición 3D de Capas Estructurales'
-}) => {
-  const [active, setActive] = useState(false);
-  return (
-    <div className="cxd-special-hybrids-card-3d-exploded-inspector" data-active={active}>
-      <h3>{title}</h3>
-      <p>Alterna entre la tarjeta ensamblada funcional y su vista explotada isométrica de 4 capas en vivo.</p>
-      <button type="button" onClick={() => setActive(!active)}>
-        Alternar Estado
-      </button>
-    </div>
-  );
-};
+export function Card3dExplodedInspector() { const root = useRef<HTMLDivElement>(null); useEffect(() => root.current ? mountCard3dExplodedInspector(root.current) : undefined, []); return <div className="cxd-special" data-cxd-control="card-3d-exploded-inspector" ref={root}><h3>Inspector de capas</h3><div className="cxd-special__scene" data-scene><small data-phase>LISTO</small><strong data-value>0 / 3</strong><p data-copy>Demostración autónoma: ejecuta la acción para actualizar el escenario.</p><div className="cxd-special__progress"><span data-progress></span></div></div><div className="cxd-special__actions"><button type="button" data-run>Separar capas</button><button type="button" data-reset>Reiniciar</button></div><span role="status">Tarjeta ensamblada</span></div>; }

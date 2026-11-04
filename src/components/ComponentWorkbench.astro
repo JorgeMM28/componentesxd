@@ -70,7 +70,7 @@ const dockerExamples: Record<string, { id: string; label: string; path: string }
             />
           </div>
 
-          <p class="codebar-notice">{category.slug === 'docker' ? 'El ejemplo de Docker seleccionado requiere un proyecto compatible; revisa los comentarios y copia los archivos auxiliares indicados.' : category.slug === 'carousels' ? 'Ejemplo funcional adaptable, inspirado en la vista previa: copia styles.css y el módulo Vanilla JS y ajusta las rutas de assets a tu proyecto.' : ['buttons', 'toasts', 'forms', 'cards', 'badges-data', 'modals', 'navigation', 'accordions-tabs', 'tables'].includes(category.slug) ? 'Implementación funcional: copia también styles.css y, en los adaptadores que lo indiquen, el módulo Vanilla JS. Ajusta las rutas de assets a tu proyecto.' : 'El archivo generado es una plantilla inicial; puede diferir de la vista previa y requerir adaptación.'}</p>
+          <p class="codebar-notice">{category.slug === 'docker' ? 'El ejemplo de Docker seleccionado requiere un proyecto compatible; revisa los comentarios y copia los archivos auxiliares indicados.' : category.slug === 'special-hybrids' ? 'Ejemplo interactivo adaptable: instala animejs y copia styles.css junto con el módulo Vanilla JS; los demás adaptadores reutilizan la misma lógica y limpian sus recursos al desmontarse.' : category.slug === 'carousels' ? 'Ejemplo funcional adaptable, inspirado en la vista previa: copia styles.css y el módulo Vanilla JS y ajusta las rutas de assets a tu proyecto.' : ['buttons', 'toasts', 'forms', 'cards', 'badges-data', 'modals', 'navigation', 'accordions-tabs', 'tables'].includes(category.slug) ? 'Implementación funcional: copia también styles.css y, en los adaptadores que lo indiquen, el módulo Vanilla JS. Ajusta las rutas de assets a tu proyecto.' : 'El archivo generado es una plantilla inicial; puede diferir de la vista previa y requerir adaptación.'}</p>
 
           <!-- 3. BARRA INFERIOR CON LISTA DESPLEGABLE EXCLUSIVA PARA EL CÓDIGO DEL FRAMEWORK -->
           <footer class="variant-showcase-block__codebar">
@@ -166,6 +166,27 @@ const dockerExamples: Record<string, { id: string; label: string; path: string }
 
   initMagneticButtons();
   initSpotlightCards();
+
+  document.querySelectorAll<HTMLElement>('[data-special-preview]').forEach(preview => {
+    let step = 0;
+    let motion: ReturnType<typeof animate> | undefined;
+    const value = preview.querySelector<HTMLElement>('[data-special-value]');
+    const state = preview.querySelector<HTMLElement>('[data-special-state]');
+    const status = preview.querySelector<HTMLElement>('[data-special-status]');
+    const meter = preview.querySelector<HTMLElement>('[data-special-meter]');
+    const canvas = preview.querySelector<HTMLElement>('[data-special-canvas]');
+    const render = (message: string) => {
+      if (value) value.textContent = `${step} / 3`;
+      if (state) state.textContent = step === 3 ? 'COMPLETO' : step ? 'EJECUTANDO' : 'LISTO';
+      if (status) status.textContent = message;
+      meter?.style.setProperty('--special-progress', `${step / 3 * 100}%`);
+      motion?.pause();
+      if (!reducedMotion.matches && canvas) motion = animate(canvas.children, { opacity: [0.35, 1], y: [12, 0], delay: stagger(60), duration: 360, ease: 'outCubic' });
+    };
+    preview.querySelector<HTMLButtonElement>('[data-special-run]')?.addEventListener('click', () => { step = step === 3 ? 1 : step + 1; render(step === 3 ? 'Acción completada' : `Procesando paso ${step} de 3`); });
+    preview.querySelector<HTMLButtonElement>('[data-special-reset]')?.addEventListener('click', () => { step = 0; render('Escenario reiniciado'); });
+    render('Sin cambios');
+  });
 
   document.querySelectorAll<HTMLElement>('[data-async-demo]').forEach((btn) => {
     bindAsyncButton(btn, () => new Promise((r) => setTimeout(r, 950)));

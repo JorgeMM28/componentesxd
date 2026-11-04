@@ -1,10 +1,10 @@
 <?php
-// Variante 06 — Step-by-Step Configurador Cloud + Motor "Calculando..." en Tiempo Real — PHP 8.3 Renderer (components/special-hybrids/variants/stepper-checkout-calculator/StepperCheckoutCalculatorRenderer.php)
 declare(strict_types=1);
-namespace ComponentesXD\SpecialHybrids;
-
-final class StepperCheckoutCalculatorRenderer {
-    public static function render(): string {
-        return '<div class="cxd-special-hybrids-stepper-checkout-calculator"><h3>Variante 06 — Step-by-Step Configurador Cloud + Motor "Calculando..." en Tiempo Real</h3><p>Avanza por las etapas de hardware, red y réplicas recalculando el costo mensual con animación numérica instantánea.</p></div>';
-    }
-}
+// Incluye styles.css y ajusta la ruta del módulo.
+function renderStepperCheckoutCalculator(): string { return <<<'HTML'
+<div class="cxd-special" data-cxd-control="stepper-checkout-calculator"><h3>Configurador cloud</h3><div class="cxd-special__progress" role="progressbar" aria-label="Progreso" aria-valuemin="1" aria-valuemax="3" aria-valuenow="1"><span data-progress></span></div><div class="cxd-special__scene" data-scene><label>Hardware <select data-hardware><option value="20">Básico</option><option value="50">Avanzado</option><option value="90">Profesional</option></select></label><label>Red <select data-network><option value="10">Estándar</option><option value="25">Premium</option></select></label><label>Réplicas <input data-replicas type="number" min="1" max="10" value="1" /></label><strong data-total></strong></div><div class="cxd-special__actions"><button type="button" data-prev>Anterior</button><button type="button" data-next>Siguiente</button><button type="button" data-reset>Reiniciar</button></div><span role="status"></span></div>
+<script type="module">
+import { mountStepperCheckoutCalculator } from '/assets/stepper-checkout-calculator.js';
+document.querySelectorAll('[data-cxd-control="stepper-checkout-calculator"]:not([data-ready])').forEach(root => { root.dataset.ready = 'true'; mountStepperCheckoutCalculator(root); });
+</script>
+HTML; }

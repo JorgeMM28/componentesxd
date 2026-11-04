@@ -1,21 +1,4 @@
-/**
- * Variante 24 — Visualizador Paso a Paso de Algoritmos de Ordenamiento (QuickSort, BubbleSort, SelectionSort, InsertionSort) — React / Next.js (TSX)
- * Archivo: components/special-hybrids/variants/sorting-algorithm-symphony/SortingAlgorithmSymphony.tsx
- */
-import React, { useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { mountSortingAlgorithmSymphony } from './sorting-algorithm-symphony.js';
 import './styles.css';
-
-export const SortingAlgorithmSymphony: React.FC<{ title?: string }> = ({
-  title = 'Variante 24 — Visualizador Paso a Paso de Algoritmos de Ordenamiento (QuickSort, BubbleSort, SelectionSort, InsertionSort)'
-}) => {
-  const [active, setActive] = useState(false);
-  return (
-    <div className="cxd-special-hybrids-sorting-algorithm-symphony" data-active={active}>
-      <h3>{title}</h3>
-      <p>28 columnas de datos con comparación e intercambio paso a paso en vivo, resaltado de pivotes activos, contadores en tiempo real y barrido verde de verificación final.</p>
-      <button type="button" onClick={() => setActive(!active)}>
-        Alternar Estado
-      </button>
-    </div>
-  );
-};
+export function SortingAlgorithmSymphony() { const root = useRef<HTMLDivElement>(null); useEffect(() => root.current ? mountSortingAlgorithmSymphony(root.current) : undefined, []); return <div className="cxd-special" data-cxd-control="sorting-algorithm-symphony" ref={root}><h3>Sinfonía de ordenamiento</h3><div className="cxd-special__scene" data-scene><small data-phase>LISTO</small><strong data-value>0 / 3</strong><p data-copy>Demostración autónoma: ejecuta la acción para actualizar el escenario.</p><div className="cxd-special__progress"><span data-progress></span></div></div><div className="cxd-special__actions"><button type="button" data-run>Ordenar columnas</button><button type="button" data-reset>Reiniciar</button></div><span role="status">Valores mezclados</span></div>; }

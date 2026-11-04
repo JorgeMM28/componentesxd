@@ -1,21 +1,4 @@
-/**
- * Variante 08 — Despachador de Toasts Apilados 3D + Cronómetro createTimer() — React / Next.js (TSX)
- * Archivo: components/special-hybrids/variants/toast-timeline-dispatcher/ToastTimelineDispatcher.tsx
- */
-import React, { useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { mountToastTimelineDispatcher } from './toast-timeline-dispatcher.js';
 import './styles.css';
-
-export const ToastTimelineDispatcher: React.FC<{ title?: string }> = ({
-  title = 'Variante 08 — Despachador de Toasts Apilados 3D + Cronómetro createTimer()'
-}) => {
-  const [active, setActive] = useState(false);
-  return (
-    <div className="cxd-special-hybrids-toast-timeline-dispatcher" data-active={active}>
-      <h3>{title}</h3>
-      <p>Genera notificaciones en vivo con física elástica y cuenta regresiva precisa en milisegundos.</p>
-      <button type="button" onClick={() => setActive(!active)}>
-        Alternar Estado
-      </button>
-    </div>
-  );
-};
+export function ToastTimelineDispatcher() { const root = useRef<HTMLDivElement>(null); useEffect(() => root.current ? mountToastTimelineDispatcher(root.current) : undefined, []); return <div className="cxd-special" data-cxd-control="toast-timeline-dispatcher" ref={root}><h3>Despachador de alertas</h3><div className="cxd-special__scene" data-scene><small data-phase>LISTO</small><strong data-value>0 / 3</strong><p data-copy>Demostración autónoma: ejecuta la acción para actualizar el escenario.</p><div className="cxd-special__progress"><span data-progress></span></div></div><div className="cxd-special__actions"><button type="button" data-run>Despachar alerta</button><button type="button" data-reset>Reiniciar</button></div><span role="status">La cola está vacía</span></div>; }

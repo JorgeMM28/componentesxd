@@ -1,21 +1,4 @@
-/**
- * Variante 26 — Sistema Solar Animado Completo (Sol + 8 Planetas + Luna + Cinturón de Asteroides + Saturno) — React / Next.js (TSX)
- * Archivo: components/special-hybrids/variants/orbital-solar-gravity-sim/OrbitalSolarGravitySim.tsx
- */
-import React, { useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { mountOrbitalSolarGravitySim } from './orbital-solar-gravity-sim.js';
 import './styles.css';
-
-export const OrbitalSolarGravitySim: React.FC<{ title?: string }> = ({
-  title = 'Variante 26 — Sistema Solar Animado Completo (Sol + 8 Planetas + Luna + Cinturón de Asteroides + Saturno)'
-}) => {
-  const [active, setActive] = useState(false);
-  return (
-    <div className="cxd-special-hybrids-orbital-solar-gravity-sim" data-active={active}>
-      <h3>{title}</h3>
-      <p>Simulación heliocéntrica continua con Mercurio, Venus, Tierra + Luna, Marte, Cinturón de Asteroides, Júpiter, Saturno con anillos, Urano y Neptuno, selector de telemetría planetaria y escala de tiempo Warp.</p>
-      <button type="button" onClick={() => setActive(!active)}>
-        Alternar Estado
-      </button>
-    </div>
-  );
-};
+export function OrbitalSolarGravitySim() { const root = useRef<HTMLDivElement>(null); useEffect(() => root.current ? mountOrbitalSolarGravitySim(root.current) : undefined, []); return <div className="cxd-special" data-cxd-control="orbital-solar-gravity-sim" ref={root}><h3>Simulador orbital</h3><div className="cxd-special__scene" data-scene><small data-phase>LISTO</small><strong data-value>0 / 3</strong><p data-copy>Demostración autónoma: ejecuta la acción para actualizar el escenario.</p><div className="cxd-special__progress"><span data-progress></span></div></div><div className="cxd-special__actions"><button type="button" data-run>Acelerar órbitas</button><button type="button" data-reset>Reiniciar</button></div><span role="status">Tiempo normal</span></div>; }

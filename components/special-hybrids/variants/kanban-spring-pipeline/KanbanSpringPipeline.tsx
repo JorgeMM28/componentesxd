@@ -1,21 +1,4 @@
-/**
- * Variante 09 — Tablero Kanban con Física Spring + Barra de Progreso Global Animada — React / Next.js (TSX)
- * Archivo: components/special-hybrids/variants/kanban-spring-pipeline/KanbanSpringPipeline.tsx
- */
-import React, { useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { mountKanbanSpringPipeline } from './kanban-spring-pipeline.js';
 import './styles.css';
-
-export const KanbanSpringPipeline: React.FC<{ title?: string }> = ({
-  title = 'Variante 09 — Tablero Kanban con Física Spring + Barra de Progreso Global Animada'
-}) => {
-  const [active, setActive] = useState(false);
-  return (
-    <div className="cxd-special-hybrids-kanban-spring-pipeline" data-active={active}>
-      <h3>{title}</h3>
-      <p>Promueve tarjetas entre etapas disparando rebote físico y actualizando el porcentaje global del sprint.</p>
-      <button type="button" onClick={() => setActive(!active)}>
-        Alternar Estado
-      </button>
-    </div>
-  );
-};
+export function KanbanSpringPipeline() { const root = useRef<HTMLDivElement>(null); useEffect(() => root.current ? mountKanbanSpringPipeline(root.current) : undefined, []); return <div className="cxd-special" data-cxd-control="kanban-spring-pipeline" ref={root}><h3>Pipeline de entrega</h3><div className="cxd-special__scene" data-scene><small data-phase>LISTO</small><strong data-value>0 / 3</strong><p data-copy>Demostración autónoma: ejecuta la acción para actualizar el escenario.</p><div className="cxd-special__progress"><span data-progress></span></div></div><div className="cxd-special__actions"><button type="button" data-run>Promover tarea</button><button type="button" data-reset>Reiniciar</button></div><span role="status">Backlog restaurado</span></div>; }

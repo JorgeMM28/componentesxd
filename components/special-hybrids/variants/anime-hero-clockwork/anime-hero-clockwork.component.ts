@@ -1,18 +1,4 @@
-// Variante 21 — Escenario Relojería Cinética & Onda Radial (Inspirado en el Hero Oficial de Anime.js v4) — Angular 18+ Signals (components/special-hybrids/variants/anime-hero-clockwork/anime-hero-clockwork.component.ts)
-import { Component, signal } from '@angular/core';
-
-@Component({
-  selector: 'cxd-anime-hero-clockwork',
-  standalone: true,
-  styleUrls: ['./styles.css'],
-  template: `
-    <div class="cxd-special-hybrids-anime-hero-clockwork" [attr.data-active]="active()">
-      <h3>Variante 21 — Escenario Relojería Cinética & Onda Radial (Inspirado en el Hero Oficial de Anime.js v4)</h3>
-      <p>36 vectores radiales concéntricos, anillos orbitales y matriz sincronizada que ejecutan coreografías de relojería, explosión solar, vórtice espiral y pulso cuántico.</p>
-      <button type="button" (click)="active.set(!active())">Alternar</button>
-    </div>
-  `
-})
-export class CxdAnimeHeroClockworkComponent {
-  active = signal(false);
-}
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import { mountAnimeHeroClockwork } from './anime-hero-clockwork.js';
+@Component({ selector:'cxd-anime-hero-clockwork', standalone:true, styleUrls:['./styles.css'], template:`<div class="cxd-special" data-cxd-control="anime-hero-clockwork" #root><h3>Relojería cinética</h3><div class="cxd-special__scene" data-scene><small data-phase>LISTO</small><strong data-value>0 / 3</strong><p data-copy>Demostración autónoma: ejecuta la acción para actualizar el escenario.</p><div class="cxd-special__progress"><span data-progress></span></div></div><div class="cxd-special__actions"><button type="button" data-run>Iniciar coreografía</button><button type="button" data-reset>Reiniciar</button></div><span role="status">Escenario reiniciado</span></div>` })
+export class AnimeHeroClockworkComponent implements AfterViewInit, OnDestroy { @ViewChild('root') root!: ElementRef<HTMLElement>; private unmount?: () => void; ngAfterViewInit() { this.unmount = mountAnimeHeroClockwork(this.root.nativeElement); } ngOnDestroy() { this.unmount?.(); } }

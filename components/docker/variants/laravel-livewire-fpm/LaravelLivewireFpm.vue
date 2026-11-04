@@ -1,14 +1,7 @@
-<!-- Variante 02 — Laravel 11 + Livewire 3 + PHP 8.3 FPM + OPcache — Vue 3 SFC (components/docker/variants/laravel-livewire-fpm/LaravelLivewireFpm.vue) -->
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
+import { mountLaravelLivewireFpm } from './laravel-livewire-fpm.js';
 import './styles.css';
-const active = ref(false);
+const root = ref<HTMLElement | null>(null); let unmount: (() => void) | undefined; onMounted(() => { if (root.value) unmount = mountLaravelLivewireFpm(root.value); }); onUnmounted(() => unmount?.());
 </script>
-
-<template>
-  <div class="cxd-docker-laravel-livewire-fpm" :data-active="active">
-    <h3>Variante 02 — Laravel 11 + Livewire 3 + PHP 8.3 FPM + OPcache</h3>
-    <p>Imagen lista para Laravel y Blade con OPcache JIT, Redis, PostgreSQL y Composer 2.8.</p>
-    <button type="button" @click="active = !active">Alternar</button>
-  </div>
-</template>
+<template><section class="cxd-docker-flow" data-cxd-control="laravel-livewire-fpm" ref="root"><h3>Laravel + Livewire</h3><ol class="cxd-docker-flow__stages" data-stages><li class="cxd-docker-flow__stage" data-stage aria-current="true">Nginx FastCGI</li><li class="cxd-docker-flow__stage" data-stage aria-current="false">PHP-FPM con OPcache</li><li class="cxd-docker-flow__stage" data-stage aria-current="false">Worker Horizon y Redis</li></ol><div class="cxd-docker-flow__actions"><button type="button" data-run>Simular siguiente salto</button><button type="button" data-reset>Reiniciar topología</button></div><span role="status" aria-live="polite">Listo para simular la topología.</span></section></template>

@@ -1,21 +1,4 @@
-/**
- * Variante 15 — Command Palette + Consola de Ejecución Paso a Paso Animada — React / Next.js (TSX)
- * Archivo: components/special-hybrids/variants/modal-command-choreography/ModalCommandChoreography.tsx
- */
-import React, { useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { mountModalCommandChoreography } from './modal-command-choreography.js';
 import './styles.css';
-
-export const ModalCommandChoreography: React.FC<{ title?: string }> = ({
-  title = 'Variante 15 — Command Palette + Consola de Ejecución Paso a Paso Animada'
-}) => {
-  const [active, setActive] = useState(false);
-  return (
-    <div className="cxd-special-hybrids-modal-command-choreography" data-active={active}>
-      <h3>{title}</h3>
-      <p>Dispara cualquier comando de la lista para ejecutar una secuencia de terminal animada en tiempo real.</p>
-      <button type="button" onClick={() => setActive(!active)}>
-        Alternar Estado
-      </button>
-    </div>
-  );
-};
+export function ModalCommandChoreography() { const root = useRef<HTMLDivElement>(null); useEffect(() => root.current ? mountModalCommandChoreography(root.current) : undefined, []); return <div className="cxd-special" data-cxd-control="modal-command-choreography" ref={root}><h3>Consola de comandos</h3><div className="cxd-special__scene" data-scene><small data-phase>LISTO</small><strong data-value>0 / 3</strong><p data-copy>Demostración autónoma: ejecuta la acción para actualizar el escenario.</p><div className="cxd-special__progress"><span data-progress></span></div></div><div className="cxd-special__actions"><button type="button" data-run>Ejecutar comando</button><button type="button" data-reset>Reiniciar</button></div><span role="status">Consola lista</span></div>; }

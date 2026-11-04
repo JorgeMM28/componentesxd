@@ -1,7 +1,6 @@
-{{-- Variante 01 — Astro / Node 22 Alpine Multi-Stage SSR — Laravel Blade (components/docker/variants/astro-node-ssr/astro-node-ssr.blade.php) --}}
-@props(['title' => 'Variante 01 — Astro / Node 22 Alpine Multi-Stage SSR'])
-<div {{ $attributes->merge(['class' => 'cxd-docker-astro-node-ssr']) }}>
-    <h3>{{ $title }}</h3>
-    <p>Contenedor de producción de 3 etapas (deps → builder → runner sin root) para Astro, Next o Remix.</p>
-    {{ $slot }}
-</div>
+{{-- Incluye styles.css y ajusta la ruta del módulo. --}}
+<section class="cxd-docker-flow" data-cxd-control="astro-node-ssr"><h3>Astro / Node SSR</h3><ol class="cxd-docker-flow__stages" data-stages><li class="cxd-docker-flow__stage" data-stage aria-current="true">Instalar dependencias</li><li class="cxd-docker-flow__stage" data-stage aria-current="false">Compilar rutas estáticas</li><li class="cxd-docker-flow__stage" data-stage aria-current="false">Arrancar runner sin root</li></ol><div class="cxd-docker-flow__actions"><button type="button" data-run>Simular siguiente salto</button><button type="button" data-reset>Reiniciar topología</button></div><span role="status" aria-live="polite">Listo para simular la topología.</span></section>
+<script type="module">
+import { mountAstroNodeSsr } from '/assets/astro-node-ssr.js';
+document.querySelectorAll('[data-cxd-control="astro-node-ssr"]:not([data-ready])').forEach(root => { root.dataset.ready = 'true'; mountAstroNodeSsr(root); });
+</script>

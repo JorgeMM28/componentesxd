@@ -1,21 +1,4 @@
-/**
- * Variante 03 — React / Vue / Svelte / Angular SPA + Nginx — React / Next.js (TSX)
- * Archivo: components/docker/variants/spa-nginx-alpine/SpaNginxAlpine.tsx
- */
-import React, { useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { mountSpaNginxAlpine } from './spa-nginx-alpine.js';
 import './styles.css';
-
-export const SpaNginxAlpine: React.FC<{ title?: string }> = ({
-  title = 'Variante 03 — React / Vue / Svelte / Angular SPA + Nginx'
-}) => {
-  const [active, setActive] = useState(false);
-  return (
-    <div className="cxd-docker-spa-nginx-alpine" data-active={active}>
-      <h3>{title}</h3>
-      <p>Compilación estática servida por Nginx Alpine con compresión gzip y try_files para rutas SPA.</p>
-      <button type="button" onClick={() => setActive(!active)}>
-        Alternar Estado
-      </button>
-    </div>
-  );
-};
+export function SpaNginxAlpine() { const root = useRef<HTMLDivElement>(null); useEffect(() => root.current ? mountSpaNginxAlpine(root.current) : undefined, []); return <section className="cxd-docker-flow" data-cxd-control="spa-nginx-alpine" ref={root}><h3>SPA + Nginx</h3><ol className="cxd-docker-flow__stages" data-stages><li className="cxd-docker-flow__stage" data-stage aria-current="true">Generar bundle Vite</li><li className="cxd-docker-flow__stage" data-stage aria-current="false">Resolver rutas con try_files</li><li className="cxd-docker-flow__stage" data-stage aria-current="false">Servir assets inmutables</li></ol><div className="cxd-docker-flow__actions"><button type="button" data-run>Simular siguiente salto</button><button type="button" data-reset>Reiniciar topología</button></div><span role="status" aria-live="polite">Listo para simular la topología.</span></section>; }

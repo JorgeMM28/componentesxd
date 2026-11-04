@@ -1,0 +1,4 @@
+import { useEffect, useRef } from 'react';
+import { mountInventoryBoard } from './inventory-board.js';
+import './styles.css';
+export function InventoryBoard() { const root = useRef<HTMLDivElement>(null); useEffect(() => root.current ? mountInventoryBoard(root.current) : undefined, []); return <div className="cxd-special" data-cxd-control="inventory-board" ref={root}><h3>Tablero de inventario</h3><div className="cxd-special__scene" data-scene><small data-phase>LISTO</small><strong data-value>0 / 3</strong><p data-copy>Demostración autónoma: ejecuta la acción para actualizar el escenario.</p><div className="cxd-special__progress"><span data-progress></span></div></div><div className="cxd-special__actions"><button type="button" data-run>Reabastecer ítem</button><button type="button" data-reset>Reiniciar</button></div><span role="status">Inventario restaurado</span></div>; }

@@ -1,18 +1,4 @@
-// Variante 19 — Transferencia Dual de Módulos + Sincronización Masiva en Cascada — Angular 18+ Signals (components/special-hybrids/variants/dual-transfer-stagger-sync/dual-transfer-stagger-sync.component.ts)
-import { Component, signal } from '@angular/core';
-
-@Component({
-  selector: 'cxd-dual-transfer-stagger-sync',
-  standalone: true,
-  styleUrls: ['./styles.css'],
-  template: `
-    <div class="cxd-special-hybrids-dual-transfer-stagger-sync" [attr.data-active]="active()">
-      <h3>Variante 19 — Transferencia Dual de Módulos + Sincronización Masiva en Cascada</h3>
-      <p>Mueve módulos uno por uno o transfiere todo el bloque con una animación escalonada de Anime.js.</p>
-      <button type="button" (click)="active.set(!active())">Alternar</button>
-    </div>
-  `
-})
-export class CxdDualTransferStaggerSyncComponent {
-  active = signal(false);
-}
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import { mountDualTransferStaggerSync } from './dual-transfer-stagger-sync.js';
+@Component({ selector:'cxd-dual-transfer-stagger-sync', standalone:true, styleUrls:['./styles.css'], template:`<div class="cxd-special" data-cxd-control="dual-transfer-stagger-sync" #root><h3>Sincronizador de permisos</h3><div class="cxd-special__scene" data-scene><small data-phase>LISTO</small><strong data-value>0 / 3</strong><p data-copy>Demostración autónoma: ejecuta la acción para actualizar el escenario.</p><div class="cxd-special__progress"><span data-progress></span></div></div><div class="cxd-special__actions"><button type="button" data-run>Transferir módulo</button><button type="button" data-reset>Reiniciar</button></div><span role="status">Listas restauradas</span></div>` })
+export class DualTransferStaggerSyncComponent implements AfterViewInit, OnDestroy { @ViewChild('root') root!: ElementRef<HTMLElement>; private unmount?: () => void; ngAfterViewInit() { this.unmount = mountDualTransferStaggerSync(this.root.nativeElement); } ngOnDestroy() { this.unmount?.(); } }
