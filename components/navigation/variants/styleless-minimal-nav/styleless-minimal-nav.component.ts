@@ -1,18 +1,4 @@
-// Variante 03 — Navegación Styleless Minimalista con Indicador Deslizante — Angular 18+ Signals (components/navigation/variants/styleless-minimal-nav/styleless-minimal-nav.component.ts)
-import { Component, signal } from '@angular/core';
-
-@Component({
-  selector: 'cxd-styleless-minimal-nav',
-  standalone: true,
-  styleUrls: ['./styles.css'],
-  template: `
-    <div class="cxd-navigation-styleless-minimal-nav" [attr.data-active]="active()">
-      <h3>Variante 03 — Navegación Styleless Minimalista con Indicador Deslizante</h3>
-      <p>Pestañas limpias sin bordes laterales donde la línea activa viaja suavemente al elemento clicado.</p>
-      <button type="button" (click)="active.set(!active())">Alternar</button>
-    </div>
-  `
-})
-export class CxdStylelessMinimalNavComponent {
-  active = signal(false);
-}
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import { mountStylelessMinimalNav } from './styleless-minimal-nav.js';
+@Component({ selector:'cxd-styleless-minimal-nav', standalone:true, styleUrls:['./styles.css'], template:`<div class="cxd-nav cxd-nav--bare" data-cxd-control="styleless-minimal-nav" #root><button type="button" data-destination="Resumen" aria-pressed="true">Resumen</button><button type="button" data-destination="Actividad" aria-pressed="false">Actividad</button><button type="button" data-destination="Ajustes" aria-pressed="false">Ajustes</button><span role="status">Vista activa: Resumen</span></div>` })
+export class StylelessMinimalNavComponent implements AfterViewInit, OnDestroy { @ViewChild('root') root!: ElementRef<HTMLElement>; private unmount?: () => void; ngAfterViewInit() { this.unmount = mountStylelessMinimalNav(this.root.nativeElement); } ngOnDestroy() { this.unmount?.(); } }

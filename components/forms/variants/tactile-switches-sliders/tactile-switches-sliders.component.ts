@@ -1,18 +1,4 @@
-// Variante 08 — Controles Interactivos (Switches, Stepper Numérico y Radios) — Angular 18+ Signals (components/forms/variants/tactile-switches-sliders/tactile-switches-sliders.component.ts)
-import { Component, signal } from '@angular/core';
-
-@Component({
-  selector: 'cxd-tactile-switches-sliders',
-  standalone: true,
-  styleUrls: ['./styles.css'],
-  template: `
-    <div class="cxd-forms-tactile-switches-sliders" [attr.data-active]="active()">
-      <h3>Variante 08 — Controles Interactivos (Switches, Stepper Numérico y Radios)</h3>
-      <p>Interruptores animados, contador con botones +/- y selector de tarjetas de opción.</p>
-      <button type="button" (click)="active.set(!active())">Alternar</button>
-    </div>
-  `
-})
-export class CxdTactileSwitchesSlidersComponent {
-  active = signal(false);
-}
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import { mountTactileSwitchesSliders } from './tactile-switches-sliders.js';
+@Component({ selector:'cxd-tactile-switches-sliders', standalone:true, styleUrls:['./styles.css'], template:`<div class="cxd-form" data-cxd-control="tactile-switches-sliders" #root><label><input type="checkbox" checked /> Auto-deploy en push</label><label><input type="checkbox" /> Modo estricto WAF</label><button type="button" data-step="-1" aria-label="Reducir réplicas">−</button><span data-value>4</span><button type="button" data-step="1" aria-label="Aumentar réplicas">+</button><span role="status">4 réplicas</span></div>` })
+export class TactileSwitchesSlidersComponent implements AfterViewInit, OnDestroy { @ViewChild('root') root!: ElementRef<HTMLElement>; private unmount?: () => void; ngAfterViewInit() { this.unmount = mountTactileSwitchesSliders(this.root.nativeElement); } ngOnDestroy() { this.unmount?.(); } }

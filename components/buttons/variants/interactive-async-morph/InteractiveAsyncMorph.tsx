@@ -1,21 +1,4 @@
-/**
- * Variante 04 — Botón Interactivo de 3 Estados (Reposo -> Cargando -> Éxito) — React / Next.js (TSX)
- * Archivo: components/buttons/variants/interactive-async-morph/InteractiveAsyncMorph.tsx
- */
-import React, { useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { mountInteractiveAsyncMorph } from './interactive-async-morph.js';
 import './styles.css';
-
-export const InteractiveAsyncMorph: React.FC<{ title?: string }> = ({
-  title = 'Variante 04 — Botón Interactivo de 3 Estados (Reposo -> Cargando -> Éxito)'
-}) => {
-  const [active, setActive] = useState(false);
-  return (
-    <div className="cxd-buttons-interactive-async-morph" data-active={active}>
-      <h3>{title}</h3>
-      <p>Haz clic para ver cómo bloquea la acción, muestra el spinner rotativo y cambia a estado completado.</p>
-      <button type="button" onClick={() => setActive(!active)}>
-        Alternar Estado
-      </button>
-    </div>
-  );
-};
+export function InteractiveAsyncMorph() { const root = useRef<HTMLDivElement>(null); useEffect(() => root.current ? mountInteractiveAsyncMorph(root.current) : undefined, []); return <div className="cxd-control" data-cxd-control="interactive-async-morph" ref={root}><button type="button" data-async aria-busy="false"><span data-spinner>◌ </span><span data-label>Haz clic para probar el ciclo asíncrono</span></button><button type="button" data-magnetic>Pasa el cursor · magnético</button><span role="status">LISTO</span></div>; }

@@ -1,11 +1,6 @@
-<!-- Variante 05 — Lista Clave-Valor con Copiado al Portapapeles por Fila — Svelte 5 Runes (components/badges-data/variants/copyable-spec-grid/CopyableSpecGrid.svelte) -->
 <script lang="ts">
-  import './styles.css';
-  let active = $state(false);
+import { mountCopyableSpecGrid } from './copyable-spec-grid.js';
+import './styles.css';
+function control(node: HTMLElement) { return { destroy: mountCopyableSpecGrid(node) }; }
 </script>
-
-<div class="cxd-badges-data-copyable-spec-grid" data-active={active}>
-  <h3>Variante 05 — Lista Clave-Valor con Copiado al Portapapeles por Fila</h3>
-  <p>Haz clic en cualquier valor técnico (API Key, Host, SHA) para copiarlo instantáneamente.</p>
-  <button type="button" onclick={() => (active = !active)}>Alternar</button>
-</div>
+<div class="cxd-data" data-cxd-control="copyable-spec-grid" use:control><button type="button" data-copy="cxd_public_demo">API_PUBLIC_KEY · copiar</button><button type="button" data-copy="example.test:4321">PRIMARY_ENDPOINT · copiar</button><button type="button" data-copy="sha256:demo">BUILD_DIGEST · copiar</button><span role="status">Selecciona un valor</span></div>

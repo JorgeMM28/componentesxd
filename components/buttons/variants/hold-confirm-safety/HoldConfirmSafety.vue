@@ -1,14 +1,7 @@
-<!-- Variante 05 — Botón con Seguridad Hold-to-Confirm (Mantener Presionado) — Vue 3 SFC (components/buttons/variants/hold-confirm-safety/HoldConfirmSafety.vue) -->
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
+import { mountHoldConfirmSafety } from './hold-confirm-safety.js';
 import './styles.css';
-const active = ref(false);
+const root = ref<HTMLElement | null>(null); let unmount: (() => void) | undefined; onMounted(() => { if (root.value) unmount = mountHoldConfirmSafety(root.value); }); onUnmounted(() => unmount?.());
 </script>
-
-<template>
-  <div class="cxd-buttons-hold-confirm-safety" :data-active="active">
-    <h3>Variante 05 — Botón con Seguridad Hold-to-Confirm (Mantener Presionado)</h3>
-    <p>Mantén presionado el botón para llenar la barra de progreso roja hasta el 100% y ejecutar la acción.</p>
-    <button type="button" @click="active = !active">Alternar</button>
-  </div>
-</template>
+<template><div class="cxd-control" data-cxd-control="hold-confirm-safety" ref="root"><button type="button" data-hold>Mantén presionado para purgar; con teclado pulsa dos veces</button><span role="status">PROGRESO DE SEGURIDAD: 0%</span></div></template>

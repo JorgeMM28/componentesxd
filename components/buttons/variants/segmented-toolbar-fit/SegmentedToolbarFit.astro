@@ -1,9 +1,14 @@
 ---
-// Variante 07 — Barra de Botones Content-Fit con Indicador Activo — Astro 5 (components/buttons/variants/segmented-toolbar-fit/SegmentedToolbarFit.astro)
 import './styles.css';
 ---
-<div class="cxd-buttons-segmented-toolbar-fit">
-  <h3>Variante 07 — Barra de Botones Content-Fit con Indicador Activo</h3>
-  <p>Grupo compacto unido donde la selección activa cambia instantáneamente al hacer clic.</p>
-  <slot />
+<div class="cxd-segments" data-cxd-segments>
+  <button type="button" class="cxd-segments__button cxd-segments__button--one" data-message="Vista de Tabla Estructurada (10 Variantes)" aria-pressed="true">Vista Tabla</button>
+  <button type="button" class="cxd-segments__button cxd-segments__button--two" data-message="Vista de Tarjetas Bento (8 Variantes)" aria-pressed="false">Vista Tarjetas</button>
+  <button type="button" class="cxd-segments__button cxd-segments__button--three" data-message="Vista de Grafo Vectorial 3D" aria-pressed="false">Vista Grafo 3D</button>
+  <button type="button" class="cxd-segments__button cxd-segments__button--four" data-message="Inspector JSON Raw en Vivo" aria-pressed="false">JSON Raw</button>
+  <span class="cxd-segments__status" role="status">MODO ACTIVO: Vista de Tabla Estructurada (10 Variantes)</span>
 </div>
+<script>
+  import { mountSegmentedToolbarFit } from './segmented-toolbar-fit.js';
+  document.querySelectorAll('[data-cxd-segments]').forEach(root => mountSegmentedToolbarFit(root));
+</script>

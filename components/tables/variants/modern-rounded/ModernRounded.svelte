@@ -1,11 +1,6 @@
-<!-- Variante 01 — Tabla Moderna de Bordes Redondeados — Svelte 5 Runes (components/tables/variants/modern-rounded/ModernRounded.svelte) -->
 <script lang="ts">
-  import './styles.css';
-  let active = $state(false);
+import { mountModernRounded } from './modern-rounded.js';
+import './styles.css';
+function control(node: HTMLElement) { return { destroy: mountModernRounded(node) }; }
 </script>
-
-<div class="cxd-tables-modern-rounded" data-active={active}>
-  <h3>Variante 01 — Tabla Moderna de Bordes Redondeados</h3>
-  <p>Contenedor con radio amplio de 18px, cabeceras suaves tipo cápsula, avatares circulares y badges pastilla.</p>
-  <button type="button" onclick={() => (active = !active)}>Alternar</button>
-</div>
+<div class="cxd-table " data-cxd-control="modern-rounded" use:control><table><thead><tr><th>Miembro</th><th>Departamento</th><th>Estado</th></tr></thead><tbody><tr><td>Elena</td><td>Arquitectura</td><td>Online</td></tr><tr><td>Marco</td><td>Sistemas</td><td>Revisión</td></tr><tr><td>Sofía</td><td>Diseño</td><td>Online</td></tr></tbody></table></div>

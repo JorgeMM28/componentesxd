@@ -1,21 +1,4 @@
-/**
- * Variante 08 — Toaster Interactivo de Subida de Archivos — React / Next.js (TSX)
- * Archivo: components/toasts/variants/upload-progress-toaster/UploadProgressToaster.tsx
- */
-import React, { useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { mountUploadProgressToaster } from './upload-progress-toaster.js';
 import './styles.css';
-
-export const UploadProgressToaster: React.FC<{ title?: string }> = ({
-  title = 'Variante 08 — Toaster Interactivo de Subida de Archivos'
-}) => {
-  const [active, setActive] = useState(false);
-  return (
-    <div className="cxd-toasts-upload-progress-toaster" data-active={active}>
-      <h3>{title}</h3>
-      <p>Simula la subida de múltiples archivos con porcentaje animado en tiempo real y botón de pausa/reinicio.</p>
-      <button type="button" onClick={() => setActive(!active)}>
-        Alternar Estado
-      </button>
-    </div>
-  );
-};
+export function UploadProgressToaster() { const root = useRef<HTMLDivElement>(null); useEffect(() => root.current ? mountUploadProgressToaster(root.current) : undefined, []); return <div className="cxd-toast" data-cxd-control="upload-progress-toaster" ref={root}><strong>Subiendo artefactos de producción</strong><span data-percent>0%</span><progress data-progress max="100" value="0" aria-label="Progreso de subida"></progress><button type="button" data-start>Simular subida</button><button type="button" data-pause>Pausar</button><span role="status">Listo</span></div>; }

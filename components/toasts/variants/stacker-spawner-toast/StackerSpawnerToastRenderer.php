@@ -1,10 +1,10 @@
 <?php
-// Variante 05 — Generador Interactivo de Pila de Toasters — PHP 8.3 Renderer (components/toasts/variants/stacker-spawner-toast/StackerSpawnerToastRenderer.php)
 declare(strict_types=1);
-namespace ComponentesXD\Toasts;
-
-final class StackerSpawnerToastRenderer {
-    public static function render(): string {
-        return '<div class="cxd-toasts-stacker-spawner-toast"><h3>Variante 05 — Generador Interactivo de Pila de Toasters</h3><p>Haz clic en los botones para disparar toasters reales de Éxito, Alerta o Error que se apilan con Anime.js.</p></div>';
-    }
-}
+// Incluye styles.css y ajusta la ruta del módulo.
+function renderStackerSpawnerToast(): string { return <<<'HTML'
+<div class="cxd-toast" data-cxd-control="stacker-spawner-toast"><strong>Notificaciones apiladas</strong><button type="button" data-kind="Éxito">+ Éxito</button><button type="button" data-kind="Alerta">+ Alerta</button><button type="button" data-kind="Error">+ Error</button><div class="cxd-toast__list" data-list aria-live="polite"></div></div>
+<script type="module">
+import { mountStackerSpawnerToast } from '/assets/stacker-spawner-toast.js';
+document.querySelectorAll('[data-cxd-control="stacker-spawner-toast"]:not([data-ready])').forEach(root => { root.dataset.ready = 'true'; mountStackerSpawnerToast(root); });
+</script>
+HTML; }

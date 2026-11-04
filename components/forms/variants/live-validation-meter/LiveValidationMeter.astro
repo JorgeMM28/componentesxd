@@ -1,9 +1,8 @@
 ---
-// Variante 06 — Formulario con Validación y Medidor de Seguridad en Vivo — Astro 5 (components/forms/variants/live-validation-meter/LiveValidationMeter.astro)
 import './styles.css';
 ---
-<div class="cxd-forms-live-validation-meter">
-  <h3>Variante 06 — Formulario con Validación y Medidor de Seguridad en Vivo</h3>
-  <p>Escribe una contraseña para ver cómo se calculan en tiempo real los 4 niveles de fortaleza.</p>
-  <slot />
-</div>
+<div class="cxd-form" data-cxd-control="live-validation-meter"><label>Contraseña <input type="password" data-password autocomplete="new-password" /></label><meter min="0" max="4" value="0" data-meter aria-label="Fortaleza de contraseña"></meter><span role="status">Sin evaluar</span></div>
+<script>
+import { mountLiveValidationMeter } from './live-validation-meter.js';
+document.querySelectorAll('[data-cxd-control="live-validation-meter"]:not([data-ready])').forEach(root => { root.dataset.ready = 'true'; mountLiveValidationMeter(root); });
+</script>

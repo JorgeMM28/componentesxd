@@ -1,17 +1,11 @@
 <?php
-// Variante 03 — Toaster con Acciones (Aceptar, Posponer, Deshacer) — Laravel Livewire 3 (components/toasts/variants/action-buttons-toast/ActionButtonsToastWire.php)
-namespace App\Livewire\Cxd\Toasts;
+namespace App\Livewire;
 use Livewire\Component;
-
-class ActionButtonsToastWire extends Component {
-    public bool $active = false;
-    public function toggle(): void { $this->active = !$this->active; }
-    public function render() {
-        return <<<'HTML'
-        <div class="cxd-toasts-action-buttons-toast">
-            <h3>Variante 03 — Toaster con Acciones (Aceptar, Posponer, Deshacer)</h3>
-            <button type="button" wire:click="toggle">Estado: {{ $active ? 'ON' : 'OFF' }}</button>
-        </div>
-        HTML;
-    }
-}
+// Incluye styles.css y ajusta la ruta del módulo.
+class ActionButtonsToastWire extends Component { public function render(): string { return <<<'HTML'
+<div class="cxd-toast" data-cxd-control="action-buttons-toast" wire:ignore><strong>Solicitud de fusión en rama principal (#409)</strong><p role="status">¿Deseas aprobar y desplegar los cambios?</p><button type="button" data-action="Aprobado y desplegado">Aprobar</button><button type="button" data-action="Pospuesto por 1 hora">Posponer</button><button type="button" data-action="Operación deshecha">Deshacer</button>@script
+<script>
+import('/assets/action-buttons-toast.js').then(module => module.mountActionButtonsToast($wire.$el));
+</script>
+@endscript</div>
+HTML; } }

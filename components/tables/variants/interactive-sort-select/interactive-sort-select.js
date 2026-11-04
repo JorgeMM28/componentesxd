@@ -1,4 +1,11 @@
-// Variante 05 — Tabla Interactiva (Ordenamiento + Selección en Vivo) — Vanilla JS (components/tables/variants/interactive-sort-select/interactive-sort-select.js)
-export function mountInteractiveSortSelect(root = document) {
-  return root.querySelectorAll('.cxd-tables-interactive-sort-select');
+// Copia styles.css. La función devuelve un desmontador.
+export function mountInteractiveSortSelect(root) {
+  const controller = new AbortController(); const signal = controller.signal; let timer;
+  const body=root.querySelector('[data-body]');const all=root.querySelector('[data-all]');const status=root.querySelector('[role="status"]');const heading=root.querySelector('[data-heading]');let ascending=true;const sync=()=>{const checks=Array.from(root.querySelectorAll('[data-check]'));const selected=checks.filter(item=>item.checked).length;checks.forEach(item=>item.closest('tr').dataset.selected=String(item.checked));all.checked=selected===checks.length;all.indeterminate=selected>0&&selected<checks.length;status.textContent=selected+' de '+checks.length+' filas seleccionadas';};root.addEventListener('change',event=>{if(event.target===all)root.querySelectorAll('[data-check]').forEach(item=>item.checked=all.checked);sync();},{signal});root.querySelector('[data-clear]').addEventListener('click',()=>{root.querySelectorAll('[data-check]').forEach(item=>item.checked=false);sync();},{signal});root.querySelector('[data-sort]').addEventListener('click',()=>{const rows=Array.from(body.rows);rows.sort((a,b)=>a.cells[1].textContent.localeCompare(b.cells[1].textContent,'es')*(ascending?1:-1));rows.forEach(row=>body.append(row));heading.setAttribute('aria-sort',ascending?'ascending':'descending');ascending=!ascending;},{signal});
+  return () => { controller.abort(); clearTimeout(timer); };
 }
+// Montaje: document.querySelectorAll('[data-cxd-control="interactive-sort-select"]').forEach(mountInteractiveSortSelect);
+// HTML:
+/*
+<div class="cxd-table" data-cxd-control="interactive-sort-select"><table><thead><tr><th><label>Todo <input type="checkbox" data-all /></label></th><th aria-sort="none" data-heading><button type="button" data-sort>Miembro ↕</button></th><th>Departamento</th></tr></thead><tbody data-body><tr><td><input type="checkbox" data-check aria-label="Seleccionar Elena" /></td><td>Elena</td><td>Arquitectura</td></tr><tr><td><input type="checkbox" data-check aria-label="Seleccionar Marco" /></td><td>Marco</td><td>Sistemas</td></tr><tr><td><input type="checkbox" data-check aria-label="Seleccionar Sofía" /></td><td>Sofía</td><td>Diseño</td></tr></tbody></table><button type="button" data-clear>Limpiar selección</button><span role="status">0 de 3 filas seleccionadas</span></div>
+*/

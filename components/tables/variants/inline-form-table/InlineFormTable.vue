@@ -1,14 +1,7 @@
-<!-- Variante 07 — Tabla con Formulario Integrado (Inputs, Selects y Cálculo) — Vue 3 SFC (components/tables/variants/inline-form-table/InlineFormTable.vue) -->
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
+import { mountInlineFormTable } from './inline-form-table.js';
 import './styles.css';
-const active = ref(false);
+const root = ref<HTMLElement | null>(null); let unmount: (() => void) | undefined; onMounted(() => { if (root.value) unmount = mountInlineFormTable(root.value); }); onUnmounted(() => unmount?.());
 </script>
-
-<template>
-  <div class="cxd-tables-inline-form-table" :data-active="active">
-    <h3>Variante 07 — Tabla con Formulario Integrado (Inputs, Selects y Cálculo)</h3>
-    <p>Celdas con inputs numéricos, selectores desplegables y switches que recalculan el subtotal de la tabla en vivo.</p>
-    <button type="button" @click="active = !active">Alternar</button>
-  </div>
-</template>
+<template><div class="cxd-table" data-cxd-control="inline-form-table" ref="root"><table><thead><tr><th>Producto</th><th>Cantidad</th><th>Precio</th><th>Subtotal</th></tr></thead><tbody><tr data-row><td>Nodos</td><td><input type="number" data-quantity min="0" value="2" aria-label="Cantidad nodos" /></td><td><select data-price aria-label="Precio nodos"><option value="20">$20</option><option value="40">$40</option></select></td><td data-subtotal>$40.00</td></tr><tr data-row><td>Almacenamiento</td><td><input type="number" data-quantity min="0" value="3" aria-label="Cantidad almacenamiento" /></td><td><select data-price aria-label="Precio almacenamiento"><option value="10">$10</option><option value="30">$30</option></select></td><td data-subtotal>$30.00</td></tr></tbody></table><span role="status">Total: $70.00</span></div></template>

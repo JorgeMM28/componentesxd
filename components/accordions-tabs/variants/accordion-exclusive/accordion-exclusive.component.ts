@@ -1,18 +1,4 @@
-// Variante 01 — Acordeón Exclusivo (Single-Open) con Animación de Altura — Angular 18+ Signals (components/accordions-tabs/variants/accordion-exclusive/accordion-exclusive.component.ts)
-import { Component, signal } from '@angular/core';
-
-@Component({
-  selector: 'cxd-accordion-exclusive',
-  standalone: true,
-  styleUrls: ['./styles.css'],
-  template: `
-    <div class="cxd-accordions-tabs-accordion-exclusive" [attr.data-active]="active()">
-      <h3>Variante 01 — Acordeón Exclusivo (Single-Open) con Animación de Altura</h3>
-      <p>Al expandir una sección técnica se cierran automáticamente las demás manteniendo el foco de lectura.</p>
-      <button type="button" (click)="active.set(!active())">Alternar</button>
-    </div>
-  `
-})
-export class CxdAccordionExclusiveComponent {
-  active = signal(false);
-}
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import { mountAccordionExclusive } from './accordion-exclusive.js';
+@Component({ selector:'cxd-accordion-exclusive', standalone:true, styleUrls:['./styles.css'], template:`<div class="cxd-widget" data-cxd-control="accordion-exclusive" #root><button type="button" data-open="one" aria-expanded="true">01 · Tokens</button><div class="cxd-widget__panel" data-panel="one">Colores y tipografía.</div><button type="button" data-open="two" aria-expanded="false">02 · Componentes</button><div class="cxd-widget__panel" data-panel="two" hidden>Bloques reutilizables.</div><button type="button" data-open="three" aria-expanded="false">03 · Animaciones</button><div class="cxd-widget__panel" data-panel="three" hidden>Movimiento e interacción.</div></div>` })
+export class AccordionExclusiveComponent implements AfterViewInit, OnDestroy { @ViewChild('root') root!: ElementRef<HTMLElement>; private unmount?: () => void; ngAfterViewInit() { this.unmount = mountAccordionExclusive(this.root.nativeElement); } ngOnDestroy() { this.unmount?.(); } }

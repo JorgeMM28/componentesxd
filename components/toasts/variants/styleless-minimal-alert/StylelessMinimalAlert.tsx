@@ -1,21 +1,4 @@
-/**
- * Variante 06 — Alerta Styleless Minimalista (Tipografía + Línea) — React / Next.js (TSX)
- * Archivo: components/toasts/variants/styleless-minimal-alert/StylelessMinimalAlert.tsx
- */
-import React, { useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { mountStylelessMinimalAlert } from './styleless-minimal-alert.js';
 import './styles.css';
-
-export const StylelessMinimalAlert: React.FC<{ title?: string }> = ({
-  title = 'Variante 06 — Alerta Styleless Minimalista (Tipografía + Línea)'
-}) => {
-  const [active, setActive] = useState(false);
-  return (
-    <div className="cxd-toasts-styleless-minimal-alert" data-active={active}>
-      <h3>{title}</h3>
-      <p>Sin caja ni sombras: solo una línea vertical de 2px, texto directo y enlace de acción limpio.</p>
-      <button type="button" onClick={() => setActive(!active)}>
-        Alternar Estado
-      </button>
-    </div>
-  );
-};
+export function StylelessMinimalAlert() { const root = useRef<HTMLDivElement>(null); useEffect(() => root.current ? mountStylelessMinimalAlert(root.current) : undefined, []); return <div className="cxd-toast cxd-toast--minimal" data-cxd-control="styleless-minimal-alert" ref={root} role="status"><strong>AVISO DEL SISTEMA</strong><p>La ventana de mantenimiento iniciará en 15 minutos sin interrupción de tráfico.</p></div>; }

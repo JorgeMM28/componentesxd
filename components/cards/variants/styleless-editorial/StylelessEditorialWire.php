@@ -1,17 +1,11 @@
 <?php
-// Variante 02 — Tarjeta Styleless Editorial (Sin Caja, Puro Layout) — Laravel Livewire 3 (components/cards/variants/styleless-editorial/StylelessEditorialWire.php)
-namespace App\Livewire\Cxd\Cards;
+namespace App\Livewire;
 use Livewire\Component;
-
-class StylelessEditorialWire extends Component {
-    public bool $active = false;
-    public function toggle(): void { $this->active = !$this->active; }
-    public function render() {
-        return <<<'HTML'
-        <div class="cxd-cards-styleless-editorial">
-            <h3>Variante 02 — Tarjeta Styleless Editorial (Sin Caja, Puro Layout)</h3>
-            <button type="button" wire:click="toggle">Estado: {{ $active ? 'ON' : 'OFF' }}</button>
-        </div>
-        HTML;
-    }
-}
+// Incluye styles.css y ajusta la ruta del módulo.
+class StylelessEditorialWire extends Component { public function render(): string { return <<<'HTML'
+<div class="cxd-card cxd-card--editorial" data-cxd-control="styleless-editorial" wire:ignore><span>ENSAYO ARQUITECTÓNICO // Nº 04</span><h3>La eliminación del contenedor innecesario</h3><p>La jerarquía tipográfica y el espacio definen el bloque.</p><button type="button" data-read>Leer especificación</button><span role="status">Listo para explorar</span>@script
+<script>
+import('/assets/styleless-editorial.js').then(module => module.mountStylelessEditorial($wire.$el));
+</script>
+@endscript</div>
+HTML; } }

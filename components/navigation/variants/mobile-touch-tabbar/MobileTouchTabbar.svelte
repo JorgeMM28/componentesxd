@@ -1,11 +1,6 @@
-<!-- Variante 10 — Mobile Bottom Tab Bar Táctil con Micro-Interacciones Cinéticas — Svelte 5 Runes (components/navigation/variants/mobile-touch-tabbar/MobileTouchTabbar.svelte) -->
 <script lang="ts">
-  import './styles.css';
-  let active = $state(false);
+import { mountMobileTouchTabbar } from './mobile-touch-tabbar.js';
+import './styles.css';
+function control(node: HTMLElement) { return { destroy: mountMobileTouchTabbar(node) }; }
 </script>
-
-<nav class="cxd-navigation-mobile-touch-tabbar" data-active={active}>
-  <h3>Variante 10 — Mobile Bottom Tab Bar Táctil con Micro-Interacciones Cinéticas</h3>
-  <p>Barra inferior flotante tipo iOS/Android con 5 destinos táctiles, pastilla indicadora animada con Anime.js v4 y badges de notificaciones.</p>
-  <button type="button" onclick={() => (active = !active)}>Alternar</button>
-</nav>
+<div class="cxd-nav cxd-nav--mobile" data-cxd-control="mobile-touch-tabbar" use:control><button type="button" data-destination="Inicio" aria-pressed="true">Inicio</button><button type="button" data-destination="Biblioteca" aria-pressed="false">Biblioteca</button><button type="button" data-destination="Motion" aria-pressed="false">Motion</button><button type="button" data-destination="Métricas" aria-pressed="false">Métricas</button><span role="status">Vista activa: Inicio</span></div>

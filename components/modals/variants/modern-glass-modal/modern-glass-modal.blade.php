@@ -1,7 +1,6 @@
-{{-- Variante 01 — Modal Moderno con Bordes Redondeados y Blur — Laravel Blade (components/modals/variants/modern-glass-modal/modern-glass-modal.blade.php) --}}
-@props(['title' => 'Variante 01 — Modal Moderno con Bordes Redondeados y Blur'])
-<div {{ $attributes->merge(['class' => 'cxd-modals-modern-glass-modal']) }}>
-    <h3>{{ $title }}</h3>
-    <p>Ventana de diálogo con cabecera limpia, cuerpo estructurado y botones que abren/cierran la vista.</p>
-    {{ $slot }}
-</div>
+{{-- Incluye styles.css y ajusta la ruta del módulo. --}}
+<div class="cxd-dialog" data-cxd-control="modern-glass-modal"><button type="button" data-open>Abrir diálogo</button><span role="status">Listo</span><dialog aria-label="Actualizar interfaz"><h3>Actualizar interfaz</h3><p>Aplica la configuración seleccionada a la demostración.</p><div class="cxd-dialog__actions"><button type="button" data-confirm>Confirmar</button><button type="button" data-close>Cancelar</button></div></dialog></div>
+<script type="module">
+import { mountModernGlassModal } from '/assets/modern-glass-modal.js';
+document.querySelectorAll('[data-cxd-control="modern-glass-modal"]:not([data-ready])').forEach(root => { root.dataset.ready = 'true'; mountModernGlassModal(root); });
+</script>

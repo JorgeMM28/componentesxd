@@ -1,7 +1,6 @@
-{{-- Variante 07 — Banner Content-Fit Flotante Tipo Píldora — Laravel Blade (components/toasts/variants/content-fit-pill-banner/content-fit-pill-banner.blade.php) --}}
-@props(['title' => 'Variante 07 — Banner Content-Fit Flotante Tipo Píldora'])
-<div {{ $attributes->merge(['class' => 'cxd-toasts-content-fit-pill-banner']) }}>
-    <h3>{{ $title }}</h3>
-    <p>Ajustado exactamente al ancho del mensaje con insignia de novedad y botón de acción compacto.</p>
-    {{ $slot }}
-</div>
+{{-- Incluye styles.css y ajusta la ruta del módulo. --}}
+<div class="cxd-toast cxd-toast--pill" data-cxd-control="content-fit-pill-banner"><strong>NUEVO</strong><span data-message>Motor Anime.js v4 integrado</span><button type="button" data-dismiss>Entendido</button><span role="status"></span></div>
+<script type="module">
+import { mountContentFitPillBanner } from '/assets/content-fit-pill-banner.js';
+document.querySelectorAll('[data-cxd-control="content-fit-pill-banner"]:not([data-ready])').forEach(root => { root.dataset.ready = 'true'; mountContentFitPillBanner(root); });
+</script>

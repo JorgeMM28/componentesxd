@@ -1,18 +1,4 @@
-// Variante 05 — Botón con Seguridad Hold-to-Confirm (Mantener Presionado) — Angular 18+ Signals (components/buttons/variants/hold-confirm-safety/hold-confirm-safety.component.ts)
-import { Component, signal } from '@angular/core';
-
-@Component({
-  selector: 'cxd-hold-confirm-safety',
-  standalone: true,
-  styleUrls: ['./styles.css'],
-  template: `
-    <div class="cxd-buttons-hold-confirm-safety" [attr.data-active]="active()">
-      <h3>Variante 05 — Botón con Seguridad Hold-to-Confirm (Mantener Presionado)</h3>
-      <p>Mantén presionado el botón para llenar la barra de progreso roja hasta el 100% y ejecutar la acción.</p>
-      <button type="button" (click)="active.set(!active())">Alternar</button>
-    </div>
-  `
-})
-export class CxdHoldConfirmSafetyComponent {
-  active = signal(false);
-}
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import { mountHoldConfirmSafety } from './hold-confirm-safety.js';
+@Component({ selector:'cxd-hold-confirm-safety', standalone:true, styleUrls:['./styles.css'], template:`<div class="cxd-control" data-cxd-control="hold-confirm-safety" #root><button type="button" data-hold>Mantén presionado para purgar; con teclado pulsa dos veces</button><span role="status">PROGRESO DE SEGURIDAD: 0%</span></div>` })
+export class HoldConfirmSafetyComponent implements AfterViewInit, OnDestroy { @ViewChild('root') root!: ElementRef<HTMLElement>; private unmount?: () => void; ngAfterViewInit() { this.unmount = mountHoldConfirmSafety(this.root.nativeElement); } ngOnDestroy() { this.unmount?.(); } }

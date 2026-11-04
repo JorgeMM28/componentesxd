@@ -1,18 +1,4 @@
-// Variante 02 — Command Palette Interactiva (Buscador en Vivo) — Angular 18+ Signals (components/modals/variants/interactive-cmdk-palette/interactive-cmdk-palette.component.ts)
-import { Component, signal } from '@angular/core';
-
-@Component({
-  selector: 'cxd-interactive-cmdk-palette',
-  standalone: true,
-  styleUrls: ['./styles.css'],
-  template: `
-    <div class="cxd-modals-interactive-cmdk-palette" [attr.data-active]="active()">
-      <h3>Variante 02 — Command Palette Interactiva (Buscador en Vivo)</h3>
-      <p>Escribe en el buscador para filtrar comandos al instante y haz clic en cualquiera para ejecutarlo.</p>
-      <button type="button" (click)="active.set(!active())">Alternar</button>
-    </div>
-  `
-})
-export class CxdInteractiveCmdkPaletteComponent {
-  active = signal(false);
-}
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import { mountInteractiveCmdkPalette } from './interactive-cmdk-palette.js';
+@Component({ selector:'cxd-interactive-cmdk-palette', standalone:true, styleUrls:['./styles.css'], template:`<div class="cxd-dialog" data-cxd-control="interactive-cmdk-palette" #root><button type="button" data-open>Abrir comandos</button><span role="status">Selecciona un comando</span><dialog aria-label="Paleta de comandos"><h3>Paleta de comandos</h3><label>Buscar <input type="search" data-search placeholder="Escribe un comando" /></label><div class="cxd-dialog__list"><button type="button" data-command="Abrir catálogo">Abrir catálogo</button><button type="button" data-command="Ver animaciones">Ver animaciones</button><button type="button" data-command="Cambiar interfaz">Cambiar interfaz</button></div><button type="button" data-close>Cerrar</button></dialog></div>` })
+export class InteractiveCmdkPaletteComponent implements AfterViewInit, OnDestroy { @ViewChild('root') root!: ElementRef<HTMLElement>; private unmount?: () => void; ngAfterViewInit() { this.unmount = mountInteractiveCmdkPalette(this.root.nativeElement); } ngOnDestroy() { this.unmount?.(); } }

@@ -1,18 +1,4 @@
-// Variante 06 — Panel Inspector Lateral (Drawer de Detalles) — Angular 18+ Signals (components/modals/variants/slide-drawer-inspector/slide-drawer-inspector.component.ts)
-import { Component, signal } from '@angular/core';
-
-@Component({
-  selector: 'cxd-slide-drawer-inspector',
-  standalone: true,
-  styleUrls: ['./styles.css'],
-  template: `
-    <div class="cxd-modals-slide-drawer-inspector" [attr.data-active]="active()">
-      <h3>Variante 06 — Panel Inspector Lateral (Drawer de Detalles)</h3>
-      <p>Estructura de panel lateral con pestañas de propiedades, JSON en vivo y botones de acción.</p>
-      <button type="button" (click)="active.set(!active())">Alternar</button>
-    </div>
-  `
-})
-export class CxdSlideDrawerInspectorComponent {
-  active = signal(false);
-}
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import { mountSlideDrawerInspector } from './slide-drawer-inspector.js';
+@Component({ selector:'cxd-slide-drawer-inspector', standalone:true, styleUrls:['./styles.css'], template:`<div class="cxd-dialog cxd-dialog--drawer" data-cxd-control="slide-drawer-inspector" #root><button type="button" data-open>Abrir inspector</button><span role="status">Inspector cerrado</span><dialog aria-label="Inspector lateral"><h3>Inspector de recurso</h3><div class="cxd-dialog__actions"><button type="button" data-tab="details" aria-pressed="true">Propiedades</button><button type="button" data-tab="json" aria-pressed="false">JSON</button></div><p data-panel="details">Región: us-east-1 · Estado: activo</p><pre data-panel="json" hidden>&#123; "region": "us-east-1", "activo": true &#125;</pre><button type="button" data-close>Cerrar</button></dialog></div>` })
+export class SlideDrawerInspectorComponent implements AfterViewInit, OnDestroy { @ViewChild('root') root!: ElementRef<HTMLElement>; private unmount?: () => void; ngAfterViewInit() { this.unmount = mountSlideDrawerInspector(this.root.nativeElement); } ngOnDestroy() { this.unmount?.(); } }

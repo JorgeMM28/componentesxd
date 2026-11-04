@@ -1,7 +1,6 @@
-{{-- Variante 01 — Formulario Moderno con Bordes Redondeados — Laravel Blade (components/forms/variants/modern-rounded-form/modern-rounded-form.blade.php) --}}
-@props(['title' => 'Variante 01 — Formulario Moderno con Bordes Redondeados'])
-<div {{ $attributes->merge(['class' => 'cxd-forms-modern-rounded-form']) }}>
-    <h3>{{ $title }}</h3>
-    <p>Campos con esquinas suaves de 12px, iconos SVG integrados a la izquierda y anillo de enfoque suave.</p>
-    {{ $slot }}
-</div>
+{{-- Incluye styles.css y ajusta la ruta del módulo. --}}
+<div class="cxd-form" data-cxd-control="modern-rounded-form"><form data-form><label>Correo electrónico <input type="email" data-email required value="arquitectura@componentesxd.dev" /></label><button type="submit">Guardar</button></form><span role="status">Listo para guardar</span></div>
+<script type="module">
+import { mountModernRoundedForm } from '/assets/modern-rounded-form.js';
+document.querySelectorAll('[data-cxd-control="modern-rounded-form"]:not([data-ready])').forEach(root => { root.dataset.ready = 'true'; mountModernRoundedForm(root); });
+</script>

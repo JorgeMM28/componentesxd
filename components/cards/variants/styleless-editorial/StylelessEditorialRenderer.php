@@ -1,10 +1,10 @@
 <?php
-// Variante 02 — Tarjeta Styleless Editorial (Sin Caja, Puro Layout) — PHP 8.3 Renderer (components/cards/variants/styleless-editorial/StylelessEditorialRenderer.php)
 declare(strict_types=1);
-namespace ComponentesXD\Cards;
-
-final class StylelessEditorialRenderer {
-    public static function render(): string {
-        return '<div class="cxd-cards-styleless-editorial"><h3>Variante 02 — Tarjeta Styleless Editorial (Sin Caja, Puro Layout)</h3><p>Diseño tipográfico tipo revista suiza con numeración grande, separador de 1px y lectura limpia.</p></div>';
-    }
-}
+// Incluye styles.css y ajusta la ruta del módulo.
+function renderStylelessEditorial(): string { return <<<'HTML'
+<div class="cxd-card cxd-card--editorial" data-cxd-control="styleless-editorial"><span>ENSAYO ARQUITECTÓNICO // Nº 04</span><h3>La eliminación del contenedor innecesario</h3><p>La jerarquía tipográfica y el espacio definen el bloque.</p><button type="button" data-read>Leer especificación</button><span role="status">Listo para explorar</span></div>
+<script type="module">
+import { mountStylelessEditorial } from '/assets/styleless-editorial.js';
+document.querySelectorAll('[data-cxd-control="styleless-editorial"]:not([data-ready])').forEach(root => { root.dataset.ready = 'true'; mountStylelessEditorial(root); });
+</script>
+HTML; }

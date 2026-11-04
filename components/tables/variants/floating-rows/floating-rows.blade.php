@@ -1,7 +1,6 @@
-{{-- Variante 04 — Tabla de Filas Flotantes Separadas — Laravel Blade (components/tables/variants/floating-rows/floating-rows.blade.php) --}}
-@props(['title' => 'Variante 04 — Tabla de Filas Flotantes Separadas'])
-<div {{ $attributes->merge(['class' => 'cxd-tables-floating-rows']) }}>
-    <h3>{{ $title }}</h3>
-    <p>Cada fila es una tarjeta independiente con sombra propia, bordes redondeados y elevación al pasar el cursor.</p>
-    {{ $slot }}
-</div>
+{{-- Incluye styles.css y ajusta la ruta del módulo. --}}
+<div class="cxd-table cxd-table--floating" data-cxd-control="floating-rows"><table><thead><tr><th>Miembro</th><th>Departamento</th><th>Estado</th></tr></thead><tbody><tr><td>Elena</td><td>Arquitectura</td><td>Online</td></tr><tr><td>Marco</td><td>Sistemas</td><td>Revisión</td></tr><tr><td>Sofía</td><td>Diseño</td><td>Online</td></tr></tbody></table></div>
+<script type="module">
+import { mountFloatingRows } from '/assets/floating-rows.js';
+document.querySelectorAll('[data-cxd-control="floating-rows"]:not([data-ready])').forEach(root => { root.dataset.ready = 'true'; mountFloatingRows(root); });
+</script>

@@ -1,4 +1,11 @@
-// Variante 02 — Carrusel Marquesina Infinita Continua (Control de Velocidad y Dirección) — Vanilla JS (components/carousels/variants/infinite-marquee/infinite-marquee.js)
-export function mountInfiniteMarquee(root = document) {
-  return root.querySelectorAll('.cxd-carousels-infinite-marquee');
+// Copia styles.css. La función devuelve un desmontador.
+export function mountInfiniteMarquee(root) {
+  const controller = new AbortController(); const signal = controller.signal; let timer;
+  const track=root.querySelector('[data-track]');const group=root.querySelector('[data-group]');const play=root.querySelector('[data-play]');const speed=root.querySelector('[data-speed]');const status=root.querySelector('[role="status"]');let running=!window.matchMedia('(prefers-reduced-motion: reduce)').matches;let visible=true;let direction=-1;let offset=0;let last=0;let frame=0;const sync=()=>{play.textContent=running?'Pausar':'Reproducir';play.setAttribute('aria-pressed',String(running));status.textContent=running?'En movimiento':'Pausado';};const tick=now=>{if(running&&visible&&group.offsetWidth){if(last)offset=(offset+direction*Number(speed.value)*(now-last)/1000)%group.offsetWidth;if(offset>0)offset-=group.offsetWidth;track.style.setProperty('--offset',offset+'px');}last=now;frame=0;schedule();};const schedule=()=>{if(running&&visible&&!frame)frame=requestAnimationFrame(tick);else if((!running||!visible)&&frame){cancelAnimationFrame(frame);frame=0;}};play.addEventListener('click',()=>{running=!running;last=0;sync();schedule();},{signal});root.querySelector('[data-direction]').addEventListener('click',()=>{direction*=-1;},{signal});const observer=typeof IntersectionObserver==='undefined'?null:new IntersectionObserver(entries=>{visible=entries[0].isIntersecting;last=0;schedule();});observer?.observe(root);signal.addEventListener('abort',()=>{cancelAnimationFrame(frame);observer?.disconnect();},{once:true});sync();schedule();
+  return () => { controller.abort(); clearTimeout(timer); };
 }
+// Montaje: document.querySelectorAll('[data-cxd-control="infinite-marquee"]').forEach(mountInfiniteMarquee);
+// HTML:
+/*
+<div class="cxd-carousel" data-cxd-control="infinite-marquee"><div class="cxd-marquee"><div class="cxd-marquee-track" data-track><div class="cxd-marquee-group" data-group><span>React</span><span>Vue</span><span>Svelte</span><span>Astro</span><span>Anime.js</span></div><div class="cxd-marquee-group" aria-hidden="true"><span>React</span><span>Vue</span><span>Svelte</span><span>Astro</span><span>Anime.js</span></div></div></div><div class="cxd-carousel__controls"><button type="button" data-play aria-pressed="false">Reproducir</button><button type="button" data-direction>Invertir dirección</button><label>Velocidad <input type="range" data-speed min="10" max="120" value="40" /></label></div><span role="status">Pausado</span></div>
+*/

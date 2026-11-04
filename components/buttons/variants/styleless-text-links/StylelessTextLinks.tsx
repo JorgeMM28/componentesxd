@@ -1,21 +1,7 @@
-/**
- * Variante 02 — Botones Styleless (Subrayado Cinético sin Caja) — React / Next.js (TSX)
- * Archivo: components/buttons/variants/styleless-text-links/StylelessTextLinks.tsx
- */
-import React, { useState } from 'react';
+import { useState } from 'react';
 import './styles.css';
-
-export const StylelessTextLinks: React.FC<{ title?: string }> = ({
-  title = 'Variante 02 — Botones Styleless (Subrayado Cinético sin Caja)'
-}) => {
-  const [active, setActive] = useState(false);
-  return (
-    <div className="cxd-buttons-styleless-text-links" data-active={active}>
-      <h3>{title}</h3>
-      <p>Cero bordes ni fondos: línea inferior que crece de izquierda a derecha y flecha SVG que avanza al pasar el cursor.</p>
-      <button type="button" onClick={() => setActive(!active)}>
-        Alternar Estado
-      </button>
-    </div>
-  );
-};
+const items = [["documentation","Explorar Documentación Técnica","Abriendo especificación técnica v4.2..."],["download","Descargar Especificación Raw","Descargando manifiesto raw (42 KB)..."]];
+export function StylelessTextLinks() {
+  const [active, setActive] = useState(-1);
+  return <div className="cxd-text-links">{items.map(([kind, label], index) => <button key={kind} type="button" className={`cxd-text-links__button cxd-text-links__button--${kind}`} aria-pressed={active === index} onClick={() => setActive(index)}>{label}</button>)}<span className="cxd-text-links__status" role="status">{active < 0 ? 'Selecciona una opción' : 'RUTA ACTIVA: ' + items[active][2]}</span></div>;
+}

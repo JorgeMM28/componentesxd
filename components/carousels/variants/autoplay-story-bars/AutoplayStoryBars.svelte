@@ -1,11 +1,6 @@
-<!-- Variante 07 — Carrusel con Barras de Tiempo Segmentadas (Autoplay + Pausa) — Svelte 5 Runes (components/carousels/variants/autoplay-story-bars/AutoplayStoryBars.svelte) -->
 <script lang="ts">
-  import './styles.css';
-  let active = $state(false);
+import { mountAutoplayStoryBars } from './autoplay-story-bars.js';
+import './styles.css';
+function control(node: HTMLElement) { return { destroy: mountAutoplayStoryBars(node) }; }
 </script>
-
-<div class="cxd-carousels-autoplay-story-bars" data-active={active}>
-  <h3>Variante 07 — Carrusel con Barras de Tiempo Segmentadas (Autoplay + Pausa)</h3>
-  <p>Cabecera con segmentos de progreso temporales que avanzan automáticamente y permiten saltar a cualquier historia.</p>
-  <button type="button" onclick={() => (active = !active)}>Alternar</button>
-</div>
+<div class="cxd-carousel" data-cxd-control="autoplay-story-bars" use:control><div class="cxd-story-bars" aria-label="Historias"><button type="button" data-story="0" aria-label="Historia 1"><span></span></button><button type="button" data-story="1" aria-label="Historia 2"><span></span></button><button type="button" data-story="2" aria-label="Historia 3"><span></span></button></div><div class="cxd-carousel__item" data-content><strong>Historia 1</strong><p>Explora la colección.</p></div><div class="cxd-carousel__controls"><button type="button" data-play aria-pressed="false">Reproducir</button></div><span role="status"></span></div>

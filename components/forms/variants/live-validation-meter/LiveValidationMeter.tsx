@@ -1,21 +1,4 @@
-/**
- * Variante 06 — Formulario con Validación y Medidor de Seguridad en Vivo — React / Next.js (TSX)
- * Archivo: components/forms/variants/live-validation-meter/LiveValidationMeter.tsx
- */
-import React, { useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { mountLiveValidationMeter } from './live-validation-meter.js';
 import './styles.css';
-
-export const LiveValidationMeter: React.FC<{ title?: string }> = ({
-  title = 'Variante 06 — Formulario con Validación y Medidor de Seguridad en Vivo'
-}) => {
-  const [active, setActive] = useState(false);
-  return (
-    <div className="cxd-forms-live-validation-meter" data-active={active}>
-      <h3>{title}</h3>
-      <p>Escribe una contraseña para ver cómo se calculan en tiempo real los 4 niveles de fortaleza.</p>
-      <button type="button" onClick={() => setActive(!active)}>
-        Alternar Estado
-      </button>
-    </div>
-  );
-};
+export function LiveValidationMeter() { const root = useRef<HTMLDivElement>(null); useEffect(() => root.current ? mountLiveValidationMeter(root.current) : undefined, []); return <div className="cxd-form" data-cxd-control="live-validation-meter" ref={root}><label>Contraseña <input type="password" data-password autoComplete="new-password" /></label><meter min="0" max="4" value="0" data-meter aria-label="Fortaleza de contraseña"></meter><span role="status">Sin evaluar</span></div>; }

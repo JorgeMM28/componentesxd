@@ -1,18 +1,4 @@
-// Variante 02 — Tabla Styleless (Sin Bordes / Editorial) — Angular 18+ Signals (components/tables/variants/styleless-minimal/styleless-minimal.component.ts)
-import { Component, signal } from '@angular/core';
-
-@Component({
-  selector: 'cxd-styleless-minimal',
-  standalone: true,
-  styleUrls: ['./styles.css'],
-  template: `
-    <div class="cxd-tables-styleless-minimal" [attr.data-active]="active()">
-      <h3>Variante 02 — Tabla Styleless (Sin Bordes / Editorial)</h3>
-      <p>Sin contenedor exterior ni líneas verticales. Puramente tipográfica con alineación generosa y subrayado sutil.</p>
-      <button type="button" (click)="active.set(!active())">Alternar</button>
-    </div>
-  `
-})
-export class CxdStylelessMinimalComponent {
-  active = signal(false);
-}
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import { mountStylelessMinimal } from './styleless-minimal.js';
+@Component({ selector:'cxd-styleless-minimal', standalone:true, styleUrls:['./styles.css'], template:`<div class="cxd-table cxd-table--minimal" data-cxd-control="styleless-minimal" #root><table><thead><tr><th>Miembro</th><th>Departamento</th><th>Estado</th></tr></thead><tbody><tr><td>Elena</td><td>Arquitectura</td><td>Online</td></tr><tr><td>Marco</td><td>Sistemas</td><td>Revisión</td></tr><tr><td>Sofía</td><td>Diseño</td><td>Online</td></tr></tbody></table></div>` })
+export class StylelessMinimalComponent implements AfterViewInit, OnDestroy { @ViewChild('root') root!: ElementRef<HTMLElement>; private unmount?: () => void; ngAfterViewInit() { this.unmount = mountStylelessMinimal(this.root.nativeElement); } ngOnDestroy() { this.unmount?.(); } }

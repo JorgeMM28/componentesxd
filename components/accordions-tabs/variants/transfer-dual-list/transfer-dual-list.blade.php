@@ -1,7 +1,6 @@
-{{-- Variante 07 — Lista Dual de Transferencia (Mover Permisos Izquierda ↔ Derecha) — Laravel Blade (components/accordions-tabs/variants/transfer-dual-list/transfer-dual-list.blade.php) --}}
-@props(['title' => 'Variante 07 — Lista Dual de Transferencia (Mover Permisos Izquierda ↔ Derecha)'])
-<div {{ $attributes->merge(['class' => 'cxd-accordions-tabs-transfer-dual-list']) }}>
-    <h3>{{ $title }}</h3>
-    <p>Selecciona y transfiere módulos entre la columna de Disponibles y la columna de Activos en tiempo real.</p>
-    {{ $slot }}
-</div>
+{{-- Incluye styles.css y ajusta la ruta del módulo. --}}
+<div class="cxd-widget" data-cxd-control="transfer-dual-list"><div class="cxd-widget__columns"><div class="cxd-widget__list" data-available><strong>Disponibles</strong><div data-item><span>WAF</span> <button type="button" data-transfer>Activar →</button></div><div data-item><span>Caché</span> <button type="button" data-transfer>Activar →</button></div></div><div class="cxd-widget__list" data-active><strong>Activos</strong></div></div><span role="status">Selecciona un módulo</span></div>
+<script type="module">
+import { mountTransferDualList } from '/assets/transfer-dual-list.js';
+document.querySelectorAll('[data-cxd-control="transfer-dual-list"]:not([data-ready])').forEach(root => { root.dataset.ready = 'true'; mountTransferDualList(root); });
+</script>

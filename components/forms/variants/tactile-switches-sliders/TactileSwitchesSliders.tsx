@@ -1,21 +1,4 @@
-/**
- * Variante 08 — Controles Interactivos (Switches, Stepper Numérico y Radios) — React / Next.js (TSX)
- * Archivo: components/forms/variants/tactile-switches-sliders/TactileSwitchesSliders.tsx
- */
-import React, { useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { mountTactileSwitchesSliders } from './tactile-switches-sliders.js';
 import './styles.css';
-
-export const TactileSwitchesSliders: React.FC<{ title?: string }> = ({
-  title = 'Variante 08 — Controles Interactivos (Switches, Stepper Numérico y Radios)'
-}) => {
-  const [active, setActive] = useState(false);
-  return (
-    <div className="cxd-forms-tactile-switches-sliders" data-active={active}>
-      <h3>{title}</h3>
-      <p>Interruptores animados, contador con botones +/- y selector de tarjetas de opción.</p>
-      <button type="button" onClick={() => setActive(!active)}>
-        Alternar Estado
-      </button>
-    </div>
-  );
-};
+export function TactileSwitchesSliders() { const root = useRef<HTMLDivElement>(null); useEffect(() => root.current ? mountTactileSwitchesSliders(root.current) : undefined, []); return <div className="cxd-form" data-cxd-control="tactile-switches-sliders" ref={root}><label><input type="checkbox" defaultChecked /> Auto-deploy en push</label><label><input type="checkbox" /> Modo estricto WAF</label><button type="button" data-step="-1" aria-label="Reducir réplicas">−</button><span data-value>4</span><button type="button" data-step="1" aria-label="Aumentar réplicas">+</button><span role="status">4 réplicas</span></div>; }

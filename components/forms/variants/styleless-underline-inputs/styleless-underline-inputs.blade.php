@@ -1,7 +1,6 @@
-{{-- Variante 02 — Inputs Styleless (Solo Línea Inferior Minimalista) — Laravel Blade (components/forms/variants/styleless-underline-inputs/styleless-underline-inputs.blade.php) --}}
-@props(['title' => 'Variante 02 — Inputs Styleless (Solo Línea Inferior Minimalista)'])
-<div {{ $attributes->merge(['class' => 'cxd-forms-styleless-underline-inputs']) }}>
-    <h3>{{ $title }}</h3>
-    <p>Sin cajas laterales ni fondo: únicamente una línea inferior que se ilumina al escribir.</p>
-    {{ $slot }}
-</div>
+{{-- Incluye styles.css y ajusta la ruta del módulo. --}}
+<div class="cxd-form cxd-form--bare" data-cxd-control="styleless-underline-inputs"><label>Título del documento <input type="text" data-input value="Manifiesto de Diseño Industrial" /></label><span role="status">Edición en vivo</span></div>
+<script type="module">
+import { mountStylelessUnderlineInputs } from '/assets/styleless-underline-inputs.js';
+document.querySelectorAll('[data-cxd-control="styleless-underline-inputs"]:not([data-ready])').forEach(root => { root.dataset.ready = 'true'; mountStylelessUnderlineInputs(root); });
+</script>

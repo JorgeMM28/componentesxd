@@ -1,11 +1,6 @@
-<!-- Variante 02 — Navbar Flotante Redondeada Tipo Cápsula — Svelte 5 Runes (components/navigation/variants/floating-pill-navbar/FloatingPillNavbar.svelte) -->
 <script lang="ts">
-  import './styles.css';
-  let active = $state(false);
+import { mountFloatingPillNavbar } from './floating-pill-navbar.js';
+import './styles.css';
+function control(node: HTMLElement) { return { destroy: mountFloatingPillNavbar(node) }; }
 </script>
-
-<div class="cxd-navigation-floating-pill-navbar" data-active={active}>
-  <h3>Variante 02 — Navbar Flotante Redondeada Tipo Cápsula</h3>
-  <p>Barra superior centrada con bordes completamente redondeados, enlaces activos y botón CTA.</p>
-  <button type="button" onclick={() => (active = !active)}>Alternar</button>
-</div>
+<div class="cxd-nav cxd-nav--pill" data-cxd-control="floating-pill-navbar" use:control><button type="button" data-destination="Inicio" aria-pressed="true">Inicio</button><button type="button" data-destination="Componentes" aria-pressed="false">Componentes</button><button type="button" data-destination="Animaciones" aria-pressed="false">Animaciones</button><span role="status">Vista activa: Inicio</span></div>

@@ -1,10 +1,10 @@
 <?php
-// Variante 04 — Inputs con Etiqueta Flotante Animada — PHP 8.3 Renderer (components/forms/variants/floating-label-inputs/FloatingLabelInputsRenderer.php)
 declare(strict_types=1);
-namespace ComponentesXD\Forms;
-
-final class FloatingLabelInputsRenderer {
-    public static function render(): string {
-        return '<div class="cxd-forms-floating-label-inputs"><h3>Variante 04 — Inputs con Etiqueta Flotante Animada</h3><p>La etiqueta viaja suavemente hacia el borde superior cuando haces clic o escribes contenido.</p></div>';
-    }
-}
+// Incluye styles.css y ajusta la ruta del módulo.
+function renderFloatingLabelInputs(): string { return <<<'HTML'
+<div class="cxd-form" data-cxd-control="floating-label-inputs"><label class="cxd-form__float"><span>Nombre del cluster</span><input type="text" data-input value="us-east-production-01" /></label><span role="status">Etiqueta flotante</span></div>
+<script type="module">
+import { mountFloatingLabelInputs } from '/assets/floating-label-inputs.js';
+document.querySelectorAll('[data-cxd-control="floating-label-inputs"]:not([data-ready])').forEach(root => { root.dataset.ready = 'true'; mountFloatingLabelInputs(root); });
+</script>
+HTML; }

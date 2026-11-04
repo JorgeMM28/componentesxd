@@ -1,18 +1,4 @@
-// Variante 08 — Menubar Desktop Clásico con Menús Flotantes (Archivo, Edición, Git) — Angular 18+ Signals (components/navigation/variants/desktop-menubar/desktop-menubar.component.ts)
-import { Component, signal } from '@angular/core';
-
-@Component({
-  selector: 'cxd-desktop-menubar',
-  standalone: true,
-  styleUrls: ['./styles.css'],
-  template: `
-    <nav class="cxd-navigation-desktop-menubar" [attr.data-active]="active()">
-      <h3>Variante 08 — Menubar Desktop Clásico con Menús Flotantes (Archivo, Edición, Git)</h3>
-      <p>Barra horizontal estilo aplicación de escritorio con menús desplegables en cascada al hacer hover o clic, atajos de teclado e indicador de sync.</p>
-      <button type="button" (click)="active.set(!active())">Alternar</button>
-    </nav>
-  `
-})
-export class CxdDesktopMenubarComponent {
-  active = signal(false);
-}
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import { mountDesktopMenubar } from './desktop-menubar.js';
+@Component({ selector:'cxd-desktop-menubar', standalone:true, styleUrls:['./styles.css'], template:`<div class="cxd-nav" data-cxd-control="desktop-menubar" #root><button type="button" data-menu-trigger aria-expanded="false">Archivo</button><button type="button" data-menu-trigger aria-expanded="false">Edición</button><button type="button" data-menu-trigger aria-expanded="false">Git</button><div class="cxd-nav__menu" data-menu hidden><button type="button" data-command="Nuevo">Nuevo</button><button type="button" data-command="Guardar">Guardar</button><button type="button" data-command="Exportar">Exportar</button></div><span role="status">Selecciona un menú</span></div>` })
+export class DesktopMenubarComponent implements AfterViewInit, OnDestroy { @ViewChild('root') root!: ElementRef<HTMLElement>; private unmount?: () => void; ngAfterViewInit() { this.unmount = mountDesktopMenubar(this.root.nativeElement); } ngOnDestroy() { this.unmount?.(); } }

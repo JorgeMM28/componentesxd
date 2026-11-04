@@ -1,18 +1,4 @@
-// Variante 05 — Conmutador de Planes Mensual / Anual con Recálculo Animado — Angular 18+ Signals (components/accordions-tabs/variants/segmented-pricing-toggle/segmented-pricing-toggle.component.ts)
-import { Component, signal } from '@angular/core';
-
-@Component({
-  selector: 'cxd-segmented-pricing-toggle',
-  standalone: true,
-  styleUrls: ['./styles.css'],
-  template: `
-    <div class="cxd-accordions-tabs-segmented-pricing-toggle" [attr.data-active]="active()">
-      <h3>Variante 05 — Conmutador de Planes Mensual / Anual con Recálculo Animado</h3>
-      <p>Alterna entre facturación mensual y anual aplicando descuento automático e interpolando las tarifas en vivo.</p>
-      <button type="button" (click)="active.set(!active())">Alternar</button>
-    </div>
-  `
-})
-export class CxdSegmentedPricingToggleComponent {
-  active = signal(false);
-}
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import { mountSegmentedPricingToggle } from './segmented-pricing-toggle.js';
+@Component({ selector:'cxd-segmented-pricing-toggle', standalone:true, styleUrls:['./styles.css'], template:`<div class="cxd-widget" data-cxd-control="segmented-pricing-toggle" #root><div class="cxd-widget__row"><button type="button" data-period="monthly" aria-pressed="true">Mensual</button><button type="button" data-period="yearly" aria-pressed="false">Anual · 20% menos</button></div><strong data-price>$20 / mes</strong><span role="status">Facturación mensual</span></div>` })
+export class SegmentedPricingToggleComponent implements AfterViewInit, OnDestroy { @ViewChild('root') root!: ElementRef<HTMLElement>; private unmount?: () => void; ngAfterViewInit() { this.unmount = mountSegmentedPricingToggle(this.root.nativeElement); } ngOnDestroy() { this.unmount?.(); } }

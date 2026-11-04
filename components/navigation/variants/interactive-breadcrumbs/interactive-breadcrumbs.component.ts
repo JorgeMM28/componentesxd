@@ -1,18 +1,4 @@
-// Variante 04 — Breadcrumbs Interactivos con Selector de Rama/Proyecto — Angular 18+ Signals (components/navigation/variants/interactive-breadcrumbs/interactive-breadcrumbs.component.ts)
-import { Component, signal } from '@angular/core';
-
-@Component({
-  selector: 'cxd-interactive-breadcrumbs',
-  standalone: true,
-  styleUrls: ['./styles.css'],
-  template: `
-    <div class="cxd-navigation-interactive-breadcrumbs" [attr.data-active]="active()">
-      <h3>Variante 04 — Breadcrumbs Interactivos con Selector de Rama/Proyecto</h3>
-      <p>Ruta de navegación con menús desplegables integrados en cada nivel de jerarquía.</p>
-      <button type="button" (click)="active.set(!active())">Alternar</button>
-    </div>
-  `
-})
-export class CxdInteractiveBreadcrumbsComponent {
-  active = signal(false);
-}
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import { mountInteractiveBreadcrumbs } from './interactive-breadcrumbs.js';
+@Component({ selector:'cxd-interactive-breadcrumbs', standalone:true, styleUrls:['./styles.css'], template:`<div class="cxd-nav" data-cxd-control="interactive-breadcrumbs" #root><nav aria-label="Ruta de navegación"><button type="button" data-path="Inicio">Inicio</button><span> / </span><button type="button" data-path="Componentes">Componentes</button><span> / </span><button type="button" data-path="Botones">Botones</button></nav><span role="status">Ruta actual: Inicio / Componentes / Botones</span></div>` })
+export class InteractiveBreadcrumbsComponent implements AfterViewInit, OnDestroy { @ViewChild('root') root!: ElementRef<HTMLElement>; private unmount?: () => void; ngAfterViewInit() { this.unmount = mountInteractiveBreadcrumbs(this.root.nativeElement); } ngOnDestroy() { this.unmount?.(); } }

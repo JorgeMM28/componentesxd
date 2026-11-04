@@ -1,17 +1,11 @@
 <?php
-// Variante 08 — Toaster Interactivo de Subida de Archivos — Laravel Livewire 3 (components/toasts/variants/upload-progress-toaster/UploadProgressToasterWire.php)
-namespace App\Livewire\Cxd\Toasts;
+namespace App\Livewire;
 use Livewire\Component;
-
-class UploadProgressToasterWire extends Component {
-    public bool $active = false;
-    public function toggle(): void { $this->active = !$this->active; }
-    public function render() {
-        return <<<'HTML'
-        <div class="cxd-toasts-upload-progress-toaster">
-            <h3>Variante 08 — Toaster Interactivo de Subida de Archivos</h3>
-            <button type="button" wire:click="toggle">Estado: {{ $active ? 'ON' : 'OFF' }}</button>
-        </div>
-        HTML;
-    }
-}
+// Incluye styles.css y ajusta la ruta del módulo.
+class UploadProgressToasterWire extends Component { public function render(): string { return <<<'HTML'
+<div class="cxd-toast" data-cxd-control="upload-progress-toaster" wire:ignore><strong>Subiendo artefactos de producción</strong><span data-percent>0%</span><progress data-progress max="100" value="0" aria-label="Progreso de subida"></progress><button type="button" data-start>Simular subida</button><button type="button" data-pause>Pausar</button><span role="status">Listo</span>@script
+<script>
+import('/assets/upload-progress-toaster.js').then(module => module.mountUploadProgressToaster($wire.$el));
+</script>
+@endscript</div>
+HTML; } }

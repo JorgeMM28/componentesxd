@@ -1,21 +1,4 @@
-/**
- * Variante 02 — Command Palette Interactiva (Buscador en Vivo) — React / Next.js (TSX)
- * Archivo: components/modals/variants/interactive-cmdk-palette/InteractiveCmdkPalette.tsx
- */
-import React, { useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { mountInteractiveCmdkPalette } from './interactive-cmdk-palette.js';
 import './styles.css';
-
-export const InteractiveCmdkPalette: React.FC<{ title?: string }> = ({
-  title = 'Variante 02 — Command Palette Interactiva (Buscador en Vivo)'
-}) => {
-  const [active, setActive] = useState(false);
-  return (
-    <div className="cxd-modals-interactive-cmdk-palette" data-active={active}>
-      <h3>{title}</h3>
-      <p>Escribe en el buscador para filtrar comandos al instante y haz clic en cualquiera para ejecutarlo.</p>
-      <button type="button" onClick={() => setActive(!active)}>
-        Alternar Estado
-      </button>
-    </div>
-  );
-};
+export function InteractiveCmdkPalette() { const root = useRef<HTMLDivElement>(null); useEffect(() => root.current ? mountInteractiveCmdkPalette(root.current) : undefined, []); return <div className="cxd-dialog" data-cxd-control="interactive-cmdk-palette" ref={root}><button type="button" data-open>Abrir comandos</button><span role="status">Selecciona un comando</span><dialog aria-label="Paleta de comandos"><h3>Paleta de comandos</h3><label>Buscar <input type="search" data-search placeholder="Escribe un comando" /></label><div className="cxd-dialog__list"><button type="button" data-command="Abrir catálogo">Abrir catálogo</button><button type="button" data-command="Ver animaciones">Ver animaciones</button><button type="button" data-command="Cambiar interfaz">Cambiar interfaz</button></div><button type="button" data-close>Cerrar</button></dialog></div>; }

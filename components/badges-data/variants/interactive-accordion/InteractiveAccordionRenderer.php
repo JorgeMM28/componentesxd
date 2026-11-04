@@ -1,10 +1,10 @@
 <?php
-// Variante 02 — Acordeón Interactivo Multi-Sección — PHP 8.3 Renderer (components/badges-data/variants/interactive-accordion/InteractiveAccordionRenderer.php)
 declare(strict_types=1);
-namespace ComponentesXD\BadgesData;
-
-final class InteractiveAccordionRenderer {
-    public static function render(): string {
-        return '<div class="cxd-badges-data-interactive-accordion"><h3>Variante 02 — Acordeón Interactivo Multi-Sección</h3><p>Haz clic en cualquier cabecera para expandir o contraer su contenido suavemente.</p></div>';
-    }
-}
+// Incluye styles.css y ajusta la ruta del módulo.
+function renderInteractiveAccordion(): string { return <<<'HTML'
+<div class="cxd-data" data-cxd-control="interactive-accordion"><div class="cxd-data__list"><div class="cxd-data__item"><button type="button" data-open="one" aria-expanded="true">01 · Tokens CSS</button><p data-panel="one">Colores, radios y tipografías mediante variables.</p></div><div class="cxd-data__item"><button type="button" data-open="two" aria-expanded="false">02 · Arquitectura de islas</button><p data-panel="two" hidden>Hidratación selectiva de componentes interactivos.</p></div></div></div>
+<script type="module">
+import { mountInteractiveAccordion } from '/assets/interactive-accordion.js';
+document.querySelectorAll('[data-cxd-control="interactive-accordion"]:not([data-ready])').forEach(root => { root.dataset.ready = 'true'; mountInteractiveAccordion(root); });
+</script>
+HTML; }

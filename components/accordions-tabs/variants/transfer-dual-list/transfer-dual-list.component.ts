@@ -1,18 +1,4 @@
-// Variante 07 — Lista Dual de Transferencia (Mover Permisos Izquierda ↔ Derecha) — Angular 18+ Signals (components/accordions-tabs/variants/transfer-dual-list/transfer-dual-list.component.ts)
-import { Component, signal } from '@angular/core';
-
-@Component({
-  selector: 'cxd-transfer-dual-list',
-  standalone: true,
-  styleUrls: ['./styles.css'],
-  template: `
-    <div class="cxd-accordions-tabs-transfer-dual-list" [attr.data-active]="active()">
-      <h3>Variante 07 — Lista Dual de Transferencia (Mover Permisos Izquierda ↔ Derecha)</h3>
-      <p>Selecciona y transfiere módulos entre la columna de Disponibles y la columna de Activos en tiempo real.</p>
-      <button type="button" (click)="active.set(!active())">Alternar</button>
-    </div>
-  `
-})
-export class CxdTransferDualListComponent {
-  active = signal(false);
-}
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import { mountTransferDualList } from './transfer-dual-list.js';
+@Component({ selector:'cxd-transfer-dual-list', standalone:true, styleUrls:['./styles.css'], template:`<div class="cxd-widget" data-cxd-control="transfer-dual-list" #root><div class="cxd-widget__columns"><div class="cxd-widget__list" data-available><strong>Disponibles</strong><div data-item><span>WAF</span> <button type="button" data-transfer>Activar →</button></div><div data-item><span>Caché</span> <button type="button" data-transfer>Activar →</button></div></div><div class="cxd-widget__list" data-active><strong>Activos</strong></div></div><span role="status">Selecciona un módulo</span></div>` })
+export class TransferDualListComponent implements AfterViewInit, OnDestroy { @ViewChild('root') root!: ElementRef<HTMLElement>; private unmount?: () => void; ngAfterViewInit() { this.unmount = mountTransferDualList(this.root.nativeElement); } ngOnDestroy() { this.unmount?.(); } }

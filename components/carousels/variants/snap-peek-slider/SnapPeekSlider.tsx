@@ -1,21 +1,4 @@
-/**
- * Variante 03 — Carrusel Multi-Tarjeta con Vista Previa Lateral (Peek) y Barra de Progreso — React / Next.js (TSX)
- * Archivo: components/carousels/variants/snap-peek-slider/SnapPeekSlider.tsx
- */
-import React, { useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { mountSnapPeekSlider } from './snap-peek-slider.js';
 import './styles.css';
-
-export const SnapPeekSlider: React.FC<{ title?: string }> = ({
-  title = 'Variante 03 — Carrusel Multi-Tarjeta con Vista Previa Lateral (Peek) y Barra de Progreso'
-}) => {
-  const [active, setActive] = useState(false);
-  return (
-    <div className="cxd-carousels-snap-peek-slider" data-active={active}>
-      <h3>{title}</h3>
-      <p>Muestra múltiples tarjetas visibles simultáneamente con desplazamiento suave, indicador numérico 01/05 y barra de progreso sincronizada.</p>
-      <button type="button" onClick={() => setActive(!active)}>
-        Alternar Estado
-      </button>
-    </div>
-  );
-};
+export function SnapPeekSlider() { const root = useRef<HTMLDivElement>(null); useEffect(() => root.current ? mountSnapPeekSlider(root.current) : undefined, []); return <div className="cxd-carousel" data-cxd-control="snap-peek-slider" ref={root} aria-label="Carrusel con vista lateral"><div className="cxd-peek" data-track tabindex="0"><article className="cxd-carousel__item" data-slide><small>01 / 04</small><strong>Aurora</strong><p>Una nueva perspectiva para explorar.</p></article><article className="cxd-carousel__item" data-slide><small>02 / 04</small><strong>Órbita</strong><p>Una nueva perspectiva para explorar.</p></article><article className="cxd-carousel__item" data-slide><small>03 / 04</small><strong>Nébula</strong><p>Una nueva perspectiva para explorar.</p></article><article className="cxd-carousel__item" data-slide><small>04 / 04</small><strong>Horizonte</strong><p>Una nueva perspectiva para explorar.</p></article></div><div className="cxd-progress" aria-hidden="true"><span data-progress></span></div><div className="cxd-carousel__controls"><button type="button" data-prev aria-label="Anterior">← Anterior</button><button type="button" data-next aria-label="Siguiente">Siguiente →</button></div><span role="status" aria-live="polite"></span></div>; }

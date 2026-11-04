@@ -1,21 +1,4 @@
-/**
- * Variante 04 — Tablero Kanban Interactivo (Mover Tareas entre Columnas en Vivo) — React / Next.js (TSX)
- * Archivo: components/accordions-tabs/variants/kanban-mini-board/KanbanMiniBoard.tsx
- */
-import React, { useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { mountKanbanMiniBoard } from './kanban-mini-board.js';
 import './styles.css';
-
-export const KanbanMiniBoard: React.FC<{ title?: string }> = ({
-  title = 'Variante 04 — Tablero Kanban Interactivo (Mover Tareas entre Columnas en Vivo)'
-}) => {
-  const [active, setActive] = useState(false);
-  return (
-    <div className="cxd-accordions-tabs-kanban-mini-board" data-active={active}>
-      <h3>{title}</h3>
-      <p>Tarjetas operativas con botones para promover o regresar tareas entre Backlog, En Progreso y Producción.</p>
-      <button type="button" onClick={() => setActive(!active)}>
-        Alternar Estado
-      </button>
-    </div>
-  );
-};
+export function KanbanMiniBoard() { const root = useRef<HTMLDivElement>(null); useEffect(() => root.current ? mountKanbanMiniBoard(root.current) : undefined, []); return <div className="cxd-widget" data-cxd-control="kanban-mini-board" ref={root}><div className="cxd-widget__columns"><div className="cxd-widget__list" data-backlog><strong>Pendiente</strong><div data-task>Revisar tokens <button type="button" data-move>Avanzar →</button></div></div><div className="cxd-widget__list" data-done><strong>Producción</strong></div></div><span role="status">Mueve una tarea</span></div>; }

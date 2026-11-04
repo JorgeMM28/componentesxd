@@ -1,7 +1,6 @@
-{{-- Variante 09 — Navigation Rail Ultra-Compacto con Tooltips y Puntos Activos — Laravel Blade (components/navigation/variants/compact-navigation-rail/compact-navigation-rail.blade.php) --}}
-@props(['title' => 'Variante 09 — Navigation Rail Ultra-Compacto con Tooltips y Puntos Activos'])
-<nav {{ $attributes->merge(['class' => 'cxd-navigation-compact-navigation-rail']) }}>
-    <h3>{{ $title }}</h3>
-    <p>Riel de navegación vertical ultra-delgado de 56px para consolas cloud con iconos vectoriales, tooltips flotantes e indicador de nodo activo.</p>
-    {{ $slot }}
-</nav>
+{{-- Incluye styles.css y ajusta la ruta del módulo. --}}
+<div class="cxd-nav cxd-nav--rail" data-cxd-control="compact-navigation-rail"><button type="button" data-destination="Consola" aria-label="Consola" aria-pressed="true">⌘</button><button type="button" data-destination="Catálogo" aria-label="Catálogo" aria-pressed="false">▦</button><button type="button" data-destination="Métricas" aria-label="Métricas" aria-pressed="false">◉</button><span role="status">Vista activa: Consola</span></div>
+<script type="module">
+import { mountCompactNavigationRail } from '/assets/compact-navigation-rail.js';
+document.querySelectorAll('[data-cxd-control="compact-navigation-rail"]:not([data-ready])').forEach(root => { root.dataset.ready = 'true'; mountCompactNavigationRail(root); });
+</script>

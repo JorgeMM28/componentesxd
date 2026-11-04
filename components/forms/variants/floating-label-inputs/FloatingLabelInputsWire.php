@@ -1,17 +1,11 @@
 <?php
-// Variante 04 — Inputs con Etiqueta Flotante Animada — Laravel Livewire 3 (components/forms/variants/floating-label-inputs/FloatingLabelInputsWire.php)
-namespace App\Livewire\Cxd\Forms;
+namespace App\Livewire;
 use Livewire\Component;
-
-class FloatingLabelInputsWire extends Component {
-    public bool $active = false;
-    public function toggle(): void { $this->active = !$this->active; }
-    public function render() {
-        return <<<'HTML'
-        <div class="cxd-forms-floating-label-inputs">
-            <h3>Variante 04 — Inputs con Etiqueta Flotante Animada</h3>
-            <button type="button" wire:click="toggle">Estado: {{ $active ? 'ON' : 'OFF' }}</button>
-        </div>
-        HTML;
-    }
-}
+// Incluye styles.css y ajusta la ruta del módulo.
+class FloatingLabelInputsWire extends Component { public function render(): string { return <<<'HTML'
+<div class="cxd-form" data-cxd-control="floating-label-inputs" wire:ignore><label class="cxd-form__float"><span>Nombre del cluster</span><input type="text" data-input value="us-east-production-01" /></label><span role="status">Etiqueta flotante</span>@script
+<script>
+import('/assets/floating-label-inputs.js').then(module => module.mountFloatingLabelInputs($wire.$el));
+</script>
+@endscript</div>
+HTML; } }

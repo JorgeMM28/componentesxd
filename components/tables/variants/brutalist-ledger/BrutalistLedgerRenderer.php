@@ -1,10 +1,10 @@
 <?php
-// Variante 10 — Tabla Industrial Cebra con Pie de Sumatoria — PHP 8.3 Renderer (components/tables/variants/brutalist-ledger/BrutalistLedgerRenderer.php)
 declare(strict_types=1);
-namespace ComponentesXD\Tables;
-
-final class BrutalistLedgerRenderer {
-    public static function render(): string {
-        return '<div class="cxd-tables-brutalist-ledger"><h3>Variante 10 — Tabla Industrial Cebra con Pie de Sumatoria</h3><p>Alto contraste con filas alternadas (zebra), bordes marcados de 2px y fila tfoot de balance total.</p></div>';
-    }
-}
+// Incluye styles.css y ajusta la ruta del módulo.
+function renderBrutalistLedger(): string { return <<<'HTML'
+<div class="cxd-table cxd-table--ledger" data-cxd-control="brutalist-ledger"><table><thead><tr><th>LOTE</th><th>OPERACIÓN</th><th>IMPORTE NETO</th></tr></thead><tbody><tr><td>001</td><td>Liquidación</td><td>$420,000.00</td></tr><tr><td>002</td><td>Cobertura</td><td>$185,500.00</td></tr><tr><td>003</td><td>Custodia</td><td>$910,250.00</td></tr></tbody><tfoot><tr><th>TOTAL</th><td></td><td>$1,515,750.00</td></tr></tfoot></table></div>
+<script type="module">
+import { mountBrutalistLedger } from '/assets/brutalist-ledger.js';
+document.querySelectorAll('[data-cxd-control="brutalist-ledger"]:not([data-ready])').forEach(root => { root.dataset.ready = 'true'; mountBrutalistLedger(root); });
+</script>
+HTML; }

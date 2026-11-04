@@ -1,10 +1,10 @@
 <?php
-// Variante 04 — Tarjeta Interactiva con Pestañas Internas — PHP 8.3 Renderer (components/cards/variants/interactive-tabbed-card/InteractiveTabbedCardRenderer.php)
 declare(strict_types=1);
-namespace ComponentesXD\Cards;
-
-final class InteractiveTabbedCardRenderer {
-    public static function render(): string {
-        return '<div class="cxd-cards-interactive-tabbed-card"><h3>Variante 04 — Tarjeta Interactiva con Pestañas Internas</h3><p>Alterna entre Resumen, Métricas y Configuración dentro de la misma tarjeta sin recargar.</p></div>';
-    }
-}
+// Incluye styles.css y ajusta la ruta del módulo.
+function renderInteractiveTabbedCard(): string { return <<<'HTML'
+<div class="cxd-card" data-cxd-control="interactive-tabbed-card"><div class="cxd-card__actions"><button type="button" data-tab="summary" aria-pressed="true">Resumen</button><button type="button" data-tab="metrics" aria-pressed="false">Métricas</button><button type="button" data-tab="settings" aria-pressed="false">Ajustes</button></div><p data-panel="summary">Estado general: 99.99% de disponibilidad.</p><p data-panel="metrics" hidden>Latencia media: 7.2 ms · Memoria: 41.2 GB.</p><p data-panel="settings" hidden>Autoescalado habilitado: 4 a 32 nodos.</p></div>
+<script type="module">
+import { mountInteractiveTabbedCard } from '/assets/interactive-tabbed-card.js';
+document.querySelectorAll('[data-cxd-control="interactive-tabbed-card"]:not([data-ready])').forEach(root => { root.dataset.ready = 'true'; mountInteractiveTabbedCard(root); });
+</script>
+HTML; }

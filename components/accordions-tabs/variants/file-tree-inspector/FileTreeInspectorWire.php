@@ -1,17 +1,11 @@
 <?php
-// Variante 06 — Árbol de Directorios Colapsable con Inspector de Archivo Activo — Laravel Livewire 3 (components/accordions-tabs/variants/file-tree-inspector/FileTreeInspectorWire.php)
-namespace App\Livewire\Cxd\AccordionsTabs;
+namespace App\Livewire;
 use Livewire\Component;
-
-class FileTreeInspectorWire extends Component {
-    public bool $active = false;
-    public function toggle(): void { $this->active = !$this->active; }
-    public function render() {
-        return <<<'HTML'
-        <div class="cxd-accordions-tabs-file-tree-inspector">
-            <h3>Variante 06 — Árbol de Directorios Colapsable con Inspector de Archivo Activo</h3>
-            <button type="button" wire:click="toggle">Estado: {{ $active ? 'ON' : 'OFF' }}</button>
-        </div>
-        HTML;
-    }
-}
+// Incluye styles.css y ajusta la ruta del módulo.
+class FileTreeInspectorWire extends Component { public function render(): string { return <<<'HTML'
+<div class="cxd-widget" data-cxd-control="file-tree-inspector" wire:ignore><div class="cxd-widget__columns"><div class="cxd-widget__list"><strong>src/</strong><div><button type="button" data-file="index.astro">index.astro</button></div><div><button type="button" data-file="tokens.css">tokens.css</button></div></div><div class="cxd-widget__list"><strong>Inspector</strong><p data-output>Selecciona un archivo</p></div></div>@script
+<script>
+import('/assets/file-tree-inspector.js').then(module => module.mountFileTreeInspector($wire.$el));
+</script>
+@endscript</div>
+HTML; } }

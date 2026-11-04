@@ -1,11 +1,6 @@
-<!-- Variante 04 — Tablero Kanban Interactivo (Mover Tareas entre Columnas en Vivo) — Svelte 5 Runes (components/accordions-tabs/variants/kanban-mini-board/KanbanMiniBoard.svelte) -->
 <script lang="ts">
-  import './styles.css';
-  let active = $state(false);
+import { mountKanbanMiniBoard } from './kanban-mini-board.js';
+import './styles.css';
+function control(node: HTMLElement) { return { destroy: mountKanbanMiniBoard(node) }; }
 </script>
-
-<div class="cxd-accordions-tabs-kanban-mini-board" data-active={active}>
-  <h3>Variante 04 — Tablero Kanban Interactivo (Mover Tareas entre Columnas en Vivo)</h3>
-  <p>Tarjetas operativas con botones para promover o regresar tareas entre Backlog, En Progreso y Producción.</p>
-  <button type="button" onclick={() => (active = !active)}>Alternar</button>
-</div>
+<div class="cxd-widget" data-cxd-control="kanban-mini-board" use:control><div class="cxd-widget__columns"><div class="cxd-widget__list" data-backlog><strong>Pendiente</strong><div data-task>Revisar tokens <button type="button" data-move>Avanzar →</button></div></div><div class="cxd-widget__list" data-done><strong>Producción</strong></div></div><span role="status">Mueve una tarea</span></div>

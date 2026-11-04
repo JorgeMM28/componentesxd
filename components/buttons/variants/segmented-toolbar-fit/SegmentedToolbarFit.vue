@@ -1,14 +1,7 @@
-<!-- Variante 07 — Barra de Botones Content-Fit con Indicador Activo — Vue 3 SFC (components/buttons/variants/segmented-toolbar-fit/SegmentedToolbarFit.vue) -->
 <script setup lang="ts">
 import { ref } from 'vue';
 import './styles.css';
-const active = ref(false);
+const items = [["one","Vista Tabla","Vista de Tabla Estructurada (10 Variantes)"],["two","Vista Tarjetas","Vista de Tarjetas Bento (8 Variantes)"],["three","Vista Grafo 3D","Vista de Grafo Vectorial 3D"],["four","JSON Raw","Inspector JSON Raw en Vivo"]];
+const active = ref(0);
 </script>
-
-<template>
-  <div class="cxd-buttons-segmented-toolbar-fit" :data-active="active">
-    <h3>Variante 07 — Barra de Botones Content-Fit con Indicador Activo</h3>
-    <p>Grupo compacto unido donde la selección activa cambia instantáneamente al hacer clic.</p>
-    <button type="button" @click="active = !active">Alternar</button>
-  </div>
-</template>
+<template><div class="cxd-segments"><button v-for="([kind, label], index) in items" :key="kind" type="button" :class="['cxd-segments__button', 'cxd-segments__button--' + kind]" :aria-pressed="active === index" @click="active = index">{{ label }}</button><span class="cxd-segments__status" role="status">{{ active < 0 ? 'MODO ACTIVO: Vista de Tabla Estructurada (10 Variantes)' : 'MODO ACTIVO: ' + items[active][2] }}</span></div></template>

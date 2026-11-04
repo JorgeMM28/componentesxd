@@ -1,14 +1,7 @@
-<!-- Variante 04 — Botón Interactivo de 3 Estados (Reposo -> Cargando -> Éxito) — Vue 3 SFC (components/buttons/variants/interactive-async-morph/InteractiveAsyncMorph.vue) -->
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
+import { mountInteractiveAsyncMorph } from './interactive-async-morph.js';
 import './styles.css';
-const active = ref(false);
+const root = ref<HTMLElement | null>(null); let unmount: (() => void) | undefined; onMounted(() => { if (root.value) unmount = mountInteractiveAsyncMorph(root.value); }); onUnmounted(() => unmount?.());
 </script>
-
-<template>
-  <div class="cxd-buttons-interactive-async-morph" :data-active="active">
-    <h3>Variante 04 — Botón Interactivo de 3 Estados (Reposo -> Cargando -> Éxito)</h3>
-    <p>Haz clic para ver cómo bloquea la acción, muestra el spinner rotativo y cambia a estado completado.</p>
-    <button type="button" @click="active = !active">Alternar</button>
-  </div>
-</template>
+<template><div class="cxd-control" data-cxd-control="interactive-async-morph" ref="root"><button type="button" data-async aria-busy="false"><span data-spinner>◌ </span><span data-label>Haz clic para probar el ciclo asíncrono</span></button><button type="button" data-magnetic>Pasa el cursor · magnético</button><span role="status">LISTO</span></div></template>

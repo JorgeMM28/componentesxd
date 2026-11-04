@@ -1,21 +1,4 @@
-/**
- * Variante 09 — Navigation Rail Ultra-Compacto con Tooltips y Puntos Activos — React / Next.js (TSX)
- * Archivo: components/navigation/variants/compact-navigation-rail/CompactNavigationRail.tsx
- */
-import React, { useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { mountCompactNavigationRail } from './compact-navigation-rail.js';
 import './styles.css';
-
-export const CompactNavigationRail: React.FC<{ title?: string }> = ({
-  title = 'Variante 09 — Navigation Rail Ultra-Compacto con Tooltips y Puntos Activos'
-}) => {
-  const [active, setActive] = useState(false);
-  return (
-    <nav className="cxd-navigation-compact-navigation-rail" data-active={active}>
-      <h3>{title}</h3>
-      <p>Riel de navegación vertical ultra-delgado de 56px para consolas cloud con iconos vectoriales, tooltips flotantes e indicador de nodo activo.</p>
-      <button type="button" onClick={() => setActive(!active)}>
-        Alternar Estado
-      </button>
-    </nav>
-  );
-};
+export function CompactNavigationRail() { const root = useRef<HTMLDivElement>(null); useEffect(() => root.current ? mountCompactNavigationRail(root.current) : undefined, []); return <div className="cxd-nav cxd-nav--rail" data-cxd-control="compact-navigation-rail" ref={root}><button type="button" data-destination="Consola" aria-label="Consola" aria-pressed="true">⌘</button><button type="button" data-destination="Catálogo" aria-label="Catálogo" aria-pressed="false">▦</button><button type="button" data-destination="Métricas" aria-label="Métricas" aria-pressed="false">◉</button><span role="status">Vista activa: Consola</span></div>; }

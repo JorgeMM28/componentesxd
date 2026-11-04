@@ -1,21 +1,4 @@
-/**
- * Variante 05 — Carrusel Split-Screen Sincronizado (Arte Visual + Especificaciones) — React / Next.js (TSX)
- * Archivo: components/carousels/variants/split-editorial-showcase/SplitEditorialShowcase.tsx
- */
-import React, { useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { mountSplitEditorialShowcase } from './split-editorial-showcase.js';
 import './styles.css';
-
-export const SplitEditorialShowcase: React.FC<{ title?: string }> = ({
-  title = 'Variante 05 — Carrusel Split-Screen Sincronizado (Arte Visual + Especificaciones)'
-}) => {
-  const [active, setActive] = useState(false);
-  return (
-    <div className="cxd-carousels-split-editorial-showcase" data-active={active}>
-      <h3>{title}</h3>
-      <p>Doble panel donde el lienzo visual izquierdo y la ficha técnica derecha se actualizan de forma coordinada con stagger.</p>
-      <button type="button" onClick={() => setActive(!active)}>
-        Alternar Estado
-      </button>
-    </div>
-  );
-};
+export function SplitEditorialShowcase() { const root = useRef<HTMLDivElement>(null); useEffect(() => root.current ? mountSplitEditorialShowcase(root.current) : undefined, []); return <div className="cxd-carousel" data-cxd-control="split-editorial-showcase" ref={root}><div className="cxd-split"><div data-art aria-hidden="true">✦</div><div><small>COLECCIÓN EDITORIAL</small><h3 data-title>Aurora</h3><p data-description>Luz y color para una interfaz expresiva.</p></div></div><div className="cxd-carousel__controls"><button type="button" data-prev aria-label="Anterior">← Anterior</button><button type="button" data-next aria-label="Siguiente">Siguiente →</button></div><span role="status" aria-live="polite"></span></div>; }

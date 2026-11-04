@@ -1,9 +1,8 @@
 ---
-// Variante 02 — Tabla Styleless (Sin Bordes / Editorial) — Astro 5 (components/tables/variants/styleless-minimal/StylelessMinimal.astro)
 import './styles.css';
 ---
-<div class="cxd-tables-styleless-minimal">
-  <h3>Variante 02 — Tabla Styleless (Sin Bordes / Editorial)</h3>
-  <p>Sin contenedor exterior ni líneas verticales. Puramente tipográfica con alineación generosa y subrayado sutil.</p>
-  <slot />
-</div>
+<div class="cxd-table cxd-table--minimal" data-cxd-control="styleless-minimal"><table><thead><tr><th>Miembro</th><th>Departamento</th><th>Estado</th></tr></thead><tbody><tr><td>Elena</td><td>Arquitectura</td><td>Online</td></tr><tr><td>Marco</td><td>Sistemas</td><td>Revisión</td></tr><tr><td>Sofía</td><td>Diseño</td><td>Online</td></tr></tbody></table></div>
+<script>
+import { mountStylelessMinimal } from './styleless-minimal.js';
+document.querySelectorAll('[data-cxd-control="styleless-minimal"]:not([data-ready])').forEach(root => { root.dataset.ready = 'true'; mountStylelessMinimal(root); });
+</script>

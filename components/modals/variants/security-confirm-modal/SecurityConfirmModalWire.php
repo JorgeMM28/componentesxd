@@ -1,17 +1,11 @@
 <?php
-// Variante 05 — Modal de Confirmación con Validación de Texto — Laravel Livewire 3 (components/modals/variants/security-confirm-modal/SecurityConfirmModalWire.php)
-namespace App\Livewire\Cxd\Modals;
+namespace App\Livewire;
 use Livewire\Component;
-
-class SecurityConfirmModalWire extends Component {
-    public bool $active = false;
-    public function toggle(): void { $this->active = !$this->active; }
-    public function render() {
-        return <<<'HTML'
-        <div class="cxd-modals-security-confirm-modal">
-            <h3>Variante 05 — Modal de Confirmación con Validación de Texto</h3>
-            <button type="button" wire:click="toggle">Estado: {{ $active ? 'ON' : 'OFF' }}</button>
-        </div>
-        HTML;
-    }
-}
+// Incluye styles.css y ajusta la ruta del módulo.
+class SecurityConfirmModalWire extends Component { public function render(): string { return <<<'HTML'
+<div class="cxd-dialog" data-cxd-control="security-confirm-modal" wire:ignore><button type="button" data-open>Eliminar recurso</button><span role="status">Sin cambios</span><dialog aria-label="Confirmar eliminación"><h3>Confirmar eliminación</h3><p>Escribe ELIMINAR para habilitar la acción de demostración.</p><label>Confirmación <input type="text" data-confirm-input autocomplete="off" /></label><div class="cxd-dialog__actions"><button type="button" data-delete disabled>Eliminar</button><button type="button" data-close>Cancelar</button></div></dialog>@script
+<script>
+import('/assets/security-confirm-modal.js').then(module => module.mountSecurityConfirmModal($wire.$el));
+</script>
+@endscript</div>
+HTML; } }

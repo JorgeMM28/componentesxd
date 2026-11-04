@@ -1,17 +1,11 @@
 <?php
-// Variante 06 — Formulario con Validación y Medidor de Seguridad en Vivo — Laravel Livewire 3 (components/forms/variants/live-validation-meter/LiveValidationMeterWire.php)
-namespace App\Livewire\Cxd\Forms;
+namespace App\Livewire;
 use Livewire\Component;
-
-class LiveValidationMeterWire extends Component {
-    public bool $active = false;
-    public function toggle(): void { $this->active = !$this->active; }
-    public function render() {
-        return <<<'HTML'
-        <div class="cxd-forms-live-validation-meter">
-            <h3>Variante 06 — Formulario con Validación y Medidor de Seguridad en Vivo</h3>
-            <button type="button" wire:click="toggle">Estado: {{ $active ? 'ON' : 'OFF' }}</button>
-        </div>
-        HTML;
-    }
-}
+// Incluye styles.css y ajusta la ruta del módulo.
+class LiveValidationMeterWire extends Component { public function render(): string { return <<<'HTML'
+<div class="cxd-form" data-cxd-control="live-validation-meter" wire:ignore><label>Contraseña <input type="password" data-password autocomplete="new-password" /></label><meter min="0" max="4" value="0" data-meter aria-label="Fortaleza de contraseña"></meter><span role="status">Sin evaluar</span>@script
+<script>
+import('/assets/live-validation-meter.js').then(module => module.mountLiveValidationMeter($wire.$el));
+</script>
+@endscript</div>
+HTML; } }

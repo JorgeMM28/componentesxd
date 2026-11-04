@@ -1,18 +1,4 @@
-// Variante 07 — Barra de Botones Content-Fit con Indicador Activo — Angular 18+ Signals (components/buttons/variants/segmented-toolbar-fit/segmented-toolbar-fit.component.ts)
 import { Component, signal } from '@angular/core';
-
-@Component({
-  selector: 'cxd-segmented-toolbar-fit',
-  standalone: true,
-  styleUrls: ['./styles.css'],
-  template: `
-    <div class="cxd-buttons-segmented-toolbar-fit" [attr.data-active]="active()">
-      <h3>Variante 07 — Barra de Botones Content-Fit con Indicador Activo</h3>
-      <p>Grupo compacto unido donde la selección activa cambia instantáneamente al hacer clic.</p>
-      <button type="button" (click)="active.set(!active())">Alternar</button>
-    </div>
-  `
-})
-export class CxdSegmentedToolbarFitComponent {
-  active = signal(false);
-}
+@Component({ selector: 'cxd-segmented-toolbar-fit', standalone: true, styleUrls: ['./styles.css'], template: `
+<div class="cxd-segments">@for (item of items; track item[0]; let i = $index) { <button type="button" class="cxd-segments__button" [class]="'cxd-segments__button cxd-segments__button--' + item[0]" [attr.aria-pressed]="active() === i" (click)="active.set(i)">{{ item[1] }}</button> }<span class="cxd-segments__status" role="status">{{ active() < 0 ? 'MODO ACTIVO: Vista de Tabla Estructurada (10 Variantes)' : 'MODO ACTIVO: ' + items[active()][2] }}</span></div>` })
+export class SegmentedToolbarFitComponent { readonly items = [["one","Vista Tabla","Vista de Tabla Estructurada (10 Variantes)"],["two","Vista Tarjetas","Vista de Tarjetas Bento (8 Variantes)"],["three","Vista Grafo 3D","Vista de Grafo Vectorial 3D"],["four","JSON Raw","Inspector JSON Raw en Vivo"]]; readonly active = signal(0); }

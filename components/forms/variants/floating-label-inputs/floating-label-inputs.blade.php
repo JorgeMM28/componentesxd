@@ -1,7 +1,6 @@
-{{-- Variante 04 — Inputs con Etiqueta Flotante Animada — Laravel Blade (components/forms/variants/floating-label-inputs/floating-label-inputs.blade.php) --}}
-@props(['title' => 'Variante 04 — Inputs con Etiqueta Flotante Animada'])
-<div {{ $attributes->merge(['class' => 'cxd-forms-floating-label-inputs']) }}>
-    <h3>{{ $title }}</h3>
-    <p>La etiqueta viaja suavemente hacia el borde superior cuando haces clic o escribes contenido.</p>
-    {{ $slot }}
-</div>
+{{-- Incluye styles.css y ajusta la ruta del módulo. --}}
+<div class="cxd-form" data-cxd-control="floating-label-inputs"><label class="cxd-form__float"><span>Nombre del cluster</span><input type="text" data-input value="us-east-production-01" /></label><span role="status">Etiqueta flotante</span></div>
+<script type="module">
+import { mountFloatingLabelInputs } from '/assets/floating-label-inputs.js';
+document.querySelectorAll('[data-cxd-control="floating-label-inputs"]:not([data-ready])').forEach(root => { root.dataset.ready = 'true'; mountFloatingLabelInputs(root); });
+</script>

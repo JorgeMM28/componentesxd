@@ -1,11 +1,6 @@
-<!-- Variante 03 — Formulario Content-Fit en Una Sola Línea — Svelte 5 Runes (components/forms/variants/content-fit-inline-bar/ContentFitInlineBar.svelte) -->
 <script lang="ts">
-  import './styles.css';
-  let active = $state(false);
+import { mountContentFitInlineBar } from './content-fit-inline-bar.js';
+import './styles.css';
+function control(node: HTMLElement) { return { destroy: mountContentFitInlineBar(node) }; }
 </script>
-
-<div class="cxd-forms-content-fit-inline-bar" data-active={active}>
-  <h3>Variante 03 — Formulario Content-Fit en Una Sola Línea</h3>
-  <p>Combina selector de prefijo, campo de texto y botón de envío en una sola cápsula compacta.</p>
-  <button type="button" onclick={() => (active = !active)}>Alternar</button>
-</div>
+<div class="cxd-form cxd-form--inline" data-cxd-control="content-fit-inline-bar" use:control><span>https://</span><input type="text" data-domain value="mi-proyecto.dev" aria-label="Dominio" /><button type="button" data-connect>Conectar dominio</button><span role="status">Listo</span></div>

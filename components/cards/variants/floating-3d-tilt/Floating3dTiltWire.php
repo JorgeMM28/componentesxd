@@ -1,17 +1,11 @@
 <?php
-// Variante 03 — Tarjeta Flotante con Perspectiva 3D Interactiva — Laravel Livewire 3 (components/cards/variants/floating-3d-tilt/Floating3dTiltWire.php)
-namespace App\Livewire\Cxd\Cards;
+namespace App\Livewire;
 use Livewire\Component;
-
-class Floating3dTiltWire extends Component {
-    public bool $active = false;
-    public function toggle(): void { $this->active = !$this->active; }
-    public function render() {
-        return <<<'HTML'
-        <div class="cxd-cards-floating-3d-tilt">
-            <h3>Variante 03 — Tarjeta Flotante con Perspectiva 3D Interactiva</h3>
-            <button type="button" wire:click="toggle">Estado: {{ $active ? 'ON' : 'OFF' }}</button>
-        </div>
-        HTML;
-    }
-}
+// Incluye styles.css y ajusta la ruta del módulo.
+class Floating3dTiltWire extends Component { public function render(): string { return <<<'HTML'
+<div class="cxd-card" data-cxd-control="floating-3d-tilt" wire:ignore><span>PERSPECTIVA 3D</span><h3>Mueve el cursor sobre esta tarjeta</h3><p>La perspectiva responde a la posición del puntero.</p>@script
+<script>
+import('/assets/floating-3d-tilt.js').then(module => module.mountFloating3dTilt($wire.$el));
+</script>
+@endscript</div>
+HTML; } }

@@ -1,11 +1,6 @@
-<!-- Variante 02 — Tabla Styleless (Sin Bordes / Editorial) — Svelte 5 Runes (components/tables/variants/styleless-minimal/StylelessMinimal.svelte) -->
 <script lang="ts">
-  import './styles.css';
-  let active = $state(false);
+import { mountStylelessMinimal } from './styleless-minimal.js';
+import './styles.css';
+function control(node: HTMLElement) { return { destroy: mountStylelessMinimal(node) }; }
 </script>
-
-<div class="cxd-tables-styleless-minimal" data-active={active}>
-  <h3>Variante 02 — Tabla Styleless (Sin Bordes / Editorial)</h3>
-  <p>Sin contenedor exterior ni líneas verticales. Puramente tipográfica con alineación generosa y subrayado sutil.</p>
-  <button type="button" onclick={() => (active = !active)}>Alternar</button>
-</div>
+<div class="cxd-table cxd-table--minimal" data-cxd-control="styleless-minimal" use:control><table><thead><tr><th>Miembro</th><th>Departamento</th><th>Estado</th></tr></thead><tbody><tr><td>Elena</td><td>Arquitectura</td><td>Online</td></tr><tr><td>Marco</td><td>Sistemas</td><td>Revisión</td></tr><tr><td>Sofía</td><td>Diseño</td><td>Online</td></tr></tbody></table></div>

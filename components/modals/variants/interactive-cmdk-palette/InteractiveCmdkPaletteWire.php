@@ -1,17 +1,11 @@
 <?php
-// Variante 02 — Command Palette Interactiva (Buscador en Vivo) — Laravel Livewire 3 (components/modals/variants/interactive-cmdk-palette/InteractiveCmdkPaletteWire.php)
-namespace App\Livewire\Cxd\Modals;
+namespace App\Livewire;
 use Livewire\Component;
-
-class InteractiveCmdkPaletteWire extends Component {
-    public bool $active = false;
-    public function toggle(): void { $this->active = !$this->active; }
-    public function render() {
-        return <<<'HTML'
-        <div class="cxd-modals-interactive-cmdk-palette">
-            <h3>Variante 02 — Command Palette Interactiva (Buscador en Vivo)</h3>
-            <button type="button" wire:click="toggle">Estado: {{ $active ? 'ON' : 'OFF' }}</button>
-        </div>
-        HTML;
-    }
-}
+// Incluye styles.css y ajusta la ruta del módulo.
+class InteractiveCmdkPaletteWire extends Component { public function render(): string { return <<<'HTML'
+<div class="cxd-dialog" data-cxd-control="interactive-cmdk-palette" wire:ignore><button type="button" data-open>Abrir comandos</button><span role="status">Selecciona un comando</span><dialog aria-label="Paleta de comandos"><h3>Paleta de comandos</h3><label>Buscar <input type="search" data-search placeholder="Escribe un comando" /></label><div class="cxd-dialog__list"><button type="button" data-command="Abrir catálogo">Abrir catálogo</button><button type="button" data-command="Ver animaciones">Ver animaciones</button><button type="button" data-command="Cambiar interfaz">Cambiar interfaz</button></div><button type="button" data-close>Cerrar</button></dialog>@script
+<script>
+import('/assets/interactive-cmdk-palette.js').then(module => module.mountInteractiveCmdkPalette($wire.$el));
+</script>
+@endscript</div>
+HTML; } }

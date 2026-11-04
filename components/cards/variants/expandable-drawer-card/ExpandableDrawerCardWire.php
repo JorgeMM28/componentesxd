@@ -1,17 +1,11 @@
 <?php
-// Variante 08 — Tarjeta con Despliegue de Detalles Técnicos — Laravel Livewire 3 (components/cards/variants/expandable-drawer-card/ExpandableDrawerCardWire.php)
-namespace App\Livewire\Cxd\Cards;
+namespace App\Livewire;
 use Livewire\Component;
-
-class ExpandableDrawerCardWire extends Component {
-    public bool $active = false;
-    public function toggle(): void { $this->active = !$this->active; }
-    public function render() {
-        return <<<'HTML'
-        <div class="cxd-cards-expandable-drawer-card">
-            <h3>Variante 08 — Tarjeta con Despliegue de Detalles Técnicos</h3>
-            <button type="button" wire:click="toggle">Estado: {{ $active ? 'ON' : 'OFF' }}</button>
-        </div>
-        HTML;
-    }
-}
+// Incluye styles.css y ajusta la ruta del módulo.
+class ExpandableDrawerCardWire extends Component { public function render(): string { return <<<'HTML'
+<div class="cxd-card" data-cxd-control="expandable-drawer-card" wire:ignore><strong>Reporte de seguridad automático</strong><button type="button" data-toggle aria-expanded="true">Desplegar / ocultar diagnóstico</button><p data-detail>0 vulnerabilidades críticas · Certificados TLS renovados por 90 días.</p>@script
+<script>
+import('/assets/expandable-drawer-card.js').then(module => module.mountExpandableDrawerCard($wire.$el));
+</script>
+@endscript</div>
+HTML; } }

@@ -1,21 +1,4 @@
-/**
- * Variante 03 — Formulario Content-Fit en Una Sola Línea — React / Next.js (TSX)
- * Archivo: components/forms/variants/content-fit-inline-bar/ContentFitInlineBar.tsx
- */
-import React, { useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { mountContentFitInlineBar } from './content-fit-inline-bar.js';
 import './styles.css';
-
-export const ContentFitInlineBar: React.FC<{ title?: string }> = ({
-  title = 'Variante 03 — Formulario Content-Fit en Una Sola Línea'
-}) => {
-  const [active, setActive] = useState(false);
-  return (
-    <div className="cxd-forms-content-fit-inline-bar" data-active={active}>
-      <h3>{title}</h3>
-      <p>Combina selector de prefijo, campo de texto y botón de envío en una sola cápsula compacta.</p>
-      <button type="button" onClick={() => setActive(!active)}>
-        Alternar Estado
-      </button>
-    </div>
-  );
-};
+export function ContentFitInlineBar() { const root = useRef<HTMLDivElement>(null); useEffect(() => root.current ? mountContentFitInlineBar(root.current) : undefined, []); return <div className="cxd-form cxd-form--inline" data-cxd-control="content-fit-inline-bar" ref={root}><span>https://</span><input type="text" data-domain defaultValue="mi-proyecto.dev" aria-label="Dominio" /><button type="button" data-connect>Conectar dominio</button><span role="status">Listo</span></div>; }

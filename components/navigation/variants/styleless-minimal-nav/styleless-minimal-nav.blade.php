@@ -1,7 +1,6 @@
-{{-- Variante 03 — Navegación Styleless Minimalista con Indicador Deslizante — Laravel Blade (components/navigation/variants/styleless-minimal-nav/styleless-minimal-nav.blade.php) --}}
-@props(['title' => 'Variante 03 — Navegación Styleless Minimalista con Indicador Deslizante'])
-<div {{ $attributes->merge(['class' => 'cxd-navigation-styleless-minimal-nav']) }}>
-    <h3>{{ $title }}</h3>
-    <p>Pestañas limpias sin bordes laterales donde la línea activa viaja suavemente al elemento clicado.</p>
-    {{ $slot }}
-</div>
+{{-- Incluye styles.css y ajusta la ruta del módulo. --}}
+<div class="cxd-nav cxd-nav--bare" data-cxd-control="styleless-minimal-nav"><button type="button" data-destination="Resumen" aria-pressed="true">Resumen</button><button type="button" data-destination="Actividad" aria-pressed="false">Actividad</button><button type="button" data-destination="Ajustes" aria-pressed="false">Ajustes</button><span role="status">Vista activa: Resumen</span></div>
+<script type="module">
+import { mountStylelessMinimalNav } from '/assets/styleless-minimal-nav.js';
+document.querySelectorAll('[data-cxd-control="styleless-minimal-nav"]:not([data-ready])').forEach(root => { root.dataset.ready = 'true'; mountStylelessMinimalNav(root); });
+</script>

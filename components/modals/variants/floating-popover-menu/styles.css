@@ -1,15 +1,1 @@
-/**
- * ============================================================================
- * COMPONENTESXD — MODALES, DIÁLOGOS Y COMMAND PALETTES
- * Variante 03 — Menú Popover Flotante Content-Fit con Acciones
- * Archivo: components/modals/variants/floating-popover-menu/styles.css
- * ============================================================================
- */
-.cxd-modals-floating-popover-menu {
-  background: var(--cxd-bg-surface);
-  color: var(--cxd-text-primary);
-  border: var(--cxd-border-width, 1px) solid var(--cxd-border);
-  border-radius: var(--cxd-radius-md);
-  font-family: var(--cxd-font-sans);
-  font-variant-numeric: tabular-nums;
-}
+.cxd-dialog{font:500 .9rem/1.5 system-ui;color:inherit}.cxd-dialog button,.cxd-dialog input,.cxd-dialog select{font:inherit;border:1px solid #8f7bbd;border-radius:7px;padding:.6rem;background:#28233d;color:#fff}.cxd-dialog button{cursor:pointer}.cxd-dialog button:disabled{opacity:.45;cursor:not-allowed}.cxd-dialog button:focus-visible,.cxd-dialog input:focus-visible,.cxd-dialog select:focus-visible{outline:3px solid #c4b5fd;outline-offset:2px}.cxd-dialog dialog{box-sizing:border-box;width:min(90vw,32rem);padding:1.4rem;border:1px solid #8f7bbd;border-radius:16px;background:#171726;color:#fff;box-shadow:0 20px 60px #0008}.cxd-dialog dialog::backdrop{background:#05050bbb}.cxd-dialog p{color:#d2cbe4}.cxd-dialog label{display:grid;gap:.3rem;margin:.7rem 0}.cxd-dialog__actions{display:flex;gap:.5rem;flex-wrap:wrap}.cxd-dialog [hidden]{display:none!important}.cxd-dialog [role=status]{display:block;margin-top:.7rem;font-size:.8rem}.cxd-dialog__popover{position:relative;padding:1rem;background:#171726;border:1px solid #8f7bbd;border-radius:10px;width:max-content;color:#fff}.cxd-dialog--drawer dialog{margin:0 0 0 auto;max-height:none;height:100vh;border-radius:16px 0 0 16px}.cxd-dialog__list{display:grid;gap:.4rem}.cxd-dialog pre{overflow:auto;max-height:12rem}

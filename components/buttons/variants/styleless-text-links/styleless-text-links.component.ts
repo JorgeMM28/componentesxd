@@ -1,18 +1,4 @@
-// Variante 02 — Botones Styleless (Subrayado Cinético sin Caja) — Angular 18+ Signals (components/buttons/variants/styleless-text-links/styleless-text-links.component.ts)
 import { Component, signal } from '@angular/core';
-
-@Component({
-  selector: 'cxd-styleless-text-links',
-  standalone: true,
-  styleUrls: ['./styles.css'],
-  template: `
-    <div class="cxd-buttons-styleless-text-links" [attr.data-active]="active()">
-      <h3>Variante 02 — Botones Styleless (Subrayado Cinético sin Caja)</h3>
-      <p>Cero bordes ni fondos: línea inferior que crece de izquierda a derecha y flecha SVG que avanza al pasar el cursor.</p>
-      <button type="button" (click)="active.set(!active())">Alternar</button>
-    </div>
-  `
-})
-export class CxdStylelessTextLinksComponent {
-  active = signal(false);
-}
+@Component({ selector: 'cxd-styleless-text-links', standalone: true, styleUrls: ['./styles.css'], template: `
+<div class="cxd-text-links">@for (item of items; track item[0]; let i = $index) { <button type="button" class="cxd-text-links__button" [class]="'cxd-text-links__button cxd-text-links__button--' + item[0]" [attr.aria-pressed]="active() === i" (click)="active.set(i)">{{ item[1] }}</button> }<span class="cxd-text-links__status" role="status">{{ active() < 0 ? 'Selecciona una opción' : 'RUTA ACTIVA: ' + items[active()][2] }}</span></div>` })
+export class StylelessTextLinksComponent { readonly items = [["documentation","Explorar Documentación Técnica","Abriendo especificación técnica v4.2..."],["download","Descargar Especificación Raw","Descargando manifiesto raw (42 KB)..."]]; readonly active = signal(-1); }

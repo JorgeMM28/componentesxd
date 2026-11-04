@@ -1,14 +1,7 @@
-<!-- Variante 04 — Tarjeta Interactiva con Pestañas Internas — Vue 3 SFC (components/cards/variants/interactive-tabbed-card/InteractiveTabbedCard.vue) -->
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
+import { mountInteractiveTabbedCard } from './interactive-tabbed-card.js';
 import './styles.css';
-const active = ref(false);
+const root = ref<HTMLElement | null>(null); let unmount: (() => void) | undefined; onMounted(() => { if (root.value) unmount = mountInteractiveTabbedCard(root.value); }); onUnmounted(() => unmount?.());
 </script>
-
-<template>
-  <div class="cxd-cards-interactive-tabbed-card" :data-active="active">
-    <h3>Variante 04 — Tarjeta Interactiva con Pestañas Internas</h3>
-    <p>Alterna entre Resumen, Métricas y Configuración dentro de la misma tarjeta sin recargar.</p>
-    <button type="button" @click="active = !active">Alternar</button>
-  </div>
-</template>
+<template><div class="cxd-card" data-cxd-control="interactive-tabbed-card" ref="root"><div class="cxd-card__actions"><button type="button" data-tab="summary" aria-pressed="true">Resumen</button><button type="button" data-tab="metrics" aria-pressed="false">Métricas</button><button type="button" data-tab="settings" aria-pressed="false">Ajustes</button></div><p data-panel="summary">Estado general: 99.99% de disponibilidad.</p><p data-panel="metrics" hidden>Latencia media: 7.2 ms · Memoria: 41.2 GB.</p><p data-panel="settings" hidden>Autoescalado habilitado: 4 a 32 nodos.</p></div></template>

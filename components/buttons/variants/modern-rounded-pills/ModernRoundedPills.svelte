@@ -1,11 +1,6 @@
-<!-- Variante 01 — Botones Modernos Redondeados (Píldora & Glow) — Svelte 5 Runes (components/buttons/variants/modern-rounded-pills/ModernRoundedPills.svelte) -->
 <script lang="ts">
-  import './styles.css';
-  let active = $state(false);
+import './styles.css';
+const items = [["primary","Botón Píldora Moderno","Despliegue Iniciado"],["soft","Secundario Suave","Modo Previsualización Activo"],["outline","Contorno Redondeado","Sincronizado con Éxito"]];
+let active = $state(-1);
 </script>
-
-<div class="cxd-buttons-modern-rounded-pills" data-active={active}>
-  <h3>Variante 01 — Botones Modernos Redondeados (Píldora & Glow)</h3>
-  <p>Bordes completamente redondeados (999px), degradado sutil, sombra difusa y micro-escala al hacer clic.</p>
-  <button type="button" onclick={() => (active = !active)}>Alternar</button>
-</div>
+<div class="cxd-pills">{#each items as [kind, label], index (kind)}<button type="button" class="cxd-pills__button cxd-pills__button--{kind}" aria-pressed={active === index} onclick={() => active = index}>{label}</button>{/each}<span class="cxd-pills__status" role="status">{active < 0 ? 'Selecciona una acción' : 'ACCIÓN EJECUTADA: ' + items[active][2]}</span></div>

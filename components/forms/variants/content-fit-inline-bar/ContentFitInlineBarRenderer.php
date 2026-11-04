@@ -1,10 +1,10 @@
 <?php
-// Variante 03 — Formulario Content-Fit en Una Sola Línea — PHP 8.3 Renderer (components/forms/variants/content-fit-inline-bar/ContentFitInlineBarRenderer.php)
 declare(strict_types=1);
-namespace ComponentesXD\Forms;
-
-final class ContentFitInlineBarRenderer {
-    public static function render(): string {
-        return '<div class="cxd-forms-content-fit-inline-bar"><h3>Variante 03 — Formulario Content-Fit en Una Sola Línea</h3><p>Combina selector de prefijo, campo de texto y botón de envío en una sola cápsula compacta.</p></div>';
-    }
-}
+// Incluye styles.css y ajusta la ruta del módulo.
+function renderContentFitInlineBar(): string { return <<<'HTML'
+<div class="cxd-form cxd-form--inline" data-cxd-control="content-fit-inline-bar"><span>https://</span><input type="text" data-domain value="mi-proyecto.dev" aria-label="Dominio" /><button type="button" data-connect>Conectar dominio</button><span role="status">Listo</span></div>
+<script type="module">
+import { mountContentFitInlineBar } from '/assets/content-fit-inline-bar.js';
+document.querySelectorAll('[data-cxd-control="content-fit-inline-bar"]:not([data-ready])').forEach(root => { root.dataset.ready = 'true'; mountContentFitInlineBar(root); });
+</script>
+HTML; }

@@ -1,11 +1,6 @@
-<!-- Variante 04 — Toaster con Formulario de Respuesta Rápida — Svelte 5 Runes (components/toasts/variants/form-reply-toast/FormReplyToast.svelte) -->
 <script lang="ts">
-  import './styles.css';
-  let active = $state(false);
+import { mountFormReplyToast } from './form-reply-toast.js';
+import './styles.css';
+function control(node: HTMLElement) { return { destroy: mountFormReplyToast(node) }; }
 </script>
-
-<div class="cxd-toasts-form-reply-toast" data-active={active}>
-  <h3>Variante 04 — Toaster con Formulario de Respuesta Rápida</h3>
-  <p>Incluye campo de texto e input de envío directo dentro de la notificación sin abrir otra página.</p>
-  <button type="button" onclick={() => (active = !active)}>Alternar</button>
-</div>
+<div class="cxd-toast" data-cxd-control="form-reply-toast" use:control><strong>Comentario de revisión</strong><p>¿Podemos subir el límite de rate-limiting?</p><form data-form><input data-input type="text" required aria-label="Respuesta rápida" placeholder="Escribe una respuesta" /><button type="submit">Responder</button></form><span role="status">Esperando respuesta</span></div>

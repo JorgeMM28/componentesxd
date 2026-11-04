@@ -1,21 +1,4 @@
-/**
- * Variante 01 — Navbar con Menú en Cascada Multi-Nivel (Estilo Microsoft) — React / Next.js (TSX)
- * Archivo: components/navigation/variants/microsoft-cascade-nav/MicrosoftCascadeNav.tsx
- */
-import React, { useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { mountMicrosoftCascadeNav } from './microsoft-cascade-nav.js';
 import './styles.css';
-
-export const MicrosoftCascadeNav: React.FC<{ title?: string }> = ({
-  title = 'Variante 01 — Navbar con Menú en Cascada Multi-Nivel (Estilo Microsoft)'
-}) => {
-  const [active, setActive] = useState(false);
-  return (
-    <div className="cxd-navigation-microsoft-cascade-nav" data-active={active}>
-      <h3>{title}</h3>
-      <p>Selecciona una categoría principal para desplegar sus sub-categorías y luego sus variantes finales.</p>
-      <button type="button" onClick={() => setActive(!active)}>
-        Alternar Estado
-      </button>
-    </div>
-  );
-};
+export function MicrosoftCascadeNav() { const root = useRef<HTMLDivElement>(null); useEffect(() => root.current ? mountMicrosoftCascadeNav(root.current) : undefined, []); return <div className="cxd-nav" data-cxd-control="microsoft-cascade-nav" ref={root}><button type="button" data-category="Componentes" aria-expanded="false">Componentes</button><button type="button" data-category="Animaciones" aria-expanded="false">Animaciones</button><div className="cxd-nav__menu" data-menu hidden><button type="button" data-group="Componentes" data-leaf="Tablas">Tablas</button><button type="button" data-group="Componentes" data-leaf="Botones">Botones</button><button type="button" data-group="Componentes" data-leaf="Formularios">Formularios</button><button type="button" data-group="Animaciones" data-leaf="SVG" hidden>SVG</button><button type="button" data-group="Animaciones" data-leaf="Timelines" hidden>Timelines</button></div><span role="status">Selecciona una categoría</span></div>; }

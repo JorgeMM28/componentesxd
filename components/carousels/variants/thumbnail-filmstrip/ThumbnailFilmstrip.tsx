@@ -1,21 +1,4 @@
-/**
- * Variante 06 — Carrusel Galería con Tira Inferior de Miniaturas (Filmstrip) — React / Next.js (TSX)
- * Archivo: components/carousels/variants/thumbnail-filmstrip/ThumbnailFilmstrip.tsx
- */
-import React, { useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { mountThumbnailFilmstrip } from './thumbnail-filmstrip.js';
 import './styles.css';
-
-export const ThumbnailFilmstrip: React.FC<{ title?: string }> = ({
-  title = 'Variante 06 — Carrusel Galería con Tira Inferior de Miniaturas (Filmstrip)'
-}) => {
-  const [active, setActive] = useState(false);
-  return (
-    <div className="cxd-carousels-thumbnail-filmstrip" data-active={active}>
-      <h3>{title}</h3>
-      <p>Escenario principal de gran formato conectado a una banda interactiva de miniaturas con enfoque activo.</p>
-      <button type="button" onClick={() => setActive(!active)}>
-        Alternar Estado
-      </button>
-    </div>
-  );
-};
+export function ThumbnailFilmstrip() { const root = useRef<HTMLDivElement>(null); useEffect(() => root.current ? mountThumbnailFilmstrip(root.current) : undefined, []); return <div className="cxd-carousel" data-cxd-control="thumbnail-filmstrip" ref={root}><div className="cxd-carousel__item cxd-film-main" data-main>✦ Aurora</div><div className="cxd-filmstrip" aria-label="Seleccionar imagen"><button type="button" data-thumb="✦ Aurora" aria-pressed="true">✦ Aurora</button><button type="button" data-thumb="◉ Órbita" aria-pressed="false">◉ Órbita</button><button type="button" data-thumb="✳ Nébula" aria-pressed="false">✳ Nébula</button></div><span role="status">Imagen: Aurora</span></div>; }

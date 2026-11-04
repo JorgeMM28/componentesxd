@@ -1,18 +1,4 @@
-// Variante 01 — Tabla Moderna de Bordes Redondeados — Angular 18+ Signals (components/tables/variants/modern-rounded/modern-rounded.component.ts)
-import { Component, signal } from '@angular/core';
-
-@Component({
-  selector: 'cxd-modern-rounded',
-  standalone: true,
-  styleUrls: ['./styles.css'],
-  template: `
-    <div class="cxd-tables-modern-rounded" [attr.data-active]="active()">
-      <h3>Variante 01 — Tabla Moderna de Bordes Redondeados</h3>
-      <p>Contenedor con radio amplio de 18px, cabeceras suaves tipo cápsula, avatares circulares y badges pastilla.</p>
-      <button type="button" (click)="active.set(!active())">Alternar</button>
-    </div>
-  `
-})
-export class CxdModernRoundedComponent {
-  active = signal(false);
-}
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import { mountModernRounded } from './modern-rounded.js';
+@Component({ selector:'cxd-modern-rounded', standalone:true, styleUrls:['./styles.css'], template:`<div class="cxd-table " data-cxd-control="modern-rounded" #root><table><thead><tr><th>Miembro</th><th>Departamento</th><th>Estado</th></tr></thead><tbody><tr><td>Elena</td><td>Arquitectura</td><td>Online</td></tr><tr><td>Marco</td><td>Sistemas</td><td>Revisión</td></tr><tr><td>Sofía</td><td>Diseño</td><td>Online</td></tr></tbody></table></div>` })
+export class ModernRoundedComponent implements AfterViewInit, OnDestroy { @ViewChild('root') root!: ElementRef<HTMLElement>; private unmount?: () => void; ngAfterViewInit() { this.unmount = mountModernRounded(this.root.nativeElement); } ngOnDestroy() { this.unmount?.(); } }

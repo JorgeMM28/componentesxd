@@ -1,18 +1,4 @@
-// Variante 06 — Tarjeta con Formulario Rápido de Cotización / Config — Angular 18+ Signals (components/cards/variants/form-embedded-card/form-embedded-card.component.ts)
-import { Component, signal } from '@angular/core';
-
-@Component({
-  selector: 'cxd-form-embedded-card',
-  standalone: true,
-  styleUrls: ['./styles.css'],
-  template: `
-    <div class="cxd-cards-form-embedded-card" [attr.data-active]="active()">
-      <h3>Variante 06 — Tarjeta con Formulario Rápido de Cotización / Config</h3>
-      <p>Permite ajustar parámetros con inputs y calcular el costo mensual directamente en la tarjeta.</p>
-      <button type="button" (click)="active.set(!active())">Alternar</button>
-    </div>
-  `
-})
-export class CxdFormEmbeddedCardComponent {
-  active = signal(false);
-}
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import { mountFormEmbeddedCard } from './form-embedded-card.js';
+@Component({ selector:'cxd-form-embedded-card', standalone:true, styleUrls:['./styles.css'], template:`<div class="cxd-card" data-cxd-control="form-embedded-card" #root><h3>Calculadora rápida de instancia</h3><label>Núcleos vCPU <input type="number" data-input min="1" max="128" value="8" /></label><p>Costo estimado: <strong data-total>$192/mes</strong></p></div>` })
+export class FormEmbeddedCardComponent implements AfterViewInit, OnDestroy { @ViewChild('root') root!: ElementRef<HTMLElement>; private unmount?: () => void; ngAfterViewInit() { this.unmount = mountFormEmbeddedCard(this.root.nativeElement); } ngOnDestroy() { this.unmount?.(); } }

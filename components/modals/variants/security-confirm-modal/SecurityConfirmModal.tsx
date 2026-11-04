@@ -1,21 +1,4 @@
-/**
- * Variante 05 — Modal de Confirmación con Validación de Texto — React / Next.js (TSX)
- * Archivo: components/modals/variants/security-confirm-modal/SecurityConfirmModal.tsx
- */
-import React, { useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { mountSecurityConfirmModal } from './security-confirm-modal.js';
 import './styles.css';
-
-export const SecurityConfirmModal: React.FC<{ title?: string }> = ({
-  title = 'Variante 05 — Modal de Confirmación con Validación de Texto'
-}) => {
-  const [active, setActive] = useState(false);
-  return (
-    <div className="cxd-modals-security-confirm-modal" data-active={active}>
-      <h3>{title}</h3>
-      <p>Escribe "ELIMINAR" en el campo de confirmación para desbloquear el botón destructivo.</p>
-      <button type="button" onClick={() => setActive(!active)}>
-        Alternar Estado
-      </button>
-    </div>
-  );
-};
+export function SecurityConfirmModal() { const root = useRef<HTMLDivElement>(null); useEffect(() => root.current ? mountSecurityConfirmModal(root.current) : undefined, []); return <div className="cxd-dialog" data-cxd-control="security-confirm-modal" ref={root}><button type="button" data-open>Eliminar recurso</button><span role="status">Sin cambios</span><dialog aria-label="Confirmar eliminación"><h3>Confirmar eliminación</h3><p>Escribe ELIMINAR para habilitar la acción de demostración.</p><label>Confirmación <input type="text" data-confirm-input autoComplete="off" /></label><div className="cxd-dialog__actions"><button type="button" data-delete disabled>Eliminar</button><button type="button" data-close>Cancelar</button></div></dialog></div>; }

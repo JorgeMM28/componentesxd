@@ -1,0 +1,89 @@
+---
+const studies = [
+  ['aurora-launch','Aurora de lanzamiento','Una entrada editorial con capas de luz y títulos escalonados.','reveal','#9f88ff'],
+  ['signal-ripple','Pulso de señal','Una onda radial para confirmar eventos o actualizar telemetría.','ripple','#39d8ff'],
+  ['spring-cards','Tarjetas elásticas','Tarjetas que aterrizan con una física de resorte expresiva.','spring','#ff9e84'],
+  ['orbit-network','Red orbital','Nodos en órbita para representar conexiones y procesos.','orbit','#7be7b0'],
+  ['cascade-metrics','Métricas en cascada','Barras de datos que se revelan con un ritmo legible.','bars','#ffa8cf'],
+  ['prism-reveal','Prisma editorial','Una aparición por planos apropiada para presentar un producto.','reveal','#80baff'],
+  ['quantum-ripple','Onda cuántica','Capas concéntricas que responden como una superficie táctil.','ripple','#c69aff'],
+  ['bento-arrival','Entrada Bento','Un conjunto de módulos que entra con rebote progresivo.','spring','#f5c677'],
+  ['satellite-sync','Sincronización satelital','Movimiento orbital para una tarea sincronizada.','orbit','#80d7ff'],
+  ['data-waterfall','Cascada de datos','Barras con retardo para visualizar actividad de red.','bars','#a5e694'],
+  ['luminous-story','Historia luminosa','Bloques editoriales que se despliegan en secuencia.','reveal','#f5a3d3'],
+  ['sonar-feedback','Confirmación sonar','Confirmación visual de una acción mediante ondas suaves.','ripple','#7ce6dd'],
+  ['elastic-dashboard','Dashboard elástico','Tarjetas de un panel que responden a una carga completada.','spring','#8da4ff'],
+  ['constellation-flow','Flujo de constelación','Órbita de partículas para acompañar un proceso continuo.','orbit','#f4a37e'],
+  ['telemetry-rhythm','Ritmo de telemetría','Una gráfica animada con énfasis en la comparación.','bars','#d5a6ff'],
+  ['layered-intro','Introducción en capas','Aparición secuencial de información y acentos de producto.','reveal','#a0e1bd'],
+  ['radar-beacon','Baliza de radar','Pulsos espaciados que indican presencia o actividad.','ripple','#ffd17f'],
+  ['elastic-stack','Pila con resorte','Una entrada con profundidad para notificaciones o paneles.','spring','#ffacc2'],
+  ['gravity-system','Sistema de gravedad','Partículas que giran alrededor de un centro común.','orbit','#c3a3ff'],
+  ['spectrum-pulse','Pulso de espectro','Columnas escalonadas para expresar intensidad y variación.','bars','#6fe0eb'],
+].map(([id,name,description,mode,color], i) => ({id,name,description,mode,color,index:i+1}));
+---
+<section class="motion-collection" aria-labelledby="motion-title">
+  <header class="motion-intro"><span>COLECCIÓN MOTION / 20 ESTUDIOS</span><h2 id="motion-title">Movimiento que comunica.</h2><p>Veinte estudios visuales de cinco familias: entradas, ondas, resortes, órbitas y barras. Cada uno incluye un ejemplo HTML, CSS y Anime.js que puedes copiar.</p></header>
+  <nav class="motion-index" aria-label="Estudios de movimiento">{studies.map(s => <a href={`#${s.id}`}>{s.index}. {s.name}</a>)}</nav>
+  <div class="motion-grid">
+    {studies.map(s => <article id={s.id} class="motion-card" data-motion-study data-mode={s.mode} data-profile={Math.floor((s.index - 1) / 5)} style={`--motion-accent:${s.color}`}>
+      <div class="motion-head"><span>{s.index} / ESTUDIO DE MOVIMIENTO</span><h3>{s.name}</h3><p>{s.description}</p></div>
+      <div class={`motion-stage motion-stage--${s.mode}`} aria-label={`Vista previa de ${s.name}`}>
+        <div class="motion-glow"></div>
+        <div class="motion-scene" aria-hidden="true">{Array.from({length: 9}, (_, i) => <div class="motion-piece" style={`--i:${i}`}><span>{String(i+1).padStart(2,'0')}</span></div>)}</div>
+        <div class="motion-caption"><span>COMPONENTESXD / MOTION</span><strong>{s.name}</strong></div>
+      </div>
+      <div class="motion-actions"><button type="button" data-motion-play>Reproducir</button><button type="button" data-motion-pause>Pausar</button><button type="button" data-motion-reverse>Invertir</button><button type="button" data-motion-restart>Reiniciar</button><button type="button" data-motion-copy>Copiar ejemplo</button><span role="status" data-motion-status></span></div>
+      <details><summary>Ver ejemplo HTML + CSS + Anime.js</summary><pre><code data-motion-code></code></pre></details>
+    </article>)}
+  </div>
+</section>
+<script>
+import { animate, stagger, createSpring } from 'animejs';
+
+type Motion = { play: () => unknown; pause: () => unknown; reverse: () => unknown; restart: () => unknown };
+function playMotion(root: HTMLElement, mode: string, profile: number): Motion {
+  const pieces = root.querySelectorAll<HTMLElement>('.motion-piece');
+  switch (mode) {
+    case 'ripple': return animate(pieces, { scale: [0.2, 1.5 + profile * 0.3], opacity: [0.85, 0], delay: stagger(60 + profile * 35), duration: 1100 + profile * 250, ease: 'outExpo' });
+    case 'spring': return animate(pieces, { y: [70 + profile * 20, 0], rotate: [-12 + profile * 8, 0], opacity: [0, 1], delay: stagger(45 + profile * 20, { from: 'center' }), ease: createSpring({ stiffness: 90 + profile * 25, damping: 10 + profile * 2 }) });
+    case 'orbit': return animate(pieces, { rotate: [0, profile % 2 ? -360 : 360], delay: stagger(25 + profile * 20), duration: 2200 + profile * 500, ease: 'inOutSine' });
+    case 'bars': return animate(pieces, { scaleY: [0.05, 1], opacity: [0.3, 1], delay: stagger(50 + profile * 30, { from: profile % 2 ? 'last' : 'first' }), duration: 800 + profile * 200, ease: 'outExpo' });
+    default: return animate(pieces, { y: [profile % 2 ? -55 : 55, 0], rotate: [-12 + profile * 8, 0], opacity: [0, 1], delay: stagger(50 + profile * 25, { from: profile % 2 ? 'last' : 'first' }), duration: 800 + profile * 200, ease: 'outExpo' });
+  }
+}
+const css = `.motion-stage{position:relative;display:grid;place-items:center;min-height:300px;background:radial-gradient(circle at 50% 40%,color-mix(in srgb,var(--motion-accent) 25%,#141327),#090b18 70%);overflow:hidden}\n.motion-scene{position:relative;width:230px;height:180px;display:flex;align-items:center;justify-content:center;gap:6px}\n.motion-piece{background:var(--motion-accent);border-radius:8px;width:20px;height:70px;transform-origin:bottom;opacity:.85}\n.motion-piece span{display:none}\n.motion-stage--reveal .motion-scene,.motion-stage--spring .motion-scene{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}\n.motion-stage--reveal .motion-piece,.motion-stage--spring .motion-piece{width:auto;height:48px;background:color-mix(in srgb,var(--motion-accent) 50%,#1b1d32);border:1px solid var(--motion-accent)}\n.motion-stage--ripple .motion-piece{position:absolute;width:100px;height:100px;background:transparent;border:2px solid var(--motion-accent);border-radius:50%;transform-origin:center}\n.motion-stage--orbit .motion-piece{position:absolute;width:150px;height:150px;background:transparent;border:1px solid color-mix(in srgb,var(--motion-accent) 35%,transparent);border-radius:50%;transform-origin:center}\n.motion-stage--orbit .motion-piece:before{content:"";display:block;width:9px;height:9px;background:var(--motion-accent);border-radius:50%;transform:rotate(calc(var(--i)*40deg)) translate(70px)}\n.motion-stage--bars .motion-piece{height:calc(45px + var(--i)*10px)}`;
+function example(mode: string, p: number): string {
+  switch (mode) {
+    case 'ripple': return `animate(pieces, { scale: [0.2, ${1.5 + p * 0.3}], opacity: [0.85, 0], delay: stagger(${60 + p * 35}), duration: ${1100 + p * 250}, ease: 'outExpo' });`;
+    case 'spring': return `animate(pieces, { y: [${70 + p * 20}, 0], rotate: [${-12 + p * 8}, 0], opacity: [0, 1], delay: stagger(${45 + p * 20}, { from: 'center' }), ease: createSpring({ stiffness: ${90 + p * 25}, damping: ${10 + p * 2} }) });`;
+    case 'orbit': return `animate(pieces, { rotate: [0, ${p % 2 ? -360 : 360}], delay: stagger(${25 + p * 20}), duration: ${2200 + p * 500}, ease: 'inOutSine' });`;
+    case 'bars': return `animate(pieces, { scaleY: [0.05, 1], opacity: [0.3, 1], delay: stagger(${50 + p * 30}, { from: '${p % 2 ? 'last' : 'first'}' }), duration: ${800 + p * 200}, ease: 'outExpo' });`;
+    default: return `animate(pieces, { y: [${p % 2 ? -55 : 55}, 0], rotate: [${-12 + p * 8}, 0], opacity: [0, 1], delay: stagger(${50 + p * 25}, { from: '${p % 2 ? 'last' : 'first'}' }), duration: ${800 + p * 200}, ease: 'outExpo' });`;
+  }
+}
+document.querySelectorAll<HTMLElement>('[data-motion-study]').forEach(card => {
+  const stage = card.querySelector<HTMLElement>('.motion-stage');
+  const mode = card.dataset.mode || 'reveal';
+  const profile = Number(card.dataset.profile || 0);
+  const code = card.querySelector<HTMLElement>('[data-motion-code]');
+  const status = card.querySelector<HTMLElement>('[data-motion-status]');
+  let active: Motion | null = null;
+  if (!stage) return;
+  const markup = `<div class="motion-stage motion-stage--${mode}" style="--motion-accent:${card.style.getPropertyValue('--motion-accent')}">\n  <div class="motion-scene">\n${Array.from({length:9},(_,i)=>`    <div class="motion-piece" style="--i:${i}"></div>`).join('\n')}\n  </div>\n</div>`;
+  const snippet = `${markup}\n\n<style>\n${css}\n</style>\n\n<script type="module">\nimport { animate, stagger, createSpring } from 'animejs';\nconst pieces = document.querySelectorAll('.motion-piece');\n${example(mode, profile)}\n<` + `/script>`;
+  if (code) code.textContent = snippet;
+  card.querySelector('[data-motion-play]')?.addEventListener('click', () => { if (active) active.play(); else active = playMotion(stage, mode, profile); if (status) status.textContent = 'Reproduciendo'; });
+  card.querySelector('[data-motion-pause]')?.addEventListener('click', () => { active?.pause(); if (status && active) status.textContent = 'Pausado'; });
+  card.querySelector('[data-motion-reverse]')?.addEventListener('click', () => { if (!active) active = playMotion(stage, mode, profile); active.reverse(); active.play(); if (status) status.textContent = 'Reproduciendo en sentido inverso'; });
+  card.querySelector('[data-motion-restart]')?.addEventListener('click', () => { if (active) active.restart(); else active = playMotion(stage, mode, profile); if (status) status.textContent = 'Reiniciado'; });
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver(entries => { if (!entries[0].isIntersecting && active) { active.pause(); if (status) status.textContent = 'Pausado fuera de pantalla'; } });
+    observer.observe(card);
+  }
+  card.querySelector('[data-motion-copy]')?.addEventListener('click', async () => { try { await navigator.clipboard.writeText(snippet); if (status) status.textContent = 'Ejemplo copiado'; } catch { if (status) status.textContent = 'Selecciona el código para copiarlo'; } });
+});
+</script>
+<style is:global>
+.motion-collection{margin:5rem 0}.motion-intro{max-width:780px;margin-bottom:2rem}.motion-intro span,.motion-head>span,.motion-caption span{font:600 .68rem var(--cxd-font-mono);letter-spacing:.13em;color:var(--cxd-text-secondary)}.motion-intro h2{font-size:clamp(2.5rem,5vw,5rem);letter-spacing:-.055em;line-height:1;margin:.8rem 0}.motion-intro p,.motion-head p{color:var(--cxd-text-secondary);line-height:1.6}.motion-index{display:flex;gap:.5rem;overflow:auto;padding:.5rem 0 1.5rem}.motion-index a{flex:none;padding:.55rem .8rem;color:var(--cxd-text-primary);border:1px solid var(--cxd-border);border-radius:999px;text-decoration:none;font-size:.75rem}.motion-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}.motion-card{min-width:0;background:var(--cxd-bg-surface);border:1px solid var(--cxd-border);border-radius:var(--cxd-radius-md);overflow:hidden;scroll-margin-top:6rem}.motion-head{padding:1.4rem}.motion-head h3{font-size:1.4rem;margin:.5rem 0}.motion-head p{min-height:3em;margin:0;font-size:.9rem}.motion-stage{position:relative;display:grid;place-items:center;min-height:300px;background:radial-gradient(circle at 50% 40%,color-mix(in srgb,var(--motion-accent) 25%,#141327),#090b18 70%);overflow:hidden}.motion-glow{position:absolute;inset:18%;filter:blur(65px);opacity:.2;background:var(--motion-accent);border-radius:50%}.motion-scene{position:relative;width:230px;height:180px;display:flex;align-items:center;justify-content:center;gap:6px}.motion-piece{background:var(--motion-accent);border-radius:8px;width:20px;height:70px;transform-origin:bottom;opacity:.85}.motion-piece span{display:none}.motion-stage--reveal .motion-scene,.motion-stage--spring .motion-scene{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.motion-stage--reveal .motion-piece,.motion-stage--spring .motion-piece{width:auto;height:48px;background:color-mix(in srgb,var(--motion-accent) 50%,#1b1d32);border:1px solid var(--motion-accent)}.motion-stage--ripple .motion-piece{position:absolute;width:100px;height:100px;background:transparent;border:2px solid var(--motion-accent);border-radius:50%;transform-origin:center}.motion-stage--orbit .motion-piece{position:absolute;width:150px;height:150px;background:transparent;border:1px solid color-mix(in srgb,var(--motion-accent) 35%,transparent);border-radius:50%;transform-origin:center}.motion-stage--orbit .motion-piece:before{content:"";display:block;width:9px;height:9px;background:var(--motion-accent);border-radius:50%;transform:rotate(calc(var(--i)*40deg)) translate(70px)}.motion-stage--bars .motion-piece{height:calc(45px + var(--i)*10px)}.motion-caption{position:absolute;bottom:1rem;left:1rem;display:grid;gap:.3rem;color:white}.motion-caption span{color:#b4b2cc}.motion-actions{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;padding:1rem}.motion-actions button{padding:.55rem .7rem;border:1px solid var(--cxd-border-strong);border-radius:6px;background:var(--cxd-bg-base);color:var(--cxd-text-primary);cursor:pointer}.motion-actions button:first-child{border-color:var(--motion-accent);color:var(--motion-accent)}.motion-actions span{font-size:.75rem;color:var(--cxd-text-secondary)}.motion-card details{border-top:1px solid var(--cxd-border);padding:1rem}.motion-card summary{cursor:pointer;font-size:.85rem}.motion-card pre{overflow:auto;max-height:24rem;color:var(--cxd-text-secondary);font-size:.73rem;line-height:1.5}.motion-card code{white-space:pre}@media(max-width:760px){.motion-grid{grid-template-columns:1fr}.motion-stage{min-height:260px}}
+</style>

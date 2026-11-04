@@ -1,21 +1,4 @@
-/**
- * Variante 02 — Navbar Flotante Redondeada Tipo Cápsula — React / Next.js (TSX)
- * Archivo: components/navigation/variants/floating-pill-navbar/FloatingPillNavbar.tsx
- */
-import React, { useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { mountFloatingPillNavbar } from './floating-pill-navbar.js';
 import './styles.css';
-
-export const FloatingPillNavbar: React.FC<{ title?: string }> = ({
-  title = 'Variante 02 — Navbar Flotante Redondeada Tipo Cápsula'
-}) => {
-  const [active, setActive] = useState(false);
-  return (
-    <div className="cxd-navigation-floating-pill-navbar" data-active={active}>
-      <h3>{title}</h3>
-      <p>Barra superior centrada con bordes completamente redondeados, enlaces activos y botón CTA.</p>
-      <button type="button" onClick={() => setActive(!active)}>
-        Alternar Estado
-      </button>
-    </div>
-  );
-};
+export function FloatingPillNavbar() { const root = useRef<HTMLDivElement>(null); useEffect(() => root.current ? mountFloatingPillNavbar(root.current) : undefined, []); return <div className="cxd-nav cxd-nav--pill" data-cxd-control="floating-pill-navbar" ref={root}><button type="button" data-destination="Inicio" aria-pressed="true">Inicio</button><button type="button" data-destination="Componentes" aria-pressed="false">Componentes</button><button type="button" data-destination="Animaciones" aria-pressed="false">Animaciones</button><span role="status">Vista activa: Inicio</span></div>; }

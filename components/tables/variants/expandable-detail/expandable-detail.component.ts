@@ -1,18 +1,4 @@
-// Variante 09 — Tabla Expandible Master-Detail (Despliegue de Sub-Panel) — Angular 18+ Signals (components/tables/variants/expandable-detail/expandable-detail.component.ts)
-import { Component, signal } from '@angular/core';
-
-@Component({
-  selector: 'cxd-expandable-detail',
-  standalone: true,
-  styleUrls: ['./styles.css'],
-  template: `
-    <div class="cxd-tables-expandable-detail" [attr.data-active]="active()">
-      <h3>Variante 09 — Tabla Expandible Master-Detail (Despliegue de Sub-Panel)</h3>
-      <p>Haz clic en cualquier fila para desplegar un panel técnico con historial, métricas y especificaciones.</p>
-      <button type="button" (click)="active.set(!active())">Alternar</button>
-    </div>
-  `
-})
-export class CxdExpandableDetailComponent {
-  active = signal(false);
-}
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import { mountExpandableDetail } from './expandable-detail.js';
+@Component({ selector:'cxd-expandable-detail', standalone:true, styleUrls:['./styles.css'], template:`<div class="cxd-table" data-cxd-control="expandable-detail" #root><table><thead><tr><th>Incidente</th><th>Estado</th></tr></thead><tbody><tr><td><button type="button" data-expand="one" aria-expanded="false">INC-4091 · Latencia</button></td><td>SEV-2</td></tr><tr data-detail="one" hidden><td>Tráfico normalizado al 100%.</td><td>Resuelto</td></tr><tr><td><button type="button" data-expand="two" aria-expanded="false">DEP-8820 · Actualización</button></td><td>Completado</td></tr><tr data-detail="two" hidden><td>24 nodos reiniciados.</td><td>Sin pérdida</td></tr></tbody></table></div>` })
+export class ExpandableDetailComponent implements AfterViewInit, OnDestroy { @ViewChild('root') root!: ElementRef<HTMLElement>; private unmount?: () => void; ngAfterViewInit() { this.unmount = mountExpandableDetail(this.root.nativeElement); } ngOnDestroy() { this.unmount?.(); } }

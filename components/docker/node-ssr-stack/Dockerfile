@@ -2,11 +2,12 @@
 # COMPONENTESXD — DOCKER BLUEPRINT: ASTRO / REACT / VUE / SVELTE / ANGULAR SSR
 # Archivo: components/docker/node-ssr-stack/Dockerfile
 # ============================================================================
-# Multi-stage ultra-ligero con usuario no-root y cache de dependencias.
+# Requiere @astrojs/node configurado en modo standalone y package-lock.json.
+# Para Astro estático usa el ejemplo static-nginx.
 
 FROM node:22-alpine AS deps
 WORKDIR /app
-COPY package.json package-lock.json* pnpm-lock.yaml* ./
+COPY package.json package-lock.json ./
 RUN npm ci
 
 FROM node:22-alpine AS builder

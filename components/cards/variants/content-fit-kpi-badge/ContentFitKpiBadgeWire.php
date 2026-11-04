@@ -1,17 +1,11 @@
 <?php
-// Variante 07 — Tarjeta Content-Fit Compacta de Telemetría — Laravel Livewire 3 (components/cards/variants/content-fit-kpi-badge/ContentFitKpiBadgeWire.php)
-namespace App\Livewire\Cxd\Cards;
+namespace App\Livewire;
 use Livewire\Component;
-
-class ContentFitKpiBadgeWire extends Component {
-    public bool $active = false;
-    public function toggle(): void { $this->active = !$this->active; }
-    public function render() {
-        return <<<'HTML'
-        <div class="cxd-cards-content-fit-kpi-badge">
-            <h3>Variante 07 — Tarjeta Content-Fit Compacta de Telemetría</h3>
-            <button type="button" wire:click="toggle">Estado: {{ $active ? 'ON' : 'OFF' }}</button>
-        </div>
-        HTML;
-    }
-}
+// Incluye styles.css y ajusta la ruta del módulo.
+class ContentFitKpiBadgeWire extends Component { public function render(): string { return <<<'HTML'
+<div class="cxd-card cxd-card--fit" data-cxd-control="content-fit-kpi-badge" wire:ignore><span>LATENCIA P99</span><h3>6.42 ms</h3><p>−1.8 ms hoy</p>@script
+<script>
+import('/assets/content-fit-kpi-badge.js').then(module => module.mountContentFitKpiBadge($wire.$el));
+</script>
+@endscript</div>
+HTML; } }

@@ -1,15 +1,1 @@
-/**
- * ============================================================================
- * COMPONENTESXD — BOTONES Y CONTROLES DE ACCIÓN
- * Variante 05 — Botón con Seguridad Hold-to-Confirm (Mantener Presionado)
- * Archivo: components/buttons/variants/hold-confirm-safety/styles.css
- * ============================================================================
- */
-.cxd-buttons-hold-confirm-safety {
-  background: var(--cxd-bg-surface);
-  color: var(--cxd-text-primary);
-  border: var(--cxd-border-width, 1px) solid var(--cxd-border);
-  border-radius: var(--cxd-radius-md);
-  font-family: var(--cxd-font-sans);
-  font-variant-numeric: tabular-nums;
-}
+.cxd-control{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:.7rem}.cxd-control button,.cxd-control select{border:1px solid #a78bfa;border-radius:8px;padding:.7rem 1rem;background:#211c38;color:#fff;font:600 .85rem system-ui;cursor:pointer}.cxd-control button:hover{background:#5944a1}.cxd-control button:focus-visible,.cxd-control select:focus-visible{outline:3px solid #c4b5fd;outline-offset:3px}.cxd-control button:disabled{opacity:.65;cursor:wait}.cxd-control [role=status]{width:100%;text-align:center;font:500 .75rem system-ui}.cxd-control [hidden]{display:none!important}.cxd-control__actions{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center}.cxd-control [data-hold]{background:linear-gradient(90deg,#ef476f var(--progress,0%),#211c38 var(--progress,0%))}.cxd-control [data-magnetic]{transition:transform .15s}.cxd-control [data-spinner]{display:none}.cxd-control [aria-busy=true] [data-spinner]{display:inline-block}@media(prefers-reduced-motion:reduce){.cxd-control [data-magnetic]{transition:none}}

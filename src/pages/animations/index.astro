@@ -2,6 +2,7 @@
 import Layout from '../../layouts/Layout.astro';
 import Icon from '../../components/Icon.astro';
 import AnimeLab from '../../components/AnimeLab.astro';
+import AnimeFeatures from '../../components/AnimeFeatures.astro';
 import registry from '../../data/vaultRegistry.json';
 ---
 
@@ -13,7 +14,7 @@ import registry from '../../data/vaultRegistry.json';
       </span>
       <h1 class="arch-title">Enciclopedia Interactiva de Anime.js v4</h1>
       <p class="arch-lead">
-        Todos los módulos de <code>https://animejs.com/documentation/getting-started</code> implementados con escenarios interactivos en vivo: Targets, Keyframes & Stagger 2D, Easings & Física Spring, Timelines con Scrubber, SVG (<code>createDrawable</code>, <code>morphTo</code>, <code>createMotionPath</code>), <code>createTimer</code>, Loaders/Spinners/Skeletons y Descomposición 3D. En cada capítulo todas las animaciones se muestran una debajo de otra y la lista desplegable se usa únicamente para seleccionar el código del framework.
+        Explora escenarios interactivos basados en la documentación de Anime.js: Targets, Keyframes & Stagger 2D, Easings & Física Spring, Timelines con Scrubber, SVG (<code>createDrawable</code>, <code>morphTo</code>, <code>createMotionPath</code>), <code>createTimer</code>, Loaders/Spinners/Skeletons y Descomposición 3D. En cada capítulo todas las animaciones se muestran una debajo de otra y la lista desplegable se usa únicamente para seleccionar el código del framework.
       </p>
     </div>
   </div>
@@ -33,7 +34,7 @@ import registry from '../../data/vaultRegistry.json';
         <div class="anim-preset-pills">
           {anim.presets.map((p, idx) => (
             <a href={`/animations/${anim.slug}#${p.id}`} class="anim-preset-pill">
-              <span>{String(idx + 1).padStart(2, '0')}. {p.name}</span>
+              <span>{p.name}</span>
             </a>
           ))}
         </div>
@@ -46,6 +47,7 @@ import registry from '../../data/vaultRegistry.json';
   </div>
 
   <!-- ESCENARIO PRINCIPAL CON CONTROLES AVANZADOS -->
+  <AnimeFeatures />
   <AnimeLab />
 </Layout>
 

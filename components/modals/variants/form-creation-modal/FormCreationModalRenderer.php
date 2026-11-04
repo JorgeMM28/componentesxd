@@ -1,10 +1,10 @@
 <?php
-// Variante 04 — Modal con Formulario de Creación de Proyecto — PHP 8.3 Renderer (components/modals/variants/form-creation-modal/FormCreationModalRenderer.php)
 declare(strict_types=1);
-namespace ComponentesXD\Modals;
-
-final class FormCreationModalRenderer {
-    public static function render(): string {
-        return '<div class="cxd-modals-form-creation-modal"><h3>Variante 04 — Modal con Formulario de Creación de Proyecto</h3><p>Diálogo completo con inputs de nombre, selector de región, visibilidad y envío interactivo.</p></div>';
-    }
-}
+// Incluye styles.css y ajusta la ruta del módulo.
+function renderFormCreationModal(): string { return <<<'HTML'
+<div class="cxd-dialog" data-cxd-control="form-creation-modal"><button type="button" data-open>Crear instancia</button><span role="status">Listo</span><dialog aria-label="Crear instancia"><h3>Crear instancia</h3><form data-form><label>Nombre <input type="text" data-name required value="edge-analytics" /></label><label>Región <select data-region><option>us-east-1</option><option>eu-central-1</option><option>ap-northeast-1</option></select></label><div class="cxd-dialog__actions"><button type="submit">Crear</button><button type="button" data-close>Cancelar</button></div></form></dialog></div>
+<script type="module">
+import { mountFormCreationModal } from '/assets/form-creation-modal.js';
+document.querySelectorAll('[data-cxd-control="form-creation-modal"]:not([data-ready])').forEach(root => { root.dataset.ready = 'true'; mountFormCreationModal(root); });
+</script>
+HTML; }

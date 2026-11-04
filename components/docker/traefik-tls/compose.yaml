@@ -1,0 +1,30 @@
+# Ejemplo: DNS y puertos 80/443 deben apuntar al servidor.
+# Define DOMAIN y ACME_EMAIL en el entorno. El socket Docker da acceso al daemon.
+services:
+  traefik:
+    image: traefik:v3.4
+    command:
+      - --providers.docker=true
+      - --providers.docker.exposedbydefault=false
+      - --entrypoints.web.address=:80
+      - --entrypoints.websecure.address=:443
+      - --entrypoints.web.http.redirections.entrypoint.to=websecure
+      - --entrypoints.web.http.redirections.entrypoint.scheme=https
+      - --certificatesresolvers.le.acme.email=${ACME_EMAIL:?Define ACME_EMAIL}
+      - --certificatesresolvers.le.acme.storage=/letsencrypt/acme.json
+      - --certificatesresolvers.le.acme.httpchallenge.entrypoint=web
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - certificates:/letsencrypt
+  app:
+    image: traefik/whoami:v1.10
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.demo.rule=Host(`${DOMAIN:?Define DOMAIN}`)
+      - traefik.http.routers.demo.entrypoints=websecure
+      - traefik.http.routers.demo.tls.certresolver=le
+volumes:
+  certificates:

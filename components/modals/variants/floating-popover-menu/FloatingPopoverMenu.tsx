@@ -1,21 +1,4 @@
-/**
- * Variante 03 — Menú Popover Flotante Content-Fit con Acciones — React / Next.js (TSX)
- * Archivo: components/modals/variants/floating-popover-menu/FloatingPopoverMenu.tsx
- */
-import React, { useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { mountFloatingPopoverMenu } from './floating-popover-menu.js';
 import './styles.css';
-
-export const FloatingPopoverMenu: React.FC<{ title?: string }> = ({
-  title = 'Variante 03 — Menú Popover Flotante Content-Fit con Acciones'
-}) => {
-  const [active, setActive] = useState(false);
-  return (
-    <div className="cxd-modals-floating-popover-menu" data-active={active}>
-      <h3>{title}</h3>
-      <p>Menú contextual compacto con opciones rápidas, atajos de teclado e interruptor integrado.</p>
-      <button type="button" onClick={() => setActive(!active)}>
-        Alternar Estado
-      </button>
-    </div>
-  );
-};
+export function FloatingPopoverMenu() { const root = useRef<HTMLDivElement>(null); useEffect(() => root.current ? mountFloatingPopoverMenu(root.current) : undefined, []); return <div className="cxd-dialog" data-cxd-control="floating-popover-menu" ref={root}><button type="button" data-trigger aria-expanded="false">Abrir menú contextual</button><div className="cxd-dialog__popover" data-popover hidden><div className="cxd-dialog__list"><button type="button" data-action="Editar">Editar</button><button type="button" data-action="Duplicar">Duplicar</button><button type="button" data-action="Archivar">Archivar</button></div></div><span role="status">Ninguna acción</span></div>; }

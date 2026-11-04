@@ -1,18 +1,4 @@
-// Variante 07 — Tabla con Formulario Integrado (Inputs, Selects y Cálculo) — Angular 18+ Signals (components/tables/variants/inline-form-table/inline-form-table.component.ts)
-import { Component, signal } from '@angular/core';
-
-@Component({
-  selector: 'cxd-inline-form-table',
-  standalone: true,
-  styleUrls: ['./styles.css'],
-  template: `
-    <div class="cxd-tables-inline-form-table" [attr.data-active]="active()">
-      <h3>Variante 07 — Tabla con Formulario Integrado (Inputs, Selects y Cálculo)</h3>
-      <p>Celdas con inputs numéricos, selectores desplegables y switches que recalculan el subtotal de la tabla en vivo.</p>
-      <button type="button" (click)="active.set(!active())">Alternar</button>
-    </div>
-  `
-})
-export class CxdInlineFormTableComponent {
-  active = signal(false);
-}
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import { mountInlineFormTable } from './inline-form-table.js';
+@Component({ selector:'cxd-inline-form-table', standalone:true, styleUrls:['./styles.css'], template:`<div class="cxd-table" data-cxd-control="inline-form-table" #root><table><thead><tr><th>Producto</th><th>Cantidad</th><th>Precio</th><th>Subtotal</th></tr></thead><tbody><tr data-row><td>Nodos</td><td><input type="number" data-quantity min="0" value="2" aria-label="Cantidad nodos" /></td><td><select data-price aria-label="Precio nodos"><option value="20">$20</option><option value="40">$40</option></select></td><td data-subtotal>$40.00</td></tr><tr data-row><td>Almacenamiento</td><td><input type="number" data-quantity min="0" value="3" aria-label="Cantidad almacenamiento" /></td><td><select data-price aria-label="Precio almacenamiento"><option value="10">$10</option><option value="30">$30</option></select></td><td data-subtotal>$30.00</td></tr></tbody></table><span role="status">Total: $70.00</span></div>` })
+export class InlineFormTableComponent implements AfterViewInit, OnDestroy { @ViewChild('root') root!: ElementRef<HTMLElement>; private unmount?: () => void; ngAfterViewInit() { this.unmount = mountInlineFormTable(this.root.nativeElement); } ngOnDestroy() { this.unmount?.(); } }

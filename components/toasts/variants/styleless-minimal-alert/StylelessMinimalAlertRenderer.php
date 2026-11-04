@@ -1,10 +1,10 @@
 <?php
-// Variante 06 — Alerta Styleless Minimalista (Tipografía + Línea) — PHP 8.3 Renderer (components/toasts/variants/styleless-minimal-alert/StylelessMinimalAlertRenderer.php)
 declare(strict_types=1);
-namespace ComponentesXD\Toasts;
-
-final class StylelessMinimalAlertRenderer {
-    public static function render(): string {
-        return '<div class="cxd-toasts-styleless-minimal-alert"><h3>Variante 06 — Alerta Styleless Minimalista (Tipografía + Línea)</h3><p>Sin caja ni sombras: solo una línea vertical de 2px, texto directo y enlace de acción limpio.</p></div>';
-    }
-}
+// Incluye styles.css y ajusta la ruta del módulo.
+function renderStylelessMinimalAlert(): string { return <<<'HTML'
+<div class="cxd-toast cxd-toast--minimal" data-cxd-control="styleless-minimal-alert" role="status"><strong>AVISO DEL SISTEMA</strong><p>La ventana de mantenimiento iniciará en 15 minutos sin interrupción de tráfico.</p></div>
+<script type="module">
+import { mountStylelessMinimalAlert } from '/assets/styleless-minimal-alert.js';
+document.querySelectorAll('[data-cxd-control="styleless-minimal-alert"]:not([data-ready])').forEach(root => { root.dataset.ready = 'true'; mountStylelessMinimalAlert(root); });
+</script>
+HTML; }

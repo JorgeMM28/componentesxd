@@ -1,17 +1,11 @@
 <?php
-// Variante 04 — Tablero Kanban Interactivo (Mover Tareas entre Columnas en Vivo) — Laravel Livewire 3 (components/accordions-tabs/variants/kanban-mini-board/KanbanMiniBoardWire.php)
-namespace App\Livewire\Cxd\AccordionsTabs;
+namespace App\Livewire;
 use Livewire\Component;
-
-class KanbanMiniBoardWire extends Component {
-    public bool $active = false;
-    public function toggle(): void { $this->active = !$this->active; }
-    public function render() {
-        return <<<'HTML'
-        <div class="cxd-accordions-tabs-kanban-mini-board">
-            <h3>Variante 04 — Tablero Kanban Interactivo (Mover Tareas entre Columnas en Vivo)</h3>
-            <button type="button" wire:click="toggle">Estado: {{ $active ? 'ON' : 'OFF' }}</button>
-        </div>
-        HTML;
-    }
-}
+// Incluye styles.css y ajusta la ruta del módulo.
+class KanbanMiniBoardWire extends Component { public function render(): string { return <<<'HTML'
+<div class="cxd-widget" data-cxd-control="kanban-mini-board" wire:ignore><div class="cxd-widget__columns"><div class="cxd-widget__list" data-backlog><strong>Pendiente</strong><div data-task>Revisar tokens <button type="button" data-move>Avanzar →</button></div></div><div class="cxd-widget__list" data-done><strong>Producción</strong></div></div><span role="status">Mueve una tarea</span>@script
+<script>
+import('/assets/kanban-mini-board.js').then(module => module.mountKanbanMiniBoard($wire.$el));
+</script>
+@endscript</div>
+HTML; } }

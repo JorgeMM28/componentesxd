@@ -1,18 +1,4 @@
-// Variante 10 — Tabla Industrial Cebra con Pie de Sumatoria — Angular 18+ Signals (components/tables/variants/brutalist-ledger/brutalist-ledger.component.ts)
-import { Component, signal } from '@angular/core';
-
-@Component({
-  selector: 'cxd-brutalist-ledger',
-  standalone: true,
-  styleUrls: ['./styles.css'],
-  template: `
-    <div class="cxd-tables-brutalist-ledger" [attr.data-active]="active()">
-      <h3>Variante 10 — Tabla Industrial Cebra con Pie de Sumatoria</h3>
-      <p>Alto contraste con filas alternadas (zebra), bordes marcados de 2px y fila tfoot de balance total.</p>
-      <button type="button" (click)="active.set(!active())">Alternar</button>
-    </div>
-  `
-})
-export class CxdBrutalistLedgerComponent {
-  active = signal(false);
-}
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import { mountBrutalistLedger } from './brutalist-ledger.js';
+@Component({ selector:'cxd-brutalist-ledger', standalone:true, styleUrls:['./styles.css'], template:`<div class="cxd-table cxd-table--ledger" data-cxd-control="brutalist-ledger" #root><table><thead><tr><th>LOTE</th><th>OPERACIÓN</th><th>IMPORTE NETO</th></tr></thead><tbody><tr><td>001</td><td>Liquidación</td><td>$420,000.00</td></tr><tr><td>002</td><td>Cobertura</td><td>$185,500.00</td></tr><tr><td>003</td><td>Custodia</td><td>$910,250.00</td></tr></tbody><tfoot><tr><th>TOTAL</th><td></td><td>$1,515,750.00</td></tr></tfoot></table></div>` })
+export class BrutalistLedgerComponent implements AfterViewInit, OnDestroy { @ViewChild('root') root!: ElementRef<HTMLElement>; private unmount?: () => void; ngAfterViewInit() { this.unmount = mountBrutalistLedger(this.root.nativeElement); } ngOnDestroy() { this.unmount?.(); } }

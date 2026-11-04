@@ -1,18 +1,4 @@
-// Variante 06 — Árbol de Directorios Colapsable con Inspector de Archivo Activo — Angular 18+ Signals (components/accordions-tabs/variants/file-tree-inspector/file-tree-inspector.component.ts)
-import { Component, signal } from '@angular/core';
-
-@Component({
-  selector: 'cxd-file-tree-inspector',
-  standalone: true,
-  styleUrls: ['./styles.css'],
-  template: `
-    <div class="cxd-accordions-tabs-file-tree-inspector" [attr.data-active]="active()">
-      <h3>Variante 06 — Árbol de Directorios Colapsable con Inspector de Archivo Activo</h3>
-      <p>Estructura jerárquica de carpetas y archivos clicables que actualiza el visor de contenido derecho.</p>
-      <button type="button" (click)="active.set(!active())">Alternar</button>
-    </div>
-  `
-})
-export class CxdFileTreeInspectorComponent {
-  active = signal(false);
-}
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import { mountFileTreeInspector } from './file-tree-inspector.js';
+@Component({ selector:'cxd-file-tree-inspector', standalone:true, styleUrls:['./styles.css'], template:`<div class="cxd-widget" data-cxd-control="file-tree-inspector" #root><div class="cxd-widget__columns"><div class="cxd-widget__list"><strong>src/</strong><div><button type="button" data-file="index.astro">index.astro</button></div><div><button type="button" data-file="tokens.css">tokens.css</button></div></div><div class="cxd-widget__list"><strong>Inspector</strong><p data-output>Selecciona un archivo</p></div></div></div>` })
+export class FileTreeInspectorComponent implements AfterViewInit, OnDestroy { @ViewChild('root') root!: ElementRef<HTMLElement>; private unmount?: () => void; ngAfterViewInit() { this.unmount = mountFileTreeInspector(this.root.nativeElement); } ngOnDestroy() { this.unmount?.(); } }

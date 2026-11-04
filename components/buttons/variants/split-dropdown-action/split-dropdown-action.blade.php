@@ -1,7 +1,6 @@
-{{-- Variante 06 — Botón con Menú de Acciones (Split Dropdown) — Laravel Blade (components/buttons/variants/split-dropdown-action/split-dropdown-action.blade.php) --}}
-@props(['title' => 'Variante 06 — Botón con Menú de Acciones (Split Dropdown)'])
-<div {{ $attributes->merge(['class' => 'cxd-buttons-split-dropdown-action']) }}>
-    <h3>{{ $title }}</h3>
-    <p>Botón dividido: la izquierda ejecuta la acción seleccionada y la derecha despliega la lista de modos.</p>
-    {{ $slot }}
-</div>
+{{-- Incluye styles.css y ajusta la ruta del módulo. --}}
+<div class="cxd-control" data-cxd-control="split-dropdown-action"><button type="button" data-run>Ejecutar: <span data-label>Producción Directa</span></button><select data-mode aria-label="Modo de ejecución"><option>Producción Directa</option><option>Simulación Dry-Run</option><option>Rollback Instantáneo</option></select><span role="status">LISTO PARA EJECUTAR ACCIÓN SELECCIONADA</span></div>
+<script type="module">
+import { mountSplitDropdownAction } from '/assets/split-dropdown-action.js';
+document.querySelectorAll('[data-cxd-control="split-dropdown-action"]:not([data-ready])').forEach(root => { root.dataset.ready = 'true'; mountSplitDropdownAction(root); });
+</script>

@@ -1,10 +1,10 @@
 <?php
-// Variante 08 — Menubar Desktop Clásico con Menús Flotantes (Archivo, Edición, Git) — PHP 8.3 Renderer (components/navigation/variants/desktop-menubar/DesktopMenubarRenderer.php)
 declare(strict_types=1);
-namespace ComponentesXD\Navigation;
-
-final class DesktopMenubarRenderer {
-    public static function render(): string {
-        return '<nav class="cxd-navigation-desktop-menubar"><h3>Variante 08 — Menubar Desktop Clásico con Menús Flotantes (Archivo, Edición, Git)</h3><p>Barra horizontal estilo aplicación de escritorio con menús desplegables en cascada al hacer hover o clic, atajos de teclado e indicador de sync.</p></nav>';
-    }
-}
+// Incluye styles.css y ajusta la ruta del módulo.
+function renderDesktopMenubar(): string { return <<<'HTML'
+<div class="cxd-nav" data-cxd-control="desktop-menubar"><button type="button" data-menu-trigger aria-expanded="false">Archivo</button><button type="button" data-menu-trigger aria-expanded="false">Edición</button><button type="button" data-menu-trigger aria-expanded="false">Git</button><div class="cxd-nav__menu" data-menu hidden><button type="button" data-command="Nuevo">Nuevo</button><button type="button" data-command="Guardar">Guardar</button><button type="button" data-command="Exportar">Exportar</button></div><span role="status">Selecciona un menú</span></div>
+<script type="module">
+import { mountDesktopMenubar } from '/assets/desktop-menubar.js';
+document.querySelectorAll('[data-cxd-control="desktop-menubar"]:not([data-ready])').forEach(root => { root.dataset.ready = 'true'; mountDesktopMenubar(root); });
+</script>
+HTML; }

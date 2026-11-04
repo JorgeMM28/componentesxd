@@ -1,18 +1,4 @@
-// Variante 02 — Navbar Flotante Redondeada Tipo Cápsula — Angular 18+ Signals (components/navigation/variants/floating-pill-navbar/floating-pill-navbar.component.ts)
-import { Component, signal } from '@angular/core';
-
-@Component({
-  selector: 'cxd-floating-pill-navbar',
-  standalone: true,
-  styleUrls: ['./styles.css'],
-  template: `
-    <div class="cxd-navigation-floating-pill-navbar" [attr.data-active]="active()">
-      <h3>Variante 02 — Navbar Flotante Redondeada Tipo Cápsula</h3>
-      <p>Barra superior centrada con bordes completamente redondeados, enlaces activos y botón CTA.</p>
-      <button type="button" (click)="active.set(!active())">Alternar</button>
-    </div>
-  `
-})
-export class CxdFloatingPillNavbarComponent {
-  active = signal(false);
-}
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import { mountFloatingPillNavbar } from './floating-pill-navbar.js';
+@Component({ selector:'cxd-floating-pill-navbar', standalone:true, styleUrls:['./styles.css'], template:`<div class="cxd-nav cxd-nav--pill" data-cxd-control="floating-pill-navbar" #root><button type="button" data-destination="Inicio" aria-pressed="true">Inicio</button><button type="button" data-destination="Componentes" aria-pressed="false">Componentes</button><button type="button" data-destination="Animaciones" aria-pressed="false">Animaciones</button><span role="status">Vista activa: Inicio</span></div>` })
+export class FloatingPillNavbarComponent implements AfterViewInit, OnDestroy { @ViewChild('root') root!: ElementRef<HTMLElement>; private unmount?: () => void; ngAfterViewInit() { this.unmount = mountFloatingPillNavbar(this.root.nativeElement); } ngOnDestroy() { this.unmount?.(); } }

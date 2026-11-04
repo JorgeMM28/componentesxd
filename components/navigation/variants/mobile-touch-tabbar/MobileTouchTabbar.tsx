@@ -1,21 +1,4 @@
-/**
- * Variante 10 — Mobile Bottom Tab Bar Táctil con Micro-Interacciones Cinéticas — React / Next.js (TSX)
- * Archivo: components/navigation/variants/mobile-touch-tabbar/MobileTouchTabbar.tsx
- */
-import React, { useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { mountMobileTouchTabbar } from './mobile-touch-tabbar.js';
 import './styles.css';
-
-export const MobileTouchTabbar: React.FC<{ title?: string }> = ({
-  title = 'Variante 10 — Mobile Bottom Tab Bar Táctil con Micro-Interacciones Cinéticas'
-}) => {
-  const [active, setActive] = useState(false);
-  return (
-    <nav className="cxd-navigation-mobile-touch-tabbar" data-active={active}>
-      <h3>{title}</h3>
-      <p>Barra inferior flotante tipo iOS/Android con 5 destinos táctiles, pastilla indicadora animada con Anime.js v4 y badges de notificaciones.</p>
-      <button type="button" onClick={() => setActive(!active)}>
-        Alternar Estado
-      </button>
-    </nav>
-  );
-};
+export function MobileTouchTabbar() { const root = useRef<HTMLDivElement>(null); useEffect(() => root.current ? mountMobileTouchTabbar(root.current) : undefined, []); return <div className="cxd-nav cxd-nav--mobile" data-cxd-control="mobile-touch-tabbar" ref={root}><button type="button" data-destination="Inicio" aria-pressed="true">Inicio</button><button type="button" data-destination="Biblioteca" aria-pressed="false">Biblioteca</button><button type="button" data-destination="Motion" aria-pressed="false">Motion</button><button type="button" data-destination="Métricas" aria-pressed="false">Métricas</button><span role="status">Vista activa: Inicio</span></div>; }

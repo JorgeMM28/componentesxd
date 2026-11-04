@@ -1,14 +1,7 @@
-<!-- Variante 08 — Controles Interactivos (Switches, Stepper Numérico y Radios) — Vue 3 SFC (components/forms/variants/tactile-switches-sliders/TactileSwitchesSliders.vue) -->
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
+import { mountTactileSwitchesSliders } from './tactile-switches-sliders.js';
 import './styles.css';
-const active = ref(false);
+const root = ref<HTMLElement | null>(null); let unmount: (() => void) | undefined; onMounted(() => { if (root.value) unmount = mountTactileSwitchesSliders(root.value); }); onUnmounted(() => unmount?.());
 </script>
-
-<template>
-  <div class="cxd-forms-tactile-switches-sliders" :data-active="active">
-    <h3>Variante 08 — Controles Interactivos (Switches, Stepper Numérico y Radios)</h3>
-    <p>Interruptores animados, contador con botones +/- y selector de tarjetas de opción.</p>
-    <button type="button" @click="active = !active">Alternar</button>
-  </div>
-</template>
+<template><div class="cxd-form" data-cxd-control="tactile-switches-sliders" ref="root"><label><input type="checkbox" checked /> Auto-deploy en push</label><label><input type="checkbox" /> Modo estricto WAF</label><button type="button" data-step="-1" aria-label="Reducir réplicas">−</button><span data-value>4</span><button type="button" data-step="1" aria-label="Aumentar réplicas">+</button><span role="status">4 réplicas</span></div></template>

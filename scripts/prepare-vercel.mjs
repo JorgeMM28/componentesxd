@@ -41,5 +41,5 @@ const config = {
 
 fs.writeFileSync(path.join(outputDir, 'config.json'), JSON.stringify(config, null, 2), 'utf8');
 
-console.log('Listo: .vercel/output generado (Vercel Build Output API v3) con las 24 páginas estáticas.');
+console.log('Listo: .vercel/output generado (Vercel Build Output API v3).');
 

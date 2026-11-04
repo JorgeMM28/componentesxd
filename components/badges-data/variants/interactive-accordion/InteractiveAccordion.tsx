@@ -1,21 +1,4 @@
-/**
- * Variante 02 — Acordeón Interactivo Multi-Sección — React / Next.js (TSX)
- * Archivo: components/badges-data/variants/interactive-accordion/InteractiveAccordion.tsx
- */
-import React, { useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { mountInteractiveAccordion } from './interactive-accordion.js';
 import './styles.css';
-
-export const InteractiveAccordion: React.FC<{ title?: string }> = ({
-  title = 'Variante 02 — Acordeón Interactivo Multi-Sección'
-}) => {
-  const [active, setActive] = useState(false);
-  return (
-    <div className="cxd-badges-data-interactive-accordion" data-active={active}>
-      <h3>{title}</h3>
-      <p>Haz clic en cualquier cabecera para expandir o contraer su contenido suavemente.</p>
-      <button type="button" onClick={() => setActive(!active)}>
-        Alternar Estado
-      </button>
-    </div>
-  );
-};
+export function InteractiveAccordion() { const root = useRef<HTMLDivElement>(null); useEffect(() => root.current ? mountInteractiveAccordion(root.current) : undefined, []); return <div className="cxd-data" data-cxd-control="interactive-accordion" ref={root}><div className="cxd-data__list"><div className="cxd-data__item"><button type="button" data-open="one" aria-expanded="true">01 · Tokens CSS</button><p data-panel="one">Colores, radios y tipografías mediante variables.</p></div><div className="cxd-data__item"><button type="button" data-open="two" aria-expanded="false">02 · Arquitectura de islas</button><p data-panel="two" hidden>Hidratación selectiva de componentes interactivos.</p></div></div></div>; }

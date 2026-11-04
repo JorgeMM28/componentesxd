@@ -1,11 +1,6 @@
-<!-- Variante 02 — Inputs Styleless (Solo Línea Inferior Minimalista) — Svelte 5 Runes (components/forms/variants/styleless-underline-inputs/StylelessUnderlineInputs.svelte) -->
 <script lang="ts">
-  import './styles.css';
-  let active = $state(false);
+import { mountStylelessUnderlineInputs } from './styleless-underline-inputs.js';
+import './styles.css';
+function control(node: HTMLElement) { return { destroy: mountStylelessUnderlineInputs(node) }; }
 </script>
-
-<div class="cxd-forms-styleless-underline-inputs" data-active={active}>
-  <h3>Variante 02 — Inputs Styleless (Solo Línea Inferior Minimalista)</h3>
-  <p>Sin cajas laterales ni fondo: únicamente una línea inferior que se ilumina al escribir.</p>
-  <button type="button" onclick={() => (active = !active)}>Alternar</button>
-</div>
+<div class="cxd-form cxd-form--bare" data-cxd-control="styleless-underline-inputs" use:control><label>Título del documento <input type="text" data-input value="Manifiesto de Diseño Industrial" /></label><span role="status">Edición en vivo</span></div>

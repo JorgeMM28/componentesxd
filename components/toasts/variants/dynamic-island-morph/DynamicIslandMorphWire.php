@@ -1,17 +1,11 @@
 <?php
-// Variante 02 — Dynamic Island Interactiva (3 Estados) — Laravel Livewire 3 (components/toasts/variants/dynamic-island-morph/DynamicIslandMorphWire.php)
-namespace App\Livewire\Cxd\Toasts;
+namespace App\Livewire;
 use Livewire\Component;
-
-class DynamicIslandMorphWire extends Component {
-    public bool $active = false;
-    public function toggle(): void { $this->active = !$this->active; }
-    public function render() {
-        return <<<'HTML'
-        <div class="cxd-toasts-dynamic-island-morph">
-            <h3>Variante 02 — Dynamic Island Interactiva (3 Estados)</h3>
-            <button type="button" wire:click="toggle">Estado: {{ $active ? 'ON' : 'OFF' }}</button>
-        </div>
-        HTML;
-    }
-}
+// Incluye styles.css y ajusta la ruta del módulo.
+class DynamicIslandMorphWire extends Component { public function render(): string { return <<<'HTML'
+<div class="cxd-toast cxd-toast--island" data-cxd-control="dynamic-island-morph" wire:ignore><strong data-title>MODO COMPACTO // IDLE</strong><button type="button" data-mode="compact">Compacto</button><button type="button" data-mode="expanded">Expandir detalles</button><p data-details hidden>Despliegue en curso hacia 12 regiones · 94% completado.</p><span role="status">Modo compacto</span>@script
+<script>
+import('/assets/dynamic-island-morph.js').then(module => module.mountDynamicIslandMorph($wire.$el));
+</script>
+@endscript</div>
+HTML; } }

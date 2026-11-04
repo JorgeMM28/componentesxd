@@ -1,15 +1,17 @@
 # COMPONENTESXD // Multi-Framework UI & Anime.js v4 Architectural Vault
 
-> **Bóveda de Ingeniería UI Copy & Paste (Zero-NPM Lock-in)**: **660 archivos de componentes** (**66 variantes radicalmente diferenciadas** × **10 frameworks/lenguajes**), **12 interfaces arquitectónicas completas**, **48 animaciones interactivas de Anime.js v4** organizadas según la documentación oficial (`https://animejs.com/documentation/getting-started`) y un **sitio multi-página en Astro 5** con **Top Navbar estilo Microsoft (Mega-Menu Cascada)**.
+> **Estado del catálogo:** algunas implementaciones generadas son plantillas iniciales y aún no reproducen la vista previa. Verifica y adapta el código antes de integrarlo. El laboratorio de estilos, degradados y tipografía está disponible en `/laboratorio`.
+
+> **Bóveda de interfaces y ejemplos de animación**: **1,160 archivos generados** (**116 variantes** × **10 tecnologías**), **12 interfaces arquitectónicas completas**, **48 animaciones interactivas de Anime.js v4** organizadas según la documentación oficial ([documentación de Anime.js](https://animejs.com/documentation/)) y un **sitio multi-página en Astro 5** con **Top Navbar estilo Microsoft (Mega-Menu Cascada)**.
 
 ---
 
 ## Arquitectura del Sitio Multi-Página (Astro 5)
 
-El sitio (`src/pages/`) está estructurado con **22 páginas estáticas** y una **barra de navegación superior (Top Navbar)** con menú desplegable multinivel estilo Microsoft (impulsado por **Anime.js v4**):
+El sitio (`src/pages/`) está estructurado con **26 páginas estáticas** y una **barra de navegación superior (Top Navbar)** con menú desplegable multinivel estilo Microsoft (impulsado por **Anime.js v4**):
 
 1. **Top Navbar con Mega-Menu Cascada (`src/layouts/Layout.astro`)**:
-   - **Componentes (66)**: Al seleccionar o pasar el cursor sobre cualquier apartado (ej. *Tablas*, *Toasters*, *Botones*, *Formularios*), el panel derecho despliega instantáneamente todas sus variantes con enlaces directos (`#ancla`) a su bloque en la página.
+   - **Componentes (116)**: Al seleccionar o pasar el cursor sobre cualquier apartado (ej. *Tablas*, *Toasters*, *Botones*, *Formularios*), el panel derecho despliega instantáneamente todas sus variantes con enlaces directos (`#ancla`) a su bloque en la página.
    - **Animaciones Anime.js (48)**: Muestra los 8 capítulos oficiales de Anime.js v4 a la izquierda y sus 6 escenarios en vivo a la derecha.
    - **Interfaces (12)**: Selector visual con previsualización cromática para conmutar en tiempo real cualquiera de los 12 sistemas de diseño en todo el sitio.
 2. **Distribución Apilada de Ancho Completo (Full-Width Stacked Variants)**:
@@ -18,58 +20,65 @@ El sitio (`src/pages/`) está estructurado con **22 páginas estáticas** y una 
 
 ---
 
-## Catálogo de Componentes (66 Variantes Radicalmente Diferenciadas × 10 Frameworks = 660 Archivos)
+## Catálogo de componentes
 
-Cada variante dentro de `components/<categoria>/variants/<variante>/` posee una estructura DOM, comportamiento interactivo y arquitectura visual completamente distinta:
+Las vistas previas se agrupan por categoría. Los archivos generados son puntos de partida y deben revisarse antes de usarse; algunas implementaciones todavía no reproducen la demostración.
 
-### 01. Tablas de Datos (`components/tables/` — 10 Variantes)
-1. **`modern-rounded`** — **Tabla Moderna Bordes Redondeados**: Contenedor `border-radius: 16px`, cabecera translúcida, avatares y badges tipo cápsula.
-2. **`styless-minimal`** — **Tabla Styless (Sin Bordes / Puro Texto)**: Cero bordes laterales ni fondos de celda; alineación tipográfica limpia y separadores capilares.
-3. **`content-fit`** — **Tabla Content-Fit (`width: max-content`)**: La tabla se ajusta estrictamente al ancho exacto de su contenido con celdas `white-space: nowrap`.
-4. **`floating-rows`** — **Tabla Flotante (`border-collapse: separate`)**: Cada fila es una tarjeta independiente flotante con `border-spacing: 0 10px` y elevación al pasar el cursor.
-5. **`interactive-sort`** — **Tabla Interactiva (Ordenamiento + Selección)**: Cabeceras clicables que ordenan filas en vivo (ASC/DESC) y checkboxes con selección múltiple real.
-6. **`crud-actions`** — **Tabla con Acciones CRUD en Vivo**: Botones funcionales para duplicar fila, eliminar con animación de Anime.js y agregar nuevos registros en tiempo real.
-7. **`inline-form`** — **Tabla con Formulario Editable en Línea**: Celdas con `<input type="text">`, `<input type="number">` y `<select>` que recalculan el subtotal y total general al instante.
-8. **`filterable-search`** — **Tabla con Filtros y Búsqueda Instantánea**: Barra superior con buscador en tiempo real por texto y píldoras de filtro por estado (`ALL`, `ONLINE`, `DEGRADED`, `OFFLINE`).
-9. **`expandable-master`** — **Tabla Expandible Master-Detail**: Filas principales que despliegan un cajón técnico secundario con logs JSON y métricas del nodo al hacer clic.
-10. **`striped-ledger`** — **Tabla Cebra Financiera de Alta Densidad**: Filas alternadas (`nth-child(even)`), tipografía monoespaciada tabular y fila `<tfoot>` de sumatoria.
+### Tablas de Datos (`tables` · 10 variantes)
 
-### 02. Toasters & Notificaciones (`components/toasts/` — 8 Variantes)
-- `minimal-pill` (Cápsula Flotante Compacta)
-- `glass-blur` (Cristal Esmerilado con Barra de Tiempo Activa)
-- `action-undo` (Notificación con Botones Deshacer / Confirmar)
-- `stacked-queue` (Pila Cascada 3D Interactiva con botón para disparar Toasts con Anime.js)
-- `terminal-cli` ( Consola Monoespaciada DevOps con stdout)
-- `progress-upload` (Toaster con Barra de Progreso Dinámica y botón Simular Subida)
-- `banner-full` (Franja Superior de Ancho Completo)
-- `rich-avatar` (Notificación Social con Avatar y Respuesta Rápida en línea)
+`modern-rounded`, `styleless-minimal`, `content-fit-compact`, `floating-rows`, `interactive-sort-select`, `crud-actions`, `inline-form-table`, `multi-filter-table`, `expandable-detail`, `brutalist-ledger`.
 
-### 03. Botones & Acciones (`components/buttons/` — 8 Variantes)
-- `solid-elevated`, `outline-architect`, `ghost-minimal`, `shimmer-beam`, `magnetic-spring`, `loading-state` (interactivo al hacer clic), `segmented-group` (conmutador activo), `kbd-shortcut` (con disparo por teclado o clic).
+### Toasters y Notificaciones (`toasts` · 8 variantes)
 
-### 04. Tarjetas & Paneles (`components/cards/` — 8 Variantes)
-- `bento-Spotlight`, `metric-sparkline`, `tilt-3d-holo` (inclinación 3D real con cursor), `horizontal-media`, `pricing-tier`, `terminal-code`, `collapsible-card`, `profile-dossier`.
+`modern-floating-toast`, `dynamic-island-morph`, `action-buttons-toast`, `form-reply-toast`, `stacker-spawner-toast`, `styleless-minimal-alert`, `content-fit-pill-banner`, `upload-progress-toaster`.
 
-### 05. Formularios & Controles (`components/forms/` — 8 Variantes)
-- `floating-input`, `otp-pin-grid` (auto-avance entre dígitos), `Dropzone-upload`, `segmented-radio`, `range-dual-slider` (actualización numérica en vivo), `tag-chips-input` (agregar/eliminar chips con Enter o clic), `password-meter` (medidor de entropía en vivo), `inline-search-kbd`.
+### Botones y Controles de Acción (`buttons` · 8 variantes)
 
-### 06. Modales & Drawers (`components/modals/` — 6 Variantes)
-- `command-palette`, `confirm-destructive`, `slide-drawer`, `wizard-stepper-modal`, `glass-lightbox`, `fullscreen-inspector`.
+`modern-rounded-pills`, `styleless-text-links`, `floating-fab-radial`, `interactive-async-morph`, `hold-confirm-safety`, `split-dropdown-action`, `segmented-toolbar-fit`, `brutalist-3d-push`.
 
-### 07. Navegación & Menús (`components/navigation/` — 6 Variantes)
-- `microsoft-mega-nav`, `kinetic-tabs`, `breadcrumb-trail`, `command-dock`, `tree-directory`, `pagination-matrix`.
+### Tarjetas y Contenedores (`cards` · 8 variantes)
 
-### 08. Badges & Telemetría (`components/badges-data/` — 6 Variantes)
-- `live-status-pill`, `radial-gauge-svg`, `sparkline-inline`, `heatmap-matrix`, `segmented-meter`, `kbd-chip-set`.
+`modern-rounded-bento`, `styleless-editorial`, `floating-3d-tilt`, `interactive-tabbed-card`, `action-toolbar-card`, `form-embedded-card`, `content-fit-kpi-badge`, `expandable-drawer-card`.
 
-### 09. Topologías Docker (`components/docker/` — 6 Variantes)
-- `fullstack-traefik`, `laravel-octane-stack`, `node-cluster-pm2`, `postgres-ha-replicated`, `observability-grafana`, `astro-nginx-edge`.
+### Formularios, Inputs y Filtros (`forms` · 8 variantes)
+
+`modern-rounded-form`, `styleless-underline-inputs`, `content-fit-inline-bar`, `floating-label-inputs`, `interactive-otp-pin`, `live-validation-meter`, `filter-search-facet`, `tactile-switches-sliders`.
+
+### Modales, Diálogos y Command Palettes (`modals` · 6 variantes)
+
+`modern-glass-modal`, `interactive-cmdk-palette`, `floating-popover-menu`, `form-creation-modal`, `security-confirm-modal`, `slide-drawer-inspector`.
+
+### Navbars, Menús Cascada y Navegación (`navigation` · 10 variantes)
+
+`microsoft-cascade-nav`, `floating-pill-navbar`, `styleless-minimal-nav`, `interactive-breadcrumbs`, `floating-action-dock`, `interactive-pagination`, `collapsible-sidebar`, `desktop-menubar`, `compact-navigation-rail`, `mobile-touch-tabbar`.
+
+### Badges, Timelines, Acordeones y Micro-UI (`badges-data` · 6 variantes)
+
+`modern-pulse-badges`, `interactive-accordion`, `interactive-svg-gauges`, `vertical-event-timeline`, `copyable-spec-grid`, `avatar-stack-interactive`.
+
+### Dockerfiles y Orquestación de Contenedores (`docker` · 6 variantes)
+
+`astro-node-ssr`, `laravel-livewire-fpm`, `spa-nginx-alpine`, `fullstack-compose-stack`, `bun-microservice`, `traefik-tls-proxy`.
+
+### Carruseles, Sliders 3D y Marquesinas Cinéticas (`carousels` · 8 variantes)
+
+`coverflow-3d`, `infinite-marquee`, `snap-peek-slider`, `vertical-telemetry-reel`, `split-editorial-showcase`, `thumbnail-filmstrip`, `autoplay-story-bars`, `card-deck-throw`.
+
+### Acordeones, Comparadores Before/After, Kanban y Conmutadores (`accordions-tabs` · 8 variantes)
+
+`accordion-exclusive`, `accordion-multi-bento`, `before-after-split`, `kanban-mini-board`, `segmented-pricing-toggle`, `file-tree-inspector`, `transfer-dual-list`, `calendar-slot-Matrix`.
+
+### Componentes Especiales Combinados (UI + Anime.js v4 en Vivo) (`special-hybrids` · 30 variantes)
+
+`stepper-carousel-wizard`, `table-realtime-stream`, `table-stagger-sorter`, `carousel-svg-morph-showcase`, `carousel-spring-physics-deck`, `stepper-checkout-calculator`, `table-bulk-explosion`, `toast-timeline-dispatcher`, `kanban-spring-pipeline`, `form-otp-svg-vault`, `card-3d-exploded-inspector`, `skeleton-to-table-hydrator`, `carousel-timeline-scrubber`, `search-grid-2d-ripple`, `modal-command-choreography`, `pricing-slider-odometer`, `docker-live-deploy-topology`, `accordion-animated-metrics`, `dual-transfer-stagger-sync`, `chrono-sla-incident-table`, `anime-hero-clockwork`, `interactive-world-telemetry-map`, `pathfinding-dijkstra-visualizer`, `sorting-algorithm-symphony`, `neural-network-graph-propagator`, `orbital-solar-gravity-sim`, `isometric-3d-city-cluster`, `audio-synth-spectrum-analyzer`, `git-branch-commit-visualizer`, `cyber-radar-threat-sonar`.
 
 ---
 
-## Enciclopedia Interactiva Anime.js v4 (`animations/` — 48 Escenarios en 8 Capítulos)
+## Enciclopedia interactiva Anime.js v4 (`animations/` — 48 escenarios en 8 capítulos)
 
-Basada en la documentación oficial de **Anime.js v4** (`https://animejs.com/documentation/getting-started`), utilizando la API modular (`animate`, `stagger`, `createTimeline`, `createTimer`, `createSpring`, `steps`, `svg.createDrawable`, `svg.morphTo`, `svg.createMotionPath`):
+La página de animaciones incluye ejemplos de distribución, arrastre, desplazamiento y WAAPI. En Especiales hay 20 estudios visuales agrupados en cinco familias; el laboratorio permite editar tipografía y degradados y copiar CSS y JavaScript.
+
+Basada en la documentación oficial de **Anime.js v4** ([documentación de Anime.js](https://animejs.com/documentation/)), utilizando la API modular (`animate`, `stagger`, `createTimeline`, `createTimer`, `createSpring`, `steps`, `svg.createDrawable`, `svg.morphTo`, `svg.createMotionPath`):
 
 1. **`animations/targets-properties/`** — **01. Targets & Propiedades Animables**: Selectores CSS, transformaciones 2D/3D independientes, variables CSS `--custom` e interpolación de atributos DOM.
 2. **`animations/keyframes-stagger/`** — **02. Keyframes & Stagger Distributivo**: Arreglos de fotogramas, keyframes por porcentaje, `stagger()` lineal desde el centro y matriz 2D `grid: [8, 4]` interactiva al hacer clic en cualquier celda.
@@ -85,12 +94,15 @@ Basada en la documentación oficial de **Anime.js v4** (`https://animejs.com/doc
 ## Comandos del Proyecto
 
 ```bash
-# Regenerar los 660 archivos de componentes y 48 módulos de animación
+# Regenerar los 1,160 archivos de componentes y 48 módulos de animación
 npm run generate:vault
+
+# Sincronizar solo los adaptadores mantenidos de botones, notificaciones, formularios, tarjetas, telemetría, diálogos, navegación, acordeones y tablas
+npm run sync:curated
 
 # Iniciar servidor de desarrollo Astro (http://localhost:4321)
 npm run dev
 
-# Compilar las 22 páginas estáticas para producción
+# Compilar las 26 páginas estáticas para producción
 npm run build
 ```

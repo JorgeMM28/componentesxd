@@ -1,11 +1,6 @@
-<!-- Variante 05 — Botón con Seguridad Hold-to-Confirm (Mantener Presionado) — Svelte 5 Runes (components/buttons/variants/hold-confirm-safety/HoldConfirmSafety.svelte) -->
 <script lang="ts">
-  import './styles.css';
-  let active = $state(false);
+import { mountHoldConfirmSafety } from './hold-confirm-safety.js';
+import './styles.css';
+function control(node: HTMLElement) { return { destroy: mountHoldConfirmSafety(node) }; }
 </script>
-
-<div class="cxd-buttons-hold-confirm-safety" data-active={active}>
-  <h3>Variante 05 — Botón con Seguridad Hold-to-Confirm (Mantener Presionado)</h3>
-  <p>Mantén presionado el botón para llenar la barra de progreso roja hasta el 100% y ejecutar la acción.</p>
-  <button type="button" onclick={() => (active = !active)}>Alternar</button>
-</div>
+<div class="cxd-control" data-cxd-control="hold-confirm-safety" use:control><button type="button" data-hold>Mantén presionado para purgar; con teclado pulsa dos veces</button><span role="status">PROGRESO DE SEGURIDAD: 0%</span></div>

@@ -1,7 +1,6 @@
-{{-- Variante 06 — Formulario con Validación y Medidor de Seguridad en Vivo — Laravel Blade (components/forms/variants/live-validation-meter/live-validation-meter.blade.php) --}}
-@props(['title' => 'Variante 06 — Formulario con Validación y Medidor de Seguridad en Vivo'])
-<div {{ $attributes->merge(['class' => 'cxd-forms-live-validation-meter']) }}>
-    <h3>{{ $title }}</h3>
-    <p>Escribe una contraseña para ver cómo se calculan en tiempo real los 4 niveles de fortaleza.</p>
-    {{ $slot }}
-</div>
+{{-- Incluye styles.css y ajusta la ruta del módulo. --}}
+<div class="cxd-form" data-cxd-control="live-validation-meter"><label>Contraseña <input type="password" data-password autocomplete="new-password" /></label><meter min="0" max="4" value="0" data-meter aria-label="Fortaleza de contraseña"></meter><span role="status">Sin evaluar</span></div>
+<script type="module">
+import { mountLiveValidationMeter } from '/assets/live-validation-meter.js';
+document.querySelectorAll('[data-cxd-control="live-validation-meter"]:not([data-ready])').forEach(root => { root.dataset.ready = 'true'; mountLiveValidationMeter(root); });
+</script>

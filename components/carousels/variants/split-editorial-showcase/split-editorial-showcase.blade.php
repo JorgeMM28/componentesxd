@@ -1,7 +1,6 @@
-{{-- Variante 05 — Carrusel Split-Screen Sincronizado (Arte Visual + Especificaciones) — Laravel Blade (components/carousels/variants/split-editorial-showcase/split-editorial-showcase.blade.php) --}}
-@props(['title' => 'Variante 05 — Carrusel Split-Screen Sincronizado (Arte Visual + Especificaciones)'])
-<div {{ $attributes->merge(['class' => 'cxd-carousels-split-editorial-showcase']) }}>
-    <h3>{{ $title }}</h3>
-    <p>Doble panel donde el lienzo visual izquierdo y la ficha técnica derecha se actualizan de forma coordinada con stagger.</p>
-    {{ $slot }}
-</div>
+{{-- Incluye styles.css y ajusta la ruta del módulo. --}}
+<div class="cxd-carousel" data-cxd-control="split-editorial-showcase"><div class="cxd-split"><div data-art aria-hidden="true">✦</div><div><small>COLECCIÓN EDITORIAL</small><h3 data-title>Aurora</h3><p data-description>Luz y color para una interfaz expresiva.</p></div></div><div class="cxd-carousel__controls"><button type="button" data-prev aria-label="Anterior">← Anterior</button><button type="button" data-next aria-label="Siguiente">Siguiente →</button></div><span role="status" aria-live="polite"></span></div>
+<script type="module">
+import { mountSplitEditorialShowcase } from '/assets/split-editorial-showcase.js';
+document.querySelectorAll('[data-cxd-control="split-editorial-showcase"]:not([data-ready])').forEach(root => { root.dataset.ready = 'true'; mountSplitEditorialShowcase(root); });
+</script>

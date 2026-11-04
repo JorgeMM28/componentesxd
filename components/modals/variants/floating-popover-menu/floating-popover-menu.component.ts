@@ -1,18 +1,4 @@
-// Variante 03 — Menú Popover Flotante Content-Fit con Acciones — Angular 18+ Signals (components/modals/variants/floating-popover-menu/floating-popover-menu.component.ts)
-import { Component, signal } from '@angular/core';
-
-@Component({
-  selector: 'cxd-floating-popover-menu',
-  standalone: true,
-  styleUrls: ['./styles.css'],
-  template: `
-    <div class="cxd-modals-floating-popover-menu" [attr.data-active]="active()">
-      <h3>Variante 03 — Menú Popover Flotante Content-Fit con Acciones</h3>
-      <p>Menú contextual compacto con opciones rápidas, atajos de teclado e interruptor integrado.</p>
-      <button type="button" (click)="active.set(!active())">Alternar</button>
-    </div>
-  `
-})
-export class CxdFloatingPopoverMenuComponent {
-  active = signal(false);
-}
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import { mountFloatingPopoverMenu } from './floating-popover-menu.js';
+@Component({ selector:'cxd-floating-popover-menu', standalone:true, styleUrls:['./styles.css'], template:`<div class="cxd-dialog" data-cxd-control="floating-popover-menu" #root><button type="button" data-trigger aria-expanded="false">Abrir menú contextual</button><div class="cxd-dialog__popover" data-popover hidden><div class="cxd-dialog__list"><button type="button" data-action="Editar">Editar</button><button type="button" data-action="Duplicar">Duplicar</button><button type="button" data-action="Archivar">Archivar</button></div></div><span role="status">Ninguna acción</span></div>` })
+export class FloatingPopoverMenuComponent implements AfterViewInit, OnDestroy { @ViewChild('root') root!: ElementRef<HTMLElement>; private unmount?: () => void; ngAfterViewInit() { this.unmount = mountFloatingPopoverMenu(this.root.nativeElement); } ngOnDestroy() { this.unmount?.(); } }

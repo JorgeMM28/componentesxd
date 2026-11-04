@@ -1,11 +1,6 @@
-<!-- Variante 01 — Formulario Moderno con Bordes Redondeados — Svelte 5 Runes (components/forms/variants/modern-rounded-form/ModernRoundedForm.svelte) -->
 <script lang="ts">
-  import './styles.css';
-  let active = $state(false);
+import { mountModernRoundedForm } from './modern-rounded-form.js';
+import './styles.css';
+function control(node: HTMLElement) { return { destroy: mountModernRoundedForm(node) }; }
 </script>
-
-<div class="cxd-forms-modern-rounded-form" data-active={active}>
-  <h3>Variante 01 — Formulario Moderno con Bordes Redondeados</h3>
-  <p>Campos con esquinas suaves de 12px, iconos SVG integrados a la izquierda y anillo de enfoque suave.</p>
-  <button type="button" onclick={() => (active = !active)}>Alternar</button>
-</div>
+<div class="cxd-form" data-cxd-control="modern-rounded-form" use:control><form data-form><label>Correo electrónico <input type="email" data-email required value="arquitectura@componentesxd.dev" /></label><button type="submit">Guardar</button></form><span role="status">Listo para guardar</span></div>

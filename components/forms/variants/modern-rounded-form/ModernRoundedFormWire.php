@@ -1,17 +1,11 @@
 <?php
-// Variante 01 — Formulario Moderno con Bordes Redondeados — Laravel Livewire 3 (components/forms/variants/modern-rounded-form/ModernRoundedFormWire.php)
-namespace App\Livewire\Cxd\Forms;
+namespace App\Livewire;
 use Livewire\Component;
-
-class ModernRoundedFormWire extends Component {
-    public bool $active = false;
-    public function toggle(): void { $this->active = !$this->active; }
-    public function render() {
-        return <<<'HTML'
-        <div class="cxd-forms-modern-rounded-form">
-            <h3>Variante 01 — Formulario Moderno con Bordes Redondeados</h3>
-            <button type="button" wire:click="toggle">Estado: {{ $active ? 'ON' : 'OFF' }}</button>
-        </div>
-        HTML;
-    }
-}
+// Incluye styles.css y ajusta la ruta del módulo.
+class ModernRoundedFormWire extends Component { public function render(): string { return <<<'HTML'
+<div class="cxd-form" data-cxd-control="modern-rounded-form" wire:ignore><form data-form><label>Correo electrónico <input type="email" data-email required value="arquitectura@componentesxd.dev" /></label><button type="submit">Guardar</button></form><span role="status">Listo para guardar</span>@script
+<script>
+import('/assets/modern-rounded-form.js').then(module => module.mountModernRoundedForm($wire.$el));
+</script>
+@endscript</div>
+HTML; } }

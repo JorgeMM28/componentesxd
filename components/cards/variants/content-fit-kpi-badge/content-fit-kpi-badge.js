@@ -1,4 +1,11 @@
-// Variante 07 — Tarjeta Content-Fit Compacta de Telemetría — Vanilla JS (components/cards/variants/content-fit-kpi-badge/content-fit-kpi-badge.js)
-export function mountContentFitKpiBadge(root = document) {
-  return root.querySelectorAll('.cxd-cards-content-fit-kpi-badge');
+// Copia styles.css. La función devuelve un desmontador.
+export function mountContentFitKpiBadge(root) {
+  const controller = new AbortController(); const signal = controller.signal; let timer;
+  // Tarjeta informativa sin listeners.
+  return () => { controller.abort(); clearTimeout(timer); };
 }
+// Montaje: document.querySelectorAll('[data-cxd-control="content-fit-kpi-badge"]').forEach(mountContentFitKpiBadge);
+// HTML:
+/*
+<div class="cxd-card cxd-card--fit" data-cxd-control="content-fit-kpi-badge"><span>LATENCIA P99</span><h3>6.42 ms</h3><p>−1.8 ms hoy</p></div>
+*/

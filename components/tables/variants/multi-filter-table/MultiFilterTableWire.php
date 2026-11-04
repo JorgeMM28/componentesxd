@@ -1,17 +1,11 @@
 <?php
-// Variante 08 — Tabla con Filtros Avanzados (Buscador + Categoría + Estado) — Laravel Livewire 3 (components/tables/variants/multi-filter-table/MultiFilterTableWire.php)
-namespace App\Livewire\Cxd\Tables;
+namespace App\Livewire;
 use Livewire\Component;
-
-class MultiFilterTableWire extends Component {
-    public bool $active = false;
-    public function toggle(): void { $this->active = !$this->active; }
-    public function render() {
-        return <<<'HTML'
-        <div class="cxd-tables-multi-filter-table">
-            <h3>Variante 08 — Tabla con Filtros Avanzados (Buscador + Categoría + Estado)</h3>
-            <button type="button" wire:click="toggle">Estado: {{ $active ? 'ON' : 'OFF' }}</button>
-        </div>
-        HTML;
-    }
-}
+// Incluye styles.css y ajusta la ruta del módulo.
+class MultiFilterTableWire extends Component { public function render(): string { return <<<'HTML'
+<div class="cxd-table" data-cxd-control="multi-filter-table" wire:ignore><div class="cxd-table__toolbar"><label>Buscar <input type="search" data-search /></label><label>Departamento <select data-department><option value="">Todos</option><option>Arquitectura</option><option>Sistemas</option></select></label><label>Estado <select data-status><option value="">Todos</option><option>Online</option><option>Revisión</option></select></label></div><table><thead><tr><th>Miembro</th><th>Departamento</th><th>Estado</th></tr></thead><tbody><tr data-row data-department-value="Arquitectura" data-status-value="Online"><td>Elena</td><td>Arquitectura</td><td>Online</td></tr><tr data-row data-department-value="Sistemas" data-status-value="Revisión"><td>Marco</td><td>Sistemas</td><td>Revisión</td></tr></tbody></table><span role="status">2 resultados</span>@script
+<script>
+import('/assets/multi-filter-table.js').then(module => module.mountMultiFilterTable($wire.$el));
+</script>
+@endscript</div>
+HTML; } }

@@ -1,18 +1,4 @@
-// Variante 02 — Acordeón Interactivo Multi-Sección — Angular 18+ Signals (components/badges-data/variants/interactive-accordion/interactive-accordion.component.ts)
-import { Component, signal } from '@angular/core';
-
-@Component({
-  selector: 'cxd-interactive-accordion',
-  standalone: true,
-  styleUrls: ['./styles.css'],
-  template: `
-    <div class="cxd-badges-data-interactive-accordion" [attr.data-active]="active()">
-      <h3>Variante 02 — Acordeón Interactivo Multi-Sección</h3>
-      <p>Haz clic en cualquier cabecera para expandir o contraer su contenido suavemente.</p>
-      <button type="button" (click)="active.set(!active())">Alternar</button>
-    </div>
-  `
-})
-export class CxdInteractiveAccordionComponent {
-  active = signal(false);
-}
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import { mountInteractiveAccordion } from './interactive-accordion.js';
+@Component({ selector:'cxd-interactive-accordion', standalone:true, styleUrls:['./styles.css'], template:`<div class="cxd-data" data-cxd-control="interactive-accordion" #root><div class="cxd-data__list"><div class="cxd-data__item"><button type="button" data-open="one" aria-expanded="true">01 · Tokens CSS</button><p data-panel="one">Colores, radios y tipografías mediante variables.</p></div><div class="cxd-data__item"><button type="button" data-open="two" aria-expanded="false">02 · Arquitectura de islas</button><p data-panel="two" hidden>Hidratación selectiva de componentes interactivos.</p></div></div></div>` })
+export class InteractiveAccordionComponent implements AfterViewInit, OnDestroy { @ViewChild('root') root!: ElementRef<HTMLElement>; private unmount?: () => void; ngAfterViewInit() { this.unmount = mountInteractiveAccordion(this.root.nativeElement); } ngOnDestroy() { this.unmount?.(); } }

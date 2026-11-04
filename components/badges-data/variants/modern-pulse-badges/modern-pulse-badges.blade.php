@@ -1,7 +1,6 @@
-{{-- Variante 01 — Colección de Badges Modernos, Outline y Con Punto Pulsante — Laravel Blade (components/badges-data/variants/modern-pulse-badges/modern-pulse-badges.blade.php) --}}
-@props(['title' => 'Variante 01 — Colección de Badges Modernos, Outline y Con Punto Pulsante'])
-<div {{ $attributes->merge(['class' => 'cxd-badges-data-modern-pulse-badges']) }}>
-    <h3>{{ $title }}</h3>
-    <p>Insignias redondeadas, cuadradas, sin bordes y con botón de cierre eliminable en vivo.</p>
-    {{ $slot }}
-</div>
+{{-- Incluye styles.css y ajusta la ruta del módulo. --}}
+<div class="cxd-data" data-cxd-control="modern-pulse-badges"><span class="cxd-data__tag">OPERATIONAL</span><span class="cxd-data__tag">DEGRADED</span><span class="cxd-data__tag">OUTAGE</span><button type="button" data-tag>astro-5 ×</button><button type="button" data-tag>animejs-v4 ×</button><button type="button" data-tag>typescript ×</button><button type="button" data-restore>Restaurar etiquetas</button><span role="status">3 etiquetas activas</span></div>
+<script type="module">
+import { mountModernPulseBadges } from '/assets/modern-pulse-badges.js';
+document.querySelectorAll('[data-cxd-control="modern-pulse-badges"]:not([data-ready])').forEach(root => { root.dataset.ready = 'true'; mountModernPulseBadges(root); });
+</script>

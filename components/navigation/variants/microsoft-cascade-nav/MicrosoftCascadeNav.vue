@@ -1,14 +1,7 @@
-<!-- Variante 01 — Navbar con Menú en Cascada Multi-Nivel (Estilo Microsoft) — Vue 3 SFC (components/navigation/variants/microsoft-cascade-nav/MicrosoftCascadeNav.vue) -->
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
+import { mountMicrosoftCascadeNav } from './microsoft-cascade-nav.js';
 import './styles.css';
-const active = ref(false);
+const root = ref<HTMLElement | null>(null); let unmount: (() => void) | undefined; onMounted(() => { if (root.value) unmount = mountMicrosoftCascadeNav(root.value); }); onUnmounted(() => unmount?.());
 </script>
-
-<template>
-  <div class="cxd-navigation-microsoft-cascade-nav" :data-active="active">
-    <h3>Variante 01 — Navbar con Menú en Cascada Multi-Nivel (Estilo Microsoft)</h3>
-    <p>Selecciona una categoría principal para desplegar sus sub-categorías y luego sus variantes finales.</p>
-    <button type="button" @click="active = !active">Alternar</button>
-  </div>
-</template>
+<template><div class="cxd-nav" data-cxd-control="microsoft-cascade-nav" ref="root"><button type="button" data-category="Componentes" aria-expanded="false">Componentes</button><button type="button" data-category="Animaciones" aria-expanded="false">Animaciones</button><div class="cxd-nav__menu" data-menu hidden><button type="button" data-group="Componentes" data-leaf="Tablas">Tablas</button><button type="button" data-group="Componentes" data-leaf="Botones">Botones</button><button type="button" data-group="Componentes" data-leaf="Formularios">Formularios</button><button type="button" data-group="Animaciones" data-leaf="SVG" hidden>SVG</button><button type="button" data-group="Animaciones" data-leaf="Timelines" hidden>Timelines</button></div><span role="status">Selecciona una categoría</span></div></template>

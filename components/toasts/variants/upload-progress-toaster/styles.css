@@ -1,15 +1,1 @@
-/**
- * ============================================================================
- * COMPONENTESXD — TOASTERS Y NOTIFICACIONES
- * Variante 08 — Toaster Interactivo de Subida de Archivos
- * Archivo: components/toasts/variants/upload-progress-toaster/styles.css
- * ============================================================================
- */
-.cxd-toasts-upload-progress-toaster {
-  background: var(--cxd-bg-surface);
-  color: var(--cxd-text-primary);
-  border: var(--cxd-border-width, 1px) solid var(--cxd-border);
-  border-radius: var(--cxd-radius-md);
-  font-family: var(--cxd-font-sans);
-  font-variant-numeric: tabular-nums;
-}
+.cxd-toast{box-sizing:border-box;display:flex;flex-wrap:wrap;align-items:center;gap:.7rem;width:min(100%,34rem);padding:1rem;border:1px solid #7c6baa;border-radius:14px;background:#171726;color:#fff;font:500 .9rem system-ui;box-shadow:0 12px 35px #0003}.cxd-toast *{box-sizing:border-box}.cxd-toast p{flex-basis:100%;margin:.2rem 0;color:#cbc6df}.cxd-toast button,.cxd-toast input{border:1px solid #8f7bbd;border-radius:7px;padding:.5rem .7rem;background:#28233d;color:#fff;font:inherit}.cxd-toast button{cursor:pointer}.cxd-toast button:focus-visible,.cxd-toast input:focus-visible{outline:3px solid #c4b5fd;outline-offset:2px}.cxd-toast input{flex:1;min-width:8rem}.cxd-toast [hidden]{display:none!important}.cxd-toast [role=status]{flex-basis:100%;font-size:.78rem;color:#c8b8ff}.cxd-toast progress{width:100%;accent-color:#a78bfa}.cxd-toast--island{border-radius:30px;background:#050507}.cxd-toast--minimal{border:0;border-left:3px solid #a78bfa;border-radius:0;background:transparent;color:inherit;box-shadow:none}.cxd-toast--pill{width:max-content;max-width:100%;border-radius:999px}.cxd-toast__list{display:grid;gap:.4rem;width:100%}.cxd-toast__item{display:flex;justify-content:space-between;gap:.5rem;padding:.6rem;border:1px solid #7c6baa;border-radius:8px;background:#28233d}@media(prefers-reduced-motion:reduce){.cxd-toast *{transition:none!important}}

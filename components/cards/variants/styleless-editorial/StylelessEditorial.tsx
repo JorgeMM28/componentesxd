@@ -1,21 +1,4 @@
-/**
- * Variante 02 — Tarjeta Styleless Editorial (Sin Caja, Puro Layout) — React / Next.js (TSX)
- * Archivo: components/cards/variants/styleless-editorial/StylelessEditorial.tsx
- */
-import React, { useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { mountStylelessEditorial } from './styleless-editorial.js';
 import './styles.css';
-
-export const StylelessEditorial: React.FC<{ title?: string }> = ({
-  title = 'Variante 02 — Tarjeta Styleless Editorial (Sin Caja, Puro Layout)'
-}) => {
-  const [active, setActive] = useState(false);
-  return (
-    <div className="cxd-cards-styleless-editorial" data-active={active}>
-      <h3>{title}</h3>
-      <p>Diseño tipográfico tipo revista suiza con numeración grande, separador de 1px y lectura limpia.</p>
-      <button type="button" onClick={() => setActive(!active)}>
-        Alternar Estado
-      </button>
-    </div>
-  );
-};
+export function StylelessEditorial() { const root = useRef<HTMLDivElement>(null); useEffect(() => root.current ? mountStylelessEditorial(root.current) : undefined, []); return <div className="cxd-card cxd-card--editorial" data-cxd-control="styleless-editorial" ref={root}><span>ENSAYO ARQUITECTÓNICO // Nº 04</span><h3>La eliminación del contenedor innecesario</h3><p>La jerarquía tipográfica y el espacio definen el bloque.</p><button type="button" data-read>Leer especificación</button><span role="status">Listo para explorar</span></div>; }

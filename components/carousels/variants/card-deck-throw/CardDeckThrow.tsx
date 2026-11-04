@@ -1,21 +1,4 @@
-/**
- * Variante 08 — Carrusel Mazo de Tarjetas con Descarte Elástico (Swipe / Throw Deck) — React / Next.js (TSX)
- * Archivo: components/carousels/variants/card-deck-throw/CardDeckThrow.tsx
- */
-import React, { useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { mountCardDeckThrow } from './card-deck-throw.js';
 import './styles.css';
-
-export const CardDeckThrow: React.FC<{ title?: string }> = ({
-  title = 'Variante 08 — Carrusel Mazo de Tarjetas con Descarte Elástico (Swipe / Throw Deck)'
-}) => {
-  const [active, setActive] = useState(false);
-  return (
-    <div className="cxd-carousels-card-deck-throw" data-active={active}>
-      <h3>{title}</h3>
-      <p>Pila interactiva donde cada acción lanza la tarjeta activa con rotación física y promueve la siguiente del mazo.</p>
-      <button type="button" onClick={() => setActive(!active)}>
-        Alternar Estado
-      </button>
-    </div>
-  );
-};
+export function CardDeckThrow() { const root = useRef<HTMLDivElement>(null); useEffect(() => root.current ? mountCardDeckThrow(root.current) : undefined, []); return <div className="cxd-carousel" data-cxd-control="card-deck-throw" ref={root}><div className="cxd-deck"><article className="cxd-carousel__item" data-slide><small>01 / 04</small><strong>Aurora</strong><p>Una nueva perspectiva para explorar.</p></article><article className="cxd-carousel__item" data-slide><small>02 / 04</small><strong>Órbita</strong><p>Una nueva perspectiva para explorar.</p></article><article className="cxd-carousel__item" data-slide><small>03 / 04</small><strong>Nébula</strong><p>Una nueva perspectiva para explorar.</p></article><article className="cxd-carousel__item" data-slide><small>04 / 04</small><strong>Horizonte</strong><p>Una nueva perspectiva para explorar.</p></article></div><div className="cxd-carousel__controls"><button type="button" data-dismiss>Descartar tarjeta</button><button type="button" data-reset>Restaurar mazo</button></div><span role="status"></span></div>; }

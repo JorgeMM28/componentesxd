@@ -1,17 +1,11 @@
 <?php
-// Variante 05 — Lista Clave-Valor con Copiado al Portapapeles por Fila — Laravel Livewire 3 (components/badges-data/variants/copyable-spec-grid/CopyableSpecGridWire.php)
-namespace App\Livewire\Cxd\BadgesData;
+namespace App\Livewire;
 use Livewire\Component;
-
-class CopyableSpecGridWire extends Component {
-    public bool $active = false;
-    public function toggle(): void { $this->active = !$this->active; }
-    public function render() {
-        return <<<'HTML'
-        <div class="cxd-badges-data-copyable-spec-grid">
-            <h3>Variante 05 — Lista Clave-Valor con Copiado al Portapapeles por Fila</h3>
-            <button type="button" wire:click="toggle">Estado: {{ $active ? 'ON' : 'OFF' }}</button>
-        </div>
-        HTML;
-    }
-}
+// Incluye styles.css y ajusta la ruta del módulo.
+class CopyableSpecGridWire extends Component { public function render(): string { return <<<'HTML'
+<div class="cxd-data" data-cxd-control="copyable-spec-grid" wire:ignore><button type="button" data-copy="cxd_public_demo">API_PUBLIC_KEY · copiar</button><button type="button" data-copy="example.test:4321">PRIMARY_ENDPOINT · copiar</button><button type="button" data-copy="sha256:demo">BUILD_DIGEST · copiar</button><span role="status">Selecciona un valor</span>@script
+<script>
+import('/assets/copyable-spec-grid.js').then(module => module.mountCopyableSpecGrid($wire.$el));
+</script>
+@endscript</div>
+HTML; } }

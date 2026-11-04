@@ -1,14 +1,7 @@
-<!-- Variante 05 — Conmutador de Planes Mensual / Anual con Recálculo Animado — Vue 3 SFC (components/accordions-tabs/variants/segmented-pricing-toggle/SegmentedPricingToggle.vue) -->
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
+import { mountSegmentedPricingToggle } from './segmented-pricing-toggle.js';
 import './styles.css';
-const active = ref(false);
+const root = ref<HTMLElement | null>(null); let unmount: (() => void) | undefined; onMounted(() => { if (root.value) unmount = mountSegmentedPricingToggle(root.value); }); onUnmounted(() => unmount?.());
 </script>
-
-<template>
-  <div class="cxd-accordions-tabs-segmented-pricing-toggle" :data-active="active">
-    <h3>Variante 05 — Conmutador de Planes Mensual / Anual con Recálculo Animado</h3>
-    <p>Alterna entre facturación mensual y anual aplicando descuento automático e interpolando las tarifas en vivo.</p>
-    <button type="button" @click="active = !active">Alternar</button>
-  </div>
-</template>
+<template><div class="cxd-widget" data-cxd-control="segmented-pricing-toggle" ref="root"><div class="cxd-widget__row"><button type="button" data-period="monthly" aria-pressed="true">Mensual</button><button type="button" data-period="yearly" aria-pressed="false">Anual · 20% menos</button></div><strong data-price>$20 / mes</strong><span role="status">Facturación mensual</span></div></template>

@@ -1,7 +1,6 @@
-{{-- Variante 04 — Línea de Tiempo (Timeline) con Filtro de Eventos — Laravel Blade (components/badges-data/variants/vertical-event-timeline/vertical-event-timeline.blade.php) --}}
-@props(['title' => 'Variante 04 — Línea de Tiempo (Timeline) con Filtro de Eventos'])
-<div {{ $attributes->merge(['class' => 'cxd-badges-data-vertical-event-timeline']) }}>
-    <h3>{{ $title }}</h3>
-    <p>Cronología vertical con nodos conectados, estados de despliegue y botón para agregar nuevo evento.</p>
-    {{ $slot }}
-</div>
+{{-- Incluye styles.css y ajusta la ruta del módulo. --}}
+<div class="cxd-data" data-cxd-control="vertical-event-timeline"><strong>Cronología de eventos</strong><button type="button" data-add>+ Agregar evento</button><div class="cxd-data__list" data-list aria-live="polite"><div class="cxd-data__item">Despliegue completado</div><div class="cxd-data__item">Archivos sincronizados</div></div></div>
+<script type="module">
+import { mountVerticalEventTimeline } from '/assets/vertical-event-timeline.js';
+document.querySelectorAll('[data-cxd-control="vertical-event-timeline"]:not([data-ready])').forEach(root => { root.dataset.ready = 'true'; mountVerticalEventTimeline(root); });
+</script>

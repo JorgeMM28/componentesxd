@@ -1,21 +1,4 @@
-/**
- * Variante 03 — Medidores Circulares SVG con Control Deslizante en Vivo — React / Next.js (TSX)
- * Archivo: components/badges-data/variants/interactive-svg-gauges/InteractiveSvgGauges.tsx
- */
-import React, { useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { mountInteractiveSvgGauges } from './interactive-svg-gauges.js';
 import './styles.css';
-
-export const InteractiveSvgGauges: React.FC<{ title?: string }> = ({
-  title = 'Variante 03 — Medidores Circulares SVG con Control Deslizante en Vivo'
-}) => {
-  const [active, setActive] = useState(false);
-  return (
-    <div className="cxd-badges-data-interactive-svg-gauges" data-active={active}>
-      <h3>{title}</h3>
-      <p>Mueve el control deslizante para actualizar en tiempo real el porcentaje y los anillos SVG.</p>
-      <button type="button" onClick={() => setActive(!active)}>
-        Alternar Estado
-      </button>
-    </div>
-  );
-};
+export function InteractiveSvgGauges() { const root = useRef<HTMLDivElement>(null); useEffect(() => root.current ? mountInteractiveSvgGauges(root.current) : undefined, []); return <div className="cxd-data" data-cxd-control="interactive-svg-gauges" ref={root}><div className="cxd-data__gauge" data-gauge><strong data-value>84%</strong></div><label>Ajustar porcentaje <input type="range" min="0" max="100" defaultValue="84" data-slider /></label><button type="button" data-set="45">45%</button><button type="button" data-set="78">78%</button><button type="button" data-set="99">99%</button><span role="status">SLA global: 84%</span></div>; }

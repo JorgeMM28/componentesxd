@@ -1,11 +1,6 @@
-<!-- Variante 03 — Comparador Visual Before / After con Cortina Deslizable — Svelte 5 Runes (components/accordions-tabs/variants/before-after-split/BeforeAfterSplit.svelte) -->
 <script lang="ts">
-  import './styles.css';
-  let active = $state(false);
+import { mountBeforeAfterSplit } from './before-after-split.js';
+import './styles.css';
+function control(node: HTMLElement) { return { destroy: mountBeforeAfterSplit(node) }; }
 </script>
-
-<div class="cxd-accordions-tabs-before-after-split" data-active={active}>
-  <h3>Variante 03 — Comparador Visual Before / After con Cortina Deslizable</h3>
-  <p>Arrastra el control divisor horizontal para comparar en tiempo real dos estados o arquitecturas superpuestas.</p>
-  <button type="button" onclick={() => (active = !active)}>Alternar</button>
-</div>
+<div class="cxd-widget" data-cxd-control="before-after-split" use:control><div class="cxd-widget__compare" data-compare>DESPUÉS<span>ANTES</span></div><label>Divisor <input type="range" min="0" max="100" value="50" data-range /></label><span role="status">50%</span></div>

@@ -1,11 +1,6 @@
-<!-- Variante 05 — Modal de Confirmación con Validación de Texto — Svelte 5 Runes (components/modals/variants/security-confirm-modal/SecurityConfirmModal.svelte) -->
 <script lang="ts">
-  import './styles.css';
-  let active = $state(false);
+import { mountSecurityConfirmModal } from './security-confirm-modal.js';
+import './styles.css';
+function control(node: HTMLElement) { return { destroy: mountSecurityConfirmModal(node) }; }
 </script>
-
-<div class="cxd-modals-security-confirm-modal" data-active={active}>
-  <h3>Variante 05 — Modal de Confirmación con Validación de Texto</h3>
-  <p>Escribe "ELIMINAR" en el campo de confirmación para desbloquear el botón destructivo.</p>
-  <button type="button" onclick={() => (active = !active)}>Alternar</button>
-</div>
+<div class="cxd-dialog" data-cxd-control="security-confirm-modal" use:control><button type="button" data-open>Eliminar recurso</button><span role="status">Sin cambios</span><dialog aria-label="Confirmar eliminación"><h3>Confirmar eliminación</h3><p>Escribe ELIMINAR para habilitar la acción de demostración.</p><label>Confirmación <input type="text" data-confirm-input autocomplete="off" /></label><div class="cxd-dialog__actions"><button type="button" data-delete disabled>Eliminar</button><button type="button" data-close>Cancelar</button></div></dialog></div>

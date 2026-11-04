@@ -1,14 +1,7 @@
-<!-- Variante 08 — Tarjeta con Despliegue de Detalles Técnicos — Vue 3 SFC (components/cards/variants/expandable-drawer-card/ExpandableDrawerCard.vue) -->
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
+import { mountExpandableDrawerCard } from './expandable-drawer-card.js';
 import './styles.css';
-const active = ref(false);
+const root = ref<HTMLElement | null>(null); let unmount: (() => void) | undefined; onMounted(() => { if (root.value) unmount = mountExpandableDrawerCard(root.value); }); onUnmounted(() => unmount?.());
 </script>
-
-<template>
-  <div class="cxd-cards-expandable-drawer-card" :data-active="active">
-    <h3>Variante 08 — Tarjeta con Despliegue de Detalles Técnicos</h3>
-    <p>Haz clic en el botón de expansión para revelar u ocultar el bloque completo de logs y nodos.</p>
-    <button type="button" @click="active = !active">Alternar</button>
-  </div>
-</template>
+<template><div class="cxd-card" data-cxd-control="expandable-drawer-card" ref="root"><strong>Reporte de seguridad automático</strong><button type="button" data-toggle aria-expanded="true">Desplegar / ocultar diagnóstico</button><p data-detail>0 vulnerabilidades críticas · Certificados TLS renovados por 90 días.</p></div></template>

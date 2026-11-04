@@ -1,18 +1,4 @@
-// Variante 06 — Carrusel Galería con Tira Inferior de Miniaturas (Filmstrip) — Angular 18+ Signals (components/carousels/variants/thumbnail-filmstrip/thumbnail-filmstrip.component.ts)
-import { Component, signal } from '@angular/core';
-
-@Component({
-  selector: 'cxd-thumbnail-filmstrip',
-  standalone: true,
-  styleUrls: ['./styles.css'],
-  template: `
-    <div class="cxd-carousels-thumbnail-filmstrip" [attr.data-active]="active()">
-      <h3>Variante 06 — Carrusel Galería con Tira Inferior de Miniaturas (Filmstrip)</h3>
-      <p>Escenario principal de gran formato conectado a una banda interactiva de miniaturas con enfoque activo.</p>
-      <button type="button" (click)="active.set(!active())">Alternar</button>
-    </div>
-  `
-})
-export class CxdThumbnailFilmstripComponent {
-  active = signal(false);
-}
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import { mountThumbnailFilmstrip } from './thumbnail-filmstrip.js';
+@Component({ selector:'cxd-thumbnail-filmstrip', standalone:true, styleUrls:['./styles.css'], template:`<div class="cxd-carousel" data-cxd-control="thumbnail-filmstrip" #root><div class="cxd-carousel__item cxd-film-main" data-main>✦ Aurora</div><div class="cxd-filmstrip" aria-label="Seleccionar imagen"><button type="button" data-thumb="✦ Aurora" aria-pressed="true">✦ Aurora</button><button type="button" data-thumb="◉ Órbita" aria-pressed="false">◉ Órbita</button><button type="button" data-thumb="✳ Nébula" aria-pressed="false">✳ Nébula</button></div><span role="status">Imagen: Aurora</span></div>` })
+export class ThumbnailFilmstripComponent implements AfterViewInit, OnDestroy { @ViewChild('root') root!: ElementRef<HTMLElement>; private unmount?: () => void; ngAfterViewInit() { this.unmount = mountThumbnailFilmstrip(this.root.nativeElement); } ngOnDestroy() { this.unmount?.(); } }

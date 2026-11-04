@@ -1,18 +1,4 @@
-// Variante 09 — Navigation Rail Ultra-Compacto con Tooltips y Puntos Activos — Angular 18+ Signals (components/navigation/variants/compact-navigation-rail/compact-navigation-rail.component.ts)
-import { Component, signal } from '@angular/core';
-
-@Component({
-  selector: 'cxd-compact-navigation-rail',
-  standalone: true,
-  styleUrls: ['./styles.css'],
-  template: `
-    <nav class="cxd-navigation-compact-navigation-rail" [attr.data-active]="active()">
-      <h3>Variante 09 — Navigation Rail Ultra-Compacto con Tooltips y Puntos Activos</h3>
-      <p>Riel de navegación vertical ultra-delgado de 56px para consolas cloud con iconos vectoriales, tooltips flotantes e indicador de nodo activo.</p>
-      <button type="button" (click)="active.set(!active())">Alternar</button>
-    </nav>
-  `
-})
-export class CxdCompactNavigationRailComponent {
-  active = signal(false);
-}
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import { mountCompactNavigationRail } from './compact-navigation-rail.js';
+@Component({ selector:'cxd-compact-navigation-rail', standalone:true, styleUrls:['./styles.css'], template:`<div class="cxd-nav cxd-nav--rail" data-cxd-control="compact-navigation-rail" #root><button type="button" data-destination="Consola" aria-label="Consola" aria-pressed="true">⌘</button><button type="button" data-destination="Catálogo" aria-label="Catálogo" aria-pressed="false">▦</button><button type="button" data-destination="Métricas" aria-label="Métricas" aria-pressed="false">◉</button><span role="status">Vista activa: Consola</span></div>` })
+export class CompactNavigationRailComponent implements AfterViewInit, OnDestroy { @ViewChild('root') root!: ElementRef<HTMLElement>; private unmount?: () => void; ngAfterViewInit() { this.unmount = mountCompactNavigationRail(this.root.nativeElement); } ngOnDestroy() { this.unmount?.(); } }

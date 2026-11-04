@@ -1,18 +1,4 @@
-// Variante 03 — Tabla Content-Fit (Ajustada al Contenido) — Angular 18+ Signals (components/tables/variants/content-fit-compact/content-fit-compact.component.ts)
-import { Component, signal } from '@angular/core';
-
-@Component({
-  selector: 'cxd-content-fit-compact',
-  standalone: true,
-  styleUrls: ['./styles.css'],
-  template: `
-    <div class="cxd-tables-content-fit-compact" [attr.data-active]="active()">
-      <h3>Variante 03 — Tabla Content-Fit (Ajustada al Contenido)</h3>
-      <p>Ancho automático exacto al texto (width: max-content), celdas ultra-compactas sin espacio desperdiciado.</p>
-      <button type="button" (click)="active.set(!active())">Alternar</button>
-    </div>
-  `
-})
-export class CxdContentFitCompactComponent {
-  active = signal(false);
-}
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import { mountContentFitCompact } from './content-fit-compact.js';
+@Component({ selector:'cxd-content-fit-compact', standalone:true, styleUrls:['./styles.css'], template:`<div class="cxd-table cxd-table--fit" data-cxd-control="content-fit-compact" #root><table><thead><tr><th>Miembro</th><th>Departamento</th><th>Estado</th></tr></thead><tbody><tr><td>Elena</td><td>Arquitectura</td><td>Online</td></tr><tr><td>Marco</td><td>Sistemas</td><td>Revisión</td></tr><tr><td>Sofía</td><td>Diseño</td><td>Online</td></tr></tbody></table></div>` })
+export class ContentFitCompactComponent implements AfterViewInit, OnDestroy { @ViewChild('root') root!: ElementRef<HTMLElement>; private unmount?: () => void; ngAfterViewInit() { this.unmount = mountContentFitCompact(this.root.nativeElement); } ngOnDestroy() { this.unmount?.(); } }

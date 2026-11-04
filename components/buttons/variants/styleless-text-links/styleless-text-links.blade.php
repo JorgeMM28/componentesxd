@@ -1,7 +1,10 @@
-{{-- Variante 02 — Botones Styleless (Subrayado Cinético sin Caja) — Laravel Blade (components/buttons/variants/styleless-text-links/styleless-text-links.blade.php) --}}
-@props(['title' => 'Variante 02 — Botones Styleless (Subrayado Cinético sin Caja)'])
-<div {{ $attributes->merge(['class' => 'cxd-buttons-styleless-text-links']) }}>
-    <h3>{{ $title }}</h3>
-    <p>Cero bordes ni fondos: línea inferior que crece de izquierda a derecha y flecha SVG que avanza al pasar el cursor.</p>
-    {{ $slot }}
+{{-- Copia styles.css y styleless-text-links.js a tus assets y ajusta las URLs. --}}
+<div class="cxd-text-links" data-cxd-text-links>
+  <button type="button" class="cxd-text-links__button cxd-text-links__button--documentation" data-message="Abriendo especificación técnica v4.2..." aria-pressed="false">Explorar Documentación Técnica</button>
+  <button type="button" class="cxd-text-links__button cxd-text-links__button--download" data-message="Descargando manifiesto raw (42 KB)..." aria-pressed="false">Descargar Especificación Raw</button>
+  <span class="cxd-text-links__status" role="status">Selecciona una opción</span>
 </div>
+<script type="module">
+import { mountStylelessTextLinks } from '/assets/styleless-text-links.js';
+document.querySelectorAll('[data-cxd-text-links]:not([data-ready])').forEach(root => { root.dataset.ready = 'true'; mountStylelessTextLinks(root); });
+</script>

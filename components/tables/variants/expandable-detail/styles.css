@@ -1,15 +1,1 @@
-/**
- * ============================================================================
- * COMPONENTESXD — TABLAS DE DATOS
- * Variante 09 — Tabla Expandible Master-Detail (Despliegue de Sub-Panel)
- * Archivo: components/tables/variants/expandable-detail/styles.css
- * ============================================================================
- */
-.cxd-tables-expandable-detail {
-  background: var(--cxd-bg-surface);
-  color: var(--cxd-text-primary);
-  border: var(--cxd-border-width, 1px) solid var(--cxd-border);
-  border-radius: var(--cxd-radius-md);
-  font-family: var(--cxd-font-sans);
-  font-variant-numeric: tabular-nums;
-}
+.cxd-table{box-sizing:border-box;width:min(100%,50rem);overflow-x:auto;padding:1rem;border:1px solid #716492;border-radius:16px;background:#171726;color:#fff;font:500 .9rem/1.5 system-ui}.cxd-table *{box-sizing:border-box}.cxd-table table{width:100%;border-collapse:collapse;text-align:left}.cxd-table th,.cxd-table td{padding:.65rem;border-bottom:1px solid #49405d}.cxd-table th{color:#c8b8ff;font-size:.78rem}.cxd-table button,.cxd-table input,.cxd-table select{font:inherit;border:1px solid #8f7bbd;border-radius:7px;padding:.4rem .55rem;background:#28233d;color:#fff}.cxd-table button{cursor:pointer}.cxd-table button:focus-visible,.cxd-table input:focus-visible,.cxd-table select:focus-visible{outline:3px solid #c4b5fd;outline-offset:2px}.cxd-table [hidden]{display:none!important}.cxd-table [role=status]{display:block;margin-top:.7rem;color:#c8b8ff;font-size:.8rem}.cxd-table--minimal{border:0;border-radius:0;background:transparent;color:inherit;padding:0}.cxd-table--fit{width:max-content;max-width:100%}.cxd-table--fit table{width:max-content}.cxd-table--fit td,.cxd-table--fit th{white-space:nowrap}.cxd-table--floating{border:0;background:transparent}.cxd-table--floating table{border-collapse:separate;border-spacing:0 .5rem}.cxd-table--floating td{background:#28233d;border:0}.cxd-table--ledger{border:2px solid #fff;border-radius:0}.cxd-table--ledger tbody tr:nth-child(even){background:#302a41}.cxd-table__toolbar{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:.7rem}.cxd-table input[type=number]{width:5rem}.cxd-table [data-selected=true]{background:#443b6b}

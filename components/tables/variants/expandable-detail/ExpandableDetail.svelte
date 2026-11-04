@@ -1,11 +1,6 @@
-<!-- Variante 09 — Tabla Expandible Master-Detail (Despliegue de Sub-Panel) — Svelte 5 Runes (components/tables/variants/expandable-detail/ExpandableDetail.svelte) -->
 <script lang="ts">
-  import './styles.css';
-  let active = $state(false);
+import { mountExpandableDetail } from './expandable-detail.js';
+import './styles.css';
+function control(node: HTMLElement) { return { destroy: mountExpandableDetail(node) }; }
 </script>
-
-<div class="cxd-tables-expandable-detail" data-active={active}>
-  <h3>Variante 09 — Tabla Expandible Master-Detail (Despliegue de Sub-Panel)</h3>
-  <p>Haz clic en cualquier fila para desplegar un panel técnico con historial, métricas y especificaciones.</p>
-  <button type="button" onclick={() => (active = !active)}>Alternar</button>
-</div>
+<div class="cxd-table" data-cxd-control="expandable-detail" use:control><table><thead><tr><th>Incidente</th><th>Estado</th></tr></thead><tbody><tr><td><button type="button" data-expand="one" aria-expanded="false">INC-4091 · Latencia</button></td><td>SEV-2</td></tr><tr data-detail="one" hidden><td>Tráfico normalizado al 100%.</td><td>Resuelto</td></tr><tr><td><button type="button" data-expand="two" aria-expanded="false">DEP-8820 · Actualización</button></td><td>Completado</td></tr><tr data-detail="two" hidden><td>24 nodos reiniciados.</td><td>Sin pérdida</td></tr></tbody></table></div>

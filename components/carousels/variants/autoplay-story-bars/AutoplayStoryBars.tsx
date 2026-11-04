@@ -1,21 +1,4 @@
-/**
- * Variante 07 — Carrusel con Barras de Tiempo Segmentadas (Autoplay + Pausa) — React / Next.js (TSX)
- * Archivo: components/carousels/variants/autoplay-story-bars/AutoplayStoryBars.tsx
- */
-import React, { useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { mountAutoplayStoryBars } from './autoplay-story-bars.js';
 import './styles.css';
-
-export const AutoplayStoryBars: React.FC<{ title?: string }> = ({
-  title = 'Variante 07 — Carrusel con Barras de Tiempo Segmentadas (Autoplay + Pausa)'
-}) => {
-  const [active, setActive] = useState(false);
-  return (
-    <div className="cxd-carousels-autoplay-story-bars" data-active={active}>
-      <h3>{title}</h3>
-      <p>Cabecera con segmentos de progreso temporales que avanzan automáticamente y permiten saltar a cualquier historia.</p>
-      <button type="button" onClick={() => setActive(!active)}>
-        Alternar Estado
-      </button>
-    </div>
-  );
-};
+export function AutoplayStoryBars() { const root = useRef<HTMLDivElement>(null); useEffect(() => root.current ? mountAutoplayStoryBars(root.current) : undefined, []); return <div className="cxd-carousel" data-cxd-control="autoplay-story-bars" ref={root}><div className="cxd-story-bars" aria-label="Historias"><button type="button" data-story="0" aria-label="Historia 1"><span></span></button><button type="button" data-story="1" aria-label="Historia 2"><span></span></button><button type="button" data-story="2" aria-label="Historia 3"><span></span></button></div><div className="cxd-carousel__item" data-content><strong>Historia 1</strong><p>Explora la colección.</p></div><div className="cxd-carousel__controls"><button type="button" data-play aria-pressed="false">Reproducir</button></div><span role="status"></span></div>; }

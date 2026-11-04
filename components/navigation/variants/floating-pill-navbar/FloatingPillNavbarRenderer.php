@@ -1,10 +1,10 @@
 <?php
-// Variante 02 — Navbar Flotante Redondeada Tipo Cápsula — PHP 8.3 Renderer (components/navigation/variants/floating-pill-navbar/FloatingPillNavbarRenderer.php)
 declare(strict_types=1);
-namespace ComponentesXD\Navigation;
-
-final class FloatingPillNavbarRenderer {
-    public static function render(): string {
-        return '<div class="cxd-navigation-floating-pill-navbar"><h3>Variante 02 — Navbar Flotante Redondeada Tipo Cápsula</h3><p>Barra superior centrada con bordes completamente redondeados, enlaces activos y botón CTA.</p></div>';
-    }
-}
+// Incluye styles.css y ajusta la ruta del módulo.
+function renderFloatingPillNavbar(): string { return <<<'HTML'
+<div class="cxd-nav cxd-nav--pill" data-cxd-control="floating-pill-navbar"><button type="button" data-destination="Inicio" aria-pressed="true">Inicio</button><button type="button" data-destination="Componentes" aria-pressed="false">Componentes</button><button type="button" data-destination="Animaciones" aria-pressed="false">Animaciones</button><span role="status">Vista activa: Inicio</span></div>
+<script type="module">
+import { mountFloatingPillNavbar } from '/assets/floating-pill-navbar.js';
+document.querySelectorAll('[data-cxd-control="floating-pill-navbar"]:not([data-ready])').forEach(root => { root.dataset.ready = 'true'; mountFloatingPillNavbar(root); });
+</script>
+HTML; }

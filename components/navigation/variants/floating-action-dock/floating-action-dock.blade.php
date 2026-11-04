@@ -1,7 +1,6 @@
-{{-- Variante 05 — Dock Flotante Inferior con Escalado al Pasar el Cursor — Laravel Blade (components/navigation/variants/floating-action-dock/floating-action-dock.blade.php) --}}
-@props(['title' => 'Variante 05 — Dock Flotante Inferior con Escalado al Pasar el Cursor'])
-<div {{ $attributes->merge(['class' => 'cxd-navigation-floating-action-dock']) }}>
-    <h3>{{ $title }}</h3>
-    <p>Barra de iconos de acceso rápido con insignias de estado e indicador de aplicación activa.</p>
-    {{ $slot }}
-</div>
+{{-- Incluye styles.css y ajusta la ruta del módulo. --}}
+<div class="cxd-nav cxd-nav--pill" data-cxd-control="floating-action-dock"><button type="button" data-destination="Consola" aria-pressed="true">⌘ Consola</button><button type="button" data-destination="Archivos" aria-pressed="false">▦ Archivos</button><button type="button" data-destination="Métricas" aria-pressed="false">◉ Métricas</button><span role="status">Vista activa: Consola</span></div>
+<script type="module">
+import { mountFloatingActionDock } from '/assets/floating-action-dock.js';
+document.querySelectorAll('[data-cxd-control="floating-action-dock"]:not([data-ready])').forEach(root => { root.dataset.ready = 'true'; mountFloatingActionDock(root); });
+</script>

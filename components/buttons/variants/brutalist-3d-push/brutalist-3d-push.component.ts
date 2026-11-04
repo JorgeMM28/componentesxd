@@ -1,18 +1,7 @@
-// Variante 08 — Botón Mecánico 3D de Presión Física — Angular 18+ Signals (components/buttons/variants/brutalist-3d-push/brutalist-3d-push.component.ts)
-import { Component, signal } from '@angular/core';
-
-@Component({
-  selector: 'cxd-brutalist-3d-push',
-  standalone: true,
-  styleUrls: ['./styles.css'],
-  template: `
-    <div class="cxd-buttons-brutalist-3d-push" [attr.data-active]="active()">
-      <h3>Variante 08 — Botón Mecánico 3D de Presión Física</h3>
-      <p>Borde grueso y sombra sólida inferior que se hunde físicamente cada vez que lo presionas.</p>
-      <button type="button" (click)="active.set(!active())">Alternar</button>
-    </div>
-  `
-})
-export class CxdBrutalist3dPushComponent {
-  active = signal(false);
-}
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import { mountBrutalist3dPush } from './brutalist-3d-push.js';
+@Component({ selector:'cxd-brutalist-3d-push', standalone:true, styleUrls:['./styles.css'], template:`<div class="cxd-mechanical" data-mechanical #root>
+  <button type="button" class="cxd-mechanical__button" data-push>Presión física 3D (<span data-count>0</span>)</button>
+  <button type="button" class="cxd-mechanical__button cxd-mechanical__button--secondary" data-toggle aria-pressed="true">Interruptor mecánico: <span data-state>ON</span></button>
+</div>` })
+export class Brutalist3dPushComponent implements AfterViewInit, OnDestroy { @ViewChild('root') root!: ElementRef<HTMLElement>; private unmount?: () => void; ngAfterViewInit() { this.unmount = mountBrutalist3dPush(this.root.nativeElement); } ngOnDestroy() { this.unmount?.(); } }

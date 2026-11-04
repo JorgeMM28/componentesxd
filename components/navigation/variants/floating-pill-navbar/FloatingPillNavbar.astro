@@ -1,9 +1,8 @@
 ---
-// Variante 02 — Navbar Flotante Redondeada Tipo Cápsula — Astro 5 (components/navigation/variants/floating-pill-navbar/FloatingPillNavbar.astro)
 import './styles.css';
 ---
-<div class="cxd-navigation-floating-pill-navbar">
-  <h3>Variante 02 — Navbar Flotante Redondeada Tipo Cápsula</h3>
-  <p>Barra superior centrada con bordes completamente redondeados, enlaces activos y botón CTA.</p>
-  <slot />
-</div>
+<div class="cxd-nav cxd-nav--pill" data-cxd-control="floating-pill-navbar"><button type="button" data-destination="Inicio" aria-pressed="true">Inicio</button><button type="button" data-destination="Componentes" aria-pressed="false">Componentes</button><button type="button" data-destination="Animaciones" aria-pressed="false">Animaciones</button><span role="status">Vista activa: Inicio</span></div>
+<script>
+import { mountFloatingPillNavbar } from './floating-pill-navbar.js';
+document.querySelectorAll('[data-cxd-control="floating-pill-navbar"]:not([data-ready])').forEach(root => { root.dataset.ready = 'true'; mountFloatingPillNavbar(root); });
+</script>

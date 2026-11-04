@@ -1,21 +1,4 @@
-/**
- * Variante 05 — Generador Interactivo de Pila de Toasters — React / Next.js (TSX)
- * Archivo: components/toasts/variants/stacker-spawner-toast/StackerSpawnerToast.tsx
- */
-import React, { useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { mountStackerSpawnerToast } from './stacker-spawner-toast.js';
 import './styles.css';
-
-export const StackerSpawnerToast: React.FC<{ title?: string }> = ({
-  title = 'Variante 05 — Generador Interactivo de Pila de Toasters'
-}) => {
-  const [active, setActive] = useState(false);
-  return (
-    <div className="cxd-toasts-stacker-spawner-toast" data-active={active}>
-      <h3>{title}</h3>
-      <p>Haz clic en los botones para disparar toasters reales de Éxito, Alerta o Error que se apilan con Anime.js.</p>
-      <button type="button" onClick={() => setActive(!active)}>
-        Alternar Estado
-      </button>
-    </div>
-  );
-};
+export function StackerSpawnerToast() { const root = useRef<HTMLDivElement>(null); useEffect(() => root.current ? mountStackerSpawnerToast(root.current) : undefined, []); return <div className="cxd-toast" data-cxd-control="stacker-spawner-toast" ref={root}><strong>Notificaciones apiladas</strong><button type="button" data-kind="Éxito">+ Éxito</button><button type="button" data-kind="Alerta">+ Alerta</button><button type="button" data-kind="Error">+ Error</button><div className="cxd-toast__list" data-list aria-live="polite"></div></div>; }

@@ -1,21 +1,4 @@
-/**
- * Variante 06 — Grupo de Avatares Flotantes con Inspector de Usuario — React / Next.js (TSX)
- * Archivo: components/badges-data/variants/avatar-stack-interactive/AvatarStackInteractive.tsx
- */
-import React, { useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { mountAvatarStackInteractive } from './avatar-stack-interactive.js';
 import './styles.css';
-
-export const AvatarStackInteractive: React.FC<{ title?: string }> = ({
-  title = 'Variante 06 — Grupo de Avatares Flotantes con Inspector de Usuario'
-}) => {
-  const [active, setActive] = useState(false);
-  return (
-    <div className="cxd-badges-data-avatar-stack-interactive" data-active={active}>
-      <h3>{title}</h3>
-      <p>Haz clic en cualquier miembro del equipo para ver su rol, estado y permisos activos.</p>
-      <button type="button" onClick={() => setActive(!active)}>
-        Alternar Estado
-      </button>
-    </div>
-  );
-};
+export function AvatarStackInteractive() { const root = useRef<HTMLDivElement>(null); useEffect(() => root.current ? mountAvatarStackInteractive(root.current) : undefined, []); return <div className="cxd-data" data-cxd-control="avatar-stack-interactive" ref={root}><button type="button" className="cxd-data__avatar" data-name="Elena Rostova" data-role="Arquitectura UI" aria-pressed="true">ER</button><button type="button" className="cxd-data__avatar" data-name="Marco Kovacs" data-role="Ingeniería de sistemas" aria-pressed="false">MK</button><button type="button" className="cxd-data__avatar" data-name="Sofía Vance" data-role="Diseño de movimiento" aria-pressed="false">SV</button><span role="status">Elena Rostova · Arquitectura UI</span></div>; }

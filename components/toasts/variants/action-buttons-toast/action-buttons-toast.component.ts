@@ -1,18 +1,4 @@
-// Variante 03 — Toaster con Acciones (Aceptar, Posponer, Deshacer) — Angular 18+ Signals (components/toasts/variants/action-buttons-toast/action-buttons-toast.component.ts)
-import { Component, signal } from '@angular/core';
-
-@Component({
-  selector: 'cxd-action-buttons-toast',
-  standalone: true,
-  styleUrls: ['./styles.css'],
-  template: `
-    <div class="cxd-toasts-action-buttons-toast" [attr.data-active]="active()">
-      <h3>Variante 03 — Toaster con Acciones (Aceptar, Posponer, Deshacer)</h3>
-      <p>Notificación de invitación/despliegue con botones interactivos que confirman o revierten la operación en vivo.</p>
-      <button type="button" (click)="active.set(!active())">Alternar</button>
-    </div>
-  `
-})
-export class CxdActionButtonsToastComponent {
-  active = signal(false);
-}
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import { mountActionButtonsToast } from './action-buttons-toast.js';
+@Component({ selector:'cxd-action-buttons-toast', standalone:true, styleUrls:['./styles.css'], template:`<div class="cxd-toast" data-cxd-control="action-buttons-toast" #root><strong>Solicitud de fusión en rama principal (#409)</strong><p role="status">¿Deseas aprobar y desplegar los cambios?</p><button type="button" data-action="Aprobado y desplegado">Aprobar</button><button type="button" data-action="Pospuesto por 1 hora">Posponer</button><button type="button" data-action="Operación deshecha">Deshacer</button></div>` })
+export class ActionButtonsToastComponent implements AfterViewInit, OnDestroy { @ViewChild('root') root!: ElementRef<HTMLElement>; private unmount?: () => void; ngAfterViewInit() { this.unmount = mountActionButtonsToast(this.root.nativeElement); } ngOnDestroy() { this.unmount?.(); } }

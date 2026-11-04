@@ -1,17 +1,11 @@
 <?php
-// Variante 05 — Generador Interactivo de Pila de Toasters — Laravel Livewire 3 (components/toasts/variants/stacker-spawner-toast/StackerSpawnerToastWire.php)
-namespace App\Livewire\Cxd\Toasts;
+namespace App\Livewire;
 use Livewire\Component;
-
-class StackerSpawnerToastWire extends Component {
-    public bool $active = false;
-    public function toggle(): void { $this->active = !$this->active; }
-    public function render() {
-        return <<<'HTML'
-        <div class="cxd-toasts-stacker-spawner-toast">
-            <h3>Variante 05 — Generador Interactivo de Pila de Toasters</h3>
-            <button type="button" wire:click="toggle">Estado: {{ $active ? 'ON' : 'OFF' }}</button>
-        </div>
-        HTML;
-    }
-}
+// Incluye styles.css y ajusta la ruta del módulo.
+class StackerSpawnerToastWire extends Component { public function render(): string { return <<<'HTML'
+<div class="cxd-toast" data-cxd-control="stacker-spawner-toast" wire:ignore><strong>Notificaciones apiladas</strong><button type="button" data-kind="Éxito">+ Éxito</button><button type="button" data-kind="Alerta">+ Alerta</button><button type="button" data-kind="Error">+ Error</button><div class="cxd-toast__list" data-list aria-live="polite"></div>@script
+<script>
+import('/assets/stacker-spawner-toast.js').then(module => module.mountStackerSpawnerToast($wire.$el));
+</script>
+@endscript</div>
+HTML; } }

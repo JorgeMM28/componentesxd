@@ -1,11 +1,6 @@
-<!-- Variante 02 — Botones Styleless (Subrayado Cinético sin Caja) — Svelte 5 Runes (components/buttons/variants/styleless-text-links/StylelessTextLinks.svelte) -->
 <script lang="ts">
-  import './styles.css';
-  let active = $state(false);
+import './styles.css';
+const items = [["documentation","Explorar Documentación Técnica","Abriendo especificación técnica v4.2..."],["download","Descargar Especificación Raw","Descargando manifiesto raw (42 KB)..."]];
+let active = $state(-1);
 </script>
-
-<div class="cxd-buttons-styleless-text-links" data-active={active}>
-  <h3>Variante 02 — Botones Styleless (Subrayado Cinético sin Caja)</h3>
-  <p>Cero bordes ni fondos: línea inferior que crece de izquierda a derecha y flecha SVG que avanza al pasar el cursor.</p>
-  <button type="button" onclick={() => (active = !active)}>Alternar</button>
-</div>
+<div class="cxd-text-links">{#each items as [kind, label], index (kind)}<button type="button" class="cxd-text-links__button cxd-text-links__button--{kind}" aria-pressed={active === index} onclick={() => active = index}>{label}</button>{/each}<span class="cxd-text-links__status" role="status">{active < 0 ? 'Selecciona una opción' : 'RUTA ACTIVA: ' + items[active][2]}</span></div>

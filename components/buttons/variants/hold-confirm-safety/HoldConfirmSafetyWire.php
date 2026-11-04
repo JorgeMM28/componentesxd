@@ -1,17 +1,11 @@
 <?php
-// Variante 05 — Botón con Seguridad Hold-to-Confirm (Mantener Presionado) — Laravel Livewire 3 (components/buttons/variants/hold-confirm-safety/HoldConfirmSafetyWire.php)
-namespace App\Livewire\Cxd\Buttons;
+namespace App\Livewire;
 use Livewire\Component;
-
-class HoldConfirmSafetyWire extends Component {
-    public bool $active = false;
-    public function toggle(): void { $this->active = !$this->active; }
-    public function render() {
-        return <<<'HTML'
-        <div class="cxd-buttons-hold-confirm-safety">
-            <h3>Variante 05 — Botón con Seguridad Hold-to-Confirm (Mantener Presionado)</h3>
-            <button type="button" wire:click="toggle">Estado: {{ $active ? 'ON' : 'OFF' }}</button>
-        </div>
-        HTML;
-    }
-}
+// Incluye styles.css y ajusta la ruta del módulo.
+class HoldConfirmSafetyWire extends Component { public function render(): string { return <<<'HTML'
+<div class="cxd-control" data-cxd-control="hold-confirm-safety" wire:ignore><button type="button" data-hold>Mantén presionado para purgar; con teclado pulsa dos veces</button><span role="status">PROGRESO DE SEGURIDAD: 0%</span>@script
+<script>
+import('/assets/hold-confirm-safety.js').then(module => module.mountHoldConfirmSafety($wire.$el));
+</script>
+@endscript</div>
+HTML; } }

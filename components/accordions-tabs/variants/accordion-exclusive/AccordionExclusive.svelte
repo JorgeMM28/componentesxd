@@ -1,11 +1,6 @@
-<!-- Variante 01 — Acordeón Exclusivo (Single-Open) con Animación de Altura — Svelte 5 Runes (components/accordions-tabs/variants/accordion-exclusive/AccordionExclusive.svelte) -->
 <script lang="ts">
-  import './styles.css';
-  let active = $state(false);
+import { mountAccordionExclusive } from './accordion-exclusive.js';
+import './styles.css';
+function control(node: HTMLElement) { return { destroy: mountAccordionExclusive(node) }; }
 </script>
-
-<div class="cxd-accordions-tabs-accordion-exclusive" data-active={active}>
-  <h3>Variante 01 — Acordeón Exclusivo (Single-Open) con Animación de Altura</h3>
-  <p>Al expandir una sección técnica se cierran automáticamente las demás manteniendo el foco de lectura.</p>
-  <button type="button" onclick={() => (active = !active)}>Alternar</button>
-</div>
+<div class="cxd-widget" data-cxd-control="accordion-exclusive" use:control><button type="button" data-open="one" aria-expanded="true">01 · Tokens</button><div class="cxd-widget__panel" data-panel="one">Colores y tipografía.</div><button type="button" data-open="two" aria-expanded="false">02 · Componentes</button><div class="cxd-widget__panel" data-panel="two" hidden>Bloques reutilizables.</div><button type="button" data-open="three" aria-expanded="false">03 · Animaciones</button><div class="cxd-widget__panel" data-panel="three" hidden>Movimiento e interacción.</div></div>

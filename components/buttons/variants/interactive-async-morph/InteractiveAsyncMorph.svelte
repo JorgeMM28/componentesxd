@@ -1,11 +1,6 @@
-<!-- Variante 04 — Botón Interactivo de 3 Estados (Reposo -> Cargando -> Éxito) — Svelte 5 Runes (components/buttons/variants/interactive-async-morph/InteractiveAsyncMorph.svelte) -->
 <script lang="ts">
-  import './styles.css';
-  let active = $state(false);
+import { mountInteractiveAsyncMorph } from './interactive-async-morph.js';
+import './styles.css';
+function control(node: HTMLElement) { return { destroy: mountInteractiveAsyncMorph(node) }; }
 </script>
-
-<div class="cxd-buttons-interactive-async-morph" data-active={active}>
-  <h3>Variante 04 — Botón Interactivo de 3 Estados (Reposo -> Cargando -> Éxito)</h3>
-  <p>Haz clic para ver cómo bloquea la acción, muestra el spinner rotativo y cambia a estado completado.</p>
-  <button type="button" onclick={() => (active = !active)}>Alternar</button>
-</div>
+<div class="cxd-control" data-cxd-control="interactive-async-morph" use:control><button type="button" data-async aria-busy="false"><span data-spinner>◌ </span><span data-label>Haz clic para probar el ciclo asíncrono</span></button><button type="button" data-magnetic>Pasa el cursor · magnético</button><span role="status">LISTO</span></div>

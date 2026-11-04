@@ -1,21 +1,4 @@
-/**
- * Variante 07 — Tabla con Formulario Integrado (Inputs, Selects y Cálculo) — React / Next.js (TSX)
- * Archivo: components/tables/variants/inline-form-table/InlineFormTable.tsx
- */
-import React, { useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { mountInlineFormTable } from './inline-form-table.js';
 import './styles.css';
-
-export const InlineFormTable: React.FC<{ title?: string }> = ({
-  title = 'Variante 07 — Tabla con Formulario Integrado (Inputs, Selects y Cálculo)'
-}) => {
-  const [active, setActive] = useState(false);
-  return (
-    <div className="cxd-tables-inline-form-table" data-active={active}>
-      <h3>{title}</h3>
-      <p>Celdas con inputs numéricos, selectores desplegables y switches que recalculan el subtotal de la tabla en vivo.</p>
-      <button type="button" onClick={() => setActive(!active)}>
-        Alternar Estado
-      </button>
-    </div>
-  );
-};
+export function InlineFormTable() { const root = useRef<HTMLDivElement>(null); useEffect(() => root.current ? mountInlineFormTable(root.current) : undefined, []); return <div className="cxd-table" data-cxd-control="inline-form-table" ref={root}><table><thead><tr><th>Producto</th><th>Cantidad</th><th>Precio</th><th>Subtotal</th></tr></thead><tbody><tr data-row><td>Nodos</td><td><input type="number" data-quantity min="0" defaultValue="2" aria-label="Cantidad nodos" /></td><td><select data-price aria-label="Precio nodos"><option value="20">$20</option><option value="40">$40</option></select></td><td data-subtotal>$40.00</td></tr><tr data-row><td>Almacenamiento</td><td><input type="number" data-quantity min="0" defaultValue="3" aria-label="Cantidad almacenamiento" /></td><td><select data-price aria-label="Precio almacenamiento"><option value="10">$10</option><option value="30">$30</option></select></td><td data-subtotal>$30.00</td></tr></tbody></table><span role="status">Total: $70.00</span></div>; }

@@ -1,17 +1,11 @@
 <?php
-// Variante 02 — Tabla Styleless (Sin Bordes / Editorial) — Laravel Livewire 3 (components/tables/variants/styleless-minimal/StylelessMinimalWire.php)
-namespace App\Livewire\Cxd\Tables;
+namespace App\Livewire;
 use Livewire\Component;
-
-class StylelessMinimalWire extends Component {
-    public bool $active = false;
-    public function toggle(): void { $this->active = !$this->active; }
-    public function render() {
-        return <<<'HTML'
-        <div class="cxd-tables-styleless-minimal">
-            <h3>Variante 02 — Tabla Styleless (Sin Bordes / Editorial)</h3>
-            <button type="button" wire:click="toggle">Estado: {{ $active ? 'ON' : 'OFF' }}</button>
-        </div>
-        HTML;
-    }
-}
+// Incluye styles.css y ajusta la ruta del módulo.
+class StylelessMinimalWire extends Component { public function render(): string { return <<<'HTML'
+<div class="cxd-table cxd-table--minimal" data-cxd-control="styleless-minimal" wire:ignore><table><thead><tr><th>Miembro</th><th>Departamento</th><th>Estado</th></tr></thead><tbody><tr><td>Elena</td><td>Arquitectura</td><td>Online</td></tr><tr><td>Marco</td><td>Sistemas</td><td>Revisión</td></tr><tr><td>Sofía</td><td>Diseño</td><td>Online</td></tr></tbody></table>@script
+<script>
+import('/assets/styleless-minimal.js').then(module => module.mountStylelessMinimal($wire.$el));
+</script>
+@endscript</div>
+HTML; } }

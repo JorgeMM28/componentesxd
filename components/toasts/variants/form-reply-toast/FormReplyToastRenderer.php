@@ -1,10 +1,10 @@
 <?php
-// Variante 04 — Toaster con Formulario de Respuesta Rápida — PHP 8.3 Renderer (components/toasts/variants/form-reply-toast/FormReplyToastRenderer.php)
 declare(strict_types=1);
-namespace ComponentesXD\Toasts;
-
-final class FormReplyToastRenderer {
-    public static function render(): string {
-        return '<div class="cxd-toasts-form-reply-toast"><h3>Variante 04 — Toaster con Formulario de Respuesta Rápida</h3><p>Incluye campo de texto e input de envío directo dentro de la notificación sin abrir otra página.</p></div>';
-    }
-}
+// Incluye styles.css y ajusta la ruta del módulo.
+function renderFormReplyToast(): string { return <<<'HTML'
+<div class="cxd-toast" data-cxd-control="form-reply-toast"><strong>Comentario de revisión</strong><p>¿Podemos subir el límite de rate-limiting?</p><form data-form><input data-input type="text" required aria-label="Respuesta rápida" placeholder="Escribe una respuesta" /><button type="submit">Responder</button></form><span role="status">Esperando respuesta</span></div>
+<script type="module">
+import { mountFormReplyToast } from '/assets/form-reply-toast.js';
+document.querySelectorAll('[data-cxd-control="form-reply-toast"]:not([data-ready])').forEach(root => { root.dataset.ready = 'true'; mountFormReplyToast(root); });
+</script>
+HTML; }

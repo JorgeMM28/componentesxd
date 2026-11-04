@@ -1,17 +1,11 @@
 <?php
-// Variante 06 — Grupo de Avatares Flotantes con Inspector de Usuario — Laravel Livewire 3 (components/badges-data/variants/avatar-stack-interactive/AvatarStackInteractiveWire.php)
-namespace App\Livewire\Cxd\BadgesData;
+namespace App\Livewire;
 use Livewire\Component;
-
-class AvatarStackInteractiveWire extends Component {
-    public bool $active = false;
-    public function toggle(): void { $this->active = !$this->active; }
-    public function render() {
-        return <<<'HTML'
-        <div class="cxd-badges-data-avatar-stack-interactive">
-            <h3>Variante 06 — Grupo de Avatares Flotantes con Inspector de Usuario</h3>
-            <button type="button" wire:click="toggle">Estado: {{ $active ? 'ON' : 'OFF' }}</button>
-        </div>
-        HTML;
-    }
-}
+// Incluye styles.css y ajusta la ruta del módulo.
+class AvatarStackInteractiveWire extends Component { public function render(): string { return <<<'HTML'
+<div class="cxd-data" data-cxd-control="avatar-stack-interactive" wire:ignore><button type="button" class="cxd-data__avatar" data-name="Elena Rostova" data-role="Arquitectura UI" aria-pressed="true">ER</button><button type="button" class="cxd-data__avatar" data-name="Marco Kovacs" data-role="Ingeniería de sistemas" aria-pressed="false">MK</button><button type="button" class="cxd-data__avatar" data-name="Sofía Vance" data-role="Diseño de movimiento" aria-pressed="false">SV</button><span role="status">Elena Rostova · Arquitectura UI</span>@script
+<script>
+import('/assets/avatar-stack-interactive.js').then(module => module.mountAvatarStackInteractive($wire.$el));
+</script>
+@endscript</div>
+HTML; } }

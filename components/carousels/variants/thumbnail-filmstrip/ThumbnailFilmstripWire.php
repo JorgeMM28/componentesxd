@@ -1,17 +1,11 @@
 <?php
-// Variante 06 — Carrusel Galería con Tira Inferior de Miniaturas (Filmstrip) — Laravel Livewire 3 (components/carousels/variants/thumbnail-filmstrip/ThumbnailFilmstripWire.php)
-namespace App\Livewire\Cxd\Carousels;
+namespace App\Livewire;
 use Livewire\Component;
-
-class ThumbnailFilmstripWire extends Component {
-    public bool $active = false;
-    public function toggle(): void { $this->active = !$this->active; }
-    public function render() {
-        return <<<'HTML'
-        <div class="cxd-carousels-thumbnail-filmstrip">
-            <h3>Variante 06 — Carrusel Galería con Tira Inferior de Miniaturas (Filmstrip)</h3>
-            <button type="button" wire:click="toggle">Estado: {{ $active ? 'ON' : 'OFF' }}</button>
-        </div>
-        HTML;
-    }
-}
+// Incluye styles.css y ajusta la ruta del módulo.
+class ThumbnailFilmstripWire extends Component { public function render(): string { return <<<'HTML'
+<div class="cxd-carousel" data-cxd-control="thumbnail-filmstrip" wire:ignore><div class="cxd-carousel__item cxd-film-main" data-main>✦ Aurora</div><div class="cxd-filmstrip" aria-label="Seleccionar imagen"><button type="button" data-thumb="✦ Aurora" aria-pressed="true">✦ Aurora</button><button type="button" data-thumb="◉ Órbita" aria-pressed="false">◉ Órbita</button><button type="button" data-thumb="✳ Nébula" aria-pressed="false">✳ Nébula</button></div><span role="status">Imagen: Aurora</span>@script
+<script>
+import('/assets/thumbnail-filmstrip.js').then(module => module.mountThumbnailFilmstrip($wire.$el));
+</script>
+@endscript</div>
+HTML; } }

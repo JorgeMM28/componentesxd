@@ -1,17 +1,11 @@
 <?php
-// Variante 07 — Banner Content-Fit Flotante Tipo Píldora — Laravel Livewire 3 (components/toasts/variants/content-fit-pill-banner/ContentFitPillBannerWire.php)
-namespace App\Livewire\Cxd\Toasts;
+namespace App\Livewire;
 use Livewire\Component;
-
-class ContentFitPillBannerWire extends Component {
-    public bool $active = false;
-    public function toggle(): void { $this->active = !$this->active; }
-    public function render() {
-        return <<<'HTML'
-        <div class="cxd-toasts-content-fit-pill-banner">
-            <h3>Variante 07 — Banner Content-Fit Flotante Tipo Píldora</h3>
-            <button type="button" wire:click="toggle">Estado: {{ $active ? 'ON' : 'OFF' }}</button>
-        </div>
-        HTML;
-    }
-}
+// Incluye styles.css y ajusta la ruta del módulo.
+class ContentFitPillBannerWire extends Component { public function render(): string { return <<<'HTML'
+<div class="cxd-toast cxd-toast--pill" data-cxd-control="content-fit-pill-banner" wire:ignore><strong>NUEVO</strong><span data-message>Motor Anime.js v4 integrado</span><button type="button" data-dismiss>Entendido</button><span role="status"></span>@script
+<script>
+import('/assets/content-fit-pill-banner.js').then(module => module.mountContentFitPillBanner($wire.$el));
+</script>
+@endscript</div>
+HTML; } }

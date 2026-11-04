@@ -1,10 +1,10 @@
 <?php
-// Variante 03 — Comparador Visual Before / After con Cortina Deslizable — PHP 8.3 Renderer (components/accordions-tabs/variants/before-after-split/BeforeAfterSplitRenderer.php)
 declare(strict_types=1);
-namespace ComponentesXD\AccordionsTabs;
-
-final class BeforeAfterSplitRenderer {
-    public static function render(): string {
-        return '<div class="cxd-accordions-tabs-before-after-split"><h3>Variante 03 — Comparador Visual Before / After con Cortina Deslizable</h3><p>Arrastra el control divisor horizontal para comparar en tiempo real dos estados o arquitecturas superpuestas.</p></div>';
-    }
-}
+// Incluye styles.css y ajusta la ruta del módulo.
+function renderBeforeAfterSplit(): string { return <<<'HTML'
+<div class="cxd-widget" data-cxd-control="before-after-split"><div class="cxd-widget__compare" data-compare>DESPUÉS<span>ANTES</span></div><label>Divisor <input type="range" min="0" max="100" value="50" data-range /></label><span role="status">50%</span></div>
+<script type="module">
+import { mountBeforeAfterSplit } from '/assets/before-after-split.js';
+document.querySelectorAll('[data-cxd-control="before-after-split"]:not([data-ready])').forEach(root => { root.dataset.ready = 'true'; mountBeforeAfterSplit(root); });
+</script>
+HTML; }

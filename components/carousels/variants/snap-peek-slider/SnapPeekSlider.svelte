@@ -1,11 +1,6 @@
-<!-- Variante 03 — Carrusel Multi-Tarjeta con Vista Previa Lateral (Peek) y Barra de Progreso — Svelte 5 Runes (components/carousels/variants/snap-peek-slider/SnapPeekSlider.svelte) -->
 <script lang="ts">
-  import './styles.css';
-  let active = $state(false);
+import { mountSnapPeekSlider } from './snap-peek-slider.js';
+import './styles.css';
+function control(node: HTMLElement) { return { destroy: mountSnapPeekSlider(node) }; }
 </script>
-
-<div class="cxd-carousels-snap-peek-slider" data-active={active}>
-  <h3>Variante 03 — Carrusel Multi-Tarjeta con Vista Previa Lateral (Peek) y Barra de Progreso</h3>
-  <p>Muestra múltiples tarjetas visibles simultáneamente con desplazamiento suave, indicador numérico 01/05 y barra de progreso sincronizada.</p>
-  <button type="button" onclick={() => (active = !active)}>Alternar</button>
-</div>
+<div class="cxd-carousel" data-cxd-control="snap-peek-slider" use:control aria-label="Carrusel con vista lateral"><div class="cxd-peek" data-track tabindex="0"><article class="cxd-carousel__item" data-slide><small>01 / 04</small><strong>Aurora</strong><p>Una nueva perspectiva para explorar.</p></article><article class="cxd-carousel__item" data-slide><small>02 / 04</small><strong>Órbita</strong><p>Una nueva perspectiva para explorar.</p></article><article class="cxd-carousel__item" data-slide><small>03 / 04</small><strong>Nébula</strong><p>Una nueva perspectiva para explorar.</p></article><article class="cxd-carousel__item" data-slide><small>04 / 04</small><strong>Horizonte</strong><p>Una nueva perspectiva para explorar.</p></article></div><div class="cxd-progress" aria-hidden="true"><span data-progress></span></div><div class="cxd-carousel__controls"><button type="button" data-prev aria-label="Anterior">← Anterior</button><button type="button" data-next aria-label="Siguiente">Siguiente →</button></div><span role="status" aria-live="polite"></span></div>

@@ -1,17 +1,11 @@
 <?php
-// Variante 05 — Tarjeta con Barra de Acciones (Favorito, Compartir, Archivar) — Laravel Livewire 3 (components/cards/variants/action-toolbar-card/ActionToolbarCardWire.php)
-namespace App\Livewire\Cxd\Cards;
+namespace App\Livewire;
 use Livewire\Component;
-
-class ActionToolbarCardWire extends Component {
-    public bool $active = false;
-    public function toggle(): void { $this->active = !$this->active; }
-    public function render() {
-        return <<<'HTML'
-        <div class="cxd-cards-action-toolbar-card">
-            <h3>Variante 05 — Tarjeta con Barra de Acciones (Favorito, Compartir, Archivar)</h3>
-            <button type="button" wire:click="toggle">Estado: {{ $active ? 'ON' : 'OFF' }}</button>
-        </div>
-        HTML;
-    }
-}
+// Incluye styles.css y ajusta la ruta del módulo.
+class ActionToolbarCardWire extends Component { public function render(): string { return <<<'HTML'
+<div class="cxd-card" data-cxd-control="action-toolbar-card" wire:ignore><span>REPOSITORIO // CORE-UI</span><h3>Paquete de componentes</h3><p>Una tarjeta con acciones independientes.</p><div class="cxd-card__actions"><button type="button" data-star aria-pressed="false">Estrella (<span data-count>142</span>)</button><button type="button" data-action="Enlace listo para compartir">Compartir</button><button type="button" data-action="Repositorio preparado">Clonar</button></div><span role="status">Listo</span>@script
+<script>
+import('/assets/action-toolbar-card.js').then(module => module.mountActionToolbarCard($wire.$el));
+</script>
+@endscript</div>
+HTML; } }

@@ -1,10 +1,10 @@
 <?php
-// Variante 10 — Mobile Bottom Tab Bar Táctil con Micro-Interacciones Cinéticas — PHP 8.3 Renderer (components/navigation/variants/mobile-touch-tabbar/MobileTouchTabbarRenderer.php)
 declare(strict_types=1);
-namespace ComponentesXD\Navigation;
-
-final class MobileTouchTabbarRenderer {
-    public static function render(): string {
-        return '<nav class="cxd-navigation-mobile-touch-tabbar"><h3>Variante 10 — Mobile Bottom Tab Bar Táctil con Micro-Interacciones Cinéticas</h3><p>Barra inferior flotante tipo iOS/Android con 5 destinos táctiles, pastilla indicadora animada con Anime.js v4 y badges de notificaciones.</p></nav>';
-    }
-}
+// Incluye styles.css y ajusta la ruta del módulo.
+function renderMobileTouchTabbar(): string { return <<<'HTML'
+<div class="cxd-nav cxd-nav--mobile" data-cxd-control="mobile-touch-tabbar"><button type="button" data-destination="Inicio" aria-pressed="true">Inicio</button><button type="button" data-destination="Biblioteca" aria-pressed="false">Biblioteca</button><button type="button" data-destination="Motion" aria-pressed="false">Motion</button><button type="button" data-destination="Métricas" aria-pressed="false">Métricas</button><span role="status">Vista activa: Inicio</span></div>
+<script type="module">
+import { mountMobileTouchTabbar } from '/assets/mobile-touch-tabbar.js';
+document.querySelectorAll('[data-cxd-control="mobile-touch-tabbar"]:not([data-ready])').forEach(root => { root.dataset.ready = 'true'; mountMobileTouchTabbar(root); });
+</script>
+HTML; }

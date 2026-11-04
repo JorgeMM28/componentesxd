@@ -1,7 +1,6 @@
-{{-- Variante 05 — Botón con Seguridad Hold-to-Confirm (Mantener Presionado) — Laravel Blade (components/buttons/variants/hold-confirm-safety/hold-confirm-safety.blade.php) --}}
-@props(['title' => 'Variante 05 — Botón con Seguridad Hold-to-Confirm (Mantener Presionado)'])
-<div {{ $attributes->merge(['class' => 'cxd-buttons-hold-confirm-safety']) }}>
-    <h3>{{ $title }}</h3>
-    <p>Mantén presionado el botón para llenar la barra de progreso roja hasta el 100% y ejecutar la acción.</p>
-    {{ $slot }}
-</div>
+{{-- Incluye styles.css y ajusta la ruta del módulo. --}}
+<div class="cxd-control" data-cxd-control="hold-confirm-safety"><button type="button" data-hold>Mantén presionado para purgar; con teclado pulsa dos veces</button><span role="status">PROGRESO DE SEGURIDAD: 0%</span></div>
+<script type="module">
+import { mountHoldConfirmSafety } from '/assets/hold-confirm-safety.js';
+document.querySelectorAll('[data-cxd-control="hold-confirm-safety"]:not([data-ready])').forEach(root => { root.dataset.ready = 'true'; mountHoldConfirmSafety(root); });
+</script>

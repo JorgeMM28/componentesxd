@@ -1,7 +1,6 @@
-{{-- Variante 07 — Carrusel con Barras de Tiempo Segmentadas (Autoplay + Pausa) — Laravel Blade (components/carousels/variants/autoplay-story-bars/autoplay-story-bars.blade.php) --}}
-@props(['title' => 'Variante 07 — Carrusel con Barras de Tiempo Segmentadas (Autoplay + Pausa)'])
-<div {{ $attributes->merge(['class' => 'cxd-carousels-autoplay-story-bars']) }}>
-    <h3>{{ $title }}</h3>
-    <p>Cabecera con segmentos de progreso temporales que avanzan automáticamente y permiten saltar a cualquier historia.</p>
-    {{ $slot }}
-</div>
+{{-- Incluye styles.css y ajusta la ruta del módulo. --}}
+<div class="cxd-carousel" data-cxd-control="autoplay-story-bars"><div class="cxd-story-bars" aria-label="Historias"><button type="button" data-story="0" aria-label="Historia 1"><span></span></button><button type="button" data-story="1" aria-label="Historia 2"><span></span></button><button type="button" data-story="2" aria-label="Historia 3"><span></span></button></div><div class="cxd-carousel__item" data-content><strong>Historia 1</strong><p>Explora la colección.</p></div><div class="cxd-carousel__controls"><button type="button" data-play aria-pressed="false">Reproducir</button></div><span role="status"></span></div>
+<script type="module">
+import { mountAutoplayStoryBars } from '/assets/autoplay-story-bars.js';
+document.querySelectorAll('[data-cxd-control="autoplay-story-bars"]:not([data-ready])').forEach(root => { root.dataset.ready = 'true'; mountAutoplayStoryBars(root); });
+</script>

@@ -1,21 +1,4 @@
-/**
- * Variante 04 — Tarjeta Interactiva con Pestañas Internas — React / Next.js (TSX)
- * Archivo: components/cards/variants/interactive-tabbed-card/InteractiveTabbedCard.tsx
- */
-import React, { useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { mountInteractiveTabbedCard } from './interactive-tabbed-card.js';
 import './styles.css';
-
-export const InteractiveTabbedCard: React.FC<{ title?: string }> = ({
-  title = 'Variante 04 — Tarjeta Interactiva con Pestañas Internas'
-}) => {
-  const [active, setActive] = useState(false);
-  return (
-    <div className="cxd-cards-interactive-tabbed-card" data-active={active}>
-      <h3>{title}</h3>
-      <p>Alterna entre Resumen, Métricas y Configuración dentro de la misma tarjeta sin recargar.</p>
-      <button type="button" onClick={() => setActive(!active)}>
-        Alternar Estado
-      </button>
-    </div>
-  );
-};
+export function InteractiveTabbedCard() { const root = useRef<HTMLDivElement>(null); useEffect(() => root.current ? mountInteractiveTabbedCard(root.current) : undefined, []); return <div className="cxd-card" data-cxd-control="interactive-tabbed-card" ref={root}><div className="cxd-card__actions"><button type="button" data-tab="summary" aria-pressed="true">Resumen</button><button type="button" data-tab="metrics" aria-pressed="false">Métricas</button><button type="button" data-tab="settings" aria-pressed="false">Ajustes</button></div><p data-panel="summary">Estado general: 99.99% de disponibilidad.</p><p data-panel="metrics" hidden>Latencia media: 7.2 ms · Memoria: 41.2 GB.</p><p data-panel="settings" hidden>Autoescalado habilitado: 4 a 32 nodos.</p></div>; }

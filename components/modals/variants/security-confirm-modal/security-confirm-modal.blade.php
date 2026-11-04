@@ -1,7 +1,6 @@
-{{-- Variante 05 — Modal de Confirmación con Validación de Texto — Laravel Blade (components/modals/variants/security-confirm-modal/security-confirm-modal.blade.php) --}}
-@props(['title' => 'Variante 05 — Modal de Confirmación con Validación de Texto'])
-<div {{ $attributes->merge(['class' => 'cxd-modals-security-confirm-modal']) }}>
-    <h3>{{ $title }}</h3>
-    <p>Escribe "ELIMINAR" en el campo de confirmación para desbloquear el botón destructivo.</p>
-    {{ $slot }}
-</div>
+{{-- Incluye styles.css y ajusta la ruta del módulo. --}}
+<div class="cxd-dialog" data-cxd-control="security-confirm-modal"><button type="button" data-open>Eliminar recurso</button><span role="status">Sin cambios</span><dialog aria-label="Confirmar eliminación"><h3>Confirmar eliminación</h3><p>Escribe ELIMINAR para habilitar la acción de demostración.</p><label>Confirmación <input type="text" data-confirm-input autocomplete="off" /></label><div class="cxd-dialog__actions"><button type="button" data-delete disabled>Eliminar</button><button type="button" data-close>Cancelar</button></div></dialog></div>
+<script type="module">
+import { mountSecurityConfirmModal } from '/assets/security-confirm-modal.js';
+document.querySelectorAll('[data-cxd-control="security-confirm-modal"]:not([data-ready])').forEach(root => { root.dataset.ready = 'true'; mountSecurityConfirmModal(root); });
+</script>

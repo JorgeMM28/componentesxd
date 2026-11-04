@@ -1,7 +1,12 @@
-{{-- Variante 07 — Barra de Botones Content-Fit con Indicador Activo — Laravel Blade (components/buttons/variants/segmented-toolbar-fit/segmented-toolbar-fit.blade.php) --}}
-@props(['title' => 'Variante 07 — Barra de Botones Content-Fit con Indicador Activo'])
-<div {{ $attributes->merge(['class' => 'cxd-buttons-segmented-toolbar-fit']) }}>
-    <h3>{{ $title }}</h3>
-    <p>Grupo compacto unido donde la selección activa cambia instantáneamente al hacer clic.</p>
-    {{ $slot }}
+{{-- Copia styles.css y segmented-toolbar-fit.js a tus assets y ajusta las URLs. --}}
+<div class="cxd-segments" data-cxd-segments>
+  <button type="button" class="cxd-segments__button cxd-segments__button--one" data-message="Vista de Tabla Estructurada (10 Variantes)" aria-pressed="true">Vista Tabla</button>
+  <button type="button" class="cxd-segments__button cxd-segments__button--two" data-message="Vista de Tarjetas Bento (8 Variantes)" aria-pressed="false">Vista Tarjetas</button>
+  <button type="button" class="cxd-segments__button cxd-segments__button--three" data-message="Vista de Grafo Vectorial 3D" aria-pressed="false">Vista Grafo 3D</button>
+  <button type="button" class="cxd-segments__button cxd-segments__button--four" data-message="Inspector JSON Raw en Vivo" aria-pressed="false">JSON Raw</button>
+  <span class="cxd-segments__status" role="status">MODO ACTIVO: Vista de Tabla Estructurada (10 Variantes)</span>
 </div>
+<script type="module">
+import { mountSegmentedToolbarFit } from '/assets/segmented-toolbar-fit.js';
+document.querySelectorAll('[data-cxd-segments]:not([data-ready])').forEach(root => { root.dataset.ready = 'true'; mountSegmentedToolbarFit(root); });
+</script>

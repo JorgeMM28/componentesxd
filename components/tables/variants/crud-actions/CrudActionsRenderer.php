@@ -1,10 +1,10 @@
 <?php
-// Variante 06 — Tabla con Acciones (Duplicar, Estado y Eliminar Fila) — PHP 8.3 Renderer (components/tables/variants/crud-actions/CrudActionsRenderer.php)
 declare(strict_types=1);
-namespace ComponentesXD\Tables;
-
-final class CrudActionsRenderer {
-    public static function render(): string {
-        return '<div class="cxd-tables-crud-actions"><h3>Variante 06 — Tabla con Acciones (Duplicar, Estado y Eliminar Fila)</h3><p>Botones funcionales en cada fila para cambiar estado, duplicar registro o eliminar con animación Anime.js.</p></div>';
-    }
-}
+// Incluye styles.css y ajusta la ruta del módulo.
+function renderCrudActions(): string { return <<<'HTML'
+<div class="cxd-table" data-cxd-control="crud-actions"><button type="button" data-add>Agregar registro</button><table><thead><tr><th>Servicio</th><th>Estado</th><th>Acciones</th></tr></thead><tbody data-body><tr><td data-name>API</td><td data-state>Activo</td><td><button type="button" data-toggle>Estado</button><button type="button" data-duplicate>Duplicar</button><button type="button" data-delete>Eliminar</button></td></tr><tr><td data-name>Worker</td><td data-state>Activo</td><td><button type="button" data-toggle>Estado</button><button type="button" data-duplicate>Duplicar</button><button type="button" data-delete>Eliminar</button></td></tr></tbody></table><span role="status">2 registros</span></div>
+<script type="module">
+import { mountCrudActions } from '/assets/crud-actions.js';
+document.querySelectorAll('[data-cxd-control="crud-actions"]:not([data-ready])').forEach(root => { root.dataset.ready = 'true'; mountCrudActions(root); });
+</script>
+HTML; }

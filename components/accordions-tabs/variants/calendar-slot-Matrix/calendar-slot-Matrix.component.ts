@@ -1,18 +1,4 @@
-// Variante 08 — Calendario y Selector Interactivo de Horarios / Turnos — Angular 18+ Signals (components/accordions-tabs/variants/calendar-slot-Matrix/calendar-slot-Matrix.component.ts)
-import { Component, signal } from '@angular/core';
-
-@Component({
-  selector: 'cxd-calendar-slot-Matrix',
-  standalone: true,
-  styleUrls: ['./styles.css'],
-  template: `
-    <div class="cxd-accordions-tabs-calendar-slot-Matrix" [attr.data-active]="active()">
-      <h3>Variante 08 — Calendario y Selector Interactivo de Horarios / Turnos</h3>
-      <p>Selecciona día de la semana y franja horaria con confirmación instantánea de reserva.</p>
-      <button type="button" (click)="active.set(!active())">Alternar</button>
-    </div>
-  `
-})
-export class CxdCalendarSlotMatrixComponent {
-  active = signal(false);
-}
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import { mountCalendarSlotMatrix } from './calendar-slot-Matrix.js';
+@Component({ selector:'cxd-calendar-slot-Matrix', standalone:true, styleUrls:['./styles.css'], template:`<div class="cxd-widget" data-cxd-control="calendar-slot-Matrix" #root><label>Día <select data-day><option>Lunes</option><option>Martes</option><option>Miércoles</option><option>Jueves</option><option>Viernes</option></select></label><div class="cxd-widget__row"><button type="button" data-slot="09:00" aria-pressed="false">09:00</button><button type="button" data-slot="11:00" aria-pressed="false">11:00</button><button type="button" data-slot="15:00" aria-pressed="false">15:00</button></div><span role="status">Selecciona un horario</span></div>` })
+export class CalendarSlotMatrixComponent implements AfterViewInit, OnDestroy { @ViewChild('root') root!: ElementRef<HTMLElement>; private unmount?: () => void; ngAfterViewInit() { this.unmount = mountCalendarSlotMatrix(this.root.nativeElement); } ngOnDestroy() { this.unmount?.(); } }

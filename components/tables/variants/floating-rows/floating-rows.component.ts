@@ -1,18 +1,4 @@
-// Variante 04 — Tabla de Filas Flotantes Separadas — Angular 18+ Signals (components/tables/variants/floating-rows/floating-rows.component.ts)
-import { Component, signal } from '@angular/core';
-
-@Component({
-  selector: 'cxd-floating-rows',
-  standalone: true,
-  styleUrls: ['./styles.css'],
-  template: `
-    <div class="cxd-tables-floating-rows" [attr.data-active]="active()">
-      <h3>Variante 04 — Tabla de Filas Flotantes Separadas</h3>
-      <p>Cada fila es una tarjeta independiente con sombra propia, bordes redondeados y elevación al pasar el cursor.</p>
-      <button type="button" (click)="active.set(!active())">Alternar</button>
-    </div>
-  `
-})
-export class CxdFloatingRowsComponent {
-  active = signal(false);
-}
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import { mountFloatingRows } from './floating-rows.js';
+@Component({ selector:'cxd-floating-rows', standalone:true, styleUrls:['./styles.css'], template:`<div class="cxd-table cxd-table--floating" data-cxd-control="floating-rows" #root><table><thead><tr><th>Miembro</th><th>Departamento</th><th>Estado</th></tr></thead><tbody><tr><td>Elena</td><td>Arquitectura</td><td>Online</td></tr><tr><td>Marco</td><td>Sistemas</td><td>Revisión</td></tr><tr><td>Sofía</td><td>Diseño</td><td>Online</td></tr></tbody></table></div>` })
+export class FloatingRowsComponent implements AfterViewInit, OnDestroy { @ViewChild('root') root!: ElementRef<HTMLElement>; private unmount?: () => void; ngAfterViewInit() { this.unmount = mountFloatingRows(this.root.nativeElement); } ngOnDestroy() { this.unmount?.(); } }

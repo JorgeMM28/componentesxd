@@ -1,21 +1,4 @@
-/**
- * Variante 02 — Acordeón Multi-Apertura con Insignias de Estado y Buscador — React / Next.js (TSX)
- * Archivo: components/accordions-tabs/variants/accordion-multi-bento/AccordionMultiBento.tsx
- */
-import React, { useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { mountAccordionMultiBento } from './accordion-multi-bento.js';
 import './styles.css';
-
-export const AccordionMultiBento: React.FC<{ title?: string }> = ({
-  title = 'Variante 02 — Acordeón Multi-Apertura con Insignias de Estado y Buscador'
-}) => {
-  const [active, setActive] = useState(false);
-  return (
-    <div className="cxd-accordions-tabs-accordion-multi-bento" data-active={active}>
-      <h3>{title}</h3>
-      <p>Permite mantener varios módulos abiertos al mismo tiempo o expandir/colapsar todos con un solo clic.</p>
-      <button type="button" onClick={() => setActive(!active)}>
-        Alternar Estado
-      </button>
-    </div>
-  );
-};
+export function AccordionMultiBento() { const root = useRef<HTMLDivElement>(null); useEffect(() => root.current ? mountAccordionMultiBento(root.current) : undefined, []); return <div className="cxd-widget" data-cxd-control="accordion-multi-bento" ref={root}><div className="cxd-widget__row"><button type="button" data-all="open">Expandir todo</button><button type="button" data-all="close">Colapsar todo</button></div><button type="button" data-open="one" aria-expanded="true">Módulo de red</button><div className="cxd-widget__panel" data-panel="one">Latencia: 8 ms</div><button type="button" data-open="two" aria-expanded="false">Módulo de datos</button><div className="cxd-widget__panel" data-panel="two" hidden>Uso: 42 GB</div></div>; }

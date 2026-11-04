@@ -1,18 +1,4 @@
-// Variante 04 — Línea de Tiempo (Timeline) con Filtro de Eventos — Angular 18+ Signals (components/badges-data/variants/vertical-event-timeline/vertical-event-timeline.component.ts)
-import { Component, signal } from '@angular/core';
-
-@Component({
-  selector: 'cxd-vertical-event-timeline',
-  standalone: true,
-  styleUrls: ['./styles.css'],
-  template: `
-    <div class="cxd-badges-data-vertical-event-timeline" [attr.data-active]="active()">
-      <h3>Variante 04 — Línea de Tiempo (Timeline) con Filtro de Eventos</h3>
-      <p>Cronología vertical con nodos conectados, estados de despliegue y botón para agregar nuevo evento.</p>
-      <button type="button" (click)="active.set(!active())">Alternar</button>
-    </div>
-  `
-})
-export class CxdVerticalEventTimelineComponent {
-  active = signal(false);
-}
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import { mountVerticalEventTimeline } from './vertical-event-timeline.js';
+@Component({ selector:'cxd-vertical-event-timeline', standalone:true, styleUrls:['./styles.css'], template:`<div class="cxd-data" data-cxd-control="vertical-event-timeline" #root><strong>Cronología de eventos</strong><button type="button" data-add>+ Agregar evento</button><div class="cxd-data__list" data-list aria-live="polite"><div class="cxd-data__item">Despliegue completado</div><div class="cxd-data__item">Archivos sincronizados</div></div></div>` })
+export class VerticalEventTimelineComponent implements AfterViewInit, OnDestroy { @ViewChild('root') root!: ElementRef<HTMLElement>; private unmount?: () => void; ngAfterViewInit() { this.unmount = mountVerticalEventTimeline(this.root.nativeElement); } ngOnDestroy() { this.unmount?.(); } }

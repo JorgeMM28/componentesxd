@@ -1,18 +1,4 @@
-// Variante 03 — Medidores Circulares SVG con Control Deslizante en Vivo — Angular 18+ Signals (components/badges-data/variants/interactive-svg-gauges/interactive-svg-gauges.component.ts)
-import { Component, signal } from '@angular/core';
-
-@Component({
-  selector: 'cxd-interactive-svg-gauges',
-  standalone: true,
-  styleUrls: ['./styles.css'],
-  template: `
-    <div class="cxd-badges-data-interactive-svg-gauges" [attr.data-active]="active()">
-      <h3>Variante 03 — Medidores Circulares SVG con Control Deslizante en Vivo</h3>
-      <p>Mueve el control deslizante para actualizar en tiempo real el porcentaje y los anillos SVG.</p>
-      <button type="button" (click)="active.set(!active())">Alternar</button>
-    </div>
-  `
-})
-export class CxdInteractiveSvgGaugesComponent {
-  active = signal(false);
-}
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import { mountInteractiveSvgGauges } from './interactive-svg-gauges.js';
+@Component({ selector:'cxd-interactive-svg-gauges', standalone:true, styleUrls:['./styles.css'], template:`<div class="cxd-data" data-cxd-control="interactive-svg-gauges" #root><div class="cxd-data__gauge" data-gauge><strong data-value>84%</strong></div><label>Ajustar porcentaje <input type="range" min="0" max="100" value="84" data-slider /></label><button type="button" data-set="45">45%</button><button type="button" data-set="78">78%</button><button type="button" data-set="99">99%</button><span role="status">SLA global: 84%</span></div>` })
+export class InteractiveSvgGaugesComponent implements AfterViewInit, OnDestroy { @ViewChild('root') root!: ElementRef<HTMLElement>; private unmount?: () => void; ngAfterViewInit() { this.unmount = mountInteractiveSvgGauges(this.root.nativeElement); } ngOnDestroy() { this.unmount?.(); } }

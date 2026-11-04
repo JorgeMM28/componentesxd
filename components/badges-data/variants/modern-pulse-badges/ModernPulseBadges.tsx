@@ -1,21 +1,4 @@
-/**
- * Variante 01 — Colección de Badges Modernos, Outline y Con Punto Pulsante — React / Next.js (TSX)
- * Archivo: components/badges-data/variants/modern-pulse-badges/ModernPulseBadges.tsx
- */
-import React, { useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { mountModernPulseBadges } from './modern-pulse-badges.js';
 import './styles.css';
-
-export const ModernPulseBadges: React.FC<{ title?: string }> = ({
-  title = 'Variante 01 — Colección de Badges Modernos, Outline y Con Punto Pulsante'
-}) => {
-  const [active, setActive] = useState(false);
-  return (
-    <div className="cxd-badges-data-modern-pulse-badges" data-active={active}>
-      <h3>{title}</h3>
-      <p>Insignias redondeadas, cuadradas, sin bordes y con botón de cierre eliminable en vivo.</p>
-      <button type="button" onClick={() => setActive(!active)}>
-        Alternar Estado
-      </button>
-    </div>
-  );
-};
+export function ModernPulseBadges() { const root = useRef<HTMLDivElement>(null); useEffect(() => root.current ? mountModernPulseBadges(root.current) : undefined, []); return <div className="cxd-data" data-cxd-control="modern-pulse-badges" ref={root}><span className="cxd-data__tag">OPERATIONAL</span><span className="cxd-data__tag">DEGRADED</span><span className="cxd-data__tag">OUTAGE</span><button type="button" data-tag>astro-5 ×</button><button type="button" data-tag>animejs-v4 ×</button><button type="button" data-tag>typescript ×</button><button type="button" data-restore>Restaurar etiquetas</button><span role="status">3 etiquetas activas</span></div>; }

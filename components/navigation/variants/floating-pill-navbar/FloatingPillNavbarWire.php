@@ -1,17 +1,11 @@
 <?php
-// Variante 02 — Navbar Flotante Redondeada Tipo Cápsula — Laravel Livewire 3 (components/navigation/variants/floating-pill-navbar/FloatingPillNavbarWire.php)
-namespace App\Livewire\Cxd\Navigation;
+namespace App\Livewire;
 use Livewire\Component;
-
-class FloatingPillNavbarWire extends Component {
-    public bool $active = false;
-    public function toggle(): void { $this->active = !$this->active; }
-    public function render() {
-        return <<<'HTML'
-        <div class="cxd-navigation-floating-pill-navbar">
-            <h3>Variante 02 — Navbar Flotante Redondeada Tipo Cápsula</h3>
-            <button type="button" wire:click="toggle">Estado: {{ $active ? 'ON' : 'OFF' }}</button>
-        </div>
-        HTML;
-    }
-}
+// Incluye styles.css y ajusta la ruta del módulo.
+class FloatingPillNavbarWire extends Component { public function render(): string { return <<<'HTML'
+<div class="cxd-nav cxd-nav--pill" data-cxd-control="floating-pill-navbar" wire:ignore><button type="button" data-destination="Inicio" aria-pressed="true">Inicio</button><button type="button" data-destination="Componentes" aria-pressed="false">Componentes</button><button type="button" data-destination="Animaciones" aria-pressed="false">Animaciones</button><span role="status">Vista activa: Inicio</span>@script
+<script>
+import('/assets/floating-pill-navbar.js').then(module => module.mountFloatingPillNavbar($wire.$el));
+</script>
+@endscript</div>
+HTML; } }

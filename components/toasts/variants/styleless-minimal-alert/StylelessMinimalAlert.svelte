@@ -1,11 +1,6 @@
-<!-- Variante 06 — Alerta Styleless Minimalista (Tipografía + Línea) — Svelte 5 Runes (components/toasts/variants/styleless-minimal-alert/StylelessMinimalAlert.svelte) -->
 <script lang="ts">
-  import './styles.css';
-  let active = $state(false);
+import { mountStylelessMinimalAlert } from './styleless-minimal-alert.js';
+import './styles.css';
+function control(node: HTMLElement) { return { destroy: mountStylelessMinimalAlert(node) }; }
 </script>
-
-<div class="cxd-toasts-styleless-minimal-alert" data-active={active}>
-  <h3>Variante 06 — Alerta Styleless Minimalista (Tipografía + Línea)</h3>
-  <p>Sin caja ni sombras: solo una línea vertical de 2px, texto directo y enlace de acción limpio.</p>
-  <button type="button" onclick={() => (active = !active)}>Alternar</button>
-</div>
+<div class="cxd-toast cxd-toast--minimal" data-cxd-control="styleless-minimal-alert" use:control role="status"><strong>AVISO DEL SISTEMA</strong><p>La ventana de mantenimiento iniciará en 15 minutos sin interrupción de tráfico.</p></div>

@@ -1,10 +1,16 @@
 <?php
-// Variante 02 — Botones Styleless (Subrayado Cinético sin Caja) — PHP 8.3 Renderer (components/buttons/variants/styleless-text-links/StylelessTextLinksRenderer.php)
 declare(strict_types=1);
-namespace ComponentesXD\Buttons;
-
-final class StylelessTextLinksRenderer {
-    public static function render(): string {
-        return '<div class="cxd-buttons-styleless-text-links"><h3>Variante 02 — Botones Styleless (Subrayado Cinético sin Caja)</h3><p>Cero bordes ni fondos: línea inferior que crece de izquierda a derecha y flecha SVG que avanza al pasar el cursor.</p></div>';
-    }
+// Incluye styles.css y monta styleless-text-links.js como módulo en el navegador.
+function renderStylelessTextLinks(): string {
+    return <<<'HTML'
+<div class="cxd-text-links" data-cxd-text-links>
+  <button type="button" class="cxd-text-links__button cxd-text-links__button--documentation" data-message="Abriendo especificación técnica v4.2..." aria-pressed="false">Explorar Documentación Técnica</button>
+  <button type="button" class="cxd-text-links__button cxd-text-links__button--download" data-message="Descargando manifiesto raw (42 KB)..." aria-pressed="false">Descargar Especificación Raw</button>
+  <span class="cxd-text-links__status" role="status">Selecciona una opción</span>
+</div>
+<script type="module">
+import { mountStylelessTextLinks } from '/assets/styleless-text-links.js';
+document.querySelectorAll('[data-cxd-text-links]:not([data-ready])').forEach(root => { root.dataset.ready = 'true'; mountStylelessTextLinks(root); });
+</script>
+HTML;
 }

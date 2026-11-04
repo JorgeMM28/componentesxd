@@ -10,10 +10,12 @@
     "build": "astro build && node scripts/prepare-vercel.mjs",
     "build:vercel": "astro build && node scripts/prepare-vercel.mjs",
     "generate:vault": "node scripts/generate-vault.mjs",
-    "preview": "astro preview"
+    "preview": "astro preview",
+    "test": "node --test",
+    "sync:curated": "node scripts/sync-curated.mjs"
   },
   "dependencies": {
-    "animejs": "^4.0.0",
+    "animejs": "^4.5.0",
     "astro": "^5.4.0"
   }
 }

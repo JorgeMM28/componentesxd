@@ -1,21 +1,4 @@
-/**
- * Variante 01 — Modal Moderno con Bordes Redondeados y Blur — React / Next.js (TSX)
- * Archivo: components/modals/variants/modern-glass-modal/ModernGlassModal.tsx
- */
-import React, { useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { mountModernGlassModal } from './modern-glass-modal.js';
 import './styles.css';
-
-export const ModernGlassModal: React.FC<{ title?: string }> = ({
-  title = 'Variante 01 — Modal Moderno con Bordes Redondeados y Blur'
-}) => {
-  const [active, setActive] = useState(false);
-  return (
-    <div className="cxd-modals-modern-glass-modal" data-active={active}>
-      <h3>{title}</h3>
-      <p>Ventana de diálogo con cabecera limpia, cuerpo estructurado y botones que abren/cierran la vista.</p>
-      <button type="button" onClick={() => setActive(!active)}>
-        Alternar Estado
-      </button>
-    </div>
-  );
-};
+export function ModernGlassModal() { const root = useRef<HTMLDivElement>(null); useEffect(() => root.current ? mountModernGlassModal(root.current) : undefined, []); return <div className="cxd-dialog" data-cxd-control="modern-glass-modal" ref={root}><button type="button" data-open>Abrir diálogo</button><span role="status">Listo</span><dialog aria-label="Actualizar interfaz"><h3>Actualizar interfaz</h3><p>Aplica la configuración seleccionada a la demostración.</p><div className="cxd-dialog__actions"><button type="button" data-confirm>Confirmar</button><button type="button" data-close>Cancelar</button></div></dialog></div>; }

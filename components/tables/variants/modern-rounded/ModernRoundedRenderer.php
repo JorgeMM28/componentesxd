@@ -1,10 +1,10 @@
 <?php
-// Variante 01 — Tabla Moderna de Bordes Redondeados — PHP 8.3 Renderer (components/tables/variants/modern-rounded/ModernRoundedRenderer.php)
 declare(strict_types=1);
-namespace ComponentesXD\Tables;
-
-final class ModernRoundedRenderer {
-    public static function render(): string {
-        return '<div class="cxd-tables-modern-rounded"><h3>Variante 01 — Tabla Moderna de Bordes Redondeados</h3><p>Contenedor con radio amplio de 18px, cabeceras suaves tipo cápsula, avatares circulares y badges pastilla.</p></div>';
-    }
-}
+// Incluye styles.css y ajusta la ruta del módulo.
+function renderModernRounded(): string { return <<<'HTML'
+<div class="cxd-table " data-cxd-control="modern-rounded"><table><thead><tr><th>Miembro</th><th>Departamento</th><th>Estado</th></tr></thead><tbody><tr><td>Elena</td><td>Arquitectura</td><td>Online</td></tr><tr><td>Marco</td><td>Sistemas</td><td>Revisión</td></tr><tr><td>Sofía</td><td>Diseño</td><td>Online</td></tr></tbody></table></div>
+<script type="module">
+import { mountModernRounded } from '/assets/modern-rounded.js';
+document.querySelectorAll('[data-cxd-control="modern-rounded"]:not([data-ready])').forEach(root => { root.dataset.ready = 'true'; mountModernRounded(root); });
+</script>
+HTML; }

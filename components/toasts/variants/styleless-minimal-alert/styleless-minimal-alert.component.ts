@@ -1,18 +1,4 @@
-// Variante 06 — Alerta Styleless Minimalista (Tipografía + Línea) — Angular 18+ Signals (components/toasts/variants/styleless-minimal-alert/styleless-minimal-alert.component.ts)
-import { Component, signal } from '@angular/core';
-
-@Component({
-  selector: 'cxd-styleless-minimal-alert',
-  standalone: true,
-  styleUrls: ['./styles.css'],
-  template: `
-    <div class="cxd-toasts-styleless-minimal-alert" [attr.data-active]="active()">
-      <h3>Variante 06 — Alerta Styleless Minimalista (Tipografía + Línea)</h3>
-      <p>Sin caja ni sombras: solo una línea vertical de 2px, texto directo y enlace de acción limpio.</p>
-      <button type="button" (click)="active.set(!active())">Alternar</button>
-    </div>
-  `
-})
-export class CxdStylelessMinimalAlertComponent {
-  active = signal(false);
-}
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import { mountStylelessMinimalAlert } from './styleless-minimal-alert.js';
+@Component({ selector:'cxd-styleless-minimal-alert', standalone:true, styleUrls:['./styles.css'], template:`<div class="cxd-toast cxd-toast--minimal" data-cxd-control="styleless-minimal-alert" #root role="status"><strong>AVISO DEL SISTEMA</strong><p>La ventana de mantenimiento iniciará en 15 minutos sin interrupción de tráfico.</p></div>` })
+export class StylelessMinimalAlertComponent implements AfterViewInit, OnDestroy { @ViewChild('root') root!: ElementRef<HTMLElement>; private unmount?: () => void; ngAfterViewInit() { this.unmount = mountStylelessMinimalAlert(this.root.nativeElement); } ngOnDestroy() { this.unmount?.(); } }

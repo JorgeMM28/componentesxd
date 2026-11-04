@@ -1,18 +1,4 @@
-// Variante 06 — Grupo de Avatares Flotantes con Inspector de Usuario — Angular 18+ Signals (components/badges-data/variants/avatar-stack-interactive/avatar-stack-interactive.component.ts)
-import { Component, signal } from '@angular/core';
-
-@Component({
-  selector: 'cxd-avatar-stack-interactive',
-  standalone: true,
-  styleUrls: ['./styles.css'],
-  template: `
-    <div class="cxd-badges-data-avatar-stack-interactive" [attr.data-active]="active()">
-      <h3>Variante 06 — Grupo de Avatares Flotantes con Inspector de Usuario</h3>
-      <p>Haz clic en cualquier miembro del equipo para ver su rol, estado y permisos activos.</p>
-      <button type="button" (click)="active.set(!active())">Alternar</button>
-    </div>
-  `
-})
-export class CxdAvatarStackInteractiveComponent {
-  active = signal(false);
-}
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import { mountAvatarStackInteractive } from './avatar-stack-interactive.js';
+@Component({ selector:'cxd-avatar-stack-interactive', standalone:true, styleUrls:['./styles.css'], template:`<div class="cxd-data" data-cxd-control="avatar-stack-interactive" #root><button type="button" class="cxd-data__avatar" data-name="Elena Rostova" data-role="Arquitectura UI" aria-pressed="true">ER</button><button type="button" class="cxd-data__avatar" data-name="Marco Kovacs" data-role="Ingeniería de sistemas" aria-pressed="false">MK</button><button type="button" class="cxd-data__avatar" data-name="Sofía Vance" data-role="Diseño de movimiento" aria-pressed="false">SV</button><span role="status">Elena Rostova · Arquitectura UI</span></div>` })
+export class AvatarStackInteractiveComponent implements AfterViewInit, OnDestroy { @ViewChild('root') root!: ElementRef<HTMLElement>; private unmount?: () => void; ngAfterViewInit() { this.unmount = mountAvatarStackInteractive(this.root.nativeElement); } ngOnDestroy() { this.unmount?.(); } }

@@ -1,18 +1,4 @@
-// Variante 05 — Tarjeta con Barra de Acciones (Favorito, Compartir, Archivar) — Angular 18+ Signals (components/cards/variants/action-toolbar-card/action-toolbar-card.component.ts)
-import { Component, signal } from '@angular/core';
-
-@Component({
-  selector: 'cxd-action-toolbar-card',
-  standalone: true,
-  styleUrls: ['./styles.css'],
-  template: `
-    <div class="cxd-cards-action-toolbar-card" [attr.data-active]="active()">
-      <h3>Variante 05 — Tarjeta con Barra de Acciones (Favorito, Compartir, Archivar)</h3>
-      <p>Incluye botones inferiores interactivos con contadores que se actualizan en tiempo real.</p>
-      <button type="button" (click)="active.set(!active())">Alternar</button>
-    </div>
-  `
-})
-export class CxdActionToolbarCardComponent {
-  active = signal(false);
-}
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import { mountActionToolbarCard } from './action-toolbar-card.js';
+@Component({ selector:'cxd-action-toolbar-card', standalone:true, styleUrls:['./styles.css'], template:`<div class="cxd-card" data-cxd-control="action-toolbar-card" #root><span>REPOSITORIO // CORE-UI</span><h3>Paquete de componentes</h3><p>Una tarjeta con acciones independientes.</p><div class="cxd-card__actions"><button type="button" data-star aria-pressed="false">Estrella (<span data-count>142</span>)</button><button type="button" data-action="Enlace listo para compartir">Compartir</button><button type="button" data-action="Repositorio preparado">Clonar</button></div><span role="status">Listo</span></div>` })
+export class ActionToolbarCardComponent implements AfterViewInit, OnDestroy { @ViewChild('root') root!: ElementRef<HTMLElement>; private unmount?: () => void; ngAfterViewInit() { this.unmount = mountActionToolbarCard(this.root.nativeElement); } ngOnDestroy() { this.unmount?.(); } }

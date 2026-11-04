@@ -1,14 +1,7 @@
-<!-- Variante 03 — Menú Popover Flotante Content-Fit con Acciones — Vue 3 SFC (components/modals/variants/floating-popover-menu/FloatingPopoverMenu.vue) -->
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
+import { mountFloatingPopoverMenu } from './floating-popover-menu.js';
 import './styles.css';
-const active = ref(false);
+const root = ref<HTMLElement | null>(null); let unmount: (() => void) | undefined; onMounted(() => { if (root.value) unmount = mountFloatingPopoverMenu(root.value); }); onUnmounted(() => unmount?.());
 </script>
-
-<template>
-  <div class="cxd-modals-floating-popover-menu" :data-active="active">
-    <h3>Variante 03 — Menú Popover Flotante Content-Fit con Acciones</h3>
-    <p>Menú contextual compacto con opciones rápidas, atajos de teclado e interruptor integrado.</p>
-    <button type="button" @click="active = !active">Alternar</button>
-  </div>
-</template>
+<template><div class="cxd-dialog" data-cxd-control="floating-popover-menu" ref="root"><button type="button" data-trigger aria-expanded="false">Abrir menú contextual</button><div class="cxd-dialog__popover" data-popover hidden><div class="cxd-dialog__list"><button type="button" data-action="Editar">Editar</button><button type="button" data-action="Duplicar">Duplicar</button><button type="button" data-action="Archivar">Archivar</button></div></div><span role="status">Ninguna acción</span></div></template>

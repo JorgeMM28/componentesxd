@@ -1,21 +1,4 @@
-/**
- * Variante 01 — Toaster Moderno Flotante con Barra de Tiempo — React / Next.js (TSX)
- * Archivo: components/toasts/variants/modern-floating-toast/ModernFloatingToast.tsx
- */
-import React, { useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { mountModernFloatingToast } from './modern-floating-toast.js';
 import './styles.css';
-
-export const ModernFloatingToast: React.FC<{ title?: string }> = ({
-  title = 'Variante 01 — Toaster Moderno Flotante con Barra de Tiempo'
-}) => {
-  const [active, setActive] = useState(false);
-  return (
-    <div className="cxd-toasts-modern-floating-toast" data-active={active}>
-      <h3>{title}</h3>
-      <p>Bordes redondeados suaves, icono en cápsula, botón de reinicio de barra de progreso y cierre animado.</p>
-      <button type="button" onClick={() => setActive(!active)}>
-        Alternar Estado
-      </button>
-    </div>
-  );
-};
+export function ModernFloatingToast() { const root = useRef<HTMLDivElement>(null); useEffect(() => root.current ? mountModernFloatingToast(root.current) : undefined, []); return <div className="cxd-toast" data-cxd-control="modern-floating-toast" ref={root}><strong>Copia de seguridad completada con éxito</strong><p>14.2 GB sincronizados en el almacenamiento encriptado.</p><button type="button" data-replay>Reiniciar barra</button><progress data-progress max="100" value="100" aria-label="Tiempo restante"></progress><span role="status">Notificación activa</span></div>; }

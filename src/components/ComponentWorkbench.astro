@@ -2,6 +2,7 @@
 import Icon from './Icon.astro';
 import LiveComponentPreview from './LiveComponentPreview.astro';
 import registry from '../data/vaultRegistry.json';
+import { readRepoFile } from '../utils/repoReader';
 
 interface Props {
   category: (typeof registry.componentCategories)[number];
@@ -9,15 +10,28 @@ interface Props {
 
 const { category } = Astro.props;
 const frameworks = registry.frameworks;
+const dockerExamples: Record<string, { id: string; label: string; path: string }[]> = {
+  'astro-node-ssr': [{ id: 'dockerfile', label: 'Dockerfile · Astro Node standalone', path: 'components/docker/node-ssr-stack/Dockerfile' }],
+  'laravel-livewire-fpm': [{ id: 'dockerfile', label: 'Dockerfile · Laravel PHP-FPM', path: 'components/docker/laravel-livewire-blade/Dockerfile' }],
+  'spa-nginx-alpine': [{ id: 'dockerfile', label: 'Dockerfile · SPA estática', path: 'components/docker/static-nginx/Dockerfile' }, { id: 'nginx', label: 'nginx.conf · SPA', path: 'components/docker/static-nginx/nginx.conf' }],
+  'fullstack-compose-stack': [{ id: 'compose', label: 'Compose · aplicación, PostgreSQL y Redis', path: 'components/docker/fullstack-compose/docker-compose.yml' }],
+  'bun-microservice': [{ id: 'dockerfile', label: 'Dockerfile · Bun', path: 'components/docker/bun-service/Dockerfile' }],
+  'traefik-tls-proxy': [{ id: 'compose', label: 'Compose · Traefik y HTTPS', path: 'components/docker/traefik-tls/compose.yaml' }]
+};
 ---
 
 <div class="workbench" data-workbench-cat={category.slug}>
+  <div class="variant-search">
+    <label for={`variant-search-${category.slug}`}>Buscar en {category.name}</label>
+    <input id={`variant-search-${category.slug}`} type="search" data-variant-search placeholder="Nombre, característica o uso…" autocomplete="off" />
+    <span data-variant-search-count role="status">{category.variants.length} variantes</span>
+  </div>
   <!-- ÍNDICE RÁPIDO DE ANCLAS PARA SALTAR A CADA VARIANTE EN LA PÁGINA -->
   <nav class="variant-jump-strip" aria-label="Variantes en esta página">
     <span class="variant-jump-strip__label">En esta página ({category.variants.length} variantes):</span>
     <div class="variant-jump-strip__pills">
       {category.variants.map((v, idx) => (
-        <a href={`#${v.id}`} class="jump-pill">
+        <a href={`#${v.id}`} class="jump-pill" data-variant-jump={v.id}>
           <span class="jump-pill__num">{String(idx + 1).padStart(2, '0')}</span>
           <span>{v.name.replace(/^Variante \d+ — /, '')}</span>
         </a>
@@ -28,12 +42,15 @@ const frameworks = registry.frameworks;
   <!-- LISTA COMPLETA DE VARIANTES EN ANCHO COMPLETO (UNA DEBAJO DE OTRA) -->
   <div class="variant-full-stack">
     {category.variants.map((variant, vIdx) => {
-      const filesMap = (variant as any).files || {};
-      const defaultFw = frameworks[0].id;
+      const examples = category.slug === 'docker' ? [...(dockerExamples[variant.id] || []), { id: 'dockerignore', label: '.dockerignore · guardar con este nombre', path: 'components/docker/.dockerignore.example' }] : [];
+      const filesMap = { ...((variant as any).files || {}) };
+      examples.forEach(file => { filesMap[file.id] = { ...file, code: readRepoFile(file.path) }; });
+      const availableFrameworks = [...examples, ...frameworks];
+      const defaultFw = availableFrameworks[0].id;
       const defaultFile = filesMap[defaultFw];
 
       return (
-        <section class="variant-showcase-block" id={variant.id} data-variant-card={variant.id}>
+        <section class="variant-showcase-block" id={variant.id} data-variant-card={variant.id} data-search-text={`${variant.name} ${variant.desc} ${variant.badge}`}>
           <!-- 1. CABECERA DE LA VARIANTE -->
           <header class="variant-showcase-block__head">
             <div class="variant-head-main">
@@ -53,6 +70,8 @@ const frameworks = registry.frameworks;
             />
           </div>
 
+          <p class="codebar-notice">{category.slug === 'docker' ? 'El ejemplo de Docker seleccionado requiere un proyecto compatible; revisa los comentarios y copia los archivos auxiliares indicados.' : category.slug === 'carousels' ? 'Ejemplo funcional adaptable, inspirado en la vista previa: copia styles.css y el módulo Vanilla JS y ajusta las rutas de assets a tu proyecto.' : ['buttons', 'toasts', 'forms', 'cards', 'badges-data', 'modals', 'navigation', 'accordions-tabs', 'tables'].includes(category.slug) ? 'Implementación funcional: copia también styles.css y, en los adaptadores que lo indiquen, el módulo Vanilla JS. Ajusta las rutas de assets a tu proyecto.' : 'El archivo generado es una plantilla inicial; puede diferir de la vista previa y requerir adaptación.'}</p>
+
           <!-- 3. BARRA INFERIOR CON LISTA DESPLEGABLE EXCLUSIVA PARA EL CÓDIGO DEL FRAMEWORK -->
           <footer class="variant-showcase-block__codebar">
             <div class="codebar-left">
@@ -62,8 +81,8 @@ const frameworks = registry.frameworks;
                   <span>Código por Framework:</span>
                 </label>
                 <div class="select-wrap">
-                  <select class="cxd-architect-select" data-unit-fw-select>
-                    {frameworks.map((fw) => (
+                  <select class="cxd-architect-select" data-unit-fw-select aria-label={`Framework para ${variant.name}`}>
+                    {availableFrameworks.map((fw) => (
                       <option value={fw.id}>{fw.label}</option>
                     ))}
                   </select>
@@ -75,7 +94,7 @@ const frameworks = registry.frameworks;
             </div>
 
             <div class="codebar-actions">
-              <button type="button" class="unit-action-btn" data-toggle-code>
+              <button type="button" class="unit-action-btn" data-toggle-code aria-expanded="false">
                 <Icon name="code" size={13} />
                 <span data-toggle-label>Ver / Ocultar Código</span>
               </button>
@@ -88,13 +107,13 @@ const frameworks = registry.frameworks;
           </footer>
 
           <!-- 4. CAJÓN DE CÓDIGO FUENTE DEL FRAMEWORK SELECCIONADO -->
-          <div class="variant-unit__code-drawer" data-code-drawer>
+          <div class="variant-unit__code-drawer is-collapsed" data-code-drawer>
             <div class="code-drawer__meta">
               <span>Comando para copiar desde la raíz del proyecto:</span>
               <code class="mono-cp" data-unit-cp>cp {defaultFile?.path} ./tu-proyecto/</code>
             </div>
 
-            {frameworks.map((fw, idx) => {
+            {availableFrameworks.map((fw, idx) => {
               const f = filesMap[fw.id];
               return (
                 <pre
@@ -115,6 +134,35 @@ const frameworks = registry.frameworks;
   import { animate, stagger, createTimeline, createTimer, createSpring, svg } from 'animejs';
   import { initMagneticButtons, bindAsyncButton } from '../../components/buttons/vanilla-js/MagneticButton.js';
   import { initSpotlightCards } from '../../components/cards/vanilla-js/SpotlightCard.js';
+
+  document.querySelectorAll<HTMLElement>('[data-workbench-cat]').forEach(workbench => {
+    const search = workbench.querySelector<HTMLInputElement>('[data-variant-search]');
+    const count = workbench.querySelector<HTMLElement>('[data-variant-search-count]');
+    const cards = Array.from(workbench.querySelectorAll<HTMLElement>('[data-variant-card]'));
+    const normalize = (text: string) => text.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+    search?.addEventListener('input', () => {
+      const terms = normalize(search.value).trim().split(/\s+/).filter(Boolean);
+      let visible = 0;
+      cards.forEach(card => {
+        const text = normalize(card.dataset.searchText || '');
+        const matches = terms.every(term => text.includes(term));
+        card.hidden = !matches;
+        const link = workbench.querySelector<HTMLElement>(`[data-variant-jump="${CSS.escape(card.dataset.variantCard || '')}"]`);
+        if (link) link.hidden = !matches;
+        if (matches) visible++;
+      });
+      if (count) count.textContent = `${visible} ${visible === 1 ? 'variante' : 'variantes'}`;
+    });
+  });
+
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  function pauseOutsideViewport(target: HTMLElement, animation: { pause: () => unknown; play: () => unknown }) {
+    if (reducedMotion.matches) { animation.pause(); return; }
+    const observer = new IntersectionObserver(entries => entries.forEach(entry => {
+      if (entry.isIntersecting) animation.play(); else animation.pause();
+    }), { rootMargin: '100px' });
+    observer.observe(target);
+  }
 
   initMagneticButtons();
   initSpotlightCards();
@@ -343,77 +391,54 @@ const frameworks = registry.frameworks;
   });
 
   // 6. FAB Radial, 3D Tilt Card, Tabbed Card, OTP & Password Meter + ALL Interactive Variants
-  document.querySelectorAll<HTMLElement>('[data-expandable-table]').forEach((wrap) => {
-    const toggleBtn = wrap.querySelector('[data-expand-toggle]');
-    const detailRow = wrap.querySelector<HTMLElement>('[data-expand-detail]');
-    const badge = wrap.querySelector<HTMLElement>('[data-expand-badge]');
-    const restartBtn = wrap.querySelector('[data-expand-restart]');
-    toggleBtn?.addEventListener('click', () => {
-      if (!detailRow) return;
-      detailRow.hidden = !detailRow.hidden;
-      if (!detailRow.hidden) {
-        animate(detailRow, { opacity: [0, 1], duration: 280, ease: 'outQuad' });
-      }
-    });
-    restartBtn?.addEventListener('click', () => {
-      if (badge) {
-        badge.textContent = 'REINICIANDO POD...';
-        animate(badge, { scale: [0.9, 1.06, 1], duration: 360, ease: 'outBack' });
-        setTimeout(() => { badge.textContent = 'POD REINICIADO OK (4ms)'; }, 650);
-      }
+  document.querySelectorAll<HTMLElement>('[data-expandable-table]').forEach((table) => {
+    table.querySelectorAll<HTMLElement>('[data-exp-row]').forEach((row) => {
+      const detail = row.nextElementSibling as HTMLElement | null;
+      const toggle = () => { if (detail) { detail.hidden = !detail.hidden; row.setAttribute('aria-expanded', String(!detail.hidden)); } };
+      row.tabIndex = 0;
+      row.setAttribute('role', 'button');
+      row.setAttribute('aria-expanded', String(detail ? !detail.hidden : false));
+      row.addEventListener('click', toggle);
+      row.addEventListener('keydown', (event) => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); toggle(); } });
     });
   });
 
   document.querySelectorAll<HTMLElement>('[data-action-toast]').forEach((toast) => {
-    const status = toast.querySelector<HTMLElement>('[data-toast-action-status]');
-    toast.querySelectorAll<HTMLButtonElement>('[data-toast-act]').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        const mode = btn.dataset.toastAct;
-        if (status) {
-          status.textContent = mode === 'undo'
-            ? 'ROLLBACK COMPLETADO: Instancia #84 restaurada'
-            : 'SNAPSHOT ARCHIVADO EN S3 GLACIER';
-        }
-        animate(toast, { scale: [0.98, 1.02, 1], duration: 320, ease: 'outBack' });
-      });
-    });
+    const message = toast.querySelector<HTMLElement>('[data-action-toast-msg]');
+    toast.querySelectorAll<HTMLButtonElement>('[data-at-btn]').forEach(button => button.addEventListener('click', () => {
+      if (message) message.textContent = button.dataset.atBtn || '';
+      animate(toast, { scale: [0.98, 1.02, 1], duration: 320, ease: 'outBack' });
+    }));
   });
 
   document.querySelectorAll<HTMLElement>('[data-form-toast]').forEach((toast) => {
-    const input = toast.querySelector<HTMLInputElement>('[data-toast-form-input]');
-    const btn = toast.querySelector<HTMLButtonElement>('[data-toast-form-send]');
-    const status = toast.querySelector<HTMLElement>('[data-toast-form-status]');
-    btn?.addEventListener('click', () => {
-      const msg = input?.value.trim() || 'Aprobado para producción';
-      if (status) status.textContent = `ENVIADO A PR #412: "${msg}"`;
-      if (input) input.value = '';
-      animate(toast, { y: [-4, 0], scale: [0.98, 1], duration: 300, ease: 'outBack' });
+    const form = toast.querySelector<HTMLFormElement>('[data-ft-form]');
+    const input = toast.querySelector<HTMLInputElement>('[data-ft-inp]');
+    const status = toast.querySelector<HTMLElement>('[data-ft-time]');
+    form?.addEventListener('submit', event => {
+      event.preventDefault();
+      if (!input?.value.trim()) return;
+      if (status) status.textContent = `Respuesta enviada: ${input.value.trim()}`;
+      input.value = '';
+      animate(toast, { y: [-4, 0], duration: 300, ease: 'outBack' });
     });
   });
 
   document.querySelectorAll<HTMLElement>('[data-pill-toast]').forEach((stage) => {
-    const pill = stage.querySelector<HTMLElement>('[data-pill-badge]');
-    const text = stage.querySelector<HTMLElement>('[data-pill-text]');
-    const states = [
-      'Sincronizado · Hace 2s · 99.98% SLA',
-      'Replicando Snapshot #904 · 14 ms',
-      'Cache Edge Purgada · 38 PoPs Activos'
-    ];
-    let idx = 0;
-    stage.querySelector('[data-pill-ping]')?.addEventListener('click', () => {
-      idx = (idx + 1) % states.length;
-      if (text) text.textContent = states[idx];
-      if (pill) animate(pill, { scale: [0.92, 1.06, 1], duration: 360, ease: 'outBack' });
+    stage.querySelector('[data-pt-btn]')?.addEventListener('click', () => {
+      const message = stage.querySelector<HTMLElement>('[data-pt-text]');
+      if (message) message.textContent = 'Notificación leída';
+      animate(stage, { scale: [0.95, 1], duration: 300, ease: 'outBack' });
     });
   });
 
   document.querySelectorAll<HTMLElement>('[data-btn-modern-group]').forEach((grp) => {
-    const status = grp.querySelector<HTMLElement>('[data-btn-modern-status]');
-    grp.querySelectorAll<HTMLButtonElement>('[data-btn-pick]').forEach((btn) => {
+    const status = grp.querySelector<HTMLElement>('[data-pill-status]');
+    grp.querySelectorAll<HTMLButtonElement>('[data-pill-btn]').forEach((btn) => {
       btn.addEventListener('click', () => {
-        grp.querySelectorAll('[data-btn-pick]').forEach((b) => b.classList.remove('is-selected'));
+        grp.querySelectorAll('[data-pill-btn]').forEach((b) => b.classList.remove('is-selected'));
         btn.classList.add('is-selected');
-        if (status) status.textContent = `ACCIÓN EJECUTADA: ${btn.dataset.btnPick}`;
+        if (status) status.textContent = `ACCIÓN EJECUTADA: ${btn.dataset.pillBtn}`;
         animate(btn, { scale: [0.94, 1.04, 1], duration: 280, ease: 'outBack' });
       });
     });
@@ -421,11 +446,11 @@ const frameworks = registry.frameworks;
 
   document.querySelectorAll<HTMLElement>('[data-btn-styleless-group]').forEach((grp) => {
     const status = grp.querySelector<HTMLElement>('[data-styleless-status]');
-    grp.querySelectorAll<HTMLButtonElement>('[data-styleless-pick]').forEach((btn) => {
+    grp.querySelectorAll<HTMLButtonElement>('[data-styleless-btn]').forEach((btn) => {
       btn.addEventListener('click', () => {
-        grp.querySelectorAll('[data-styleless-pick]').forEach((b) => b.classList.remove('is-active'));
+        grp.querySelectorAll('[data-styleless-btn]').forEach((b) => b.classList.remove('is-active'));
         btn.classList.add('is-active');
-        if (status) status.textContent = `RUTA ACTIVA: ${btn.dataset.stylelessPick}`;
+        if (status) status.textContent = `RUTA ACTIVA: ${btn.dataset.stylelessBtn}`;
         animate(btn, { x: [0, 5, 0], duration: 260, ease: 'outQuad' });
       });
     });
@@ -433,7 +458,7 @@ const frameworks = registry.frameworks;
 
   document.querySelectorAll<HTMLElement>('[data-fab-stage]').forEach((st) => {
     const items = st.querySelector<HTMLElement>('[data-fab-items]');
-    const status = st.querySelector<HTMLElement>('[data-fab-status]');
+    const status = st.querySelector<HTMLElement>('[data-fab-readout]');
     let open = true;
     st.querySelector('[data-fab-toggle]')?.addEventListener('click', () => {
       if (!items) return;
@@ -449,14 +474,14 @@ const frameworks = registry.frameworks;
           opacity: [1, 0],
           duration: 200,
           ease: 'inQuad',
-          onComplete: () => { items.style.display = 'none'; }
+          onComplete: () => { if (!open) items.style.display = 'none'; }
         });
         if (status) status.textContent = 'MENÚ RADIAL CERRADO';
       }
     });
-    st.querySelectorAll<HTMLButtonElement>('[data-fab-act]').forEach((btn) => {
+    st.querySelectorAll<HTMLButtonElement>('[data-fab-action]').forEach((btn) => {
       btn.addEventListener('click', () => {
-        if (status) status.textContent = `ACCIÓN: ${btn.dataset.fabAct}`;
+        if (status) status.textContent = `ACCIÓN: ${btn.dataset.fabAction}`;
         animate(btn, { scale: [0.9, 1.08, 1], duration: 280, ease: 'outBack' });
       });
     });
@@ -466,9 +491,10 @@ const frameworks = registry.frameworks;
     const btn = st.querySelector<HTMLElement>('[data-hold-btn]');
     const fill = st.querySelector<HTMLElement>('[data-hold-fill]');
     const label = st.querySelector<HTMLElement>('[data-hold-label]');
-    const status = st.querySelector<HTMLElement>('[data-hold-status]');
+    const status = st.querySelector<HTMLElement>('[data-hold-pct]');
     let timer: number | null = null;
     let pct = 0;
+    let keyboardArmed = false;
 
     const startHold = () => {
       if (timer) window.clearInterval(timer);
@@ -499,166 +525,131 @@ const frameworks = registry.frameworks;
       }
     };
 
-    btn?.addEventListener('mousedown', startHold);
-    btn?.addEventListener('mouseup', stopHold);
-    btn?.addEventListener('mouseleave', stopHold);
-    btn?.addEventListener('click', () => {
-      if (pct < 100) {
-        if (fill) animate(fill, { width: ['0%', '100%'], duration: 550, ease: 'outExpo' });
-        if (label) label.textContent = 'PURGA CONFIRMADA (100%)';
-        if (status) status.textContent = 'EJECUTADO INSTANTÁNEAMENTE';
-        pct = 100;
-      } else {
-        pct = 0;
-        if (fill) fill.style.width = '0%';
-        if (label) label.textContent = 'Mantén presionado (o clic) para Purgar Cluster';
-        if (status) status.textContent = 'LISTO PARA CONFIRMAR';
+    btn?.addEventListener('pointerdown', (event) => { if (event.button === 0) { keyboardArmed = false; startHold(); } });
+    btn?.addEventListener('pointerup', stopHold);
+    btn?.addEventListener('pointerleave', stopHold);
+    btn?.addEventListener('pointercancel', stopHold);
+    btn?.addEventListener('blur', () => { keyboardArmed = false; });
+    btn?.addEventListener('click', (event) => {
+      if (event.detail !== 0) return;
+      if (!keyboardArmed) {
+        keyboardArmed = true;
+        if (status) status.textContent = 'PULSA DE NUEVO PARA CONFIRMAR';
+        return;
       }
+      keyboardArmed = false;
+      pct = 100;
+      if (fill) fill.style.width = '100%';
+      if (label) label.textContent = 'PURGA CONFIRMADA (100%)';
+      if (status) status.textContent = 'CLUSTER PURGADO OK';
     });
   });
 
-  document.querySelectorAll<HTMLElement>('[data-split-btn-stage]').forEach((st) => {
-    const mainBtn = st.querySelector<HTMLButtonElement>('[data-split-main]');
-    const toggleBtn = st.querySelector<HTMLButtonElement>('[data-split-toggle]');
-    const menu = st.querySelector<HTMLElement>('[data-split-menu]');
-    const status = st.querySelector<HTMLElement>('[data-split-status]');
-    let selectedEnv = 'Producción (v4.2)';
+  document.querySelectorAll<HTMLElement>('[data-split-btn-stage]').forEach((stage) => {
+    const button = stage.querySelector<HTMLButtonElement>('[data-split-exec]');
+    const select = stage.querySelector<HTMLSelectElement>('[data-split-mode-sel]');
+    const label = stage.querySelector<HTMLElement>('[data-split-main-lbl]');
+    const status = stage.querySelector<HTMLElement>('[data-split-feedback]');
+    select?.addEventListener('change', () => {
+      if (label) label.textContent = `Ejecutar: ${select.value}`;
+      if (status) status.textContent = `MODO SELECCIONADO: ${select.value}`;
+    });
+    button?.addEventListener('click', () => {
+      if (status) status.textContent = `ACCIÓN EJECUTADA: ${select?.value || ''}`;
+      animate(button, { scale: [0.95, 1], duration: 280, ease: 'outBack' });
+    });
+  });
 
-    mainBtn?.addEventListener('click', () => {
-      if (status) status.textContent = `DESPLEGANDO EN: ${selectedEnv.toUpperCase()}...`;
-      animate(mainBtn, { scale: [0.95, 1.03, 1], duration: 280, ease: 'outBack' });
-    });
-    toggleBtn?.addEventListener('click', () => {
-      if (!menu) return;
-      menu.hidden = !menu.hidden;
-    });
-    st.querySelectorAll<HTMLButtonElement>('[data-split-opt]').forEach((opt) => {
-      opt.addEventListener('click', () => {
-        selectedEnv = opt.dataset.splitOpt || 'Producción';
-        if (mainBtn) mainBtn.textContent = `Desplegar en ${selectedEnv}`;
-        if (status) status.textContent = `DESTINO CAMBIADO A: ${selectedEnv}`;
-        if (menu) menu.hidden = true;
+  document.querySelectorAll<HTMLElement>('[data-seg-stage]').forEach((stage) => {
+    const status = stage.querySelector<HTMLElement>('[data-seg-output]');
+    stage.querySelectorAll<HTMLButtonElement>('[data-seg-val]').forEach((button) => {
+      button.setAttribute('aria-pressed', String(button.classList.contains('is-active')));
+      button.addEventListener('click', () => {
+        stage.querySelectorAll<HTMLButtonElement>('[data-seg-val]').forEach((item) => {
+          item.classList.toggle('is-active', item === button);
+          item.setAttribute('aria-pressed', String(item === button));
+        });
+        if (status) status.textContent = `MODO ACTIVO: ${button.dataset.segVal}`;
+        animate(button, { scale: [0.94, 1], duration: 240, ease: 'outBack' });
       });
     });
   });
 
-  document.querySelectorAll<HTMLElement>('[data-seg-stage]').forEach((st) => {
-    const status = st.querySelector<HTMLElement>('[data-seg-status]');
-    st.querySelectorAll<HTMLButtonElement>('[data-seg-opt]').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        st.querySelectorAll('[data-seg-opt]').forEach((b) => b.classList.remove('is-active'));
-        btn.classList.add('is-active');
-        if (status) status.textContent = `VISTA ACTIVA: ${(btn.dataset.segOpt || '').toUpperCase()}`;
-        animate(btn, { scale: [0.94, 1], duration: 240, ease: 'outBack' });
-      });
+  document.querySelectorAll<HTMLElement>('[data-btn-3d-stage]').forEach((stage) => {
+    const count = stage.querySelector<HTMLElement>('[data-push-count]');
+    const state = stage.querySelector<HTMLElement>('[data-push-state]');
+    stage.querySelector<HTMLButtonElement>('[data-push-3d]')?.addEventListener('click', (event) => {
+      if (count) count.textContent = String(Number(count.textContent) + 1);
+      animate(event.currentTarget as HTMLElement, { y: [0, 4, 0], duration: 180 });
     });
-  });
-
-  document.querySelectorAll<HTMLElement>('[data-btn-3d-stage]').forEach((st) => {
-    const status = st.querySelector<HTMLElement>('[data-3d-status]');
-    let count = 0;
-    st.querySelectorAll<HTMLButtonElement>('[data-3d-key]').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        count++;
-        if (status) status.textContent = `TECLA [${btn.getAttribute('data-3d-key')}] · ${count} PULSACIONES`;
-        animate(btn, { y: [0, 4, 0], duration: 180, ease: 'outQuad' });
-      });
+    stage.querySelector<HTMLButtonElement>('[data-push-toggle]')?.addEventListener('click', (event) => {
+      if (state) state.textContent = state.textContent === 'ON' ? 'OFF' : 'ON';
+      (event.currentTarget as HTMLElement).setAttribute('aria-pressed', String(state?.textContent === 'ON'));
     });
   });
 
   document.querySelectorAll<HTMLElement>('[data-action-card]').forEach((card) => {
-    const badge = card.querySelector<HTMLElement>('[data-card-status]');
-    card.querySelectorAll<HTMLButtonElement>('[data-card-act]').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        const act = btn.dataset.cardAct;
-        if (badge) {
-          badge.textContent = act === 'Scale +2' ? '42 PODS ACTIVOS' : act === 'Purge Cache' ? 'CACHE L1 VACIADA' : 'LOGS EN VIVO OK';
-        }
-        animate(card, { scale: [0.99, 1.01, 1], duration: 260, ease: 'outQuad' });
-      });
+    const count = card.querySelector<HTMLElement>('[data-ac-count]');
+    card.querySelector<HTMLButtonElement>('[data-ac-star]')?.addEventListener('click', event => {
+      const button = event.currentTarget as HTMLButtonElement;
+      const active = button.getAttribute('aria-pressed') === 'true';
+      button.setAttribute('aria-pressed', String(!active));
+      if (count) count.textContent = String(Number(count.textContent) + (active ? -1 : 1));
     });
+    card.querySelectorAll<HTMLButtonElement>('[data-ac-share], [data-ac-clone]').forEach(button => button.addEventListener('click', () => {
+      const label = button.querySelector('span');
+      if (label) label.textContent = button.hasAttribute('data-ac-share') ? 'Enlace listo para compartir' : 'Repositorio preparado';
+    }));
   });
-
   document.querySelectorAll<HTMLElement>('[data-calc-card]').forEach((card) => {
-    const range = card.querySelector<HTMLInputElement>('[data-calc-range]');
-    const tier = card.querySelector<HTMLSelectElement>('[data-calc-tier]');
-    const label = card.querySelector<HTMLElement>('[data-calc-nodes-label]');
-    const total = card.querySelector<HTMLElement>('[data-calc-total]');
-    const recalc = () => {
-      const nodes = Number(range?.value || 12);
-      const unit = Number(tier?.value || 20);
-      if (label) label.textContent = `${nodes} Nodos`;
-      if (total) total.textContent = `$${(nodes * unit).toFixed(2)} / mes`;
-    };
-    range?.addEventListener('input', recalc);
-    tier?.addEventListener('change', recalc);
+    const input = card.querySelector<HTMLInputElement>('[data-cc-input]');
+    const output = card.querySelector<HTMLElement>('[data-cc-out]');
+    input?.addEventListener('input', () => { if (output) output.textContent = `$${Math.max(0, Number(input.value) || 0) * 24}/mes`; });
   });
-
   document.querySelectorAll<HTMLElement>('[data-expand-card]').forEach((card) => {
-    const btn = card.querySelector<HTMLButtonElement>('[data-expand-card-btn]');
-    const body = card.querySelector<HTMLElement>('[data-expand-card-body]');
-    btn?.addEventListener('click', () => {
+    const button = card.querySelector<HTMLButtonElement>('[data-ec-toggle]');
+    const body = card.querySelector<HTMLElement>('[data-ec-area]');
+    button?.setAttribute('aria-expanded', String(!body?.hidden));
+    button?.addEventListener('click', () => {
       if (!body) return;
       body.hidden = !body.hidden;
-      btn.textContent = body.hidden ? 'Mostrar Stacktrace Completo' : 'Ocultar Stacktrace';
+      button.setAttribute('aria-expanded', String(!body.hidden));
       if (!body.hidden) animate(body, { opacity: [0, 1], y: [-6, 0], duration: 260, ease: 'outQuad' });
     });
   });
-
-  document.querySelectorAll<HTMLElement>('[data-modern-form]').forEach((form) => {
-    const nameInp = form.querySelector<HTMLInputElement>('[data-mf-name]');
-    const regionSel = form.querySelector<HTMLSelectElement>('[data-mf-region]');
-    const status = form.querySelector<HTMLElement>('[data-mf-status]');
-    form.querySelector('[data-mf-submit]')?.addEventListener('click', () => {
-      const name = nameInp?.value.trim() || 'edge-worker';
-      const reg = regionSel?.value || 'us-east-1';
-      if (status) status.textContent = `DESPLEGADO: ${name} EN ${reg.toUpperCase()}`;
-      animate(form, { scale: [0.99, 1.01, 1], duration: 280, ease: 'outBack' });
+  document.querySelectorAll<HTMLFormElement>('[data-modern-form]').forEach(form => {
+    form.addEventListener('submit', event => {
+      event.preventDefault();
+      const status = form.querySelector<HTMLElement>('[data-mf-msg]');
+      if (status) status.textContent = 'Correo guardado en la demostración';
     });
   });
-
-  document.querySelectorAll<HTMLElement>('[data-inline-fit-form]').forEach((row) => {
-    const domain = row.querySelector<HTMLInputElement>('[data-fit-domain]');
-    const status = row.querySelector<HTMLElement>('[data-fit-status]');
-    row.querySelector('[data-fit-connect]')?.addEventListener('click', () => {
-      const d = domain?.value.trim() || 'componentesxd.dev';
-      if (status) status.textContent = `SSL ACTIVO PARA https://${d}`;
-      animate(row, { x: [0, 4, 0], duration: 240, ease: 'outQuad' });
+  document.querySelectorAll<HTMLElement>('[data-inline-fit-form]').forEach(row => {
+    row.querySelector<HTMLButtonElement>('[data-if-btn]')?.addEventListener('click', event => {
+      const domain = row.querySelector<HTMLInputElement>('[data-if-inp]')?.value.trim();
+      const button = event.currentTarget as HTMLButtonElement;
+      const label = button.querySelector('span');
+      if (label) label.textContent = domain ? `Conectado: ${domain}` : 'Introduce un dominio';
     });
   });
-
-  document.querySelectorAll<HTMLElement>('[data-facet-filter]').forEach((box) => {
-    const search = box.querySelector<HTMLInputElement>('[data-ff-search]');
-    const status = box.querySelector<HTMLElement>('[data-ff-status]');
-    let currentFilter = 'all';
-    const updateFilter = () => {
-      const q = search?.value.trim() || '';
-      if (status) {
-        status.textContent = `FILTRO: ${currentFilter.toUpperCase()} ${q ? `· BUSCANDO "${q}"` : '· 24 RESULTADOS'}`;
-      }
-    };
-    search?.addEventListener('input', updateFilter);
-    box.querySelectorAll<HTMLButtonElement>('[data-ff-tag]').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        box.querySelectorAll('[data-ff-tag]').forEach((b) => b.classList.remove('is-on'));
-        btn.classList.add('is-on');
-        currentFilter = btn.dataset.ffTag || 'all';
-        updateFilter();
+  document.querySelectorAll<HTMLElement>('[data-facet-filter]').forEach(box => {
+    const count = box.querySelector<HTMLElement>('[data-facet-count]');
+    box.querySelectorAll<HTMLButtonElement>('[data-facet-chip]').forEach(button => {
+      button.setAttribute('aria-pressed', String(button.classList.contains('mini-btn--accent')));
+      button.addEventListener('click', () => {
+        button.classList.toggle('mini-btn--accent');
+        button.setAttribute('aria-pressed', String(button.classList.contains('mini-btn--accent')));
+        if (count) count.textContent = `${box.querySelectorAll('[data-facet-chip].mini-btn--accent').length} filtros activos seleccionados`;
       });
     });
   });
-
-  document.querySelectorAll<HTMLElement>('[data-tactile-controls]').forEach((ctrl) => {
-    const checks = ctrl.querySelectorAll<HTMLInputElement>('input[type="checkbox"]');
-    const range = ctrl.querySelector<HTMLInputElement>('[data-tc-range]');
-    const status = ctrl.querySelector<HTMLElement>('[data-tc-status]');
-    const sync = () => {
-      let activeCount = 0;
-      checks.forEach((c) => { if (c.checked) activeCount++; });
-      if (status) status.textContent = `${activeCount}/${checks.length} Reglas Activas · Límite: ${range?.value || 72}% CPU`;
-    };
-    checks.forEach((c) => c.addEventListener('change', sync));
-    range?.addEventListener('input', sync);
+  document.querySelectorAll<HTMLElement>('[data-tactile-controls]').forEach(ctrl => {
+    const value = ctrl.querySelector<HTMLElement>('[data-tc-val]');
+    for (const [selector, change] of [['[data-tc-dec]', -1], ['[data-tc-inc]', 1]] as const) {
+      ctrl.querySelector(selector)?.addEventListener('click', () => {
+        if (value) value.textContent = `${Math.max(1, Math.min(128, (parseInt(value.textContent || '4', 10) || 4) + change))} Réplicas`;
+      });
+    }
   });
 
   // 6A-MODALS: 6 Unique Interactive Modals (CAT-06)
@@ -1176,7 +1167,9 @@ const frameworks = registry.frameworks;
   document.querySelectorAll<HTMLElement>('[data-marquee-carousel]').forEach((mq) => {
     const track = mq.querySelector<HTMLElement>('[data-mq-track]');
     if (!track) return;
-    let paused = false;
+    let paused = reducedMotion.matches;
+    let visible = false;
+    let frame = 0;
     let dir = -1;
     let speed = 1;
     let pos = 0;
@@ -1188,12 +1181,14 @@ const frameworks = registry.frameworks;
         if (pos > 0) pos = -260;
         track.style.transform = `translateX(${pos}px)`;
       }
-      requestAnimationFrame(tick);
+      if (!paused && visible) frame = requestAnimationFrame(tick);
+      else frame = 0;
     };
-    requestAnimationFrame(tick);
-
+    const sync = () => { if (!paused && visible && !frame) frame = requestAnimationFrame(tick); };
+    new IntersectionObserver(entries => { visible = entries[0]?.isIntersecting || false; sync(); }, { rootMargin: '100px' }).observe(mq);
     mq.querySelector('[data-mq-toggle]')?.addEventListener('click', () => {
       paused = !paused;
+      sync();
     });
     mq.querySelector('[data-mq-reverse]')?.addEventListener('click', () => {
       dir *= -1;
@@ -1947,7 +1942,7 @@ const frameworks = registry.frameworks;
     const btns = h.querySelectorAll<HTMLButtonElement>('[data-h21-mode]');
 
     if (halo) {
-      animate(halo, { scale: [0.92, 1.06, 0.92], opacity: [0.35, 0.85, 0.35], duration: 3200, loop: true, ease: 'inOutSine' });
+      pauseOutsideViewport(h, animate(halo, { scale: [0.92, 1.06, 0.92], opacity: [0.35, 0.85, 0.35], duration: 3200, loop: true, ease: 'inOutSine' }));
     }
 
     function runHeroMode(mode: string) {
@@ -2483,10 +2478,10 @@ const frameworks = registry.frameworks;
     let activeAnims: ReturnType<typeof animate>[] = [];
 
     if (sun) {
-      animate(sun, { scale: [0.95, 1.08, 0.95], duration: 2600, loop: true, ease: 'inOutSine' });
+      pauseOutsideViewport(h, animate(sun, { scale: [0.95, 1.08, 0.95], duration: 2600, loop: true, ease: 'inOutSine' }));
     }
     if (moon) {
-      animate(moon, { rotate: '1turn', duration: 1600, ease: 'linear', loop: true });
+      pauseOutsideViewport(h, animate(moon, { rotate: '1turn', duration: 1600, ease: 'linear', loop: true }));
     }
 
     function startOrbits(speedMultiplier: number) {
@@ -2495,16 +2490,19 @@ const frameworks = registry.frameworks;
         const basePeriod = Number(c.dataset.period || 6000);
         // Ángulo inicial escalonado para distribución armónica
         c.style.transform = `rotate(${idx * 42}deg)`;
-        return animate(c, {
+        const orbit = animate(c, {
           rotate: [`${idx * 42}deg`, `${idx * 42 + 360}deg`],
           duration: Math.max(450, Math.round(basePeriod / speedMultiplier)),
           ease: 'linear',
           loop: true
         });
+        return orbit;
       });
+      if (reducedMotion.matches) activeAnims.forEach(a => a.pause());
     }
 
     startOrbits(1);
+    if (!reducedMotion.matches) new IntersectionObserver(entries => { activeAnims.forEach(a => entries[0]?.isIntersecting ? a.play() : a.pause()); }, { rootMargin: '100px' }).observe(h);
 
     speedBtns.forEach((sb) => {
       sb.addEventListener('click', () => {
@@ -2775,7 +2773,7 @@ const frameworks = registry.frameworks;
     const status = h.querySelector('[data-h30-status]');
 
     if (sweep) {
-      animate(sweep, { rotate: '1turn', duration: 2800, ease: 'linear', loop: true });
+      pauseOutsideViewport(h, animate(sweep, { rotate: '1turn', duration: 2800, ease: 'linear', loop: true }));
     }
 
     h.querySelector('[data-h30-scan]')?.addEventListener('click', () => {
@@ -2814,12 +2812,13 @@ const frameworks = registry.frameworks;
 
     toggleBtn?.addEventListener('click', () => {
       drawer?.classList.toggle('is-collapsed');
+      toggleBtn.setAttribute('aria-expanded', String(!drawer?.classList.contains('is-collapsed')));
     });
 
     copyBtn?.addEventListener('click', async () => {
       const activeCode = card.querySelector('.unit-code-block.is-active code');
       if (!activeCode) return;
-      await navigator.clipboard.writeText(activeCode.textContent || '');
+      try { await navigator.clipboard.writeText(activeCode.textContent || ''); } catch { if (copyLabel) copyLabel.textContent = 'No se pudo copiar'; return; }
       if (copyLabel) {
         const prev = copyLabel.textContent;
         copyLabel.textContent = '¡Código Copiado!';
@@ -2832,6 +2831,12 @@ const frameworks = registry.frameworks;
 </script>
 
 <style>
+  .variant-search { display:flex; flex-wrap:wrap; gap:.75rem; align-items:center; padding:1rem; background:var(--cxd-bg-surface); border:1px solid var(--cxd-border); border-radius:var(--cxd-radius-md); }
+  .variant-search label { font-weight:700; font-size:.85rem; }
+  .variant-search input { flex:1 1 220px; min-width:0; background:var(--cxd-bg-base); color:var(--cxd-text-primary); border:1px solid var(--cxd-border-strong); border-radius:6px; padding:.65rem .75rem; }
+  .variant-search span { color:var(--cxd-text-secondary); font-size:.8rem; }
+  [data-variant-card][hidden], [data-variant-jump][hidden] { display:none !important; }
+  .codebar-notice { margin: 0; padding: .6rem 1rem; color: var(--cxd-text-secondary); font-size: .8rem; line-height: 1.5; }
   .workbench {
     display: flex;
     flex-direction: column;

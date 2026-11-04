@@ -11,12 +11,17 @@ const { category } = Astro.props;
 ---
 
 <div class="anime-workbench" data-anime-cat={category.slug}>
+  <div class="anime-search">
+    <label for={`anime-search-${category.slug}`}>Buscar en {category.name}</label>
+    <input id={`anime-search-${category.slug}`} type="search" data-anime-search placeholder="Nombre, técnica o uso…" autocomplete="off" />
+    <span data-anime-search-count role="status">{category.presets.length} animaciones</span>
+  </div>
   <!-- ÍNDICE DE SALTO RÁPIDO A CADA ANIMACIÓN EN ESTA PÁGINA -->
   <nav class="variant-jump-strip" aria-label="Animaciones en esta página">
     <span class="variant-jump-strip__label">En esta página ({category.presets.length} animaciones Anime.js v4):</span>
     <div class="variant-jump-strip__pills">
       {category.presets.map((p, idx) => (
-        <a href={`#${p.id}`} class="jump-pill">
+        <a href={`#${p.id}`} class="jump-pill" data-anime-jump={p.id}>
           <span class="jump-pill__num">0{idx + 1}</span>
           <span>{p.name.replace(/^\d+\.\s*/, '')}</span>
         </a>
@@ -35,6 +40,7 @@ const { category } = Astro.props;
           class="anime-showcase-block"
           id={preset.id}
           data-preset-block={preset.id}
+          data-search-text={`${preset.name} ${preset.desc} ${preset.stageType}`}
           data-stage-type={stageType}
           data-default-ease={preset.ease}
           data-default-duration={preset.duration}
@@ -398,6 +404,8 @@ const { category } = Astro.props;
               )}
           </div>
 
+          <p class="anime-code-notice">Los fragmentos son ejemplos iniciales y pueden diferir de la animación mostrada.</p>
+
           <!-- 3. BARRA INFERIOR CON LISTA DESPLEGABLE EXCLUSIVA PARA EL FRAMEWORK -->
           <footer class="anime-showcase-block__codebar">
             <div class="codebar-left">
@@ -407,7 +415,7 @@ const { category } = Astro.props;
                   <span>Adaptador de Código:</span>
                 </label>
                 <div class="select-wrap">
-                  <select class="cxd-architect-select" data-anime-fw-select>
+                  <select class="cxd-architect-select" data-anime-fw-select aria-label={`Adaptador para ${preset.name}`}>
                     <option value="vanilla">Anime.js v4 Module ({preset.filePath})</option>
                     <option value="react">React / Next.js Hook (TSX)</option>
                     <option value="vue">Vue 3 Composable (SFC)</option>
@@ -417,11 +425,11 @@ const { category } = Astro.props;
                   <Icon name="chevron-down" size={12} class="select-chevron" />
                 </div>
               </div>
-              <code class="codebar-path">{preset.filePath}</code>
+              <code class="codebar-path" data-anime-path data-original-path={preset.filePath}>{preset.filePath}</code>
             </div>
 
             <div class="codebar-actions">
-              <button type="button" class="unit-action-btn" data-toggle-anime-code>
+              <button type="button" class="unit-action-btn" data-toggle-anime-code aria-expanded="false">
                 <Icon name="code" size={13} />
                 <span>Ver / Ocultar Código</span>
               </button>
@@ -433,7 +441,7 @@ const { category } = Astro.props;
           </footer>
 
           <!-- 4. CAJÓN DE CÓDIGO -->
-          <div class="variant-unit__code-drawer" data-anime-drawer>
+          <div class="variant-unit__code-drawer is-collapsed" data-anime-drawer>
             <pre class="unit-code-block is-active" data-afw-panel="vanilla"><code>{preset.code}</code></pre>
             <pre class="unit-code-block" data-afw-panel="react"><code>{reactSnippet}</code></pre>
             <pre class="unit-code-block" data-afw-panel="vue"><code>{vueSnippet}</code></pre>
@@ -452,6 +460,13 @@ const { category } = Astro.props;
 </script>
 
 <style>
+  .anime-search { display:flex; flex-wrap:wrap; gap:.75rem; align-items:center; padding:1rem; margin-bottom:1rem; background:var(--cxd-bg-surface); border:1px solid var(--cxd-border); border-radius:var(--cxd-radius-md); }
+  .anime-search label { font-weight:700; font-size:.85rem; }
+  .anime-search input { flex:1 1 220px; min-width:0; background:var(--cxd-bg-base); color:var(--cxd-text-primary); border:1px solid var(--cxd-border-strong); border-radius:6px; padding:.65rem .75rem; }
+  .anime-search span { color:var(--cxd-text-secondary); font-size:.8rem; }
+  [data-preset-block][hidden], [data-anime-jump][hidden] { display:none !important; }
+
+  .anime-code-notice { margin: 0; padding: .6rem 1rem; color: var(--cxd-text-secondary); font-size: .8rem; line-height: 1.5; }
   .anime-workbench {
     display: flex;
     flex-direction: column;

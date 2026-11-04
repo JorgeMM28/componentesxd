@@ -1,18 +1,4 @@
-// Variante 08 — Toaster Interactivo de Subida de Archivos — Angular 18+ Signals (components/toasts/variants/upload-progress-toaster/upload-progress-toaster.component.ts)
-import { Component, signal } from '@angular/core';
-
-@Component({
-  selector: 'cxd-upload-progress-toaster',
-  standalone: true,
-  styleUrls: ['./styles.css'],
-  template: `
-    <div class="cxd-toasts-upload-progress-toaster" [attr.data-active]="active()">
-      <h3>Variante 08 — Toaster Interactivo de Subida de Archivos</h3>
-      <p>Simula la subida de múltiples archivos con porcentaje animado en tiempo real y botón de pausa/reinicio.</p>
-      <button type="button" (click)="active.set(!active())">Alternar</button>
-    </div>
-  `
-})
-export class CxdUploadProgressToasterComponent {
-  active = signal(false);
-}
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import { mountUploadProgressToaster } from './upload-progress-toaster.js';
+@Component({ selector:'cxd-upload-progress-toaster', standalone:true, styleUrls:['./styles.css'], template:`<div class="cxd-toast" data-cxd-control="upload-progress-toaster" #root><strong>Subiendo artefactos de producción</strong><span data-percent>0%</span><progress data-progress max="100" value="0" aria-label="Progreso de subida"></progress><button type="button" data-start>Simular subida</button><button type="button" data-pause>Pausar</button><span role="status">Listo</span></div>` })
+export class UploadProgressToasterComponent implements AfterViewInit, OnDestroy { @ViewChild('root') root!: ElementRef<HTMLElement>; private unmount?: () => void; ngAfterViewInit() { this.unmount = mountUploadProgressToaster(this.root.nativeElement); } ngOnDestroy() { this.unmount?.(); } }

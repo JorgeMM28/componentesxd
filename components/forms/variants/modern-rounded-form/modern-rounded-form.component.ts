@@ -1,18 +1,4 @@
-// Variante 01 — Formulario Moderno con Bordes Redondeados — Angular 18+ Signals (components/forms/variants/modern-rounded-form/modern-rounded-form.component.ts)
-import { Component, signal } from '@angular/core';
-
-@Component({
-  selector: 'cxd-modern-rounded-form',
-  standalone: true,
-  styleUrls: ['./styles.css'],
-  template: `
-    <div class="cxd-forms-modern-rounded-form" [attr.data-active]="active()">
-      <h3>Variante 01 — Formulario Moderno con Bordes Redondeados</h3>
-      <p>Campos con esquinas suaves de 12px, iconos SVG integrados a la izquierda y anillo de enfoque suave.</p>
-      <button type="button" (click)="active.set(!active())">Alternar</button>
-    </div>
-  `
-})
-export class CxdModernRoundedFormComponent {
-  active = signal(false);
-}
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import { mountModernRoundedForm } from './modern-rounded-form.js';
+@Component({ selector:'cxd-modern-rounded-form', standalone:true, styleUrls:['./styles.css'], template:`<div class="cxd-form" data-cxd-control="modern-rounded-form" #root><form data-form><label>Correo electrónico <input type="email" data-email required value="arquitectura@componentesxd.dev" /></label><button type="submit">Guardar</button></form><span role="status">Listo para guardar</span></div>` })
+export class ModernRoundedFormComponent implements AfterViewInit, OnDestroy { @ViewChild('root') root!: ElementRef<HTMLElement>; private unmount?: () => void; ngAfterViewInit() { this.unmount = mountModernRoundedForm(this.root.nativeElement); } ngOnDestroy() { this.unmount?.(); } }

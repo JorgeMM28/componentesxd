@@ -1,21 +1,7 @@
-/**
- * Variante 07 — Barra de Botones Content-Fit con Indicador Activo — React / Next.js (TSX)
- * Archivo: components/buttons/variants/segmented-toolbar-fit/SegmentedToolbarFit.tsx
- */
-import React, { useState } from 'react';
+import { useState } from 'react';
 import './styles.css';
-
-export const SegmentedToolbarFit: React.FC<{ title?: string }> = ({
-  title = 'Variante 07 — Barra de Botones Content-Fit con Indicador Activo'
-}) => {
-  const [active, setActive] = useState(false);
-  return (
-    <div className="cxd-buttons-segmented-toolbar-fit" data-active={active}>
-      <h3>{title}</h3>
-      <p>Grupo compacto unido donde la selección activa cambia instantáneamente al hacer clic.</p>
-      <button type="button" onClick={() => setActive(!active)}>
-        Alternar Estado
-      </button>
-    </div>
-  );
-};
+const items = [["one","Vista Tabla","Vista de Tabla Estructurada (10 Variantes)"],["two","Vista Tarjetas","Vista de Tarjetas Bento (8 Variantes)"],["three","Vista Grafo 3D","Vista de Grafo Vectorial 3D"],["four","JSON Raw","Inspector JSON Raw en Vivo"]];
+export function SegmentedToolbarFit() {
+  const [active, setActive] = useState(0);
+  return <div className="cxd-segments">{items.map(([kind, label], index) => <button key={kind} type="button" className={`cxd-segments__button cxd-segments__button--${kind}`} aria-pressed={active === index} onClick={() => setActive(index)}>{label}</button>)}<span className="cxd-segments__status" role="status">{active < 0 ? 'MODO ACTIVO: Vista de Tabla Estructurada (10 Variantes)' : 'MODO ACTIVO: ' + items[active][2]}</span></div>;
+}

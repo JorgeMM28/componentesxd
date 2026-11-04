@@ -1,9 +1,8 @@
 ---
-// Variante 04 — Breadcrumbs Interactivos con Selector de Rama/Proyecto — Astro 5 (components/navigation/variants/interactive-breadcrumbs/InteractiveBreadcrumbs.astro)
 import './styles.css';
 ---
-<div class="cxd-navigation-interactive-breadcrumbs">
-  <h3>Variante 04 — Breadcrumbs Interactivos con Selector de Rama/Proyecto</h3>
-  <p>Ruta de navegación con menús desplegables integrados en cada nivel de jerarquía.</p>
-  <slot />
-</div>
+<div class="cxd-nav" data-cxd-control="interactive-breadcrumbs"><nav aria-label="Ruta de navegación"><button type="button" data-path="Inicio">Inicio</button><span> / </span><button type="button" data-path="Componentes">Componentes</button><span> / </span><button type="button" data-path="Botones">Botones</button></nav><span role="status">Ruta actual: Inicio / Componentes / Botones</span></div>
+<script>
+import { mountInteractiveBreadcrumbs } from './interactive-breadcrumbs.js';
+document.querySelectorAll('[data-cxd-control="interactive-breadcrumbs"]:not([data-ready])').forEach(root => { root.dataset.ready = 'true'; mountInteractiveBreadcrumbs(root); });
+</script>

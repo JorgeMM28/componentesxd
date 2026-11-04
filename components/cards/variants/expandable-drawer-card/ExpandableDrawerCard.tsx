@@ -1,21 +1,4 @@
-/**
- * Variante 08 — Tarjeta con Despliegue de Detalles Técnicos — React / Next.js (TSX)
- * Archivo: components/cards/variants/expandable-drawer-card/ExpandableDrawerCard.tsx
- */
-import React, { useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { mountExpandableDrawerCard } from './expandable-drawer-card.js';
 import './styles.css';
-
-export const ExpandableDrawerCard: React.FC<{ title?: string }> = ({
-  title = 'Variante 08 — Tarjeta con Despliegue de Detalles Técnicos'
-}) => {
-  const [active, setActive] = useState(false);
-  return (
-    <div className="cxd-cards-expandable-drawer-card" data-active={active}>
-      <h3>{title}</h3>
-      <p>Haz clic en el botón de expansión para revelar u ocultar el bloque completo de logs y nodos.</p>
-      <button type="button" onClick={() => setActive(!active)}>
-        Alternar Estado
-      </button>
-    </div>
-  );
-};
+export function ExpandableDrawerCard() { const root = useRef<HTMLDivElement>(null); useEffect(() => root.current ? mountExpandableDrawerCard(root.current) : undefined, []); return <div className="cxd-card" data-cxd-control="expandable-drawer-card" ref={root}><strong>Reporte de seguridad automático</strong><button type="button" data-toggle aria-expanded="true">Desplegar / ocultar diagnóstico</button><p data-detail>0 vulnerabilidades críticas · Certificados TLS renovados por 90 días.</p></div>; }

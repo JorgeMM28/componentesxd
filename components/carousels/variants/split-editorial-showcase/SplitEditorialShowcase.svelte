@@ -1,11 +1,6 @@
-<!-- Variante 05 — Carrusel Split-Screen Sincronizado (Arte Visual + Especificaciones) — Svelte 5 Runes (components/carousels/variants/split-editorial-showcase/SplitEditorialShowcase.svelte) -->
 <script lang="ts">
-  import './styles.css';
-  let active = $state(false);
+import { mountSplitEditorialShowcase } from './split-editorial-showcase.js';
+import './styles.css';
+function control(node: HTMLElement) { return { destroy: mountSplitEditorialShowcase(node) }; }
 </script>
-
-<div class="cxd-carousels-split-editorial-showcase" data-active={active}>
-  <h3>Variante 05 — Carrusel Split-Screen Sincronizado (Arte Visual + Especificaciones)</h3>
-  <p>Doble panel donde el lienzo visual izquierdo y la ficha técnica derecha se actualizan de forma coordinada con stagger.</p>
-  <button type="button" onclick={() => (active = !active)}>Alternar</button>
-</div>
+<div class="cxd-carousel" data-cxd-control="split-editorial-showcase" use:control><div class="cxd-split"><div data-art aria-hidden="true">✦</div><div><small>COLECCIÓN EDITORIAL</small><h3 data-title>Aurora</h3><p data-description>Luz y color para una interfaz expresiva.</p></div></div><div class="cxd-carousel__controls"><button type="button" data-prev aria-label="Anterior">← Anterior</button><button type="button" data-next aria-label="Siguiente">Siguiente →</button></div><span role="status" aria-live="polite"></span></div>

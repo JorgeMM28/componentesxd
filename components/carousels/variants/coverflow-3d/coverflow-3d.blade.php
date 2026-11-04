@@ -1,7 +1,6 @@
-{{-- Variante 01 — Carrusel 3D Coverflow con Perspectiva e Inclinación — Laravel Blade (components/carousels/variants/coverflow-3d/coverflow-3d.blade.php) --}}
-@props(['title' => 'Variante 01 — Carrusel 3D Coverflow con Perspectiva e Inclinación'])
-<div {{ $attributes->merge(['class' => 'cxd-carousels-coverflow-3d']) }}>
-    <h3>{{ $title }}</h3>
-    <p>Tarjetas en perspectiva tridimensional donde la diapositiva central avanza al frente y las laterales rotan en eje Y con Anime.js v4.</p>
-    {{ $slot }}
-</div>
+{{-- Incluye styles.css y ajusta la ruta del módulo. --}}
+<div class="cxd-carousel" data-cxd-control="coverflow-3d" aria-label="Carrusel coverflow"><div class="cxd-carousel__viewport cxd-coverflow"><article class="cxd-carousel__item" data-slide><small>01 / 04</small><strong>Aurora</strong><p>Una nueva perspectiva para explorar.</p></article><article class="cxd-carousel__item" data-slide><small>02 / 04</small><strong>Órbita</strong><p>Una nueva perspectiva para explorar.</p></article><article class="cxd-carousel__item" data-slide><small>03 / 04</small><strong>Nébula</strong><p>Una nueva perspectiva para explorar.</p></article><article class="cxd-carousel__item" data-slide><small>04 / 04</small><strong>Horizonte</strong><p>Una nueva perspectiva para explorar.</p></article></div><div class="cxd-carousel__controls"><button type="button" data-prev aria-label="Anterior">← Anterior</button><button type="button" data-next aria-label="Siguiente">Siguiente →</button></div><span role="status" aria-live="polite"></span></div>
+<script type="module">
+import { mountCoverflow3d } from '/assets/coverflow-3d.js';
+document.querySelectorAll('[data-cxd-control="coverflow-3d"]:not([data-ready])').forEach(root => { root.dataset.ready = 'true'; mountCoverflow3d(root); });
+</script>

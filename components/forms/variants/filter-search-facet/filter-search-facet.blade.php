@@ -1,7 +1,6 @@
-{{-- Variante 07 — Panel de Filtros Interactivos (Chips + Rango + Buscador) — Laravel Blade (components/forms/variants/filter-search-facet/filter-search-facet.blade.php) --}}
-@props(['title' => 'Variante 07 — Panel de Filtros Interactivos (Chips + Rango + Buscador)'])
-<div {{ $attributes->merge(['class' => 'cxd-forms-filter-search-facet']) }}>
-    <h3>{{ $title }}</h3>
-    <p>Selecciona etiquetas múltiples y desliza el rango de precio para ver el resumen de filtros activos.</p>
-    {{ $slot }}
-</div>
+{{-- Incluye styles.css y ajusta la ruta del módulo. --}}
+<div class="cxd-form" data-cxd-control="filter-search-facet"><button type="button" data-filter aria-pressed="true">SSR activo</button><button type="button" data-filter aria-pressed="true">Edge ready</button><button type="button" data-filter aria-pressed="false">TypeScript strict</button><button type="button" data-filter aria-pressed="false">Dockerizado</button><span role="status">2 filtros activos</span></div>
+<script type="module">
+import { mountFilterSearchFacet } from '/assets/filter-search-facet.js';
+document.querySelectorAll('[data-cxd-control="filter-search-facet"]:not([data-ready])').forEach(root => { root.dataset.ready = 'true'; mountFilterSearchFacet(root); });
+</script>

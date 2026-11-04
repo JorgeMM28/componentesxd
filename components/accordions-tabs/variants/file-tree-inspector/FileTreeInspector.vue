@@ -1,14 +1,7 @@
-<!-- Variante 06 — Árbol de Directorios Colapsable con Inspector de Archivo Activo — Vue 3 SFC (components/accordions-tabs/variants/file-tree-inspector/FileTreeInspector.vue) -->
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
+import { mountFileTreeInspector } from './file-tree-inspector.js';
 import './styles.css';
-const active = ref(false);
+const root = ref<HTMLElement | null>(null); let unmount: (() => void) | undefined; onMounted(() => { if (root.value) unmount = mountFileTreeInspector(root.value); }); onUnmounted(() => unmount?.());
 </script>
-
-<template>
-  <div class="cxd-accordions-tabs-file-tree-inspector" :data-active="active">
-    <h3>Variante 06 — Árbol de Directorios Colapsable con Inspector de Archivo Activo</h3>
-    <p>Estructura jerárquica de carpetas y archivos clicables que actualiza el visor de contenido derecho.</p>
-    <button type="button" @click="active = !active">Alternar</button>
-  </div>
-</template>
+<template><div class="cxd-widget" data-cxd-control="file-tree-inspector" ref="root"><div class="cxd-widget__columns"><div class="cxd-widget__list"><strong>src/</strong><div><button type="button" data-file="index.astro">index.astro</button></div><div><button type="button" data-file="tokens.css">tokens.css</button></div></div><div class="cxd-widget__list"><strong>Inspector</strong><p data-output>Selecciona un archivo</p></div></div></div></template>

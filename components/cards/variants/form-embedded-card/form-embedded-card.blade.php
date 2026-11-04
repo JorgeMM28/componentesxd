@@ -1,7 +1,6 @@
-{{-- Variante 06 — Tarjeta con Formulario Rápido de Cotización / Config — Laravel Blade (components/cards/variants/form-embedded-card/form-embedded-card.blade.php) --}}
-@props(['title' => 'Variante 06 — Tarjeta con Formulario Rápido de Cotización / Config'])
-<div {{ $attributes->merge(['class' => 'cxd-cards-form-embedded-card']) }}>
-    <h3>{{ $title }}</h3>
-    <p>Permite ajustar parámetros con inputs y calcular el costo mensual directamente en la tarjeta.</p>
-    {{ $slot }}
-</div>
+{{-- Incluye styles.css y ajusta la ruta del módulo. --}}
+<div class="cxd-card" data-cxd-control="form-embedded-card"><h3>Calculadora rápida de instancia</h3><label>Núcleos vCPU <input type="number" data-input min="1" max="128" value="8" /></label><p>Costo estimado: <strong data-total>$192/mes</strong></p></div>
+<script type="module">
+import { mountFormEmbeddedCard } from '/assets/form-embedded-card.js';
+document.querySelectorAll('[data-cxd-control="form-embedded-card"]:not([data-ready])').forEach(root => { root.dataset.ready = 'true'; mountFormEmbeddedCard(root); });
+</script>

@@ -1,21 +1,4 @@
-/**
- * Variante 04 — Breadcrumbs Interactivos con Selector de Rama/Proyecto — React / Next.js (TSX)
- * Archivo: components/navigation/variants/interactive-breadcrumbs/InteractiveBreadcrumbs.tsx
- */
-import React, { useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { mountInteractiveBreadcrumbs } from './interactive-breadcrumbs.js';
 import './styles.css';
-
-export const InteractiveBreadcrumbs: React.FC<{ title?: string }> = ({
-  title = 'Variante 04 — Breadcrumbs Interactivos con Selector de Rama/Proyecto'
-}) => {
-  const [active, setActive] = useState(false);
-  return (
-    <div className="cxd-navigation-interactive-breadcrumbs" data-active={active}>
-      <h3>{title}</h3>
-      <p>Ruta de navegación con menús desplegables integrados en cada nivel de jerarquía.</p>
-      <button type="button" onClick={() => setActive(!active)}>
-        Alternar Estado
-      </button>
-    </div>
-  );
-};
+export function InteractiveBreadcrumbs() { const root = useRef<HTMLDivElement>(null); useEffect(() => root.current ? mountInteractiveBreadcrumbs(root.current) : undefined, []); return <div className="cxd-nav" data-cxd-control="interactive-breadcrumbs" ref={root}><nav aria-label="Ruta de navegación"><button type="button" data-path="Inicio">Inicio</button><span> / </span><button type="button" data-path="Componentes">Componentes</button><span> / </span><button type="button" data-path="Botones">Botones</button></nav><span role="status">Ruta actual: Inicio / Componentes / Botones</span></div>; }

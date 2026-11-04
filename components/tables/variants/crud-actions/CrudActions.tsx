@@ -1,21 +1,4 @@
-/**
- * Variante 06 — Tabla con Acciones (Duplicar, Estado y Eliminar Fila) — React / Next.js (TSX)
- * Archivo: components/tables/variants/crud-actions/CrudActions.tsx
- */
-import React, { useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { mountCrudActions } from './crud-actions.js';
 import './styles.css';
-
-export const CrudActions: React.FC<{ title?: string }> = ({
-  title = 'Variante 06 — Tabla con Acciones (Duplicar, Estado y Eliminar Fila)'
-}) => {
-  const [active, setActive] = useState(false);
-  return (
-    <div className="cxd-tables-crud-actions" data-active={active}>
-      <h3>{title}</h3>
-      <p>Botones funcionales en cada fila para cambiar estado, duplicar registro o eliminar con animación Anime.js.</p>
-      <button type="button" onClick={() => setActive(!active)}>
-        Alternar Estado
-      </button>
-    </div>
-  );
-};
+export function CrudActions() { const root = useRef<HTMLDivElement>(null); useEffect(() => root.current ? mountCrudActions(root.current) : undefined, []); return <div className="cxd-table" data-cxd-control="crud-actions" ref={root}><button type="button" data-add>Agregar registro</button><table><thead><tr><th>Servicio</th><th>Estado</th><th>Acciones</th></tr></thead><tbody data-body><tr><td data-name>API</td><td data-state>Activo</td><td><button type="button" data-toggle>Estado</button><button type="button" data-duplicate>Duplicar</button><button type="button" data-delete>Eliminar</button></td></tr><tr><td data-name>Worker</td><td data-state>Activo</td><td><button type="button" data-toggle>Estado</button><button type="button" data-duplicate>Duplicar</button><button type="button" data-delete>Eliminar</button></td></tr></tbody></table><span role="status">2 registros</span></div>; }

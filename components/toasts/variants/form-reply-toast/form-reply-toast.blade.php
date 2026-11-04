@@ -1,7 +1,6 @@
-{{-- Variante 04 — Toaster con Formulario de Respuesta Rápida — Laravel Blade (components/toasts/variants/form-reply-toast/form-reply-toast.blade.php) --}}
-@props(['title' => 'Variante 04 — Toaster con Formulario de Respuesta Rápida'])
-<div {{ $attributes->merge(['class' => 'cxd-toasts-form-reply-toast']) }}>
-    <h3>{{ $title }}</h3>
-    <p>Incluye campo de texto e input de envío directo dentro de la notificación sin abrir otra página.</p>
-    {{ $slot }}
-</div>
+{{-- Incluye styles.css y ajusta la ruta del módulo. --}}
+<div class="cxd-toast" data-cxd-control="form-reply-toast"><strong>Comentario de revisión</strong><p>¿Podemos subir el límite de rate-limiting?</p><form data-form><input data-input type="text" required aria-label="Respuesta rápida" placeholder="Escribe una respuesta" /><button type="submit">Responder</button></form><span role="status">Esperando respuesta</span></div>
+<script type="module">
+import { mountFormReplyToast } from '/assets/form-reply-toast.js';
+document.querySelectorAll('[data-cxd-control="form-reply-toast"]:not([data-ready])').forEach(root => { root.dataset.ready = 'true'; mountFormReplyToast(root); });
+</script>

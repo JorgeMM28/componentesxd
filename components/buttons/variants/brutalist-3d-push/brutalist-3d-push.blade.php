@@ -1,7 +1,9 @@
-{{-- Variante 08 — Botón Mecánico 3D de Presión Física — Laravel Blade (components/buttons/variants/brutalist-3d-push/brutalist-3d-push.blade.php) --}}
-@props(['title' => 'Variante 08 — Botón Mecánico 3D de Presión Física'])
-<div {{ $attributes->merge(['class' => 'cxd-buttons-brutalist-3d-push']) }}>
-    <h3>{{ $title }}</h3>
-    <p>Borde grueso y sombra sólida inferior que se hunde físicamente cada vez que lo presionas.</p>
-    {{ $slot }}
+{{-- Incluye styles.css y ajusta la ruta del módulo. --}}
+<div class="cxd-mechanical" data-mechanical>
+  <button type="button" class="cxd-mechanical__button" data-push>Presión física 3D (<span data-count>0</span>)</button>
+  <button type="button" class="cxd-mechanical__button cxd-mechanical__button--secondary" data-toggle aria-pressed="true">Interruptor mecánico: <span data-state>ON</span></button>
 </div>
+<script type="module">
+import { mountBrutalist3dPush } from '/assets/brutalist-3d-push.js';
+document.querySelectorAll('[data-mechanical]:not([data-ready])').forEach(root => { root.dataset.ready = 'true'; mountBrutalist3dPush(root); });
+</script>

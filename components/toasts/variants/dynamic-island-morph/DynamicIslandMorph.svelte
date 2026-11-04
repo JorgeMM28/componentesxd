@@ -1,11 +1,6 @@
-<!-- Variante 02 — Dynamic Island Interactiva (3 Estados) — Svelte 5 Runes (components/toasts/variants/dynamic-island-morph/DynamicIslandMorph.svelte) -->
 <script lang="ts">
-  import './styles.css';
-  let active = $state(false);
+import { mountDynamicIslandMorph } from './dynamic-island-morph.js';
+import './styles.css';
+function control(node: HTMLElement) { return { destroy: mountDynamicIslandMorph(node) }; }
 </script>
-
-<div class="cxd-toasts-dynamic-island-morph" data-active={active}>
-  <h3>Variante 02 — Dynamic Island Interactiva (3 Estados)</h3>
-  <p>Cápsula negra brillante que cambia de tamaño con Anime.js entre Compacto, Llamada/Proceso y Expandido.</p>
-  <button type="button" onclick={() => (active = !active)}>Alternar</button>
-</div>
+<div class="cxd-toast cxd-toast--island" data-cxd-control="dynamic-island-morph" use:control><strong data-title>MODO COMPACTO // IDLE</strong><button type="button" data-mode="compact">Compacto</button><button type="button" data-mode="expanded">Expandir detalles</button><p data-details hidden>Despliegue en curso hacia 12 regiones · 94% completado.</p><span role="status">Modo compacto</span></div>

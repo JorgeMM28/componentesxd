@@ -1,11 +1,6 @@
-<!-- Variante 03 — Medidores Circulares SVG con Control Deslizante en Vivo — Svelte 5 Runes (components/badges-data/variants/interactive-svg-gauges/InteractiveSvgGauges.svelte) -->
 <script lang="ts">
-  import './styles.css';
-  let active = $state(false);
+import { mountInteractiveSvgGauges } from './interactive-svg-gauges.js';
+import './styles.css';
+function control(node: HTMLElement) { return { destroy: mountInteractiveSvgGauges(node) }; }
 </script>
-
-<div class="cxd-badges-data-interactive-svg-gauges" data-active={active}>
-  <h3>Variante 03 — Medidores Circulares SVG con Control Deslizante en Vivo</h3>
-  <p>Mueve el control deslizante para actualizar en tiempo real el porcentaje y los anillos SVG.</p>
-  <button type="button" onclick={() => (active = !active)}>Alternar</button>
-</div>
+<div class="cxd-data" data-cxd-control="interactive-svg-gauges" use:control><div class="cxd-data__gauge" data-gauge><strong data-value>84%</strong></div><label>Ajustar porcentaje <input type="range" min="0" max="100" value="84" data-slider /></label><button type="button" data-set="45">45%</button><button type="button" data-set="78">78%</button><button type="button" data-set="99">99%</button><span role="status">SLA global: 84%</span></div>

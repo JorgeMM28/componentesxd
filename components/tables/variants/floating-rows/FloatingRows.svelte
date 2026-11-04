@@ -1,11 +1,6 @@
-<!-- Variante 04 — Tabla de Filas Flotantes Separadas — Svelte 5 Runes (components/tables/variants/floating-rows/FloatingRows.svelte) -->
 <script lang="ts">
-  import './styles.css';
-  let active = $state(false);
+import { mountFloatingRows } from './floating-rows.js';
+import './styles.css';
+function control(node: HTMLElement) { return { destroy: mountFloatingRows(node) }; }
 </script>
-
-<div class="cxd-tables-floating-rows" data-active={active}>
-  <h3>Variante 04 — Tabla de Filas Flotantes Separadas</h3>
-  <p>Cada fila es una tarjeta independiente con sombra propia, bordes redondeados y elevación al pasar el cursor.</p>
-  <button type="button" onclick={() => (active = !active)}>Alternar</button>
-</div>
+<div class="cxd-table cxd-table--floating" data-cxd-control="floating-rows" use:control><table><thead><tr><th>Miembro</th><th>Departamento</th><th>Estado</th></tr></thead><tbody><tr><td>Elena</td><td>Arquitectura</td><td>Online</td></tr><tr><td>Marco</td><td>Sistemas</td><td>Revisión</td></tr><tr><td>Sofía</td><td>Diseño</td><td>Online</td></tr></tbody></table></div>

@@ -1,10 +1,10 @@
 <?php
-// Variante 03 — Menú Popover Flotante Content-Fit con Acciones — PHP 8.3 Renderer (components/modals/variants/floating-popover-menu/FloatingPopoverMenuRenderer.php)
 declare(strict_types=1);
-namespace ComponentesXD\Modals;
-
-final class FloatingPopoverMenuRenderer {
-    public static function render(): string {
-        return '<div class="cxd-modals-floating-popover-menu"><h3>Variante 03 — Menú Popover Flotante Content-Fit con Acciones</h3><p>Menú contextual compacto con opciones rápidas, atajos de teclado e interruptor integrado.</p></div>';
-    }
-}
+// Incluye styles.css y ajusta la ruta del módulo.
+function renderFloatingPopoverMenu(): string { return <<<'HTML'
+<div class="cxd-dialog" data-cxd-control="floating-popover-menu"><button type="button" data-trigger aria-expanded="false">Abrir menú contextual</button><div class="cxd-dialog__popover" data-popover hidden><div class="cxd-dialog__list"><button type="button" data-action="Editar">Editar</button><button type="button" data-action="Duplicar">Duplicar</button><button type="button" data-action="Archivar">Archivar</button></div></div><span role="status">Ninguna acción</span></div>
+<script type="module">
+import { mountFloatingPopoverMenu } from '/assets/floating-popover-menu.js';
+document.querySelectorAll('[data-cxd-control="floating-popover-menu"]:not([data-ready])').forEach(root => { root.dataset.ready = 'true'; mountFloatingPopoverMenu(root); });
+</script>
+HTML; }

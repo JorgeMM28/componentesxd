@@ -1,17 +1,11 @@
 <?php
-// Variante 07 — Lista Dual de Transferencia (Mover Permisos Izquierda ↔ Derecha) — Laravel Livewire 3 (components/accordions-tabs/variants/transfer-dual-list/TransferDualListWire.php)
-namespace App\Livewire\Cxd\AccordionsTabs;
+namespace App\Livewire;
 use Livewire\Component;
-
-class TransferDualListWire extends Component {
-    public bool $active = false;
-    public function toggle(): void { $this->active = !$this->active; }
-    public function render() {
-        return <<<'HTML'
-        <div class="cxd-accordions-tabs-transfer-dual-list">
-            <h3>Variante 07 — Lista Dual de Transferencia (Mover Permisos Izquierda ↔ Derecha)</h3>
-            <button type="button" wire:click="toggle">Estado: {{ $active ? 'ON' : 'OFF' }}</button>
-        </div>
-        HTML;
-    }
-}
+// Incluye styles.css y ajusta la ruta del módulo.
+class TransferDualListWire extends Component { public function render(): string { return <<<'HTML'
+<div class="cxd-widget" data-cxd-control="transfer-dual-list" wire:ignore><div class="cxd-widget__columns"><div class="cxd-widget__list" data-available><strong>Disponibles</strong><div data-item><span>WAF</span> <button type="button" data-transfer>Activar →</button></div><div data-item><span>Caché</span> <button type="button" data-transfer>Activar →</button></div></div><div class="cxd-widget__list" data-active><strong>Activos</strong></div></div><span role="status">Selecciona un módulo</span>@script
+<script>
+import('/assets/transfer-dual-list.js').then(module => module.mountTransferDualList($wire.$el));
+</script>
+@endscript</div>
+HTML; } }

@@ -1,14 +1,7 @@
-<!-- Variante 01 — Tarjeta Moderna Bordes Redondeados + Luz Radial — Vue 3 SFC (components/cards/variants/modern-rounded-bento/ModernRoundedBento.vue) -->
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
+import { mountModernRoundedBento } from './modern-rounded-bento.js';
 import './styles.css';
-const active = ref(false);
+const root = ref<HTMLElement | null>(null); let unmount: (() => void) | undefined; onMounted(() => { if (root.value) unmount = mountModernRoundedBento(root.value); }); onUnmounted(() => unmount?.());
 </script>
-
-<template>
-  <div class="cxd-cards-modern-rounded-bento" :data-active="active">
-    <h3>Variante 01 — Tarjeta Moderna Bordes Redondeados + Luz Radial</h3>
-    <p>Radio suave de 20px, iluminación que sigue al cursor, insignia superior y métrica destacada.</p>
-    <button type="button" @click="active = !active">Alternar</button>
-  </div>
-</template>
+<template><div class="cxd-card" data-cxd-control="modern-rounded-bento" ref="root"><span>MODERN BENTO · +31.4%</span><h3>Rendimiento global de red</h3><strong data-metric>2.48M req/s</strong><p>Una tarjeta con iluminación que sigue al cursor.</p></div></template>

@@ -1,18 +1,4 @@
-// Variante 05 — Modal de Confirmación con Validación de Texto — Angular 18+ Signals (components/modals/variants/security-confirm-modal/security-confirm-modal.component.ts)
-import { Component, signal } from '@angular/core';
-
-@Component({
-  selector: 'cxd-security-confirm-modal',
-  standalone: true,
-  styleUrls: ['./styles.css'],
-  template: `
-    <div class="cxd-modals-security-confirm-modal" [attr.data-active]="active()">
-      <h3>Variante 05 — Modal de Confirmación con Validación de Texto</h3>
-      <p>Escribe "ELIMINAR" en el campo de confirmación para desbloquear el botón destructivo.</p>
-      <button type="button" (click)="active.set(!active())">Alternar</button>
-    </div>
-  `
-})
-export class CxdSecurityConfirmModalComponent {
-  active = signal(false);
-}
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import { mountSecurityConfirmModal } from './security-confirm-modal.js';
+@Component({ selector:'cxd-security-confirm-modal', standalone:true, styleUrls:['./styles.css'], template:`<div class="cxd-dialog" data-cxd-control="security-confirm-modal" #root><button type="button" data-open>Eliminar recurso</button><span role="status">Sin cambios</span><dialog aria-label="Confirmar eliminación"><h3>Confirmar eliminación</h3><p>Escribe ELIMINAR para habilitar la acción de demostración.</p><label>Confirmación <input type="text" data-confirm-input autocomplete="off" /></label><div class="cxd-dialog__actions"><button type="button" data-delete disabled>Eliminar</button><button type="button" data-close>Cancelar</button></div></dialog></div>` })
+export class SecurityConfirmModalComponent implements AfterViewInit, OnDestroy { @ViewChild('root') root!: ElementRef<HTMLElement>; private unmount?: () => void; ngAfterViewInit() { this.unmount = mountSecurityConfirmModal(this.root.nativeElement); } ngOnDestroy() { this.unmount?.(); } }

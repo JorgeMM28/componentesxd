@@ -1,11 +1,6 @@
-<!-- Variante 06 — Botón con Menú de Acciones (Split Dropdown) — Svelte 5 Runes (components/buttons/variants/split-dropdown-action/SplitDropdownAction.svelte) -->
 <script lang="ts">
-  import './styles.css';
-  let active = $state(false);
+import { mountSplitDropdownAction } from './split-dropdown-action.js';
+import './styles.css';
+function control(node: HTMLElement) { return { destroy: mountSplitDropdownAction(node) }; }
 </script>
-
-<div class="cxd-buttons-split-dropdown-action" data-active={active}>
-  <h3>Variante 06 — Botón con Menú de Acciones (Split Dropdown)</h3>
-  <p>Botón dividido: la izquierda ejecuta la acción seleccionada y la derecha despliega la lista de modos.</p>
-  <button type="button" onclick={() => (active = !active)}>Alternar</button>
-</div>
+<div class="cxd-control" data-cxd-control="split-dropdown-action" use:control><button type="button" data-run>Ejecutar: <span data-label>Producción Directa</span></button><select data-mode aria-label="Modo de ejecución"><option>Producción Directa</option><option>Simulación Dry-Run</option><option>Rollback Instantáneo</option></select><span role="status">LISTO PARA EJECUTAR ACCIÓN SELECCIONADA</span></div>

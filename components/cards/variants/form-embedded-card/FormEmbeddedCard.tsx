@@ -1,21 +1,4 @@
-/**
- * Variante 06 — Tarjeta con Formulario Rápido de Cotización / Config — React / Next.js (TSX)
- * Archivo: components/cards/variants/form-embedded-card/FormEmbeddedCard.tsx
- */
-import React, { useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { mountFormEmbeddedCard } from './form-embedded-card.js';
 import './styles.css';
-
-export const FormEmbeddedCard: React.FC<{ title?: string }> = ({
-  title = 'Variante 06 — Tarjeta con Formulario Rápido de Cotización / Config'
-}) => {
-  const [active, setActive] = useState(false);
-  return (
-    <div className="cxd-cards-form-embedded-card" data-active={active}>
-      <h3>{title}</h3>
-      <p>Permite ajustar parámetros con inputs y calcular el costo mensual directamente en la tarjeta.</p>
-      <button type="button" onClick={() => setActive(!active)}>
-        Alternar Estado
-      </button>
-    </div>
-  );
-};
+export function FormEmbeddedCard() { const root = useRef<HTMLDivElement>(null); useEffect(() => root.current ? mountFormEmbeddedCard(root.current) : undefined, []); return <div className="cxd-card" data-cxd-control="form-embedded-card" ref={root}><h3>Calculadora rápida de instancia</h3><label>Núcleos vCPU <input type="number" data-input min="1" max="128" defaultValue="8" /></label><p>Costo estimado: <strong data-total>$192/mes</strong></p></div>; }

@@ -1,18 +1,4 @@
-// Variante 06 — Botón con Menú de Acciones (Split Dropdown) — Angular 18+ Signals (components/buttons/variants/split-dropdown-action/split-dropdown-action.component.ts)
-import { Component, signal } from '@angular/core';
-
-@Component({
-  selector: 'cxd-split-dropdown-action',
-  standalone: true,
-  styleUrls: ['./styles.css'],
-  template: `
-    <div class="cxd-buttons-split-dropdown-action" [attr.data-active]="active()">
-      <h3>Variante 06 — Botón con Menú de Acciones (Split Dropdown)</h3>
-      <p>Botón dividido: la izquierda ejecuta la acción seleccionada y la derecha despliega la lista de modos.</p>
-      <button type="button" (click)="active.set(!active())">Alternar</button>
-    </div>
-  `
-})
-export class CxdSplitDropdownActionComponent {
-  active = signal(false);
-}
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import { mountSplitDropdownAction } from './split-dropdown-action.js';
+@Component({ selector:'cxd-split-dropdown-action', standalone:true, styleUrls:['./styles.css'], template:`<div class="cxd-control" data-cxd-control="split-dropdown-action" #root><button type="button" data-run>Ejecutar: <span data-label>Producción Directa</span></button><select data-mode aria-label="Modo de ejecución"><option>Producción Directa</option><option>Simulación Dry-Run</option><option>Rollback Instantáneo</option></select><span role="status">LISTO PARA EJECUTAR ACCIÓN SELECCIONADA</span></div>` })
+export class SplitDropdownActionComponent implements AfterViewInit, OnDestroy { @ViewChild('root') root!: ElementRef<HTMLElement>; private unmount?: () => void; ngAfterViewInit() { this.unmount = mountSplitDropdownAction(this.root.nativeElement); } ngOnDestroy() { this.unmount?.(); } }

@@ -1,10 +1,13 @@
 <?php
-// Variante 08 — Botón Mecánico 3D de Presión Física — PHP 8.3 Renderer (components/buttons/variants/brutalist-3d-push/Brutalist3dPushRenderer.php)
 declare(strict_types=1);
-namespace ComponentesXD\Buttons;
-
-final class Brutalist3dPushRenderer {
-    public static function render(): string {
-        return '<div class="cxd-buttons-brutalist-3d-push"><h3>Variante 08 — Botón Mecánico 3D de Presión Física</h3><p>Borde grueso y sombra sólida inferior que se hunde físicamente cada vez que lo presionas.</p></div>';
-    }
-}
+// Incluye styles.css y ajusta la ruta del módulo.
+function renderBrutalist3dPush(): string { return <<<'HTML'
+<div class="cxd-mechanical" data-mechanical>
+  <button type="button" class="cxd-mechanical__button" data-push>Presión física 3D (<span data-count>0</span>)</button>
+  <button type="button" class="cxd-mechanical__button cxd-mechanical__button--secondary" data-toggle aria-pressed="true">Interruptor mecánico: <span data-state>ON</span></button>
+</div>
+<script type="module">
+import { mountBrutalist3dPush } from '/assets/brutalist-3d-push.js';
+document.querySelectorAll('[data-mechanical]:not([data-ready])').forEach(root => { root.dataset.ready = 'true'; mountBrutalist3dPush(root); });
+</script>
+HTML; }

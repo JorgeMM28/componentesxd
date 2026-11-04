@@ -1,11 +1,6 @@
-<!-- Variante 03 — Tabla Content-Fit (Ajustada al Contenido) — Svelte 5 Runes (components/tables/variants/content-fit-compact/ContentFitCompact.svelte) -->
 <script lang="ts">
-  import './styles.css';
-  let active = $state(false);
+import { mountContentFitCompact } from './content-fit-compact.js';
+import './styles.css';
+function control(node: HTMLElement) { return { destroy: mountContentFitCompact(node) }; }
 </script>
-
-<div class="cxd-tables-content-fit-compact" data-active={active}>
-  <h3>Variante 03 — Tabla Content-Fit (Ajustada al Contenido)</h3>
-  <p>Ancho automático exacto al texto (width: max-content), celdas ultra-compactas sin espacio desperdiciado.</p>
-  <button type="button" onclick={() => (active = !active)}>Alternar</button>
-</div>
+<div class="cxd-table cxd-table--fit" data-cxd-control="content-fit-compact" use:control><table><thead><tr><th>Miembro</th><th>Departamento</th><th>Estado</th></tr></thead><tbody><tr><td>Elena</td><td>Arquitectura</td><td>Online</td></tr><tr><td>Marco</td><td>Sistemas</td><td>Revisión</td></tr><tr><td>Sofía</td><td>Diseño</td><td>Online</td></tr></tbody></table></div>

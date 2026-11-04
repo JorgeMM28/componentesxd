@@ -1,18 +1,4 @@
-// Variante 02 — Carrusel Marquesina Infinita Continua (Control de Velocidad y Dirección) — Angular 18+ Signals (components/carousels/variants/infinite-marquee/infinite-marquee.component.ts)
-import { Component, signal } from '@angular/core';
-
-@Component({
-  selector: 'cxd-infinite-marquee',
-  standalone: true,
-  styleUrls: ['./styles.css'],
-  template: `
-    <div class="cxd-carousels-infinite-marquee" [attr.data-active]="active()">
-      <h3>Variante 02 — Carrusel Marquesina Infinita Continua (Control de Velocidad y Dirección)</h3>
-      <p>Cinta continua sin costuras para nodos, métricas o marcas con botones para invertir dirección, pausar o acelerar en vivo.</p>
-      <button type="button" (click)="active.set(!active())">Alternar</button>
-    </div>
-  `
-})
-export class CxdInfiniteMarqueeComponent {
-  active = signal(false);
-}
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import { mountInfiniteMarquee } from './infinite-marquee.js';
+@Component({ selector:'cxd-infinite-marquee', standalone:true, styleUrls:['./styles.css'], template:`<div class="cxd-carousel" data-cxd-control="infinite-marquee" #root><div class="cxd-marquee"><div class="cxd-marquee-track" data-track><div class="cxd-marquee-group" data-group><span>React</span><span>Vue</span><span>Svelte</span><span>Astro</span><span>Anime.js</span></div><div class="cxd-marquee-group" aria-hidden="true"><span>React</span><span>Vue</span><span>Svelte</span><span>Astro</span><span>Anime.js</span></div></div></div><div class="cxd-carousel__controls"><button type="button" data-play aria-pressed="false">Reproducir</button><button type="button" data-direction>Invertir dirección</button><label>Velocidad <input type="range" data-speed min="10" max="120" value="40" /></label></div><span role="status">Pausado</span></div>` })
+export class InfiniteMarqueeComponent implements AfterViewInit, OnDestroy { @ViewChild('root') root!: ElementRef<HTMLElement>; private unmount?: () => void; ngAfterViewInit() { this.unmount = mountInfiniteMarquee(this.root.nativeElement); } ngOnDestroy() { this.unmount?.(); } }

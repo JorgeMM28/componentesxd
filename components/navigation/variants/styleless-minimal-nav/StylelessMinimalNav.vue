@@ -1,14 +1,7 @@
-<!-- Variante 03 — Navegación Styleless Minimalista con Indicador Deslizante — Vue 3 SFC (components/navigation/variants/styleless-minimal-nav/StylelessMinimalNav.vue) -->
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
+import { mountStylelessMinimalNav } from './styleless-minimal-nav.js';
 import './styles.css';
-const active = ref(false);
+const root = ref<HTMLElement | null>(null); let unmount: (() => void) | undefined; onMounted(() => { if (root.value) unmount = mountStylelessMinimalNav(root.value); }); onUnmounted(() => unmount?.());
 </script>
-
-<template>
-  <div class="cxd-navigation-styleless-minimal-nav" :data-active="active">
-    <h3>Variante 03 — Navegación Styleless Minimalista con Indicador Deslizante</h3>
-    <p>Pestañas limpias sin bordes laterales donde la línea activa viaja suavemente al elemento clicado.</p>
-    <button type="button" @click="active = !active">Alternar</button>
-  </div>
-</template>
+<template><div class="cxd-nav cxd-nav--bare" data-cxd-control="styleless-minimal-nav" ref="root"><button type="button" data-destination="Resumen" aria-pressed="true">Resumen</button><button type="button" data-destination="Actividad" aria-pressed="false">Actividad</button><button type="button" data-destination="Ajustes" aria-pressed="false">Ajustes</button><span role="status">Vista activa: Resumen</span></div></template>

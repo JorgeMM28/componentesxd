@@ -1,7 +1,6 @@
-{{-- Variante 08 — Toaster Interactivo de Subida de Archivos — Laravel Blade (components/toasts/variants/upload-progress-toaster/upload-progress-toaster.blade.php) --}}
-@props(['title' => 'Variante 08 — Toaster Interactivo de Subida de Archivos'])
-<div {{ $attributes->merge(['class' => 'cxd-toasts-upload-progress-toaster']) }}>
-    <h3>{{ $title }}</h3>
-    <p>Simula la subida de múltiples archivos con porcentaje animado en tiempo real y botón de pausa/reinicio.</p>
-    {{ $slot }}
-</div>
+{{-- Incluye styles.css y ajusta la ruta del módulo. --}}
+<div class="cxd-toast" data-cxd-control="upload-progress-toaster"><strong>Subiendo artefactos de producción</strong><span data-percent>0%</span><progress data-progress max="100" value="0" aria-label="Progreso de subida"></progress><button type="button" data-start>Simular subida</button><button type="button" data-pause>Pausar</button><span role="status">Listo</span></div>
+<script type="module">
+import { mountUploadProgressToaster } from '/assets/upload-progress-toaster.js';
+document.querySelectorAll('[data-cxd-control="upload-progress-toaster"]:not([data-ready])').forEach(root => { root.dataset.ready = 'true'; mountUploadProgressToaster(root); });
+</script>

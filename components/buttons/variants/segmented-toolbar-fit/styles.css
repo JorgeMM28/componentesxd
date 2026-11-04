@@ -1,15 +1,1 @@
-/**
- * ============================================================================
- * COMPONENTESXD — BOTONES Y CONTROLES DE ACCIÓN
- * Variante 07 — Barra de Botones Content-Fit con Indicador Activo
- * Archivo: components/buttons/variants/segmented-toolbar-fit/styles.css
- * ============================================================================
- */
-.cxd-buttons-segmented-toolbar-fit {
-  background: var(--cxd-bg-surface);
-  color: var(--cxd-text-primary);
-  border: var(--cxd-border-width, 1px) solid var(--cxd-border);
-  border-radius: var(--cxd-radius-md);
-  font-family: var(--cxd-font-sans);
-  font-variant-numeric: tabular-nums;
-}
+.cxd-segments{display:flex;flex-wrap:wrap;justify-content:center;gap:0}.cxd-segments__button{border:1px solid #565c70;padding:.65rem .9rem;background:#181c2b;color:#f4f4ff;font:600 .85rem system-ui;cursor:pointer}.cxd-segments__button:first-child{border-radius:8px 0 0 8px}.cxd-segments__button:nth-child(4){border-radius:0 8px 8px 0}.cxd-segments__button[aria-pressed="true"]{background:#7253f4;color:#fff}.cxd-segments__button:focus-visible{outline:3px solid #a78bfa;outline-offset:2px}.cxd-segments__status{width:100%;text-align:center;margin-top:.75rem;font:500 .75rem system-ui}

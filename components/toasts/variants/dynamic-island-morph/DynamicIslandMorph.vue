@@ -1,14 +1,7 @@
-<!-- Variante 02 — Dynamic Island Interactiva (3 Estados) — Vue 3 SFC (components/toasts/variants/dynamic-island-morph/DynamicIslandMorph.vue) -->
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
+import { mountDynamicIslandMorph } from './dynamic-island-morph.js';
 import './styles.css';
-const active = ref(false);
+const root = ref<HTMLElement | null>(null); let unmount: (() => void) | undefined; onMounted(() => { if (root.value) unmount = mountDynamicIslandMorph(root.value); }); onUnmounted(() => unmount?.());
 </script>
-
-<template>
-  <div class="cxd-toasts-dynamic-island-morph" :data-active="active">
-    <h3>Variante 02 — Dynamic Island Interactiva (3 Estados)</h3>
-    <p>Cápsula negra brillante que cambia de tamaño con Anime.js entre Compacto, Llamada/Proceso y Expandido.</p>
-    <button type="button" @click="active = !active">Alternar</button>
-  </div>
-</template>
+<template><div class="cxd-toast cxd-toast--island" data-cxd-control="dynamic-island-morph" ref="root"><strong data-title>MODO COMPACTO // IDLE</strong><button type="button" data-mode="compact">Compacto</button><button type="button" data-mode="expanded">Expandir detalles</button><p data-details hidden>Despliegue en curso hacia 12 regiones · 94% completado.</p><span role="status">Modo compacto</span></div></template>

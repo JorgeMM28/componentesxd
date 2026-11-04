@@ -1,21 +1,4 @@
-/**
- * Variante 01 — Formulario Moderno con Bordes Redondeados — React / Next.js (TSX)
- * Archivo: components/forms/variants/modern-rounded-form/ModernRoundedForm.tsx
- */
-import React, { useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { mountModernRoundedForm } from './modern-rounded-form.js';
 import './styles.css';
-
-export const ModernRoundedForm: React.FC<{ title?: string }> = ({
-  title = 'Variante 01 — Formulario Moderno con Bordes Redondeados'
-}) => {
-  const [active, setActive] = useState(false);
-  return (
-    <div className="cxd-forms-modern-rounded-form" data-active={active}>
-      <h3>{title}</h3>
-      <p>Campos con esquinas suaves de 12px, iconos SVG integrados a la izquierda y anillo de enfoque suave.</p>
-      <button type="button" onClick={() => setActive(!active)}>
-        Alternar Estado
-      </button>
-    </div>
-  );
-};
+export function ModernRoundedForm() { const root = useRef<HTMLDivElement>(null); useEffect(() => root.current ? mountModernRoundedForm(root.current) : undefined, []); return <div className="cxd-form" data-cxd-control="modern-rounded-form" ref={root}><form data-form><label>Correo electrónico <input type="email" data-email required defaultValue="arquitectura@componentesxd.dev" /></label><button type="submit">Guardar</button></form><span role="status">Listo para guardar</span></div>; }

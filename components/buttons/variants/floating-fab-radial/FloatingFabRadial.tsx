@@ -1,21 +1,4 @@
-/**
- * Variante 03 — Botón Flotante (FAB) con Menú Desplegable — React / Next.js (TSX)
- * Archivo: components/buttons/variants/floating-fab-radial/FloatingFabRadial.tsx
- */
-import React, { useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { mountFloatingFabRadial } from './floating-fab-radial.js';
 import './styles.css';
-
-export const FloatingFabRadial: React.FC<{ title?: string }> = ({
-  title = 'Variante 03 — Botón Flotante (FAB) con Menú Desplegable'
-}) => {
-  const [active, setActive] = useState(false);
-  return (
-    <div className="cxd-buttons-floating-fab-radial" data-active={active}>
-      <h3>{title}</h3>
-      <p>Botón circular flotante que al hacer clic despliega 3 acciones satélite con física elástica.</p>
-      <button type="button" onClick={() => setActive(!active)}>
-        Alternar Estado
-      </button>
-    </div>
-  );
-};
+export function FloatingFabRadial() { const root = useRef<HTMLDivElement>(null); useEffect(() => root.current ? mountFloatingFabRadial(root.current) : undefined, []); return <div className="cxd-control" data-cxd-control="floating-fab-radial" ref={root}><button type="button" data-fab aria-expanded="true">Abrir / Cerrar menú flotante</button><span role="status">SATÉLITES ACTIVOS</span><div className="cxd-control__actions" data-actions><button type="button" data-action="Nuevo despliegue ejecutado">01. Nuevo despliegue</button><button type="button" data-action="Repositorio clonado">02. Clonar repositorio</button><button type="button" data-action="Logs exportados">03. Exportar logs</button></div></div>; }

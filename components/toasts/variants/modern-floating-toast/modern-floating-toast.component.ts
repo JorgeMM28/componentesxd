@@ -1,18 +1,4 @@
-// Variante 01 — Toaster Moderno Flotante con Barra de Tiempo — Angular 18+ Signals (components/toasts/variants/modern-floating-toast/modern-floating-toast.component.ts)
-import { Component, signal } from '@angular/core';
-
-@Component({
-  selector: 'cxd-modern-floating-toast',
-  standalone: true,
-  styleUrls: ['./styles.css'],
-  template: `
-    <div class="cxd-toasts-modern-floating-toast" [attr.data-active]="active()">
-      <h3>Variante 01 — Toaster Moderno Flotante con Barra de Tiempo</h3>
-      <p>Bordes redondeados suaves, icono en cápsula, botón de reinicio de barra de progreso y cierre animado.</p>
-      <button type="button" (click)="active.set(!active())">Alternar</button>
-    </div>
-  `
-})
-export class CxdModernFloatingToastComponent {
-  active = signal(false);
-}
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import { mountModernFloatingToast } from './modern-floating-toast.js';
+@Component({ selector:'cxd-modern-floating-toast', standalone:true, styleUrls:['./styles.css'], template:`<div class="cxd-toast" data-cxd-control="modern-floating-toast" #root><strong>Copia de seguridad completada con éxito</strong><p>14.2 GB sincronizados en el almacenamiento encriptado.</p><button type="button" data-replay>Reiniciar barra</button><progress data-progress max="100" value="100" aria-label="Tiempo restante"></progress><span role="status">Notificación activa</span></div>` })
+export class ModernFloatingToastComponent implements AfterViewInit, OnDestroy { @ViewChild('root') root!: ElementRef<HTMLElement>; private unmount?: () => void; ngAfterViewInit() { this.unmount = mountModernFloatingToast(this.root.nativeElement); } ngOnDestroy() { this.unmount?.(); } }

@@ -1,18 +1,4 @@
-// Variante 03 — Formulario Content-Fit en Una Sola Línea — Angular 18+ Signals (components/forms/variants/content-fit-inline-bar/content-fit-inline-bar.component.ts)
-import { Component, signal } from '@angular/core';
-
-@Component({
-  selector: 'cxd-content-fit-inline-bar',
-  standalone: true,
-  styleUrls: ['./styles.css'],
-  template: `
-    <div class="cxd-forms-content-fit-inline-bar" [attr.data-active]="active()">
-      <h3>Variante 03 — Formulario Content-Fit en Una Sola Línea</h3>
-      <p>Combina selector de prefijo, campo de texto y botón de envío en una sola cápsula compacta.</p>
-      <button type="button" (click)="active.set(!active())">Alternar</button>
-    </div>
-  `
-})
-export class CxdContentFitInlineBarComponent {
-  active = signal(false);
-}
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import { mountContentFitInlineBar } from './content-fit-inline-bar.js';
+@Component({ selector:'cxd-content-fit-inline-bar', standalone:true, styleUrls:['./styles.css'], template:`<div class="cxd-form cxd-form--inline" data-cxd-control="content-fit-inline-bar" #root><span>https://</span><input type="text" data-domain value="mi-proyecto.dev" aria-label="Dominio" /><button type="button" data-connect>Conectar dominio</button><span role="status">Listo</span></div>` })
+export class ContentFitInlineBarComponent implements AfterViewInit, OnDestroy { @ViewChild('root') root!: ElementRef<HTMLElement>; private unmount?: () => void; ngAfterViewInit() { this.unmount = mountContentFitInlineBar(this.root.nativeElement); } ngOnDestroy() { this.unmount?.(); } }

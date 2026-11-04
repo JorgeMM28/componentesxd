@@ -1,18 +1,4 @@
-// Variante 04 — Modal con Formulario de Creación de Proyecto — Angular 18+ Signals (components/modals/variants/form-creation-modal/form-creation-modal.component.ts)
-import { Component, signal } from '@angular/core';
-
-@Component({
-  selector: 'cxd-form-creation-modal',
-  standalone: true,
-  styleUrls: ['./styles.css'],
-  template: `
-    <div class="cxd-modals-form-creation-modal" [attr.data-active]="active()">
-      <h3>Variante 04 — Modal con Formulario de Creación de Proyecto</h3>
-      <p>Diálogo completo con inputs de nombre, selector de región, visibilidad y envío interactivo.</p>
-      <button type="button" (click)="active.set(!active())">Alternar</button>
-    </div>
-  `
-})
-export class CxdFormCreationModalComponent {
-  active = signal(false);
-}
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import { mountFormCreationModal } from './form-creation-modal.js';
+@Component({ selector:'cxd-form-creation-modal', standalone:true, styleUrls:['./styles.css'], template:`<div class="cxd-dialog" data-cxd-control="form-creation-modal" #root><button type="button" data-open>Crear instancia</button><span role="status">Listo</span><dialog aria-label="Crear instancia"><h3>Crear instancia</h3><form data-form><label>Nombre <input type="text" data-name required value="edge-analytics" /></label><label>Región <select data-region><option>us-east-1</option><option>eu-central-1</option><option>ap-northeast-1</option></select></label><div class="cxd-dialog__actions"><button type="submit">Crear</button><button type="button" data-close>Cancelar</button></div></form></dialog></div>` })
+export class FormCreationModalComponent implements AfterViewInit, OnDestroy { @ViewChild('root') root!: ElementRef<HTMLElement>; private unmount?: () => void; ngAfterViewInit() { this.unmount = mountFormCreationModal(this.root.nativeElement); } ngOnDestroy() { this.unmount?.(); } }

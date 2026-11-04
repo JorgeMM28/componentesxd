@@ -1,21 +1,4 @@
-/**
- * Variante 05 — Lista Clave-Valor con Copiado al Portapapeles por Fila — React / Next.js (TSX)
- * Archivo: components/badges-data/variants/copyable-spec-grid/CopyableSpecGrid.tsx
- */
-import React, { useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { mountCopyableSpecGrid } from './copyable-spec-grid.js';
 import './styles.css';
-
-export const CopyableSpecGrid: React.FC<{ title?: string }> = ({
-  title = 'Variante 05 — Lista Clave-Valor con Copiado al Portapapeles por Fila'
-}) => {
-  const [active, setActive] = useState(false);
-  return (
-    <div className="cxd-badges-data-copyable-spec-grid" data-active={active}>
-      <h3>{title}</h3>
-      <p>Haz clic en cualquier valor técnico (API Key, Host, SHA) para copiarlo instantáneamente.</p>
-      <button type="button" onClick={() => setActive(!active)}>
-        Alternar Estado
-      </button>
-    </div>
-  );
-};
+export function CopyableSpecGrid() { const root = useRef<HTMLDivElement>(null); useEffect(() => root.current ? mountCopyableSpecGrid(root.current) : undefined, []); return <div className="cxd-data" data-cxd-control="copyable-spec-grid" ref={root}><button type="button" data-copy="cxd_public_demo">API_PUBLIC_KEY · copiar</button><button type="button" data-copy="example.test:4321">PRIMARY_ENDPOINT · copiar</button><button type="button" data-copy="sha256:demo">BUILD_DIGEST · copiar</button><span role="status">Selecciona un valor</span></div>; }

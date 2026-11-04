@@ -1,17 +1,11 @@
 <?php
-// Variante 02 — Inputs Styleless (Solo Línea Inferior Minimalista) — Laravel Livewire 3 (components/forms/variants/styleless-underline-inputs/StylelessUnderlineInputsWire.php)
-namespace App\Livewire\Cxd\Forms;
+namespace App\Livewire;
 use Livewire\Component;
-
-class StylelessUnderlineInputsWire extends Component {
-    public bool $active = false;
-    public function toggle(): void { $this->active = !$this->active; }
-    public function render() {
-        return <<<'HTML'
-        <div class="cxd-forms-styleless-underline-inputs">
-            <h3>Variante 02 — Inputs Styleless (Solo Línea Inferior Minimalista)</h3>
-            <button type="button" wire:click="toggle">Estado: {{ $active ? 'ON' : 'OFF' }}</button>
-        </div>
-        HTML;
-    }
-}
+// Incluye styles.css y ajusta la ruta del módulo.
+class StylelessUnderlineInputsWire extends Component { public function render(): string { return <<<'HTML'
+<div class="cxd-form cxd-form--bare" data-cxd-control="styleless-underline-inputs" wire:ignore><label>Título del documento <input type="text" data-input value="Manifiesto de Diseño Industrial" /></label><span role="status">Edición en vivo</span>@script
+<script>
+import('/assets/styleless-underline-inputs.js').then(module => module.mountStylelessUnderlineInputs($wire.$el));
+</script>
+@endscript</div>
+HTML; } }

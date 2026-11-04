@@ -1,0 +1,56 @@
+<section class="advanced-anime" aria-labelledby="advanced-title">
+  <header><span>ANIME.JS 4.5 / CAPACIDADES ADICIONALES</span><h2 id="advanced-title">Interacción, distribución y navegador.</h2><p>Ejemplos prácticos de APIs de Anime.js para construir interfaces que responden a las personas.</p></header>
+  <div class="advanced-grid">
+    <article><h3>Distribución animada</h3><p>Alterna entre cuadrícula y lista con <code>createLayout()</code>.</p><div class="layout-demo" data-layout-demo><div>Diseño</div><div>Código</div><div>Entrega</div><div>Medición</div></div><button type="button" data-layout-toggle>Alternar distribución</button><details><summary>Ver código</summary><pre><code>import &#123; createLayout &#125; from 'animejs';
+const root = document.querySelector('.layout-demo');
+const layout = createLayout(root);
+document.querySelector('button').addEventListener('click', () =&gt; &#123;
+  layout.update((&#123; root &#125;) =&gt; root.classList.toggle('is-list'));
+&#125;);</code></pre></details></article>
+    <article><h3>Movimiento arrastrable</h3><p>Arrastra la pieza o usa los botones para moverla con teclado.</p><div class="drag-demo" data-drag-area><div class="drag-piece" data-drag-piece>Mover</div></div><div class="advanced-actions"><button type="button" data-drag-left>← Izquierda</button><button type="button" data-drag-right>Derecha →</button><button type="button" data-drag-reset>Restablecer</button></div><details><summary>Ver código</summary><pre><code>import &#123; createDraggable &#125; from 'animejs';
+const piece = document.querySelector('.drag-piece');
+const draggable = createDraggable(piece, &#123; container: '.drag-demo' &#125;);
+// En una aplicación, conserva una alternativa accesible por teclado.</code></pre></details></article>
+    <article><h3>Entrada al desplazar</h3><p>Desplázate dentro del panel para activar una animación con <code>onScroll()</code>.</p><div class="scroll-demo" data-scroll-container tabindex="0" aria-label="Panel desplazable de demostración"><div class="scroll-spacer">Desplázate ↓</div><div class="scroll-piece" data-scroll-piece>Contenido revelado</div><div class="scroll-spacer">Fin del panel</div></div><details><summary>Ver código</summary><pre><code>import &#123; animate, onScroll &#125; from 'animejs';
+const container = document.querySelector('.scroll-demo');
+const target = document.querySelector('.scroll-piece');
+animate(target, &#123; opacity: [0, 1], y: [30, 0],
+  duration: 700, autoplay: onScroll(&#123; container, target &#125;)
+&#125;);</code></pre></details></article>
+    <article><h3>Animación con WAAPI</h3><p>Usa el motor nativo del navegador para animar propiedades compatibles.</p><div class="waapi-demo"><div class="waapi-piece" data-waapi-piece>WAAPI</div></div><button type="button" data-waapi-play>Ejecutar transición</button><details><summary>Ver código</summary><pre><code>import &#123; waapi &#125; from 'animejs';
+const piece = document.querySelector('.waapi-piece');
+waapi.animate(piece, &#123;
+  x: [0, 100, 0], rotate: [0, 180, 360],
+  duration: 1400, ease: 'inOutSine'
+&#125;);</code></pre></details></article>
+  </div>
+</section>
+<script>
+import { animate, onScroll, createLayout, createDraggable, waapi } from 'animejs';
+const root = document.querySelector<HTMLElement>('[data-layout-demo]');
+if (root) {
+  const layout = createLayout(root);
+  document.querySelector('[data-layout-toggle]')?.addEventListener('click', () => layout.update(({ root }) => root.classList.toggle('is-list')));
+}
+const piece = document.querySelector<HTMLElement>('[data-drag-piece]');
+const area = document.querySelector<HTMLElement>('[data-drag-area]');
+if (piece && area) {
+  const draggable = createDraggable(piece, { container: area });
+  const move = (delta: number) => { draggable.x += delta; };
+  document.querySelector('[data-drag-left]')?.addEventListener('click', () => move(-24));
+  document.querySelector('[data-drag-right]')?.addEventListener('click', () => move(24));
+  document.querySelector('[data-drag-reset]')?.addEventListener('click', () => draggable.reset());
+}
+const scrollContainer = document.querySelector<HTMLElement>('[data-scroll-container]');
+const scrollTarget = document.querySelector<HTMLElement>('[data-scroll-piece]');
+if (scrollContainer && scrollTarget && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  animate(scrollTarget, { opacity: [0, 1], y: [30, 0], duration: 700, autoplay: onScroll({ container: scrollContainer, target: scrollTarget }) });
+}
+document.querySelector('[data-waapi-play]')?.addEventListener('click', () => {
+  const target = document.querySelector<HTMLElement>('[data-waapi-piece]');
+  if (target) waapi.animate(target, { x: [0, 100, 0], rotate: [0, 180, 360], duration: 1400, ease: 'inOutSine' });
+});
+</script>
+<style>
+.advanced-anime{margin:4rem 0}.advanced-anime header{max-width:720px}.advanced-anime header>span{font:600 .7rem var(--cxd-font-mono);letter-spacing:.12em;color:var(--cxd-text-secondary)}.advanced-anime h2{font-size:clamp(2rem,4vw,3.5rem);letter-spacing:-.05em;margin:.75rem 0}.advanced-anime p{color:var(--cxd-text-secondary);line-height:1.6}.advanced-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem;margin-top:2rem}.advanced-grid article{min-width:0;padding:1.25rem;border:1px solid var(--cxd-border);border-radius:var(--cxd-radius-md);background:var(--cxd-bg-surface)}.advanced-grid article h3{font-size:1.2rem}.advanced-grid button{cursor:pointer;color:var(--cxd-text-primary);background:var(--cxd-bg-base);border:1px solid var(--cxd-border-strong);border-radius:6px;padding:.6rem .75rem;margin:.35rem .2rem 0 0}.advanced-grid details{margin-top:1rem;font-size:.8rem}.advanced-grid summary{cursor:pointer}.advanced-grid pre{overflow:auto;line-height:1.5;color:var(--cxd-text-secondary)}.layout-demo{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;min-height:160px;margin:1rem 0}.layout-demo.is-list{grid-template-columns:1fr}.layout-demo div{display:grid;place-items:center;background:#4f4489;color:white;border-radius:6px;padding:.5rem}.scroll-demo{height:160px;overflow-y:auto;background:#101222;border-radius:8px;text-align:center;margin:1rem 0;color:#b7b3d0}.scroll-spacer{min-height:140px;display:grid;place-items:center;font-size:.8rem}.scroll-piece{padding:1rem;background:#9181f4;color:#101022;font-weight:700;border-radius:8px;margin:0 1rem}.drag-demo,.waapi-demo{height:160px;display:grid;place-items:center;background:#101222;border-radius:8px;margin:1rem 0;overflow:hidden}.drag-piece,.waapi-demo div{display:grid;place-items:center;width:80px;height:80px;border-radius:18px;background:#9181f4;color:#101022;font-weight:700}.drag-piece{cursor:grab;touch-action:none}.drag-piece:active{cursor:grabbing}@media(max-width:850px){.advanced-grid{grid-template-columns:1fr}}
+</style>

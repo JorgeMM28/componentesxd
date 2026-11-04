@@ -1,21 +1,4 @@
-/**
- * Variante 01 — Acordeón Exclusivo (Single-Open) con Animación de Altura — React / Next.js (TSX)
- * Archivo: components/accordions-tabs/variants/accordion-exclusive/AccordionExclusive.tsx
- */
-import React, { useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { mountAccordionExclusive } from './accordion-exclusive.js';
 import './styles.css';
-
-export const AccordionExclusive: React.FC<{ title?: string }> = ({
-  title = 'Variante 01 — Acordeón Exclusivo (Single-Open) con Animación de Altura'
-}) => {
-  const [active, setActive] = useState(false);
-  return (
-    <div className="cxd-accordions-tabs-accordion-exclusive" data-active={active}>
-      <h3>{title}</h3>
-      <p>Al expandir una sección técnica se cierran automáticamente las demás manteniendo el foco de lectura.</p>
-      <button type="button" onClick={() => setActive(!active)}>
-        Alternar Estado
-      </button>
-    </div>
-  );
-};
+export function AccordionExclusive() { const root = useRef<HTMLDivElement>(null); useEffect(() => root.current ? mountAccordionExclusive(root.current) : undefined, []); return <div className="cxd-widget" data-cxd-control="accordion-exclusive" ref={root}><button type="button" data-open="one" aria-expanded="true">01 · Tokens</button><div className="cxd-widget__panel" data-panel="one">Colores y tipografía.</div><button type="button" data-open="two" aria-expanded="false">02 · Componentes</button><div className="cxd-widget__panel" data-panel="two" hidden>Bloques reutilizables.</div><button type="button" data-open="three" aria-expanded="false">03 · Animaciones</button><div className="cxd-widget__panel" data-panel="three" hidden>Movimiento e interacción.</div></div>; }

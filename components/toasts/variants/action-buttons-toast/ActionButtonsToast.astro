@@ -1,9 +1,8 @@
 ---
-// Variante 03 — Toaster con Acciones (Aceptar, Posponer, Deshacer) — Astro 5 (components/toasts/variants/action-buttons-toast/ActionButtonsToast.astro)
 import './styles.css';
 ---
-<div class="cxd-toasts-action-buttons-toast">
-  <h3>Variante 03 — Toaster con Acciones (Aceptar, Posponer, Deshacer)</h3>
-  <p>Notificación de invitación/despliegue con botones interactivos que confirman o revierten la operación en vivo.</p>
-  <slot />
-</div>
+<div class="cxd-toast" data-cxd-control="action-buttons-toast"><strong>Solicitud de fusión en rama principal (#409)</strong><p role="status">¿Deseas aprobar y desplegar los cambios?</p><button type="button" data-action="Aprobado y desplegado">Aprobar</button><button type="button" data-action="Pospuesto por 1 hora">Posponer</button><button type="button" data-action="Operación deshecha">Deshacer</button></div>
+<script>
+import { mountActionButtonsToast } from './action-buttons-toast.js';
+document.querySelectorAll('[data-cxd-control="action-buttons-toast"]:not([data-ready])').forEach(root => { root.dataset.ready = 'true'; mountActionButtonsToast(root); });
+</script>

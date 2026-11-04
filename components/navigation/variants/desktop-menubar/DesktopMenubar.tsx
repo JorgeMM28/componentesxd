@@ -1,21 +1,4 @@
-/**
- * Variante 08 — Menubar Desktop Clásico con Menús Flotantes (Archivo, Edición, Git) — React / Next.js (TSX)
- * Archivo: components/navigation/variants/desktop-menubar/DesktopMenubar.tsx
- */
-import React, { useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { mountDesktopMenubar } from './desktop-menubar.js';
 import './styles.css';
-
-export const DesktopMenubar: React.FC<{ title?: string }> = ({
-  title = 'Variante 08 — Menubar Desktop Clásico con Menús Flotantes (Archivo, Edición, Git)'
-}) => {
-  const [active, setActive] = useState(false);
-  return (
-    <nav className="cxd-navigation-desktop-menubar" data-active={active}>
-      <h3>{title}</h3>
-      <p>Barra horizontal estilo aplicación de escritorio con menús desplegables en cascada al hacer hover o clic, atajos de teclado e indicador de sync.</p>
-      <button type="button" onClick={() => setActive(!active)}>
-        Alternar Estado
-      </button>
-    </nav>
-  );
-};
+export function DesktopMenubar() { const root = useRef<HTMLDivElement>(null); useEffect(() => root.current ? mountDesktopMenubar(root.current) : undefined, []); return <div className="cxd-nav" data-cxd-control="desktop-menubar" ref={root}><button type="button" data-menu-trigger aria-expanded="false">Archivo</button><button type="button" data-menu-trigger aria-expanded="false">Edición</button><button type="button" data-menu-trigger aria-expanded="false">Git</button><div className="cxd-nav__menu" data-menu hidden><button type="button" data-command="Nuevo">Nuevo</button><button type="button" data-command="Guardar">Guardar</button><button type="button" data-command="Exportar">Exportar</button></div><span role="status">Selecciona un menú</span></div>; }

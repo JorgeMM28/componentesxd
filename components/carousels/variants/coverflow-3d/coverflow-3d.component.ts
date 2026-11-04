@@ -1,18 +1,4 @@
-// Variante 01 — Carrusel 3D Coverflow con Perspectiva e Inclinación — Angular 18+ Signals (components/carousels/variants/coverflow-3d/coverflow-3d.component.ts)
-import { Component, signal } from '@angular/core';
-
-@Component({
-  selector: 'cxd-coverflow-3d',
-  standalone: true,
-  styleUrls: ['./styles.css'],
-  template: `
-    <div class="cxd-carousels-coverflow-3d" [attr.data-active]="active()">
-      <h3>Variante 01 — Carrusel 3D Coverflow con Perspectiva e Inclinación</h3>
-      <p>Tarjetas en perspectiva tridimensional donde la diapositiva central avanza al frente y las laterales rotan en eje Y con Anime.js v4.</p>
-      <button type="button" (click)="active.set(!active())">Alternar</button>
-    </div>
-  `
-})
-export class CxdCoverflow3dComponent {
-  active = signal(false);
-}
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import { mountCoverflow3d } from './coverflow-3d.js';
+@Component({ selector:'cxd-coverflow-3d', standalone:true, styleUrls:['./styles.css'], template:`<div class="cxd-carousel" data-cxd-control="coverflow-3d" #root aria-label="Carrusel coverflow"><div class="cxd-carousel__viewport cxd-coverflow"><article class="cxd-carousel__item" data-slide><small>01 / 04</small><strong>Aurora</strong><p>Una nueva perspectiva para explorar.</p></article><article class="cxd-carousel__item" data-slide><small>02 / 04</small><strong>Órbita</strong><p>Una nueva perspectiva para explorar.</p></article><article class="cxd-carousel__item" data-slide><small>03 / 04</small><strong>Nébula</strong><p>Una nueva perspectiva para explorar.</p></article><article class="cxd-carousel__item" data-slide><small>04 / 04</small><strong>Horizonte</strong><p>Una nueva perspectiva para explorar.</p></article></div><div class="cxd-carousel__controls"><button type="button" data-prev aria-label="Anterior">← Anterior</button><button type="button" data-next aria-label="Siguiente">Siguiente →</button></div><span role="status" aria-live="polite"></span></div>` })
+export class Coverflow3dComponent implements AfterViewInit, OnDestroy { @ViewChild('root') root!: ElementRef<HTMLElement>; private unmount?: () => void; ngAfterViewInit() { this.unmount = mountCoverflow3d(this.root.nativeElement); } ngOnDestroy() { this.unmount?.(); } }

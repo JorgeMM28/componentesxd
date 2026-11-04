@@ -1,14 +1,7 @@
-<!-- Variante 09 — Navigation Rail Ultra-Compacto con Tooltips y Puntos Activos — Vue 3 SFC (components/navigation/variants/compact-navigation-rail/CompactNavigationRail.vue) -->
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
+import { mountCompactNavigationRail } from './compact-navigation-rail.js';
 import './styles.css';
-const active = ref(false);
+const root = ref<HTMLElement | null>(null); let unmount: (() => void) | undefined; onMounted(() => { if (root.value) unmount = mountCompactNavigationRail(root.value); }); onUnmounted(() => unmount?.());
 </script>
-
-<template>
-  <nav class="cxd-navigation-compact-navigation-rail" :data-active="active">
-    <h3>Variante 09 — Navigation Rail Ultra-Compacto con Tooltips y Puntos Activos</h3>
-    <p>Riel de navegación vertical ultra-delgado de 56px para consolas cloud con iconos vectoriales, tooltips flotantes e indicador de nodo activo.</p>
-    <button type="button" @click="active = !active">Alternar</button>
-  </nav>
-</template>
+<template><div class="cxd-nav cxd-nav--rail" data-cxd-control="compact-navigation-rail" ref="root"><button type="button" data-destination="Consola" aria-label="Consola" aria-pressed="true">⌘</button><button type="button" data-destination="Catálogo" aria-label="Catálogo" aria-pressed="false">▦</button><button type="button" data-destination="Métricas" aria-label="Métricas" aria-pressed="false">◉</button><span role="status">Vista activa: Consola</span></div></template>

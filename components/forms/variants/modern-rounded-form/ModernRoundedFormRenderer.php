@@ -1,10 +1,10 @@
 <?php
-// Variante 01 — Formulario Moderno con Bordes Redondeados — PHP 8.3 Renderer (components/forms/variants/modern-rounded-form/ModernRoundedFormRenderer.php)
 declare(strict_types=1);
-namespace ComponentesXD\Forms;
-
-final class ModernRoundedFormRenderer {
-    public static function render(): string {
-        return '<div class="cxd-forms-modern-rounded-form"><h3>Variante 01 — Formulario Moderno con Bordes Redondeados</h3><p>Campos con esquinas suaves de 12px, iconos SVG integrados a la izquierda y anillo de enfoque suave.</p></div>';
-    }
-}
+// Incluye styles.css y ajusta la ruta del módulo.
+function renderModernRoundedForm(): string { return <<<'HTML'
+<div class="cxd-form" data-cxd-control="modern-rounded-form"><form data-form><label>Correo electrónico <input type="email" data-email required value="arquitectura@componentesxd.dev" /></label><button type="submit">Guardar</button></form><span role="status">Listo para guardar</span></div>
+<script type="module">
+import { mountModernRoundedForm } from '/assets/modern-rounded-form.js';
+document.querySelectorAll('[data-cxd-control="modern-rounded-form"]:not([data-ready])').forEach(root => { root.dataset.ready = 'true'; mountModernRoundedForm(root); });
+</script>
+HTML; }

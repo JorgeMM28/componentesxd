@@ -1,11 +1,6 @@
-<!-- Variante 08 — Calendario y Selector Interactivo de Horarios / Turnos — Svelte 5 Runes (components/accordions-tabs/variants/calendar-slot-Matrix/CalendarSlotMatrix.svelte) -->
 <script lang="ts">
-  import './styles.css';
-  let active = $state(false);
+import { mountCalendarSlotMatrix } from './calendar-slot-Matrix.js';
+import './styles.css';
+function control(node: HTMLElement) { return { destroy: mountCalendarSlotMatrix(node) }; }
 </script>
-
-<div class="cxd-accordions-tabs-calendar-slot-Matrix" data-active={active}>
-  <h3>Variante 08 — Calendario y Selector Interactivo de Horarios / Turnos</h3>
-  <p>Selecciona día de la semana y franja horaria con confirmación instantánea de reserva.</p>
-  <button type="button" onclick={() => (active = !active)}>Alternar</button>
-</div>
+<div class="cxd-widget" data-cxd-control="calendar-slot-Matrix" use:control><label>Día <select data-day><option>Lunes</option><option>Martes</option><option>Miércoles</option><option>Jueves</option><option>Viernes</option></select></label><div class="cxd-widget__row"><button type="button" data-slot="09:00" aria-pressed="false">09:00</button><button type="button" data-slot="11:00" aria-pressed="false">11:00</button><button type="button" data-slot="15:00" aria-pressed="false">15:00</button></div><span role="status">Selecciona un horario</span></div>

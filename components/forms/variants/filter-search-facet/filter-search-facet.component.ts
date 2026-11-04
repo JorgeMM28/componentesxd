@@ -1,18 +1,4 @@
-// Variante 07 — Panel de Filtros Interactivos (Chips + Rango + Buscador) — Angular 18+ Signals (components/forms/variants/filter-search-facet/filter-search-facet.component.ts)
-import { Component, signal } from '@angular/core';
-
-@Component({
-  selector: 'cxd-filter-search-facet',
-  standalone: true,
-  styleUrls: ['./styles.css'],
-  template: `
-    <div class="cxd-forms-filter-search-facet" [attr.data-active]="active()">
-      <h3>Variante 07 — Panel de Filtros Interactivos (Chips + Rango + Buscador)</h3>
-      <p>Selecciona etiquetas múltiples y desliza el rango de precio para ver el resumen de filtros activos.</p>
-      <button type="button" (click)="active.set(!active())">Alternar</button>
-    </div>
-  `
-})
-export class CxdFilterSearchFacetComponent {
-  active = signal(false);
-}
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import { mountFilterSearchFacet } from './filter-search-facet.js';
+@Component({ selector:'cxd-filter-search-facet', standalone:true, styleUrls:['./styles.css'], template:`<div class="cxd-form" data-cxd-control="filter-search-facet" #root><button type="button" data-filter aria-pressed="true">SSR activo</button><button type="button" data-filter aria-pressed="true">Edge ready</button><button type="button" data-filter aria-pressed="false">TypeScript strict</button><button type="button" data-filter aria-pressed="false">Dockerizado</button><span role="status">2 filtros activos</span></div>` })
+export class FilterSearchFacetComponent implements AfterViewInit, OnDestroy { @ViewChild('root') root!: ElementRef<HTMLElement>; private unmount?: () => void; ngAfterViewInit() { this.unmount = mountFilterSearchFacet(this.root.nativeElement); } ngOnDestroy() { this.unmount?.(); } }

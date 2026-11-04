@@ -1,11 +1,6 @@
-<!-- Variante 01 — Colección de Badges Modernos, Outline y Con Punto Pulsante — Svelte 5 Runes (components/badges-data/variants/modern-pulse-badges/ModernPulseBadges.svelte) -->
 <script lang="ts">
-  import './styles.css';
-  let active = $state(false);
+import { mountModernPulseBadges } from './modern-pulse-badges.js';
+import './styles.css';
+function control(node: HTMLElement) { return { destroy: mountModernPulseBadges(node) }; }
 </script>
-
-<div class="cxd-badges-data-modern-pulse-badges" data-active={active}>
-  <h3>Variante 01 — Colección de Badges Modernos, Outline y Con Punto Pulsante</h3>
-  <p>Insignias redondeadas, cuadradas, sin bordes y con botón de cierre eliminable en vivo.</p>
-  <button type="button" onclick={() => (active = !active)}>Alternar</button>
-</div>
+<div class="cxd-data" data-cxd-control="modern-pulse-badges" use:control><span class="cxd-data__tag">OPERATIONAL</span><span class="cxd-data__tag">DEGRADED</span><span class="cxd-data__tag">OUTAGE</span><button type="button" data-tag>astro-5 ×</button><button type="button" data-tag>animejs-v4 ×</button><button type="button" data-tag>typescript ×</button><button type="button" data-restore>Restaurar etiquetas</button><span role="status">3 etiquetas activas</span></div>

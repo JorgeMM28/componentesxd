@@ -1,4 +1,4 @@
-import { animate, stagger, createTimeline, createTimer, createSpring, steps, svg } from 'animejs';
+import { animate as animeAnimate, stagger, createTimeline as animeTimeline, createTimer as animeTimer, createSpring, steps, svg } from 'animejs';
 
 export function buildAnimeFrameworkSnippets(preset: { id: string; name: string; ease: string; duration: number }) {
   const openScriptTs = '<' + 'script lang="ts">';
@@ -87,6 +87,24 @@ ${closeScript}`;
 }
 
 export function initAnimeCategoryWorkbench() {
+  document.querySelectorAll<HTMLElement>('[data-anime-cat]').forEach(workbench => {
+    const search = workbench.querySelector<HTMLInputElement>('[data-anime-search]');
+    const count = workbench.querySelector<HTMLElement>('[data-anime-search-count]');
+    const cards = Array.from(workbench.querySelectorAll<HTMLElement>('[data-preset-block]'));
+    const normalize = (text: string) => text.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+    search?.addEventListener('input', () => {
+      const terms = normalize(search.value).trim().split(/\s+/).filter(Boolean);
+      let visible = 0;
+      cards.forEach(card => {
+        const match = terms.every(term => normalize(card.dataset.searchText || '').includes(term));
+        card.hidden = !match;
+        const link = workbench.querySelector<HTMLElement>(`[data-anime-jump="${CSS.escape(card.dataset.presetBlock || '')}"]`);
+        if (link) link.hidden = !match;
+        if (match) visible++;
+      });
+      if (count) count.textContent = `${visible} ${visible === 1 ? 'animación' : 'animaciones'}`;
+    });
+  });
   document.querySelectorAll<HTMLElement>('[data-preset-block]').forEach((block) => {
     const stageType = block.dataset.stageType || 'transforms-xyz';
     const baseEase = block.dataset.defaultEase || 'outExpo';
@@ -94,11 +112,20 @@ export function initAnimeCategoryWorkbench() {
     let currentSpeed = 1;
     let activeAnim: { pause?: () => void; play?: () => void; reverse?: () => void } | null = null;
     let stepIndex = 0;
+    let manuallyPaused = false;
+    let started = false;
+    type Playback = { pause: () => unknown; play?: () => unknown; reverse?: () => unknown; cancel?: () => unknown };
+    let running: Playback[] = [];
+    // Track every instance, including independent animations inside the same stage.
+    const track = <T extends Playback>(instance: T): T => { running.push(instance); return instance; };
+    const animate: typeof animeAnimate = (...args) => track(animeAnimate(...args));
+    const createTimeline: typeof animeTimeline = (...args) => track(animeTimeline(...args));
+    const createTimer: typeof animeTimer = (...args) => track(animeTimer(...args));
 
     function launchAnimation(customOrigin: 'center' | 'first' | 'last' | number = 'center') {
-      if (activeAnim && typeof activeAnim.pause === 'function') {
-        activeAnim.pause();
-      }
+      running.forEach(instance => instance.cancel ? instance.cancel() : instance.pause());
+      running = [];
+      activeAnim = null;
       const duration = Math.max(200, Math.round(baseDuration / currentSpeed));
       const els = block.querySelectorAll<HTMLElement>('[data-anim-el]');
 
@@ -368,10 +395,10 @@ export function initAnimeCategoryWorkbench() {
         activeAnim = tl;
         tl.play();
         const scrubber = block.querySelector<HTMLInputElement>('[data-tl-scrubber]');
-        scrubber?.addEventListener('input', () => {
+        if (scrubber) scrubber.oninput = () => {
           tl.pause();
           tl.seek((Number(scrubber.value) / 100) * tl.duration);
-        });
+        };
         return;
       }
 
@@ -541,15 +568,27 @@ export function initAnimeCategoryWorkbench() {
       }
     }
 
-    launchAnimation();
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      const observer = new IntersectionObserver(entries => {
+        for (const entry of entries) {
+          if (entry.isIntersecting && !manuallyPaused) {
+            if (!started) { launchAnimation(); started = true; }
+            else running.forEach(instance => instance.play?.());
+          } else if (!entry.isIntersecting) {
+            running.forEach(instance => instance.pause());
+          }
+        }
+      }, { rootMargin: '120px' });
+      observer.observe(block);
+    }
 
     // Controles de Reproducción
-    block.querySelector('[data-anim-play]')?.addEventListener('click', () => launchAnimation());
-    block.querySelector('[data-anim-pause]')?.addEventListener('click', () => activeAnim?.pause?.());
+    block.querySelector('[data-anim-play]')?.addEventListener('click', () => { manuallyPaused = false; started = true; launchAnimation(); });
+    block.querySelector('[data-anim-pause]')?.addEventListener('click', () => { manuallyPaused = true; running.forEach(instance => instance.pause()); });
     block.querySelector('[data-anim-reverse]')?.addEventListener('click', () => {
-      if (activeAnim?.reverse) {
-        activeAnim.reverse();
-        activeAnim.play?.();
+      manuallyPaused = false;
+      if (running.some(instance => instance.reverse)) {
+        running.forEach(instance => { instance.reverse?.(); instance.play?.(); });
       } else {
         launchAnimation('last');
       }
@@ -558,6 +597,8 @@ export function initAnimeCategoryWorkbench() {
     block.querySelectorAll<HTMLButtonElement>('[data-spd]').forEach((sBtn) => {
       sBtn.addEventListener('click', () => {
         currentSpeed = Number(sBtn.dataset.spd || 1);
+        manuallyPaused = false;
+        started = true;
         block.querySelectorAll('[data-spd]').forEach((b) => b.classList.remove('is-active'));
         sBtn.classList.add('is-active');
         launchAnimation();
@@ -586,16 +627,19 @@ export function initAnimeCategoryWorkbench() {
     fwSelect?.addEventListener('change', () => {
       const val = fwSelect.value;
       panels.forEach((p) => p.classList.toggle('is-active', p.dataset.afwPanel === val));
+      const path = block.querySelector<HTMLElement>('[data-anime-path]');
+      if (path) path.textContent = val === 'vanilla' ? path.dataset.originalPath || '' : `Ejemplo ${fwSelect.selectedOptions[0]?.textContent || val}`;
     });
 
     toggleBtn?.addEventListener('click', () => {
       drawer?.classList.toggle('is-collapsed');
+      toggleBtn.setAttribute('aria-expanded', String(!drawer?.classList.contains('is-collapsed')));
     });
 
     copyBtn?.addEventListener('click', async () => {
       const activeCode = block.querySelector('.unit-code-block.is-active code');
       if (!activeCode) return;
-      await navigator.clipboard.writeText(activeCode.textContent || '');
+      try { await navigator.clipboard.writeText(activeCode.textContent || ''); } catch { if (copyLbl) copyLbl.textContent = 'No se pudo copiar'; return; }
       if (copyLbl) {
         const prev = copyLbl.textContent;
         copyLbl.textContent = '¡Código Copiado!';

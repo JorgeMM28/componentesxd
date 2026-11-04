@@ -1,21 +1,4 @@
-/**
- * Variante 03 — Tabla Content-Fit (Ajustada al Contenido) — React / Next.js (TSX)
- * Archivo: components/tables/variants/content-fit-compact/ContentFitCompact.tsx
- */
-import React, { useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { mountContentFitCompact } from './content-fit-compact.js';
 import './styles.css';
-
-export const ContentFitCompact: React.FC<{ title?: string }> = ({
-  title = 'Variante 03 — Tabla Content-Fit (Ajustada al Contenido)'
-}) => {
-  const [active, setActive] = useState(false);
-  return (
-    <div className="cxd-tables-content-fit-compact" data-active={active}>
-      <h3>{title}</h3>
-      <p>Ancho automático exacto al texto (width: max-content), celdas ultra-compactas sin espacio desperdiciado.</p>
-      <button type="button" onClick={() => setActive(!active)}>
-        Alternar Estado
-      </button>
-    </div>
-  );
-};
+export function ContentFitCompact() { const root = useRef<HTMLDivElement>(null); useEffect(() => root.current ? mountContentFitCompact(root.current) : undefined, []); return <div className="cxd-table cxd-table--fit" data-cxd-control="content-fit-compact" ref={root}><table><thead><tr><th>Miembro</th><th>Departamento</th><th>Estado</th></tr></thead><tbody><tr><td>Elena</td><td>Arquitectura</td><td>Online</td></tr><tr><td>Marco</td><td>Sistemas</td><td>Revisión</td></tr><tr><td>Sofía</td><td>Diseño</td><td>Online</td></tr></tbody></table></div>; }

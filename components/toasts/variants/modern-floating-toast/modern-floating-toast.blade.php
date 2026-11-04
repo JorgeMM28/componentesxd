@@ -1,7 +1,6 @@
-{{-- Variante 01 — Toaster Moderno Flotante con Barra de Tiempo — Laravel Blade (components/toasts/variants/modern-floating-toast/modern-floating-toast.blade.php) --}}
-@props(['title' => 'Variante 01 — Toaster Moderno Flotante con Barra de Tiempo'])
-<div {{ $attributes->merge(['class' => 'cxd-toasts-modern-floating-toast']) }}>
-    <h3>{{ $title }}</h3>
-    <p>Bordes redondeados suaves, icono en cápsula, botón de reinicio de barra de progreso y cierre animado.</p>
-    {{ $slot }}
-</div>
+{{-- Incluye styles.css y ajusta la ruta del módulo. --}}
+<div class="cxd-toast" data-cxd-control="modern-floating-toast"><strong>Copia de seguridad completada con éxito</strong><p>14.2 GB sincronizados en el almacenamiento encriptado.</p><button type="button" data-replay>Reiniciar barra</button><progress data-progress max="100" value="100" aria-label="Tiempo restante"></progress><span role="status">Notificación activa</span></div>
+<script type="module">
+import { mountModernFloatingToast } from '/assets/modern-floating-toast.js';
+document.querySelectorAll('[data-cxd-control="modern-floating-toast"]:not([data-ready])').forEach(root => { root.dataset.ready = 'true'; mountModernFloatingToast(root); });
+</script>

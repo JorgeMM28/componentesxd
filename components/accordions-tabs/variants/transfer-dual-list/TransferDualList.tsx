@@ -1,21 +1,4 @@
-/**
- * Variante 07 — Lista Dual de Transferencia (Mover Permisos Izquierda ↔ Derecha) — React / Next.js (TSX)
- * Archivo: components/accordions-tabs/variants/transfer-dual-list/TransferDualList.tsx
- */
-import React, { useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { mountTransferDualList } from './transfer-dual-list.js';
 import './styles.css';
-
-export const TransferDualList: React.FC<{ title?: string }> = ({
-  title = 'Variante 07 — Lista Dual de Transferencia (Mover Permisos Izquierda ↔ Derecha)'
-}) => {
-  const [active, setActive] = useState(false);
-  return (
-    <div className="cxd-accordions-tabs-transfer-dual-list" data-active={active}>
-      <h3>{title}</h3>
-      <p>Selecciona y transfiere módulos entre la columna de Disponibles y la columna de Activos en tiempo real.</p>
-      <button type="button" onClick={() => setActive(!active)}>
-        Alternar Estado
-      </button>
-    </div>
-  );
-};
+export function TransferDualList() { const root = useRef<HTMLDivElement>(null); useEffect(() => root.current ? mountTransferDualList(root.current) : undefined, []); return <div className="cxd-widget" data-cxd-control="transfer-dual-list" ref={root}><div className="cxd-widget__columns"><div className="cxd-widget__list" data-available><strong>Disponibles</strong><div data-item><span>WAF</span> <button type="button" data-transfer>Activar →</button></div><div data-item><span>Caché</span> <button type="button" data-transfer>Activar →</button></div></div><div className="cxd-widget__list" data-active><strong>Activos</strong></div></div><span role="status">Selecciona un módulo</span></div>; }

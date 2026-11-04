@@ -1,21 +1,4 @@
-/**
- * Variante 08 — Tabla con Filtros Avanzados (Buscador + Categoría + Estado) — React / Next.js (TSX)
- * Archivo: components/tables/variants/multi-filter-table/MultiFilterTable.tsx
- */
-import React, { useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { mountMultiFilterTable } from './multi-filter-table.js';
 import './styles.css';
-
-export const MultiFilterTable: React.FC<{ title?: string }> = ({
-  title = 'Variante 08 — Tabla con Filtros Avanzados (Buscador + Categoría + Estado)'
-}) => {
-  const [active, setActive] = useState(false);
-  return (
-    <div className="cxd-tables-multi-filter-table" data-active={active}>
-      <h3>{title}</h3>
-      <p>Barra superior con buscador instantáneo, selector de departamento y botones de estado combinables.</p>
-      <button type="button" onClick={() => setActive(!active)}>
-        Alternar Estado
-      </button>
-    </div>
-  );
-};
+export function MultiFilterTable() { const root = useRef<HTMLDivElement>(null); useEffect(() => root.current ? mountMultiFilterTable(root.current) : undefined, []); return <div className="cxd-table" data-cxd-control="multi-filter-table" ref={root}><div className="cxd-table__toolbar"><label>Buscar <input type="search" data-search /></label><label>Departamento <select data-department><option value="">Todos</option><option>Arquitectura</option><option>Sistemas</option></select></label><label>Estado <select data-status><option value="">Todos</option><option>Online</option><option>Revisión</option></select></label></div><table><thead><tr><th>Miembro</th><th>Departamento</th><th>Estado</th></tr></thead><tbody><tr data-row data-department-value="Arquitectura" data-status-value="Online"><td>Elena</td><td>Arquitectura</td><td>Online</td></tr><tr data-row data-department-value="Sistemas" data-status-value="Revisión"><td>Marco</td><td>Sistemas</td><td>Revisión</td></tr></tbody></table><span role="status">2 resultados</span></div>; }

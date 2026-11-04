@@ -1,14 +1,7 @@
-<!-- Variante 10 — Mobile Bottom Tab Bar Táctil con Micro-Interacciones Cinéticas — Vue 3 SFC (components/navigation/variants/mobile-touch-tabbar/MobileTouchTabbar.vue) -->
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
+import { mountMobileTouchTabbar } from './mobile-touch-tabbar.js';
 import './styles.css';
-const active = ref(false);
+const root = ref<HTMLElement | null>(null); let unmount: (() => void) | undefined; onMounted(() => { if (root.value) unmount = mountMobileTouchTabbar(root.value); }); onUnmounted(() => unmount?.());
 </script>
-
-<template>
-  <nav class="cxd-navigation-mobile-touch-tabbar" :data-active="active">
-    <h3>Variante 10 — Mobile Bottom Tab Bar Táctil con Micro-Interacciones Cinéticas</h3>
-    <p>Barra inferior flotante tipo iOS/Android con 5 destinos táctiles, pastilla indicadora animada con Anime.js v4 y badges de notificaciones.</p>
-    <button type="button" @click="active = !active">Alternar</button>
-  </nav>
-</template>
+<template><div class="cxd-nav cxd-nav--mobile" data-cxd-control="mobile-touch-tabbar" ref="root"><button type="button" data-destination="Inicio" aria-pressed="true">Inicio</button><button type="button" data-destination="Biblioteca" aria-pressed="false">Biblioteca</button><button type="button" data-destination="Motion" aria-pressed="false">Motion</button><button type="button" data-destination="Métricas" aria-pressed="false">Métricas</button><span role="status">Vista activa: Inicio</span></div></template>

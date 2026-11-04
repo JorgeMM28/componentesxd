@@ -1,4 +1,11 @@
-// Variante 01 — Carrusel 3D Coverflow con Perspectiva e Inclinación — Vanilla JS (components/carousels/variants/coverflow-3d/coverflow-3d.js)
-export function mountCoverflow3d(root = document) {
-  return root.querySelectorAll('.cxd-carousels-coverflow-3d');
+// Copia styles.css. La función devuelve un desmontador.
+export function mountCoverflow3d(root) {
+  const controller = new AbortController(); const signal = controller.signal; let timer;
+  let index=0;const slides=Array.from(root.querySelectorAll('[data-slide]'));const status=root.querySelector('[role="status"]');const move=delta=>{index=(index+delta+slides.length)%slides.length;render();};root.querySelector('[data-prev]').addEventListener('click',()=>move(-1),{signal});root.querySelector('[data-next]').addEventListener('click',()=>move(1),{signal});const render=()=>{slides.forEach((slide,i)=>{let d=i-index;if(d>slides.length/2)d-=slides.length;if(d < -slides.length/2)d+=slides.length;slide.style.setProperty('--position',String(d));slide.style.setProperty('--scale',d===0?'1':'.75');slide.style.setProperty('--opacity',Math.abs(d)>1?'0':d===0?'1':'.65');slide.style.setProperty('--layer',String(5-Math.abs(d)));slide.setAttribute('aria-hidden',String(d!==0));});status.textContent='Diapositiva '+(index+1)+' de '+slides.length;};render();
+  return () => { controller.abort(); clearTimeout(timer); };
 }
+// Montaje: document.querySelectorAll('[data-cxd-control="coverflow-3d"]').forEach(mountCoverflow3d);
+// HTML:
+/*
+<div class="cxd-carousel" data-cxd-control="coverflow-3d" aria-label="Carrusel coverflow"><div class="cxd-carousel__viewport cxd-coverflow"><article class="cxd-carousel__item" data-slide><small>01 / 04</small><strong>Aurora</strong><p>Una nueva perspectiva para explorar.</p></article><article class="cxd-carousel__item" data-slide><small>02 / 04</small><strong>Órbita</strong><p>Una nueva perspectiva para explorar.</p></article><article class="cxd-carousel__item" data-slide><small>03 / 04</small><strong>Nébula</strong><p>Una nueva perspectiva para explorar.</p></article><article class="cxd-carousel__item" data-slide><small>04 / 04</small><strong>Horizonte</strong><p>Una nueva perspectiva para explorar.</p></article></div><div class="cxd-carousel__controls"><button type="button" data-prev aria-label="Anterior">← Anterior</button><button type="button" data-next aria-label="Siguiente">Siguiente →</button></div><span role="status" aria-live="polite"></span></div>
+*/

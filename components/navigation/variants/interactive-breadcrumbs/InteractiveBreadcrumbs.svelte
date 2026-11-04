@@ -1,11 +1,6 @@
-<!-- Variante 04 — Breadcrumbs Interactivos con Selector de Rama/Proyecto — Svelte 5 Runes (components/navigation/variants/interactive-breadcrumbs/InteractiveBreadcrumbs.svelte) -->
 <script lang="ts">
-  import './styles.css';
-  let active = $state(false);
+import { mountInteractiveBreadcrumbs } from './interactive-breadcrumbs.js';
+import './styles.css';
+function control(node: HTMLElement) { return { destroy: mountInteractiveBreadcrumbs(node) }; }
 </script>
-
-<div class="cxd-navigation-interactive-breadcrumbs" data-active={active}>
-  <h3>Variante 04 — Breadcrumbs Interactivos con Selector de Rama/Proyecto</h3>
-  <p>Ruta de navegación con menús desplegables integrados en cada nivel de jerarquía.</p>
-  <button type="button" onclick={() => (active = !active)}>Alternar</button>
-</div>
+<div class="cxd-nav" data-cxd-control="interactive-breadcrumbs" use:control><nav aria-label="Ruta de navegación"><button type="button" data-path="Inicio">Inicio</button><span> / </span><button type="button" data-path="Componentes">Componentes</button><span> / </span><button type="button" data-path="Botones">Botones</button></nav><span role="status">Ruta actual: Inicio / Componentes / Botones</span></div>

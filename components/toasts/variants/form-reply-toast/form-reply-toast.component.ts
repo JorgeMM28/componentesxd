@@ -1,18 +1,4 @@
-// Variante 04 — Toaster con Formulario de Respuesta Rápida — Angular 18+ Signals (components/toasts/variants/form-reply-toast/form-reply-toast.component.ts)
-import { Component, signal } from '@angular/core';
-
-@Component({
-  selector: 'cxd-form-reply-toast',
-  standalone: true,
-  styleUrls: ['./styles.css'],
-  template: `
-    <div class="cxd-toasts-form-reply-toast" [attr.data-active]="active()">
-      <h3>Variante 04 — Toaster con Formulario de Respuesta Rápida</h3>
-      <p>Incluye campo de texto e input de envío directo dentro de la notificación sin abrir otra página.</p>
-      <button type="button" (click)="active.set(!active())">Alternar</button>
-    </div>
-  `
-})
-export class CxdFormReplyToastComponent {
-  active = signal(false);
-}
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import { mountFormReplyToast } from './form-reply-toast.js';
+@Component({ selector:'cxd-form-reply-toast', standalone:true, styleUrls:['./styles.css'], template:`<div class="cxd-toast" data-cxd-control="form-reply-toast" #root><strong>Comentario de revisión</strong><p>¿Podemos subir el límite de rate-limiting?</p><form data-form><input data-input type="text" required aria-label="Respuesta rápida" placeholder="Escribe una respuesta" /><button type="submit">Responder</button></form><span role="status">Esperando respuesta</span></div>` })
+export class FormReplyToastComponent implements AfterViewInit, OnDestroy { @ViewChild('root') root!: ElementRef<HTMLElement>; private unmount?: () => void; ngAfterViewInit() { this.unmount = mountFormReplyToast(this.root.nativeElement); } ngOnDestroy() { this.unmount?.(); } }

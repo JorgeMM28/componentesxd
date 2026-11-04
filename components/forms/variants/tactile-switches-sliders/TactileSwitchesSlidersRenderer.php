@@ -1,10 +1,10 @@
 <?php
-// Variante 08 — Controles Interactivos (Switches, Stepper Numérico y Radios) — PHP 8.3 Renderer (components/forms/variants/tactile-switches-sliders/TactileSwitchesSlidersRenderer.php)
 declare(strict_types=1);
-namespace ComponentesXD\Forms;
-
-final class TactileSwitchesSlidersRenderer {
-    public static function render(): string {
-        return '<div class="cxd-forms-tactile-switches-sliders"><h3>Variante 08 — Controles Interactivos (Switches, Stepper Numérico y Radios)</h3><p>Interruptores animados, contador con botones +/- y selector de tarjetas de opción.</p></div>';
-    }
-}
+// Incluye styles.css y ajusta la ruta del módulo.
+function renderTactileSwitchesSliders(): string { return <<<'HTML'
+<div class="cxd-form" data-cxd-control="tactile-switches-sliders"><label><input type="checkbox" checked /> Auto-deploy en push</label><label><input type="checkbox" /> Modo estricto WAF</label><button type="button" data-step="-1" aria-label="Reducir réplicas">−</button><span data-value>4</span><button type="button" data-step="1" aria-label="Aumentar réplicas">+</button><span role="status">4 réplicas</span></div>
+<script type="module">
+import { mountTactileSwitchesSliders } from '/assets/tactile-switches-sliders.js';
+document.querySelectorAll('[data-cxd-control="tactile-switches-sliders"]:not([data-ready])').forEach(root => { root.dataset.ready = 'true'; mountTactileSwitchesSliders(root); });
+</script>
+HTML; }

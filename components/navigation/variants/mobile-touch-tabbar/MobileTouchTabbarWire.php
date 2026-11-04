@@ -1,17 +1,11 @@
 <?php
-// Variante 10 — Mobile Bottom Tab Bar Táctil con Micro-Interacciones Cinéticas — Laravel Livewire 3 (components/navigation/variants/mobile-touch-tabbar/MobileTouchTabbarWire.php)
-namespace App\Livewire\Cxd\Navigation;
+namespace App\Livewire;
 use Livewire\Component;
-
-class MobileTouchTabbarWire extends Component {
-    public bool $active = false;
-    public function toggle(): void { $this->active = !$this->active; }
-    public function render() {
-        return <<<'HTML'
-        <nav class="cxd-navigation-mobile-touch-tabbar">
-            <h3>Variante 10 — Mobile Bottom Tab Bar Táctil con Micro-Interacciones Cinéticas</h3>
-            <button type="button" wire:click="toggle">Estado: {{ $active ? 'ON' : 'OFF' }}</button>
-        </nav>
-        HTML;
-    }
-}
+// Incluye styles.css y ajusta la ruta del módulo.
+class MobileTouchTabbarWire extends Component { public function render(): string { return <<<'HTML'
+<div class="cxd-nav cxd-nav--mobile" data-cxd-control="mobile-touch-tabbar" wire:ignore><button type="button" data-destination="Inicio" aria-pressed="true">Inicio</button><button type="button" data-destination="Biblioteca" aria-pressed="false">Biblioteca</button><button type="button" data-destination="Motion" aria-pressed="false">Motion</button><button type="button" data-destination="Métricas" aria-pressed="false">Métricas</button><span role="status">Vista activa: Inicio</span>@script
+<script>
+import('/assets/mobile-touch-tabbar.js').then(module => module.mountMobileTouchTabbar($wire.$el));
+</script>
+@endscript</div>
+HTML; } }

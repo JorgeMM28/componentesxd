@@ -1,18 +1,4 @@
-// Variante 06 — Formulario con Validación y Medidor de Seguridad en Vivo — Angular 18+ Signals (components/forms/variants/live-validation-meter/live-validation-meter.component.ts)
-import { Component, signal } from '@angular/core';
-
-@Component({
-  selector: 'cxd-live-validation-meter',
-  standalone: true,
-  styleUrls: ['./styles.css'],
-  template: `
-    <div class="cxd-forms-live-validation-meter" [attr.data-active]="active()">
-      <h3>Variante 06 — Formulario con Validación y Medidor de Seguridad en Vivo</h3>
-      <p>Escribe una contraseña para ver cómo se calculan en tiempo real los 4 niveles de fortaleza.</p>
-      <button type="button" (click)="active.set(!active())">Alternar</button>
-    </div>
-  `
-})
-export class CxdLiveValidationMeterComponent {
-  active = signal(false);
-}
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import { mountLiveValidationMeter } from './live-validation-meter.js';
+@Component({ selector:'cxd-live-validation-meter', standalone:true, styleUrls:['./styles.css'], template:`<div class="cxd-form" data-cxd-control="live-validation-meter" #root><label>Contraseña <input type="password" data-password autocomplete="new-password" /></label><meter min="0" max="4" value="0" data-meter aria-label="Fortaleza de contraseña"></meter><span role="status">Sin evaluar</span></div>` })
+export class LiveValidationMeterComponent implements AfterViewInit, OnDestroy { @ViewChild('root') root!: ElementRef<HTMLElement>; private unmount?: () => void; ngAfterViewInit() { this.unmount = mountLiveValidationMeter(this.root.nativeElement); } ngOnDestroy() { this.unmount?.(); } }

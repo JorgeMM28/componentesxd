@@ -1,14 +1,7 @@
-<!-- Variante 01 — Formulario Moderno con Bordes Redondeados — Vue 3 SFC (components/forms/variants/modern-rounded-form/ModernRoundedForm.vue) -->
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
+import { mountModernRoundedForm } from './modern-rounded-form.js';
 import './styles.css';
-const active = ref(false);
+const root = ref<HTMLElement | null>(null); let unmount: (() => void) | undefined; onMounted(() => { if (root.value) unmount = mountModernRoundedForm(root.value); }); onUnmounted(() => unmount?.());
 </script>
-
-<template>
-  <div class="cxd-forms-modern-rounded-form" :data-active="active">
-    <h3>Variante 01 — Formulario Moderno con Bordes Redondeados</h3>
-    <p>Campos con esquinas suaves de 12px, iconos SVG integrados a la izquierda y anillo de enfoque suave.</p>
-    <button type="button" @click="active = !active">Alternar</button>
-  </div>
-</template>
+<template><div class="cxd-form" data-cxd-control="modern-rounded-form" ref="root"><form data-form><label>Correo electrónico <input type="email" data-email required value="arquitectura@componentesxd.dev" /></label><button type="submit">Guardar</button></form><span role="status">Listo para guardar</span></div></template>

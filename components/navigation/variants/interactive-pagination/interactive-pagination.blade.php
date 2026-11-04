@@ -1,7 +1,6 @@
-{{-- Variante 06 — Barra de Paginación Interactiva con Salto de Página — Laravel Blade (components/navigation/variants/interactive-pagination/interactive-pagination.blade.php) --}}
-@props(['title' => 'Variante 06 — Barra de Paginación Interactiva con Salto de Página'])
-<div {{ $attributes->merge(['class' => 'cxd-navigation-interactive-pagination']) }}>
-    <h3>{{ $title }}</h3>
-    <p>Haz clic en los números o botones Anterior/Siguiente para actualizar la página activa en vivo.</p>
-    {{ $slot }}
-</div>
+{{-- Incluye styles.css y ajusta la ruta del módulo. --}}
+<div class="cxd-nav" data-cxd-control="interactive-pagination"><button type="button" data-step="-1">Anterior</button><button type="button" data-page="1" aria-current="page">1</button><button type="button" data-page="2">2</button><button type="button" data-page="3">3</button><button type="button" data-step="1">Siguiente</button><span role="status">Página 1 de 3</span></div>
+<script type="module">
+import { mountInteractivePagination } from '/assets/interactive-pagination.js';
+document.querySelectorAll('[data-cxd-control="interactive-pagination"]:not([data-ready])').forEach(root => { root.dataset.ready = 'true'; mountInteractivePagination(root); });
+</script>

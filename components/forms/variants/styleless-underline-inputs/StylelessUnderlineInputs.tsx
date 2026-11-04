@@ -1,21 +1,4 @@
-/**
- * Variante 02 — Inputs Styleless (Solo Línea Inferior Minimalista) — React / Next.js (TSX)
- * Archivo: components/forms/variants/styleless-underline-inputs/StylelessUnderlineInputs.tsx
- */
-import React, { useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { mountStylelessUnderlineInputs } from './styleless-underline-inputs.js';
 import './styles.css';
-
-export const StylelessUnderlineInputs: React.FC<{ title?: string }> = ({
-  title = 'Variante 02 — Inputs Styleless (Solo Línea Inferior Minimalista)'
-}) => {
-  const [active, setActive] = useState(false);
-  return (
-    <div className="cxd-forms-styleless-underline-inputs" data-active={active}>
-      <h3>{title}</h3>
-      <p>Sin cajas laterales ni fondo: únicamente una línea inferior que se ilumina al escribir.</p>
-      <button type="button" onClick={() => setActive(!active)}>
-        Alternar Estado
-      </button>
-    </div>
-  );
-};
+export function StylelessUnderlineInputs() { const root = useRef<HTMLDivElement>(null); useEffect(() => root.current ? mountStylelessUnderlineInputs(root.current) : undefined, []); return <div className="cxd-form cxd-form--bare" data-cxd-control="styleless-underline-inputs" ref={root}><label>Título del documento <input type="text" data-input defaultValue="Manifiesto de Diseño Industrial" /></label><span role="status">Edición en vivo</span></div>; }

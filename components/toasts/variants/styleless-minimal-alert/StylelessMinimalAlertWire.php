@@ -1,17 +1,11 @@
 <?php
-// Variante 06 — Alerta Styleless Minimalista (Tipografía + Línea) — Laravel Livewire 3 (components/toasts/variants/styleless-minimal-alert/StylelessMinimalAlertWire.php)
-namespace App\Livewire\Cxd\Toasts;
+namespace App\Livewire;
 use Livewire\Component;
-
-class StylelessMinimalAlertWire extends Component {
-    public bool $active = false;
-    public function toggle(): void { $this->active = !$this->active; }
-    public function render() {
-        return <<<'HTML'
-        <div class="cxd-toasts-styleless-minimal-alert">
-            <h3>Variante 06 — Alerta Styleless Minimalista (Tipografía + Línea)</h3>
-            <button type="button" wire:click="toggle">Estado: {{ $active ? 'ON' : 'OFF' }}</button>
-        </div>
-        HTML;
-    }
-}
+// Incluye styles.css y ajusta la ruta del módulo.
+class StylelessMinimalAlertWire extends Component { public function render(): string { return <<<'HTML'
+<div class="cxd-toast cxd-toast--minimal" data-cxd-control="styleless-minimal-alert" wire:ignore role="status"><strong>AVISO DEL SISTEMA</strong><p>La ventana de mantenimiento iniciará en 15 minutos sin interrupción de tráfico.</p>@script
+<script>
+import('/assets/styleless-minimal-alert.js').then(module => module.mountStylelessMinimalAlert($wire.$el));
+</script>
+@endscript</div>
+HTML; } }

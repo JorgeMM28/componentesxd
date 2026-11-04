@@ -1,21 +1,4 @@
-/**
- * Variante 01 — Tabla Moderna de Bordes Redondeados — React / Next.js (TSX)
- * Archivo: components/tables/variants/modern-rounded/ModernRounded.tsx
- */
-import React, { useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { mountModernRounded } from './modern-rounded.js';
 import './styles.css';
-
-export const ModernRounded: React.FC<{ title?: string }> = ({
-  title = 'Variante 01 — Tabla Moderna de Bordes Redondeados'
-}) => {
-  const [active, setActive] = useState(false);
-  return (
-    <div className="cxd-tables-modern-rounded" data-active={active}>
-      <h3>{title}</h3>
-      <p>Contenedor con radio amplio de 18px, cabeceras suaves tipo cápsula, avatares circulares y badges pastilla.</p>
-      <button type="button" onClick={() => setActive(!active)}>
-        Alternar Estado
-      </button>
-    </div>
-  );
-};
+export function ModernRounded() { const root = useRef<HTMLDivElement>(null); useEffect(() => root.current ? mountModernRounded(root.current) : undefined, []); return <div className="cxd-table " data-cxd-control="modern-rounded" ref={root}><table><thead><tr><th>Miembro</th><th>Departamento</th><th>Estado</th></tr></thead><tbody><tr><td>Elena</td><td>Arquitectura</td><td>Online</td></tr><tr><td>Marco</td><td>Sistemas</td><td>Revisión</td></tr><tr><td>Sofía</td><td>Diseño</td><td>Online</td></tr></tbody></table></div>; }

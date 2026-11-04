@@ -1,21 +1,4 @@
-/**
- * Variante 01 — Carrusel 3D Coverflow con Perspectiva e Inclinación — React / Next.js (TSX)
- * Archivo: components/carousels/variants/coverflow-3d/Coverflow3d.tsx
- */
-import React, { useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { mountCoverflow3d } from './coverflow-3d.js';
 import './styles.css';
-
-export const Coverflow3d: React.FC<{ title?: string }> = ({
-  title = 'Variante 01 — Carrusel 3D Coverflow con Perspectiva e Inclinación'
-}) => {
-  const [active, setActive] = useState(false);
-  return (
-    <div className="cxd-carousels-coverflow-3d" data-active={active}>
-      <h3>{title}</h3>
-      <p>Tarjetas en perspectiva tridimensional donde la diapositiva central avanza al frente y las laterales rotan en eje Y con Anime.js v4.</p>
-      <button type="button" onClick={() => setActive(!active)}>
-        Alternar Estado
-      </button>
-    </div>
-  );
-};
+export function Coverflow3d() { const root = useRef<HTMLDivElement>(null); useEffect(() => root.current ? mountCoverflow3d(root.current) : undefined, []); return <div className="cxd-carousel" data-cxd-control="coverflow-3d" ref={root} aria-label="Carrusel coverflow"><div className="cxd-carousel__viewport cxd-coverflow"><article className="cxd-carousel__item" data-slide><small>01 / 04</small><strong>Aurora</strong><p>Una nueva perspectiva para explorar.</p></article><article className="cxd-carousel__item" data-slide><small>02 / 04</small><strong>Órbita</strong><p>Una nueva perspectiva para explorar.</p></article><article className="cxd-carousel__item" data-slide><small>03 / 04</small><strong>Nébula</strong><p>Una nueva perspectiva para explorar.</p></article><article className="cxd-carousel__item" data-slide><small>04 / 04</small><strong>Horizonte</strong><p>Una nueva perspectiva para explorar.</p></article></div><div className="cxd-carousel__controls"><button type="button" data-prev aria-label="Anterior">← Anterior</button><button type="button" data-next aria-label="Siguiente">Siguiente →</button></div><span role="status" aria-live="polite"></span></div>; }

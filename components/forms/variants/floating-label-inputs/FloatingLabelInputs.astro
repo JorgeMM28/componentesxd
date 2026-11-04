@@ -1,9 +1,8 @@
 ---
-// Variante 04 — Inputs con Etiqueta Flotante Animada — Astro 5 (components/forms/variants/floating-label-inputs/FloatingLabelInputs.astro)
 import './styles.css';
 ---
-<div class="cxd-forms-floating-label-inputs">
-  <h3>Variante 04 — Inputs con Etiqueta Flotante Animada</h3>
-  <p>La etiqueta viaja suavemente hacia el borde superior cuando haces clic o escribes contenido.</p>
-  <slot />
-</div>
+<div class="cxd-form" data-cxd-control="floating-label-inputs"><label class="cxd-form__float"><span>Nombre del cluster</span><input type="text" data-input value="us-east-production-01" /></label><span role="status">Etiqueta flotante</span></div>
+<script>
+import { mountFloatingLabelInputs } from './floating-label-inputs.js';
+document.querySelectorAll('[data-cxd-control="floating-label-inputs"]:not([data-ready])').forEach(root => { root.dataset.ready = 'true'; mountFloatingLabelInputs(root); });
+</script>

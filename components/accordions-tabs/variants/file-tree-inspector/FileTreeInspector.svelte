@@ -1,11 +1,6 @@
-<!-- Variante 06 — Árbol de Directorios Colapsable con Inspector de Archivo Activo — Svelte 5 Runes (components/accordions-tabs/variants/file-tree-inspector/FileTreeInspector.svelte) -->
 <script lang="ts">
-  import './styles.css';
-  let active = $state(false);
+import { mountFileTreeInspector } from './file-tree-inspector.js';
+import './styles.css';
+function control(node: HTMLElement) { return { destroy: mountFileTreeInspector(node) }; }
 </script>
-
-<div class="cxd-accordions-tabs-file-tree-inspector" data-active={active}>
-  <h3>Variante 06 — Árbol de Directorios Colapsable con Inspector de Archivo Activo</h3>
-  <p>Estructura jerárquica de carpetas y archivos clicables que actualiza el visor de contenido derecho.</p>
-  <button type="button" onclick={() => (active = !active)}>Alternar</button>
-</div>
+<div class="cxd-widget" data-cxd-control="file-tree-inspector" use:control><div class="cxd-widget__columns"><div class="cxd-widget__list"><strong>src/</strong><div><button type="button" data-file="index.astro">index.astro</button></div><div><button type="button" data-file="tokens.css">tokens.css</button></div></div><div class="cxd-widget__list"><strong>Inspector</strong><p data-output>Selecciona un archivo</p></div></div></div>

@@ -1,6 +1,8 @@
 # ============================================================================
-# COMPONENTESXD — DOCKER COMPOSE FULLSTACK (APP + POSTGRES + REDIS + NGINX)
+# COMPONENTESXD — DOCKER COMPOSE FULLSTACK (APP + POSTGRES + REDIS)
 # Archivo: components/docker/fullstack-compose/docker-compose.yml
+# Coloca este archivo en la raíz de una aplicación con un Dockerfile compatible.
+# DATABASE_URL debe apuntar al servicio postgres y usar la misma contraseña.
 # ============================================================================
 
 services:
@@ -13,7 +15,7 @@ services:
       - "4321:4321"
     environment:
       NODE_ENV: production
-      DATABASE_URL: postgres://app:secret@postgres:5432/componentesxd
+      DATABASE_URL: ${DATABASE_URL:?Define DATABASE_URL con credenciales codificadas}
       REDIS_URL: redis://redis:6379
     depends_on:
       postgres:
@@ -26,7 +28,7 @@ services:
     restart: unless-stopped
     environment:
       POSTGRES_USER: app
-      POSTGRES_PASSWORD: secret
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Define POSTGRES_PASSWORD}
       POSTGRES_DB: componentesxd
     volumes:
       - pgdata:/var/lib/postgresql/data
@@ -40,7 +42,10 @@ services:
     image: redis:7.4-alpine
     restart: unless-stopped
     command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - redisdata:/data
 
 volumes:
   pgdata:
+  redisdata:
 

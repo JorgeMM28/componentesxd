@@ -1,10 +1,10 @@
 <?php
-// Variante 05 — Lista Clave-Valor con Copiado al Portapapeles por Fila — PHP 8.3 Renderer (components/badges-data/variants/copyable-spec-grid/CopyableSpecGridRenderer.php)
 declare(strict_types=1);
-namespace ComponentesXD\BadgesData;
-
-final class CopyableSpecGridRenderer {
-    public static function render(): string {
-        return '<div class="cxd-badges-data-copyable-spec-grid"><h3>Variante 05 — Lista Clave-Valor con Copiado al Portapapeles por Fila</h3><p>Haz clic en cualquier valor técnico (API Key, Host, SHA) para copiarlo instantáneamente.</p></div>';
-    }
-}
+// Incluye styles.css y ajusta la ruta del módulo.
+function renderCopyableSpecGrid(): string { return <<<'HTML'
+<div class="cxd-data" data-cxd-control="copyable-spec-grid"><button type="button" data-copy="cxd_public_demo">API_PUBLIC_KEY · copiar</button><button type="button" data-copy="example.test:4321">PRIMARY_ENDPOINT · copiar</button><button type="button" data-copy="sha256:demo">BUILD_DIGEST · copiar</button><span role="status">Selecciona un valor</span></div>
+<script type="module">
+import { mountCopyableSpecGrid } from '/assets/copyable-spec-grid.js';
+document.querySelectorAll('[data-cxd-control="copyable-spec-grid"]:not([data-ready])').forEach(root => { root.dataset.ready = 'true'; mountCopyableSpecGrid(root); });
+</script>
+HTML; }

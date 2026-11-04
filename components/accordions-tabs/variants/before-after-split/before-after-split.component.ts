@@ -1,18 +1,4 @@
-// Variante 03 — Comparador Visual Before / After con Cortina Deslizable — Angular 18+ Signals (components/accordions-tabs/variants/before-after-split/before-after-split.component.ts)
-import { Component, signal } from '@angular/core';
-
-@Component({
-  selector: 'cxd-before-after-split',
-  standalone: true,
-  styleUrls: ['./styles.css'],
-  template: `
-    <div class="cxd-accordions-tabs-before-after-split" [attr.data-active]="active()">
-      <h3>Variante 03 — Comparador Visual Before / After con Cortina Deslizable</h3>
-      <p>Arrastra el control divisor horizontal para comparar en tiempo real dos estados o arquitecturas superpuestas.</p>
-      <button type="button" (click)="active.set(!active())">Alternar</button>
-    </div>
-  `
-})
-export class CxdBeforeAfterSplitComponent {
-  active = signal(false);
-}
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import { mountBeforeAfterSplit } from './before-after-split.js';
+@Component({ selector:'cxd-before-after-split', standalone:true, styleUrls:['./styles.css'], template:`<div class="cxd-widget" data-cxd-control="before-after-split" #root><div class="cxd-widget__compare" data-compare>DESPUÉS<span>ANTES</span></div><label>Divisor <input type="range" min="0" max="100" value="50" data-range /></label><span role="status">50%</span></div>` })
+export class BeforeAfterSplitComponent implements AfterViewInit, OnDestroy { @ViewChild('root') root!: ElementRef<HTMLElement>; private unmount?: () => void; ngAfterViewInit() { this.unmount = mountBeforeAfterSplit(this.root.nativeElement); } ngOnDestroy() { this.unmount?.(); } }

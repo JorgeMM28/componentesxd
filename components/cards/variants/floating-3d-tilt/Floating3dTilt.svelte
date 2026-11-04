@@ -1,11 +1,6 @@
-<!-- Variante 03 — Tarjeta Flotante con Perspectiva 3D Interactiva — Svelte 5 Runes (components/cards/variants/floating-3d-tilt/Floating3dTilt.svelte) -->
 <script lang="ts">
-  import './styles.css';
-  let active = $state(false);
+import { mountFloating3dTilt } from './floating-3d-tilt.js';
+import './styles.css';
+function control(node: HTMLElement) { return { destroy: mountFloating3dTilt(node) }; }
 </script>
-
-<div class="cxd-cards-floating-3d-tilt" data-active={active}>
-  <h3>Variante 03 — Tarjeta Flotante con Perspectiva 3D Interactiva</h3>
-  <p>Mueve el cursor encima para inclinar la tarjeta en 3 ejes (rotateX / rotateY) con sombra profunda.</p>
-  <button type="button" onclick={() => (active = !active)}>Alternar</button>
-</div>
+<div class="cxd-card" data-cxd-control="floating-3d-tilt" use:control><span>PERSPECTIVA 3D</span><h3>Mueve el cursor sobre esta tarjeta</h3><p>La perspectiva responde a la posición del puntero.</p></div>

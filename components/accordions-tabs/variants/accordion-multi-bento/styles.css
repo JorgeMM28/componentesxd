@@ -1,15 +1,1 @@
-/**
- * ============================================================================
- * COMPONENTESXD — ACORDEONES, COMPARADORES BEFORE/AFTER, KANBAN Y CONMUTADORES
- * Variante 02 — Acordeón Multi-Apertura con Insignias de Estado y Buscador
- * Archivo: components/accordions-tabs/variants/accordion-multi-bento/styles.css
- * ============================================================================
- */
-.cxd-accordions-tabs-accordion-multi-bento {
-  background: var(--cxd-bg-surface);
-  color: var(--cxd-text-primary);
-  border: var(--cxd-border-width, 1px) solid var(--cxd-border);
-  border-radius: var(--cxd-radius-md);
-  font-family: var(--cxd-font-sans);
-  font-variant-numeric: tabular-nums;
-}
+.cxd-widget{box-sizing:border-box;width:min(100%,40rem);padding:1rem;border:1px solid #716492;border-radius:12px;background:#171726;color:#fff;font:500 .9rem/1.5 system-ui}.cxd-widget *{box-sizing:border-box}.cxd-widget button,.cxd-widget input,.cxd-widget select{font:inherit;border:1px solid #8f7bbd;border-radius:7px;padding:.5rem .65rem;background:#28233d;color:#fff}.cxd-widget button{cursor:pointer}.cxd-widget button:focus-visible,.cxd-widget input:focus-visible,.cxd-widget select:focus-visible{outline:3px solid #c4b5fd;outline-offset:2px}.cxd-widget [hidden]{display:none!important}.cxd-widget [aria-pressed=true]{background:#7253f4}.cxd-widget [role=status]{display:block;margin-top:.7rem;color:#c8b8ff;font-size:.8rem}.cxd-widget__row{display:flex;flex-wrap:wrap;gap:.5rem;margin:.5rem 0}.cxd-widget__panel{padding:.65rem;border:1px solid #716492;border-radius:7px;margin:.4rem 0}.cxd-widget__compare{position:relative;overflow:hidden;height:120px;border-radius:8px;background:#b894ed;color:#151025;display:grid;place-items:center}.cxd-widget__compare span{position:absolute;inset:0;display:grid;place-items:center;background:#2d526d;color:white;clip-path:inset(0 calc(100% - var(--split,50%)) 0 0)}.cxd-widget__columns{display:grid;grid-template-columns:1fr 1fr;gap:.5rem}.cxd-widget__list{min-height:3rem;padding:.5rem;border:1px solid #716492;border-radius:7px}

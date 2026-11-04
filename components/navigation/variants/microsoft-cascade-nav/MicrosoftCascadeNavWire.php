@@ -1,17 +1,11 @@
 <?php
-// Variante 01 — Navbar con Menú en Cascada Multi-Nivel (Estilo Microsoft) — Laravel Livewire 3 (components/navigation/variants/microsoft-cascade-nav/MicrosoftCascadeNavWire.php)
-namespace App\Livewire\Cxd\Navigation;
+namespace App\Livewire;
 use Livewire\Component;
-
-class MicrosoftCascadeNavWire extends Component {
-    public bool $active = false;
-    public function toggle(): void { $this->active = !$this->active; }
-    public function render() {
-        return <<<'HTML'
-        <div class="cxd-navigation-microsoft-cascade-nav">
-            <h3>Variante 01 — Navbar con Menú en Cascada Multi-Nivel (Estilo Microsoft)</h3>
-            <button type="button" wire:click="toggle">Estado: {{ $active ? 'ON' : 'OFF' }}</button>
-        </div>
-        HTML;
-    }
-}
+// Incluye styles.css y ajusta la ruta del módulo.
+class MicrosoftCascadeNavWire extends Component { public function render(): string { return <<<'HTML'
+<div class="cxd-nav" data-cxd-control="microsoft-cascade-nav" wire:ignore><button type="button" data-category="Componentes" aria-expanded="false">Componentes</button><button type="button" data-category="Animaciones" aria-expanded="false">Animaciones</button><div class="cxd-nav__menu" data-menu hidden><button type="button" data-group="Componentes" data-leaf="Tablas">Tablas</button><button type="button" data-group="Componentes" data-leaf="Botones">Botones</button><button type="button" data-group="Componentes" data-leaf="Formularios">Formularios</button><button type="button" data-group="Animaciones" data-leaf="SVG" hidden>SVG</button><button type="button" data-group="Animaciones" data-leaf="Timelines" hidden>Timelines</button></div><span role="status">Selecciona una categoría</span>@script
+<script>
+import('/assets/microsoft-cascade-nav.js').then(module => module.mountMicrosoftCascadeNav($wire.$el));
+</script>
+@endscript</div>
+HTML; } }

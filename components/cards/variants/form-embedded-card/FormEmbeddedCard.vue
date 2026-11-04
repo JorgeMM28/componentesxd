@@ -1,14 +1,7 @@
-<!-- Variante 06 — Tarjeta con Formulario Rápido de Cotización / Config — Vue 3 SFC (components/cards/variants/form-embedded-card/FormEmbeddedCard.vue) -->
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
+import { mountFormEmbeddedCard } from './form-embedded-card.js';
 import './styles.css';
-const active = ref(false);
+const root = ref<HTMLElement | null>(null); let unmount: (() => void) | undefined; onMounted(() => { if (root.value) unmount = mountFormEmbeddedCard(root.value); }); onUnmounted(() => unmount?.());
 </script>
-
-<template>
-  <div class="cxd-cards-form-embedded-card" :data-active="active">
-    <h3>Variante 06 — Tarjeta con Formulario Rápido de Cotización / Config</h3>
-    <p>Permite ajustar parámetros con inputs y calcular el costo mensual directamente en la tarjeta.</p>
-    <button type="button" @click="active = !active">Alternar</button>
-  </div>
-</template>
+<template><div class="cxd-card" data-cxd-control="form-embedded-card" ref="root"><h3>Calculadora rápida de instancia</h3><label>Núcleos vCPU <input type="number" data-input min="1" max="128" value="8" /></label><p>Costo estimado: <strong data-total>$192/mes</strong></p></div></template>

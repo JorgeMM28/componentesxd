@@ -1,4 +1,11 @@
-// Variante 03 — Carrusel Multi-Tarjeta con Vista Previa Lateral (Peek) y Barra de Progreso — Vanilla JS (components/carousels/variants/snap-peek-slider/snap-peek-slider.js)
-export function mountSnapPeekSlider(root = document) {
-  return root.querySelectorAll('.cxd-carousels-snap-peek-slider');
+// Copia styles.css. La función devuelve un desmontador.
+export function mountSnapPeekSlider(root) {
+  const controller = new AbortController(); const signal = controller.signal; let timer;
+  const track=root.querySelector('[data-track]');const slides=Array.from(root.querySelectorAll('[data-slide]'));const status=root.querySelector('[role="status"]');const progress=root.querySelector('[data-progress]');const sync=()=>{const max=track.scrollWidth-track.clientWidth;const ratio=max>0?track.scrollLeft/max:0;progress.style.setProperty('--progress',(ratio*100)+'%');const nearest=slides.reduce((best,slide,i)=>Math.abs(slide.getBoundingClientRect().left-track.getBoundingClientRect().left)<Math.abs(slides[best].getBoundingClientRect().left-track.getBoundingClientRect().left)?i:best,0);status.textContent='Tarjeta '+(nearest+1)+' de '+slides.length;};root.querySelector('[data-prev]').addEventListener('click',()=>track.scrollBy({left:-track.clientWidth*.75,behavior:'smooth'}),{signal});root.querySelector('[data-next]').addEventListener('click',()=>track.scrollBy({left:track.clientWidth*.75,behavior:'smooth'}),{signal});track.addEventListener('scroll',sync,{signal,passive:true});sync();
+  return () => { controller.abort(); clearTimeout(timer); };
 }
+// Montaje: document.querySelectorAll('[data-cxd-control="snap-peek-slider"]').forEach(mountSnapPeekSlider);
+// HTML:
+/*
+<div class="cxd-carousel" data-cxd-control="snap-peek-slider" aria-label="Carrusel con vista lateral"><div class="cxd-peek" data-track tabindex="0"><article class="cxd-carousel__item" data-slide><small>01 / 04</small><strong>Aurora</strong><p>Una nueva perspectiva para explorar.</p></article><article class="cxd-carousel__item" data-slide><small>02 / 04</small><strong>Órbita</strong><p>Una nueva perspectiva para explorar.</p></article><article class="cxd-carousel__item" data-slide><small>03 / 04</small><strong>Nébula</strong><p>Una nueva perspectiva para explorar.</p></article><article class="cxd-carousel__item" data-slide><small>04 / 04</small><strong>Horizonte</strong><p>Una nueva perspectiva para explorar.</p></article></div><div class="cxd-progress" aria-hidden="true"><span data-progress></span></div><div class="cxd-carousel__controls"><button type="button" data-prev aria-label="Anterior">← Anterior</button><button type="button" data-next aria-label="Siguiente">Siguiente →</button></div><span role="status" aria-live="polite"></span></div>
+*/

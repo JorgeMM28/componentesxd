@@ -1,10 +1,10 @@
 <?php
-// Variante 04 — Línea de Tiempo (Timeline) con Filtro de Eventos — PHP 8.3 Renderer (components/badges-data/variants/vertical-event-timeline/VerticalEventTimelineRenderer.php)
 declare(strict_types=1);
-namespace ComponentesXD\BadgesData;
-
-final class VerticalEventTimelineRenderer {
-    public static function render(): string {
-        return '<div class="cxd-badges-data-vertical-event-timeline"><h3>Variante 04 — Línea de Tiempo (Timeline) con Filtro de Eventos</h3><p>Cronología vertical con nodos conectados, estados de despliegue y botón para agregar nuevo evento.</p></div>';
-    }
-}
+// Incluye styles.css y ajusta la ruta del módulo.
+function renderVerticalEventTimeline(): string { return <<<'HTML'
+<div class="cxd-data" data-cxd-control="vertical-event-timeline"><strong>Cronología de eventos</strong><button type="button" data-add>+ Agregar evento</button><div class="cxd-data__list" data-list aria-live="polite"><div class="cxd-data__item">Despliegue completado</div><div class="cxd-data__item">Archivos sincronizados</div></div></div>
+<script type="module">
+import { mountVerticalEventTimeline } from '/assets/vertical-event-timeline.js';
+document.querySelectorAll('[data-cxd-control="vertical-event-timeline"]:not([data-ready])').forEach(root => { root.dataset.ready = 'true'; mountVerticalEventTimeline(root); });
+</script>
+HTML; }

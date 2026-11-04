@@ -68,6 +68,8 @@ const pathname = Astro.url.pathname;
             <span>Inicio</span>
           </a>
 
+          <a href="/laboratorio" class={`ms-nav-item ${pathname === "/laboratorio" ? "is-current" : ""}`}><span>Laboratorio</span></a>
+
           <!-- 1. MENÚ EN CASCADA: COMPONENTES -> CATEGORÍA -> VARIANTES -->
           <div class="ms-cascade-wrapper" data-cascade-root="components">
             <button
@@ -573,6 +575,7 @@ const pathname = Astro.url.pathname;
     font-size: 0.82rem;
     font-weight: 500;
     text-decoration: none;
+    white-space: nowrap;
     cursor: pointer;
     transition: all 140ms ease;
   }
@@ -598,6 +601,19 @@ const pathname = Astro.url.pathname;
 
   .ms-nav-trigger.is-open .ms-chevron {
     transform: rotate(180deg);
+  }
+
+  @media (max-width: 1350px) {
+    .ms-navbar__container { height: auto; min-height: 60px; flex-wrap: wrap; gap: .25rem 1rem; padding-top: .45rem; padding-bottom: .45rem; }
+    .ms-nav-links { order: 3; width: 100%; flex-wrap: wrap; }
+    .ms-navbar__right { margin-left: auto; }
+    .ms-nav-item, .ms-nav-trigger { height: 34px; padding: 0 .55rem; }
+  }
+  @media (max-width: 600px) {
+    .ms-navbar__container { padding-left: .75rem; padding-right: .75rem; }
+    .ms-navbar__right { display: none; }
+    .ms-nav-links { gap: .1rem; }
+    .ms-nav-item, .ms-nav-trigger { font-size: .73rem; gap: .25rem; }
   }
 
   /* Mega Dropdown Container — Abre del lado izquierdo hacia la derecha dentro del contenedor */

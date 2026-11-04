@@ -1,7 +1,6 @@
-{{-- Variante 05 — Conmutador de Planes Mensual / Anual con Recálculo Animado — Laravel Blade (components/accordions-tabs/variants/segmented-pricing-toggle/segmented-pricing-toggle.blade.php) --}}
-@props(['title' => 'Variante 05 — Conmutador de Planes Mensual / Anual con Recálculo Animado'])
-<div {{ $attributes->merge(['class' => 'cxd-accordions-tabs-segmented-pricing-toggle']) }}>
-    <h3>{{ $title }}</h3>
-    <p>Alterna entre facturación mensual y anual aplicando descuento automático e interpolando las tarifas en vivo.</p>
-    {{ $slot }}
-</div>
+{{-- Incluye styles.css y ajusta la ruta del módulo. --}}
+<div class="cxd-widget" data-cxd-control="segmented-pricing-toggle"><div class="cxd-widget__row"><button type="button" data-period="monthly" aria-pressed="true">Mensual</button><button type="button" data-period="yearly" aria-pressed="false">Anual · 20% menos</button></div><strong data-price>$20 / mes</strong><span role="status">Facturación mensual</span></div>
+<script type="module">
+import { mountSegmentedPricingToggle } from '/assets/segmented-pricing-toggle.js';
+document.querySelectorAll('[data-cxd-control="segmented-pricing-toggle"]:not([data-ready])').forEach(root => { root.dataset.ready = 'true'; mountSegmentedPricingToggle(root); });
+</script>

@@ -1,9 +1,8 @@
 ---
-// Variante 04 — Tablero Kanban Interactivo (Mover Tareas entre Columnas en Vivo) — Astro 5 (components/accordions-tabs/variants/kanban-mini-board/KanbanMiniBoard.astro)
 import './styles.css';
 ---
-<div class="cxd-accordions-tabs-kanban-mini-board">
-  <h3>Variante 04 — Tablero Kanban Interactivo (Mover Tareas entre Columnas en Vivo)</h3>
-  <p>Tarjetas operativas con botones para promover o regresar tareas entre Backlog, En Progreso y Producción.</p>
-  <slot />
-</div>
+<div class="cxd-widget" data-cxd-control="kanban-mini-board"><div class="cxd-widget__columns"><div class="cxd-widget__list" data-backlog><strong>Pendiente</strong><div data-task>Revisar tokens <button type="button" data-move>Avanzar →</button></div></div><div class="cxd-widget__list" data-done><strong>Producción</strong></div></div><span role="status">Mueve una tarea</span></div>
+<script>
+import { mountKanbanMiniBoard } from './kanban-mini-board.js';
+document.querySelectorAll('[data-cxd-control="kanban-mini-board"]:not([data-ready])').forEach(root => { root.dataset.ready = 'true'; mountKanbanMiniBoard(root); });
+</script>

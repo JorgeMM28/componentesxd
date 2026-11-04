@@ -1,21 +1,4 @@
-/**
- * Variante 02 — Carrusel Marquesina Infinita Continua (Control de Velocidad y Dirección) — React / Next.js (TSX)
- * Archivo: components/carousels/variants/infinite-marquee/InfiniteMarquee.tsx
- */
-import React, { useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { mountInfiniteMarquee } from './infinite-marquee.js';
 import './styles.css';
-
-export const InfiniteMarquee: React.FC<{ title?: string }> = ({
-  title = 'Variante 02 — Carrusel Marquesina Infinita Continua (Control de Velocidad y Dirección)'
-}) => {
-  const [active, setActive] = useState(false);
-  return (
-    <div className="cxd-carousels-infinite-marquee" data-active={active}>
-      <h3>{title}</h3>
-      <p>Cinta continua sin costuras para nodos, métricas o marcas con botones para invertir dirección, pausar o acelerar en vivo.</p>
-      <button type="button" onClick={() => setActive(!active)}>
-        Alternar Estado
-      </button>
-    </div>
-  );
-};
+export function InfiniteMarquee() { const root = useRef<HTMLDivElement>(null); useEffect(() => root.current ? mountInfiniteMarquee(root.current) : undefined, []); return <div className="cxd-carousel" data-cxd-control="infinite-marquee" ref={root}><div className="cxd-marquee"><div className="cxd-marquee-track" data-track><div className="cxd-marquee-group" data-group><span>React</span><span>Vue</span><span>Svelte</span><span>Astro</span><span>Anime.js</span></div><div className="cxd-marquee-group" aria-hidden="true"><span>React</span><span>Vue</span><span>Svelte</span><span>Astro</span><span>Anime.js</span></div></div></div><div className="cxd-carousel__controls"><button type="button" data-play aria-pressed="false">Reproducir</button><button type="button" data-direction>Invertir dirección</button><label>Velocidad <input type="range" data-speed min="10" max="120" defaultValue="40" /></label></div><span role="status">Pausado</span></div>; }

@@ -1,21 +1,4 @@
-/**
- * Variante 09 — Tabla Expandible Master-Detail (Despliegue de Sub-Panel) — React / Next.js (TSX)
- * Archivo: components/tables/variants/expandable-detail/ExpandableDetail.tsx
- */
-import React, { useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { mountExpandableDetail } from './expandable-detail.js';
 import './styles.css';
-
-export const ExpandableDetail: React.FC<{ title?: string }> = ({
-  title = 'Variante 09 — Tabla Expandible Master-Detail (Despliegue de Sub-Panel)'
-}) => {
-  const [active, setActive] = useState(false);
-  return (
-    <div className="cxd-tables-expandable-detail" data-active={active}>
-      <h3>{title}</h3>
-      <p>Haz clic en cualquier fila para desplegar un panel técnico con historial, métricas y especificaciones.</p>
-      <button type="button" onClick={() => setActive(!active)}>
-        Alternar Estado
-      </button>
-    </div>
-  );
-};
+export function ExpandableDetail() { const root = useRef<HTMLDivElement>(null); useEffect(() => root.current ? mountExpandableDetail(root.current) : undefined, []); return <div className="cxd-table" data-cxd-control="expandable-detail" ref={root}><table><thead><tr><th>Incidente</th><th>Estado</th></tr></thead><tbody><tr><td><button type="button" data-expand="one" aria-expanded="false">INC-4091 · Latencia</button></td><td>SEV-2</td></tr><tr data-detail="one" hidden><td>Tráfico normalizado al 100%.</td><td>Resuelto</td></tr><tr><td><button type="button" data-expand="two" aria-expanded="false">DEP-8820 · Actualización</button></td><td>Completado</td></tr><tr data-detail="two" hidden><td>24 nodos reiniciados.</td><td>Sin pérdida</td></tr></tbody></table></div>; }

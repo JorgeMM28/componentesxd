@@ -1,7 +1,6 @@
-{{-- Variante 04 — Breadcrumbs Interactivos con Selector de Rama/Proyecto — Laravel Blade (components/navigation/variants/interactive-breadcrumbs/interactive-breadcrumbs.blade.php) --}}
-@props(['title' => 'Variante 04 — Breadcrumbs Interactivos con Selector de Rama/Proyecto'])
-<div {{ $attributes->merge(['class' => 'cxd-navigation-interactive-breadcrumbs']) }}>
-    <h3>{{ $title }}</h3>
-    <p>Ruta de navegación con menús desplegables integrados en cada nivel de jerarquía.</p>
-    {{ $slot }}
-</div>
+{{-- Incluye styles.css y ajusta la ruta del módulo. --}}
+<div class="cxd-nav" data-cxd-control="interactive-breadcrumbs"><nav aria-label="Ruta de navegación"><button type="button" data-path="Inicio">Inicio</button><span> / </span><button type="button" data-path="Componentes">Componentes</button><span> / </span><button type="button" data-path="Botones">Botones</button></nav><span role="status">Ruta actual: Inicio / Componentes / Botones</span></div>
+<script type="module">
+import { mountInteractiveBreadcrumbs } from '/assets/interactive-breadcrumbs.js';
+document.querySelectorAll('[data-cxd-control="interactive-breadcrumbs"]:not([data-ready])').forEach(root => { root.dataset.ready = 'true'; mountInteractiveBreadcrumbs(root); });
+</script>

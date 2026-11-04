@@ -1,18 +1,4 @@
-// Variante 08 — Tabla con Filtros Avanzados (Buscador + Categoría + Estado) — Angular 18+ Signals (components/tables/variants/multi-filter-table/multi-filter-table.component.ts)
-import { Component, signal } from '@angular/core';
-
-@Component({
-  selector: 'cxd-multi-filter-table',
-  standalone: true,
-  styleUrls: ['./styles.css'],
-  template: `
-    <div class="cxd-tables-multi-filter-table" [attr.data-active]="active()">
-      <h3>Variante 08 — Tabla con Filtros Avanzados (Buscador + Categoría + Estado)</h3>
-      <p>Barra superior con buscador instantáneo, selector de departamento y botones de estado combinables.</p>
-      <button type="button" (click)="active.set(!active())">Alternar</button>
-    </div>
-  `
-})
-export class CxdMultiFilterTableComponent {
-  active = signal(false);
-}
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import { mountMultiFilterTable } from './multi-filter-table.js';
+@Component({ selector:'cxd-multi-filter-table', standalone:true, styleUrls:['./styles.css'], template:`<div class="cxd-table" data-cxd-control="multi-filter-table" #root><div class="cxd-table__toolbar"><label>Buscar <input type="search" data-search /></label><label>Departamento <select data-department><option value="">Todos</option><option>Arquitectura</option><option>Sistemas</option></select></label><label>Estado <select data-status><option value="">Todos</option><option>Online</option><option>Revisión</option></select></label></div><table><thead><tr><th>Miembro</th><th>Departamento</th><th>Estado</th></tr></thead><tbody><tr data-row data-department-value="Arquitectura" data-status-value="Online"><td>Elena</td><td>Arquitectura</td><td>Online</td></tr><tr data-row data-department-value="Sistemas" data-status-value="Revisión"><td>Marco</td><td>Sistemas</td><td>Revisión</td></tr></tbody></table><span role="status">2 resultados</span></div>` })
+export class MultiFilterTableComponent implements AfterViewInit, OnDestroy { @ViewChild('root') root!: ElementRef<HTMLElement>; private unmount?: () => void; ngAfterViewInit() { this.unmount = mountMultiFilterTable(this.root.nativeElement); } ngOnDestroy() { this.unmount?.(); } }

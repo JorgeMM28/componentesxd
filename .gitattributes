@@ -1,0 +1,3 @@
+# Los fragmentos del registro deben coincidir exactamente con los archivos exportados.
+# Mantener LF también en Windows evita que Git altere los ejemplos al hacer checkout.
+* text=auto eol=lf

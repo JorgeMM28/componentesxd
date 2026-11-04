@@ -1,11 +1,6 @@
-<!-- Variante 06 — Tarjeta con Formulario Rápido de Cotización / Config — Svelte 5 Runes (components/cards/variants/form-embedded-card/FormEmbeddedCard.svelte) -->
 <script lang="ts">
-  import './styles.css';
-  let active = $state(false);
+import { mountFormEmbeddedCard } from './form-embedded-card.js';
+import './styles.css';
+function control(node: HTMLElement) { return { destroy: mountFormEmbeddedCard(node) }; }
 </script>
-
-<div class="cxd-cards-form-embedded-card" data-active={active}>
-  <h3>Variante 06 — Tarjeta con Formulario Rápido de Cotización / Config</h3>
-  <p>Permite ajustar parámetros con inputs y calcular el costo mensual directamente en la tarjeta.</p>
-  <button type="button" onclick={() => (active = !active)}>Alternar</button>
-</div>
+<div class="cxd-card" data-cxd-control="form-embedded-card" use:control><h3>Calculadora rápida de instancia</h3><label>Núcleos vCPU <input type="number" data-input min="1" max="128" value="8" /></label><p>Costo estimado: <strong data-total>$192/mes</strong></p></div>

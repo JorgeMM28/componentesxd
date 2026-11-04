@@ -1,21 +1,4 @@
-/**
- * Variante 05 — Botón con Seguridad Hold-to-Confirm (Mantener Presionado) — React / Next.js (TSX)
- * Archivo: components/buttons/variants/hold-confirm-safety/HoldConfirmSafety.tsx
- */
-import React, { useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { mountHoldConfirmSafety } from './hold-confirm-safety.js';
 import './styles.css';
-
-export const HoldConfirmSafety: React.FC<{ title?: string }> = ({
-  title = 'Variante 05 — Botón con Seguridad Hold-to-Confirm (Mantener Presionado)'
-}) => {
-  const [active, setActive] = useState(false);
-  return (
-    <div className="cxd-buttons-hold-confirm-safety" data-active={active}>
-      <h3>{title}</h3>
-      <p>Mantén presionado el botón para llenar la barra de progreso roja hasta el 100% y ejecutar la acción.</p>
-      <button type="button" onClick={() => setActive(!active)}>
-        Alternar Estado
-      </button>
-    </div>
-  );
-};
+export function HoldConfirmSafety() { const root = useRef<HTMLDivElement>(null); useEffect(() => root.current ? mountHoldConfirmSafety(root.current) : undefined, []); return <div className="cxd-control" data-cxd-control="hold-confirm-safety" ref={root}><button type="button" data-hold>Mantén presionado para purgar; con teclado pulsa dos veces</button><span role="status">PROGRESO DE SEGURIDAD: 0%</span></div>; }

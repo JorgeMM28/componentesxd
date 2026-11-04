@@ -1,7 +1,6 @@
-{{-- Variante 03 — Tarjeta Flotante con Perspectiva 3D Interactiva — Laravel Blade (components/cards/variants/floating-3d-tilt/floating-3d-tilt.blade.php) --}}
-@props(['title' => 'Variante 03 — Tarjeta Flotante con Perspectiva 3D Interactiva'])
-<div {{ $attributes->merge(['class' => 'cxd-cards-floating-3d-tilt']) }}>
-    <h3>{{ $title }}</h3>
-    <p>Mueve el cursor encima para inclinar la tarjeta en 3 ejes (rotateX / rotateY) con sombra profunda.</p>
-    {{ $slot }}
-</div>
+{{-- Incluye styles.css y ajusta la ruta del módulo. --}}
+<div class="cxd-card" data-cxd-control="floating-3d-tilt"><span>PERSPECTIVA 3D</span><h3>Mueve el cursor sobre esta tarjeta</h3><p>La perspectiva responde a la posición del puntero.</p></div>
+<script type="module">
+import { mountFloating3dTilt } from '/assets/floating-3d-tilt.js';
+document.querySelectorAll('[data-cxd-control="floating-3d-tilt"]:not([data-ready])').forEach(root => { root.dataset.ready = 'true'; mountFloating3dTilt(root); });
+</script>

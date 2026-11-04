@@ -1,7 +1,6 @@
-{{-- Variante 01 — Tarjeta Moderna Bordes Redondeados + Luz Radial — Laravel Blade (components/cards/variants/modern-rounded-bento/modern-rounded-bento.blade.php) --}}
-@props(['title' => 'Variante 01 — Tarjeta Moderna Bordes Redondeados + Luz Radial'])
-<div {{ $attributes->merge(['class' => 'cxd-cards-modern-rounded-bento']) }}>
-    <h3>{{ $title }}</h3>
-    <p>Radio suave de 20px, iluminación que sigue al cursor, insignia superior y métrica destacada.</p>
-    {{ $slot }}
-</div>
+{{-- Incluye styles.css y ajusta la ruta del módulo. --}}
+<div class="cxd-card" data-cxd-control="modern-rounded-bento"><span>MODERN BENTO · +31.4%</span><h3>Rendimiento global de red</h3><strong data-metric>2.48M req/s</strong><p>Una tarjeta con iluminación que sigue al cursor.</p></div>
+<script type="module">
+import { mountModernRoundedBento } from '/assets/modern-rounded-bento.js';
+document.querySelectorAll('[data-cxd-control="modern-rounded-bento"]:not([data-ready])').forEach(root => { root.dataset.ready = 'true'; mountModernRoundedBento(root); });
+</script>

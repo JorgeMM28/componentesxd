@@ -1,17 +1,11 @@
 <?php
-// Variante 03 — Navegación Styleless Minimalista con Indicador Deslizante — Laravel Livewire 3 (components/navigation/variants/styleless-minimal-nav/StylelessMinimalNavWire.php)
-namespace App\Livewire\Cxd\Navigation;
+namespace App\Livewire;
 use Livewire\Component;
-
-class StylelessMinimalNavWire extends Component {
-    public bool $active = false;
-    public function toggle(): void { $this->active = !$this->active; }
-    public function render() {
-        return <<<'HTML'
-        <div class="cxd-navigation-styleless-minimal-nav">
-            <h3>Variante 03 — Navegación Styleless Minimalista con Indicador Deslizante</h3>
-            <button type="button" wire:click="toggle">Estado: {{ $active ? 'ON' : 'OFF' }}</button>
-        </div>
-        HTML;
-    }
-}
+// Incluye styles.css y ajusta la ruta del módulo.
+class StylelessMinimalNavWire extends Component { public function render(): string { return <<<'HTML'
+<div class="cxd-nav cxd-nav--bare" data-cxd-control="styleless-minimal-nav" wire:ignore><button type="button" data-destination="Resumen" aria-pressed="true">Resumen</button><button type="button" data-destination="Actividad" aria-pressed="false">Actividad</button><button type="button" data-destination="Ajustes" aria-pressed="false">Ajustes</button><span role="status">Vista activa: Resumen</span>@script
+<script>
+import('/assets/styleless-minimal-nav.js').then(module => module.mountStylelessMinimalNav($wire.$el));
+</script>
+@endscript</div>
+HTML; } }

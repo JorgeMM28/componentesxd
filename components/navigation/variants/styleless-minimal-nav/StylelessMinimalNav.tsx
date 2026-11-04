@@ -1,21 +1,4 @@
-/**
- * Variante 03 — Navegación Styleless Minimalista con Indicador Deslizante — React / Next.js (TSX)
- * Archivo: components/navigation/variants/styleless-minimal-nav/StylelessMinimalNav.tsx
- */
-import React, { useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { mountStylelessMinimalNav } from './styleless-minimal-nav.js';
 import './styles.css';
-
-export const StylelessMinimalNav: React.FC<{ title?: string }> = ({
-  title = 'Variante 03 — Navegación Styleless Minimalista con Indicador Deslizante'
-}) => {
-  const [active, setActive] = useState(false);
-  return (
-    <div className="cxd-navigation-styleless-minimal-nav" data-active={active}>
-      <h3>{title}</h3>
-      <p>Pestañas limpias sin bordes laterales donde la línea activa viaja suavemente al elemento clicado.</p>
-      <button type="button" onClick={() => setActive(!active)}>
-        Alternar Estado
-      </button>
-    </div>
-  );
-};
+export function StylelessMinimalNav() { const root = useRef<HTMLDivElement>(null); useEffect(() => root.current ? mountStylelessMinimalNav(root.current) : undefined, []); return <div className="cxd-nav cxd-nav--bare" data-cxd-control="styleless-minimal-nav" ref={root}><button type="button" data-destination="Resumen" aria-pressed="true">Resumen</button><button type="button" data-destination="Actividad" aria-pressed="false">Actividad</button><button type="button" data-destination="Ajustes" aria-pressed="false">Ajustes</button><span role="status">Vista activa: Resumen</span></div>; }

@@ -1,11 +1,6 @@
-<!-- Variante 07 — Panel de Filtros Interactivos (Chips + Rango + Buscador) — Svelte 5 Runes (components/forms/variants/filter-search-facet/FilterSearchFacet.svelte) -->
 <script lang="ts">
-  import './styles.css';
-  let active = $state(false);
+import { mountFilterSearchFacet } from './filter-search-facet.js';
+import './styles.css';
+function control(node: HTMLElement) { return { destroy: mountFilterSearchFacet(node) }; }
 </script>
-
-<div class="cxd-forms-filter-search-facet" data-active={active}>
-  <h3>Variante 07 — Panel de Filtros Interactivos (Chips + Rango + Buscador)</h3>
-  <p>Selecciona etiquetas múltiples y desliza el rango de precio para ver el resumen de filtros activos.</p>
-  <button type="button" onclick={() => (active = !active)}>Alternar</button>
-</div>
+<div class="cxd-form" data-cxd-control="filter-search-facet" use:control><button type="button" data-filter aria-pressed="true">SSR activo</button><button type="button" data-filter aria-pressed="true">Edge ready</button><button type="button" data-filter aria-pressed="false">TypeScript strict</button><button type="button" data-filter aria-pressed="false">Dockerizado</button><span role="status">2 filtros activos</span></div>

@@ -1,7 +1,6 @@
-{{-- Variante 04 — Tablero Kanban Interactivo (Mover Tareas entre Columnas en Vivo) — Laravel Blade (components/accordions-tabs/variants/kanban-mini-board/kanban-mini-board.blade.php) --}}
-@props(['title' => 'Variante 04 — Tablero Kanban Interactivo (Mover Tareas entre Columnas en Vivo)'])
-<div {{ $attributes->merge(['class' => 'cxd-accordions-tabs-kanban-mini-board']) }}>
-    <h3>{{ $title }}</h3>
-    <p>Tarjetas operativas con botones para promover o regresar tareas entre Backlog, En Progreso y Producción.</p>
-    {{ $slot }}
-</div>
+{{-- Incluye styles.css y ajusta la ruta del módulo. --}}
+<div class="cxd-widget" data-cxd-control="kanban-mini-board"><div class="cxd-widget__columns"><div class="cxd-widget__list" data-backlog><strong>Pendiente</strong><div data-task>Revisar tokens <button type="button" data-move>Avanzar →</button></div></div><div class="cxd-widget__list" data-done><strong>Producción</strong></div></div><span role="status">Mueve una tarea</span></div>
+<script type="module">
+import { mountKanbanMiniBoard } from '/assets/kanban-mini-board.js';
+document.querySelectorAll('[data-cxd-control="kanban-mini-board"]:not([data-ready])').forEach(root => { root.dataset.ready = 'true'; mountKanbanMiniBoard(root); });
+</script>

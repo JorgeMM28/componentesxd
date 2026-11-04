@@ -1,14 +1,7 @@
-<!-- Variante 07 — Panel de Filtros Interactivos (Chips + Rango + Buscador) — Vue 3 SFC (components/forms/variants/filter-search-facet/FilterSearchFacet.vue) -->
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
+import { mountFilterSearchFacet } from './filter-search-facet.js';
 import './styles.css';
-const active = ref(false);
+const root = ref<HTMLElement | null>(null); let unmount: (() => void) | undefined; onMounted(() => { if (root.value) unmount = mountFilterSearchFacet(root.value); }); onUnmounted(() => unmount?.());
 </script>
-
-<template>
-  <div class="cxd-forms-filter-search-facet" :data-active="active">
-    <h3>Variante 07 — Panel de Filtros Interactivos (Chips + Rango + Buscador)</h3>
-    <p>Selecciona etiquetas múltiples y desliza el rango de precio para ver el resumen de filtros activos.</p>
-    <button type="button" @click="active = !active">Alternar</button>
-  </div>
-</template>
+<template><div class="cxd-form" data-cxd-control="filter-search-facet" ref="root"><button type="button" data-filter aria-pressed="true">SSR activo</button><button type="button" data-filter aria-pressed="true">Edge ready</button><button type="button" data-filter aria-pressed="false">TypeScript strict</button><button type="button" data-filter aria-pressed="false">Dockerizado</button><span role="status">2 filtros activos</span></div></template>

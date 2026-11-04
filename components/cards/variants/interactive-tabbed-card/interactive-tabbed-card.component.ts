@@ -1,18 +1,4 @@
-// Variante 04 — Tarjeta Interactiva con Pestañas Internas — Angular 18+ Signals (components/cards/variants/interactive-tabbed-card/interactive-tabbed-card.component.ts)
-import { Component, signal } from '@angular/core';
-
-@Component({
-  selector: 'cxd-interactive-tabbed-card',
-  standalone: true,
-  styleUrls: ['./styles.css'],
-  template: `
-    <div class="cxd-cards-interactive-tabbed-card" [attr.data-active]="active()">
-      <h3>Variante 04 — Tarjeta Interactiva con Pestañas Internas</h3>
-      <p>Alterna entre Resumen, Métricas y Configuración dentro de la misma tarjeta sin recargar.</p>
-      <button type="button" (click)="active.set(!active())">Alternar</button>
-    </div>
-  `
-})
-export class CxdInteractiveTabbedCardComponent {
-  active = signal(false);
-}
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import { mountInteractiveTabbedCard } from './interactive-tabbed-card.js';
+@Component({ selector:'cxd-interactive-tabbed-card', standalone:true, styleUrls:['./styles.css'], template:`<div class="cxd-card" data-cxd-control="interactive-tabbed-card" #root><div class="cxd-card__actions"><button type="button" data-tab="summary" aria-pressed="true">Resumen</button><button type="button" data-tab="metrics" aria-pressed="false">Métricas</button><button type="button" data-tab="settings" aria-pressed="false">Ajustes</button></div><p data-panel="summary">Estado general: 99.99% de disponibilidad.</p><p data-panel="metrics" hidden>Latencia media: 7.2 ms · Memoria: 41.2 GB.</p><p data-panel="settings" hidden>Autoescalado habilitado: 4 a 32 nodos.</p></div>` })
+export class InteractiveTabbedCardComponent implements AfterViewInit, OnDestroy { @ViewChild('root') root!: ElementRef<HTMLElement>; private unmount?: () => void; ngAfterViewInit() { this.unmount = mountInteractiveTabbedCard(this.root.nativeElement); } ngOnDestroy() { this.unmount?.(); } }

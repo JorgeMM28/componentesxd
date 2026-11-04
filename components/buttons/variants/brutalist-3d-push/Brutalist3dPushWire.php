@@ -1,17 +1,7 @@
 <?php
-// Variante 08 — Botón Mecánico 3D de Presión Física — Laravel Livewire 3 (components/buttons/variants/brutalist-3d-push/Brutalist3dPushWire.php)
-namespace App\Livewire\Cxd\Buttons;
+namespace App\Livewire;
 use Livewire\Component;
-
-class Brutalist3dPushWire extends Component {
-    public bool $active = false;
-    public function toggle(): void { $this->active = !$this->active; }
-    public function render() {
-        return <<<'HTML'
-        <div class="cxd-buttons-brutalist-3d-push">
-            <h3>Variante 08 — Botón Mecánico 3D de Presión Física</h3>
-            <button type="button" wire:click="toggle">Estado: {{ $active ? 'ON' : 'OFF' }}</button>
-        </div>
-        HTML;
-    }
-}
+// Incluye styles.css en tus assets.
+class Brutalist3dPushWire extends Component { public int $count = 0; public bool $on = true; public function push(): void { $this->count++; } public function toggle(): void { $this->on = !$this->on; } public function render(): string { return <<<'HTML'
+<div class="cxd-mechanical"><button type="button" class="cxd-mechanical__button" wire:click="push">Presión física 3D ({{ $count }})</button><button type="button" class="cxd-mechanical__button cxd-mechanical__button--secondary" wire:click="toggle" aria-pressed="{{ $on ? 'true' : 'false' }}">Interruptor mecánico: {{ $on ? 'ON' : 'OFF' }}</button></div>
+HTML; } }

@@ -1,11 +1,6 @@
-<!-- Variante 05 — Generador Interactivo de Pila de Toasters — Svelte 5 Runes (components/toasts/variants/stacker-spawner-toast/StackerSpawnerToast.svelte) -->
 <script lang="ts">
-  import './styles.css';
-  let active = $state(false);
+import { mountStackerSpawnerToast } from './stacker-spawner-toast.js';
+import './styles.css';
+function control(node: HTMLElement) { return { destroy: mountStackerSpawnerToast(node) }; }
 </script>
-
-<div class="cxd-toasts-stacker-spawner-toast" data-active={active}>
-  <h3>Variante 05 — Generador Interactivo de Pila de Toasters</h3>
-  <p>Haz clic en los botones para disparar toasters reales de Éxito, Alerta o Error que se apilan con Anime.js.</p>
-  <button type="button" onclick={() => (active = !active)}>Alternar</button>
-</div>
+<div class="cxd-toast" data-cxd-control="stacker-spawner-toast" use:control><strong>Notificaciones apiladas</strong><button type="button" data-kind="Éxito">+ Éxito</button><button type="button" data-kind="Alerta">+ Alerta</button><button type="button" data-kind="Error">+ Error</button><div class="cxd-toast__list" data-list aria-live="polite"></div></div>

@@ -1,14 +1,7 @@
-<!-- Variante 02 — Navbar Flotante Redondeada Tipo Cápsula — Vue 3 SFC (components/navigation/variants/floating-pill-navbar/FloatingPillNavbar.vue) -->
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
+import { mountFloatingPillNavbar } from './floating-pill-navbar.js';
 import './styles.css';
-const active = ref(false);
+const root = ref<HTMLElement | null>(null); let unmount: (() => void) | undefined; onMounted(() => { if (root.value) unmount = mountFloatingPillNavbar(root.value); }); onUnmounted(() => unmount?.());
 </script>
-
-<template>
-  <div class="cxd-navigation-floating-pill-navbar" :data-active="active">
-    <h3>Variante 02 — Navbar Flotante Redondeada Tipo Cápsula</h3>
-    <p>Barra superior centrada con bordes completamente redondeados, enlaces activos y botón CTA.</p>
-    <button type="button" @click="active = !active">Alternar</button>
-  </div>
-</template>
+<template><div class="cxd-nav cxd-nav--pill" data-cxd-control="floating-pill-navbar" ref="root"><button type="button" data-destination="Inicio" aria-pressed="true">Inicio</button><button type="button" data-destination="Componentes" aria-pressed="false">Componentes</button><button type="button" data-destination="Animaciones" aria-pressed="false">Animaciones</button><span role="status">Vista activa: Inicio</span></div></template>

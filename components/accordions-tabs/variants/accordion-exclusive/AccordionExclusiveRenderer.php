@@ -1,10 +1,10 @@
 <?php
-// Variante 01 — Acordeón Exclusivo (Single-Open) con Animación de Altura — PHP 8.3 Renderer (components/accordions-tabs/variants/accordion-exclusive/AccordionExclusiveRenderer.php)
 declare(strict_types=1);
-namespace ComponentesXD\AccordionsTabs;
-
-final class AccordionExclusiveRenderer {
-    public static function render(): string {
-        return '<div class="cxd-accordions-tabs-accordion-exclusive"><h3>Variante 01 — Acordeón Exclusivo (Single-Open) con Animación de Altura</h3><p>Al expandir una sección técnica se cierran automáticamente las demás manteniendo el foco de lectura.</p></div>';
-    }
-}
+// Incluye styles.css y ajusta la ruta del módulo.
+function renderAccordionExclusive(): string { return <<<'HTML'
+<div class="cxd-widget" data-cxd-control="accordion-exclusive"><button type="button" data-open="one" aria-expanded="true">01 · Tokens</button><div class="cxd-widget__panel" data-panel="one">Colores y tipografía.</div><button type="button" data-open="two" aria-expanded="false">02 · Componentes</button><div class="cxd-widget__panel" data-panel="two" hidden>Bloques reutilizables.</div><button type="button" data-open="three" aria-expanded="false">03 · Animaciones</button><div class="cxd-widget__panel" data-panel="three" hidden>Movimiento e interacción.</div></div>
+<script type="module">
+import { mountAccordionExclusive } from '/assets/accordion-exclusive.js';
+document.querySelectorAll('[data-cxd-control="accordion-exclusive"]:not([data-ready])').forEach(root => { root.dataset.ready = 'true'; mountAccordionExclusive(root); });
+</script>
+HTML; }

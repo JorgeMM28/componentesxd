@@ -1,11 +1,6 @@
-<!-- Variante 01 — Toaster Moderno Flotante con Barra de Tiempo — Svelte 5 Runes (components/toasts/variants/modern-floating-toast/ModernFloatingToast.svelte) -->
 <script lang="ts">
-  import './styles.css';
-  let active = $state(false);
+import { mountModernFloatingToast } from './modern-floating-toast.js';
+import './styles.css';
+function control(node: HTMLElement) { return { destroy: mountModernFloatingToast(node) }; }
 </script>
-
-<div class="cxd-toasts-modern-floating-toast" data-active={active}>
-  <h3>Variante 01 — Toaster Moderno Flotante con Barra de Tiempo</h3>
-  <p>Bordes redondeados suaves, icono en cápsula, botón de reinicio de barra de progreso y cierre animado.</p>
-  <button type="button" onclick={() => (active = !active)}>Alternar</button>
-</div>
+<div class="cxd-toast" data-cxd-control="modern-floating-toast" use:control><strong>Copia de seguridad completada con éxito</strong><p>14.2 GB sincronizados en el almacenamiento encriptado.</p><button type="button" data-replay>Reiniciar barra</button><progress data-progress max="100" value="100" aria-label="Tiempo restante"></progress><span role="status">Notificación activa</span></div>

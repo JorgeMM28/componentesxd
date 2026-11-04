@@ -1,18 +1,4 @@
-// Variante 07 — Sidebar Lateral Colapsable con Árbol de Proyectos y Estado de Clúster — Angular 18+ Signals (components/navigation/variants/collapsible-sidebar/collapsible-sidebar.component.ts)
-import { Component, signal } from '@angular/core';
-
-@Component({
-  selector: 'cxd-collapsible-sidebar',
-  standalone: true,
-  styleUrls: ['./styles.css'],
-  template: `
-    <nav class="cxd-navigation-collapsible-sidebar" [attr.data-active]="active()">
-      <h3>Variante 07 — Sidebar Lateral Colapsable con Árbol de Proyectos y Estado de Clúster</h3>
-      <p>Panel de navegación lateral con botón de colapso cinético (240px ↔ 68px), selector de entorno (Prod/Staging), árbol de módulos e indicador de salud.</p>
-      <button type="button" (click)="active.set(!active())">Alternar</button>
-    </nav>
-  `
-})
-export class CxdCollapsibleSidebarComponent {
-  active = signal(false);
-}
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import { mountCollapsibleSidebar } from './collapsible-sidebar.js';
+@Component({ selector:'cxd-collapsible-sidebar', standalone:true, styleUrls:['./styles.css'], template:`<div class="cxd-nav cxd-nav--sidebar" data-cxd-control="collapsible-sidebar" #root><button type="button" data-collapse aria-label="Colapsar navegación" aria-expanded="true">☰ <span data-label>Colapsar</span></button><label>Entorno <select data-env><option>Producción</option><option>Staging</option></select></label><button type="button" data-destination="Resumen" aria-label="Resumen" aria-pressed="true">◉ <span data-label>Resumen</span></button><button type="button" data-destination="Despliegues" aria-label="Despliegues" aria-pressed="false">▦ <span data-label>Despliegues</span></button><button type="button" data-destination="Seguridad" aria-label="Seguridad" aria-pressed="false">◇ <span data-label>Seguridad</span></button><span role="status">Vista activa: Resumen</span></div>` })
+export class CollapsibleSidebarComponent implements AfterViewInit, OnDestroy { @ViewChild('root') root!: ElementRef<HTMLElement>; private unmount?: () => void; ngAfterViewInit() { this.unmount = mountCollapsibleSidebar(this.root.nativeElement); } ngOnDestroy() { this.unmount?.(); } }

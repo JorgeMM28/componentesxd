@@ -1,9 +1,8 @@
 ---
-// Variante 06 — Alerta Styleless Minimalista (Tipografía + Línea) — Astro 5 (components/toasts/variants/styleless-minimal-alert/StylelessMinimalAlert.astro)
 import './styles.css';
 ---
-<div class="cxd-toasts-styleless-minimal-alert">
-  <h3>Variante 06 — Alerta Styleless Minimalista (Tipografía + Línea)</h3>
-  <p>Sin caja ni sombras: solo una línea vertical de 2px, texto directo y enlace de acción limpio.</p>
-  <slot />
-</div>
+<div class="cxd-toast cxd-toast--minimal" data-cxd-control="styleless-minimal-alert" role="status"><strong>AVISO DEL SISTEMA</strong><p>La ventana de mantenimiento iniciará en 15 minutos sin interrupción de tráfico.</p></div>
+<script>
+import { mountStylelessMinimalAlert } from './styleless-minimal-alert.js';
+document.querySelectorAll('[data-cxd-control="styleless-minimal-alert"]:not([data-ready])').forEach(root => { root.dataset.ready = 'true'; mountStylelessMinimalAlert(root); });
+</script>

@@ -1,14 +1,7 @@
-<!-- Variante 06 — Alerta Styleless Minimalista (Tipografía + Línea) — Vue 3 SFC (components/toasts/variants/styleless-minimal-alert/StylelessMinimalAlert.vue) -->
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
+import { mountStylelessMinimalAlert } from './styleless-minimal-alert.js';
 import './styles.css';
-const active = ref(false);
+const root = ref<HTMLElement | null>(null); let unmount: (() => void) | undefined; onMounted(() => { if (root.value) unmount = mountStylelessMinimalAlert(root.value); }); onUnmounted(() => unmount?.());
 </script>
-
-<template>
-  <div class="cxd-toasts-styleless-minimal-alert" :data-active="active">
-    <h3>Variante 06 — Alerta Styleless Minimalista (Tipografía + Línea)</h3>
-    <p>Sin caja ni sombras: solo una línea vertical de 2px, texto directo y enlace de acción limpio.</p>
-    <button type="button" @click="active = !active">Alternar</button>
-  </div>
-</template>
+<template><div class="cxd-toast cxd-toast--minimal" data-cxd-control="styleless-minimal-alert" ref="root" role="status"><strong>AVISO DEL SISTEMA</strong><p>La ventana de mantenimiento iniciará en 15 minutos sin interrupción de tráfico.</p></div></template>

@@ -1,21 +1,4 @@
-/**
- * Variante 08 — Calendario y Selector Interactivo de Horarios / Turnos — React / Next.js (TSX)
- * Archivo: components/accordions-tabs/variants/calendar-slot-Matrix/CalendarSlotMatrix.tsx
- */
-import React, { useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { mountCalendarSlotMatrix } from './calendar-slot-Matrix.js';
 import './styles.css';
-
-export const CalendarSlotMatrix: React.FC<{ title?: string }> = ({
-  title = 'Variante 08 — Calendario y Selector Interactivo de Horarios / Turnos'
-}) => {
-  const [active, setActive] = useState(false);
-  return (
-    <div className="cxd-accordions-tabs-calendar-slot-Matrix" data-active={active}>
-      <h3>{title}</h3>
-      <p>Selecciona día de la semana y franja horaria con confirmación instantánea de reserva.</p>
-      <button type="button" onClick={() => setActive(!active)}>
-        Alternar Estado
-      </button>
-    </div>
-  );
-};
+export function CalendarSlotMatrix() { const root = useRef<HTMLDivElement>(null); useEffect(() => root.current ? mountCalendarSlotMatrix(root.current) : undefined, []); return <div className="cxd-widget" data-cxd-control="calendar-slot-Matrix" ref={root}><label>Día <select data-day><option>Lunes</option><option>Martes</option><option>Miércoles</option><option>Jueves</option><option>Viernes</option></select></label><div className="cxd-widget__row"><button type="button" data-slot="09:00" aria-pressed="false">09:00</button><button type="button" data-slot="11:00" aria-pressed="false">11:00</button><button type="button" data-slot="15:00" aria-pressed="false">15:00</button></div><span role="status">Selecciona un horario</span></div>; }

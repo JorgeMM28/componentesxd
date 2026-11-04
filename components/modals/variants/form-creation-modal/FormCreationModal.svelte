@@ -1,11 +1,6 @@
-<!-- Variante 04 — Modal con Formulario de Creación de Proyecto — Svelte 5 Runes (components/modals/variants/form-creation-modal/FormCreationModal.svelte) -->
 <script lang="ts">
-  import './styles.css';
-  let active = $state(false);
+import { mountFormCreationModal } from './form-creation-modal.js';
+import './styles.css';
+function control(node: HTMLElement) { return { destroy: mountFormCreationModal(node) }; }
 </script>
-
-<div class="cxd-modals-form-creation-modal" data-active={active}>
-  <h3>Variante 04 — Modal con Formulario de Creación de Proyecto</h3>
-  <p>Diálogo completo con inputs de nombre, selector de región, visibilidad y envío interactivo.</p>
-  <button type="button" onclick={() => (active = !active)}>Alternar</button>
-</div>
+<div class="cxd-dialog" data-cxd-control="form-creation-modal" use:control><button type="button" data-open>Crear instancia</button><span role="status">Listo</span><dialog aria-label="Crear instancia"><h3>Crear instancia</h3><form data-form><label>Nombre <input type="text" data-name required value="edge-analytics" /></label><label>Región <select data-region><option>us-east-1</option><option>eu-central-1</option><option>ap-northeast-1</option></select></label><div class="cxd-dialog__actions"><button type="submit">Crear</button><button type="button" data-close>Cancelar</button></div></form></dialog></div>

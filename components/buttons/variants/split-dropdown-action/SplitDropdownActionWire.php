@@ -1,17 +1,11 @@
 <?php
-// Variante 06 — Botón con Menú de Acciones (Split Dropdown) — Laravel Livewire 3 (components/buttons/variants/split-dropdown-action/SplitDropdownActionWire.php)
-namespace App\Livewire\Cxd\Buttons;
+namespace App\Livewire;
 use Livewire\Component;
-
-class SplitDropdownActionWire extends Component {
-    public bool $active = false;
-    public function toggle(): void { $this->active = !$this->active; }
-    public function render() {
-        return <<<'HTML'
-        <div class="cxd-buttons-split-dropdown-action">
-            <h3>Variante 06 — Botón con Menú de Acciones (Split Dropdown)</h3>
-            <button type="button" wire:click="toggle">Estado: {{ $active ? 'ON' : 'OFF' }}</button>
-        </div>
-        HTML;
-    }
-}
+// Incluye styles.css y ajusta la ruta del módulo.
+class SplitDropdownActionWire extends Component { public function render(): string { return <<<'HTML'
+<div class="cxd-control" data-cxd-control="split-dropdown-action" wire:ignore><button type="button" data-run>Ejecutar: <span data-label>Producción Directa</span></button><select data-mode aria-label="Modo de ejecución"><option>Producción Directa</option><option>Simulación Dry-Run</option><option>Rollback Instantáneo</option></select><span role="status">LISTO PARA EJECUTAR ACCIÓN SELECCIONADA</span>@script
+<script>
+import('/assets/split-dropdown-action.js').then(module => module.mountSplitDropdownAction($wire.$el));
+</script>
+@endscript</div>
+HTML; } }

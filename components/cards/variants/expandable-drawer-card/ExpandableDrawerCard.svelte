@@ -1,11 +1,6 @@
-<!-- Variante 08 — Tarjeta con Despliegue de Detalles Técnicos — Svelte 5 Runes (components/cards/variants/expandable-drawer-card/ExpandableDrawerCard.svelte) -->
 <script lang="ts">
-  import './styles.css';
-  let active = $state(false);
+import { mountExpandableDrawerCard } from './expandable-drawer-card.js';
+import './styles.css';
+function control(node: HTMLElement) { return { destroy: mountExpandableDrawerCard(node) }; }
 </script>
-
-<div class="cxd-cards-expandable-drawer-card" data-active={active}>
-  <h3>Variante 08 — Tarjeta con Despliegue de Detalles Técnicos</h3>
-  <p>Haz clic en el botón de expansión para revelar u ocultar el bloque completo de logs y nodos.</p>
-  <button type="button" onclick={() => (active = !active)}>Alternar</button>
-</div>
+<div class="cxd-card" data-cxd-control="expandable-drawer-card" use:control><strong>Reporte de seguridad automático</strong><button type="button" data-toggle aria-expanded="true">Desplegar / ocultar diagnóstico</button><p data-detail>0 vulnerabilidades críticas · Certificados TLS renovados por 90 días.</p></div>

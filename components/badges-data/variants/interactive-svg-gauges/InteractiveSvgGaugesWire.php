@@ -1,17 +1,11 @@
 <?php
-// Variante 03 — Medidores Circulares SVG con Control Deslizante en Vivo — Laravel Livewire 3 (components/badges-data/variants/interactive-svg-gauges/InteractiveSvgGaugesWire.php)
-namespace App\Livewire\Cxd\BadgesData;
+namespace App\Livewire;
 use Livewire\Component;
-
-class InteractiveSvgGaugesWire extends Component {
-    public bool $active = false;
-    public function toggle(): void { $this->active = !$this->active; }
-    public function render() {
-        return <<<'HTML'
-        <div class="cxd-badges-data-interactive-svg-gauges">
-            <h3>Variante 03 — Medidores Circulares SVG con Control Deslizante en Vivo</h3>
-            <button type="button" wire:click="toggle">Estado: {{ $active ? 'ON' : 'OFF' }}</button>
-        </div>
-        HTML;
-    }
-}
+// Incluye styles.css y ajusta la ruta del módulo.
+class InteractiveSvgGaugesWire extends Component { public function render(): string { return <<<'HTML'
+<div class="cxd-data" data-cxd-control="interactive-svg-gauges" wire:ignore><div class="cxd-data__gauge" data-gauge><strong data-value>84%</strong></div><label>Ajustar porcentaje <input type="range" min="0" max="100" value="84" data-slider /></label><button type="button" data-set="45">45%</button><button type="button" data-set="78">78%</button><button type="button" data-set="99">99%</button><span role="status">SLA global: 84%</span>@script
+<script>
+import('/assets/interactive-svg-gauges.js').then(module => module.mountInteractiveSvgGauges($wire.$el));
+</script>
+@endscript</div>
+HTML; } }

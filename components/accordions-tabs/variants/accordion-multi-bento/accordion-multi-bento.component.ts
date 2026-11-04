@@ -1,18 +1,4 @@
-// Variante 02 — Acordeón Multi-Apertura con Insignias de Estado y Buscador — Angular 18+ Signals (components/accordions-tabs/variants/accordion-multi-bento/accordion-multi-bento.component.ts)
-import { Component, signal } from '@angular/core';
-
-@Component({
-  selector: 'cxd-accordion-multi-bento',
-  standalone: true,
-  styleUrls: ['./styles.css'],
-  template: `
-    <div class="cxd-accordions-tabs-accordion-multi-bento" [attr.data-active]="active()">
-      <h3>Variante 02 — Acordeón Multi-Apertura con Insignias de Estado y Buscador</h3>
-      <p>Permite mantener varios módulos abiertos al mismo tiempo o expandir/colapsar todos con un solo clic.</p>
-      <button type="button" (click)="active.set(!active())">Alternar</button>
-    </div>
-  `
-})
-export class CxdAccordionMultiBentoComponent {
-  active = signal(false);
-}
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import { mountAccordionMultiBento } from './accordion-multi-bento.js';
+@Component({ selector:'cxd-accordion-multi-bento', standalone:true, styleUrls:['./styles.css'], template:`<div class="cxd-widget" data-cxd-control="accordion-multi-bento" #root><div class="cxd-widget__row"><button type="button" data-all="open">Expandir todo</button><button type="button" data-all="close">Colapsar todo</button></div><button type="button" data-open="one" aria-expanded="true">Módulo de red</button><div class="cxd-widget__panel" data-panel="one">Latencia: 8 ms</div><button type="button" data-open="two" aria-expanded="false">Módulo de datos</button><div class="cxd-widget__panel" data-panel="two" hidden>Uso: 42 GB</div></div>` })
+export class AccordionMultiBentoComponent implements AfterViewInit, OnDestroy { @ViewChild('root') root!: ElementRef<HTMLElement>; private unmount?: () => void; ngAfterViewInit() { this.unmount = mountAccordionMultiBento(this.root.nativeElement); } ngOnDestroy() { this.unmount?.(); } }

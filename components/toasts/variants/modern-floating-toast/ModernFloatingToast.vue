@@ -1,14 +1,7 @@
-<!-- Variante 01 — Toaster Moderno Flotante con Barra de Tiempo — Vue 3 SFC (components/toasts/variants/modern-floating-toast/ModernFloatingToast.vue) -->
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
+import { mountModernFloatingToast } from './modern-floating-toast.js';
 import './styles.css';
-const active = ref(false);
+const root = ref<HTMLElement | null>(null); let unmount: (() => void) | undefined; onMounted(() => { if (root.value) unmount = mountModernFloatingToast(root.value); }); onUnmounted(() => unmount?.());
 </script>
-
-<template>
-  <div class="cxd-toasts-modern-floating-toast" :data-active="active">
-    <h3>Variante 01 — Toaster Moderno Flotante con Barra de Tiempo</h3>
-    <p>Bordes redondeados suaves, icono en cápsula, botón de reinicio de barra de progreso y cierre animado.</p>
-    <button type="button" @click="active = !active">Alternar</button>
-  </div>
-</template>
+<template><div class="cxd-toast" data-cxd-control="modern-floating-toast" ref="root"><strong>Copia de seguridad completada con éxito</strong><p>14.2 GB sincronizados en el almacenamiento encriptado.</p><button type="button" data-replay>Reiniciar barra</button><progress data-progress max="100" value="100" aria-label="Tiempo restante"></progress><span role="status">Notificación activa</span></div></template>

@@ -1,18 +1,4 @@
-// Variante 05 — Carrusel Split-Screen Sincronizado (Arte Visual + Especificaciones) — Angular 18+ Signals (components/carousels/variants/split-editorial-showcase/split-editorial-showcase.component.ts)
-import { Component, signal } from '@angular/core';
-
-@Component({
-  selector: 'cxd-split-editorial-showcase',
-  standalone: true,
-  styleUrls: ['./styles.css'],
-  template: `
-    <div class="cxd-carousels-split-editorial-showcase" [attr.data-active]="active()">
-      <h3>Variante 05 — Carrusel Split-Screen Sincronizado (Arte Visual + Especificaciones)</h3>
-      <p>Doble panel donde el lienzo visual izquierdo y la ficha técnica derecha se actualizan de forma coordinada con stagger.</p>
-      <button type="button" (click)="active.set(!active())">Alternar</button>
-    </div>
-  `
-})
-export class CxdSplitEditorialShowcaseComponent {
-  active = signal(false);
-}
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import { mountSplitEditorialShowcase } from './split-editorial-showcase.js';
+@Component({ selector:'cxd-split-editorial-showcase', standalone:true, styleUrls:['./styles.css'], template:`<div class="cxd-carousel" data-cxd-control="split-editorial-showcase" #root><div class="cxd-split"><div data-art aria-hidden="true">✦</div><div><small>COLECCIÓN EDITORIAL</small><h3 data-title>Aurora</h3><p data-description>Luz y color para una interfaz expresiva.</p></div></div><div class="cxd-carousel__controls"><button type="button" data-prev aria-label="Anterior">← Anterior</button><button type="button" data-next aria-label="Siguiente">Siguiente →</button></div><span role="status" aria-live="polite"></span></div>` })
+export class SplitEditorialShowcaseComponent implements AfterViewInit, OnDestroy { @ViewChild('root') root!: ElementRef<HTMLElement>; private unmount?: () => void; ngAfterViewInit() { this.unmount = mountSplitEditorialShowcase(this.root.nativeElement); } ngOnDestroy() { this.unmount?.(); } }

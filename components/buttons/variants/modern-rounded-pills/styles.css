@@ -1,15 +1,10 @@
-/**
- * ============================================================================
- * COMPONENTESXD — BOTONES Y CONTROLES DE ACCIÓN
- * Variante 01 — Botones Modernos Redondeados (Píldora & Glow)
- * Archivo: components/buttons/variants/modern-rounded-pills/styles.css
- * ============================================================================
- */
-.cxd-buttons-modern-rounded-pills {
-  background: var(--cxd-bg-surface);
-  color: var(--cxd-text-primary);
-  border: var(--cxd-border-width, 1px) solid var(--cxd-border);
-  border-radius: var(--cxd-radius-md);
-  font-family: var(--cxd-font-sans);
-  font-variant-numeric: tabular-nums;
-}
+.cxd-pills { display:flex; flex-wrap:wrap; justify-content:center; gap:1rem; }
+.cxd-pills__button { border:1px solid transparent; border-radius:999px; padding:.8rem 1.2rem; font:600 .9rem system-ui,sans-serif; cursor:pointer; transition:transform .18s,box-shadow .18s; }
+.cxd-pills__button:active { transform:scale(.95); }
+.cxd-pills__button:focus-visible { outline:3px solid #a78bfa; outline-offset:3px; }
+.cxd-pills__button--primary { background:linear-gradient(120deg,#7253f4,#b082ff); color:white; box-shadow:0 8px 25px #7253f455; }
+.cxd-pills__button--soft { background:#eae5ff; color:#36226b; }
+.cxd-pills__button--outline { background:transparent; border-color:#8d76ed; color:inherit; }
+.cxd-pills__button[aria-pressed="true"] { box-shadow:0 0 0 3px #a78bfa80; }
+.cxd-pills__status { width:100%; text-align:center; font:500 .75rem system-ui,sans-serif; }
+@media (prefers-reduced-motion:reduce) { .cxd-pills__button { transition:none; } }

@@ -1,17 +1,11 @@
 <?php
-// Variante 03 — Menú Popover Flotante Content-Fit con Acciones — Laravel Livewire 3 (components/modals/variants/floating-popover-menu/FloatingPopoverMenuWire.php)
-namespace App\Livewire\Cxd\Modals;
+namespace App\Livewire;
 use Livewire\Component;
-
-class FloatingPopoverMenuWire extends Component {
-    public bool $active = false;
-    public function toggle(): void { $this->active = !$this->active; }
-    public function render() {
-        return <<<'HTML'
-        <div class="cxd-modals-floating-popover-menu">
-            <h3>Variante 03 — Menú Popover Flotante Content-Fit con Acciones</h3>
-            <button type="button" wire:click="toggle">Estado: {{ $active ? 'ON' : 'OFF' }}</button>
-        </div>
-        HTML;
-    }
-}
+// Incluye styles.css y ajusta la ruta del módulo.
+class FloatingPopoverMenuWire extends Component { public function render(): string { return <<<'HTML'
+<div class="cxd-dialog" data-cxd-control="floating-popover-menu" wire:ignore><button type="button" data-trigger aria-expanded="false">Abrir menú contextual</button><div class="cxd-dialog__popover" data-popover hidden><div class="cxd-dialog__list"><button type="button" data-action="Editar">Editar</button><button type="button" data-action="Duplicar">Duplicar</button><button type="button" data-action="Archivar">Archivar</button></div></div><span role="status">Ninguna acción</span>@script
+<script>
+import('/assets/floating-popover-menu.js').then(module => module.mountFloatingPopoverMenu($wire.$el));
+</script>
+@endscript</div>
+HTML; } }

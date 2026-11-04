@@ -1,0 +1,80 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+<Layout title="Laboratorio visual | COMPONENTESXD" section="LABORATORIO">
+  <div class="lab">
+    <header class="lab-heading"><span>LABORATORIO CREATIVO / 01</span><h1>Estilo en movimiento.</h1><p>Explora tipografía, color y animación. Ajusta los controles y copia el CSS para usarlo en tu proyecto.</p></header>
+    <div class="lab-layout">
+      <section class="lab-controls" aria-label="Controles de diseño">
+        <h2>Diseña tu escena</h2>
+        <label>Texto <input id="lab-text" type="text" value="Las ideas cobran vida." maxlength="100" /></label>
+        <label>Fuente <select id="lab-font"><option value="Inter, sans-serif">Inter · moderna</option><option value="Georgia, serif">Georgia · editorial</option><option value="'JetBrains Mono', monospace">JetBrains Mono · técnica</option><option value="Arial, sans-serif">Arial · universal</option></select></label>
+        <label>Tamaño <input id="lab-size" type="range" min="24" max="100" value="64" /><output for="lab-size" id="lab-size-output">64 px</output></label>
+        <label>Peso <select id="lab-weight"><option value="400">Regular</option><option value="600">Semibold</option><option value="800" selected>Extra bold</option></select></label>
+        <label>Espaciado <input id="lab-spacing" type="range" min="-4" max="12" value="-2" /><output for="lab-spacing" id="lab-spacing-output">-2 px</output></label>
+        <label>Tipo de degradado <select id="lab-gradient"><option value="linear">Lineal</option><option value="radial">Radial</option><option value="conic">Cónico</option></select></label>
+        <label>Aplicar degradado a <select id="lab-target"><option value="text">Texto</option><option value="background">Fondo</option></select></label>
+        <div class="lab-colors"><label>Color inicial <input id="lab-color-a" type="color" value="#ae8cff" /></label><label>Color final <input id="lab-color-b" type="color" value="#61e8ff" /></label></div>
+        <label>Ángulo <input id="lab-angle" type="range" min="0" max="360" value="110" /><output for="lab-angle" id="lab-angle-output">110°</output></label>
+        <label>Animación <select id="lab-motion"><option value="chars">Ola de caracteres</option><option value="words">Entrada por palabras</option><option value="lines">Revelado por líneas</option><option value="scramble">Texto cifrado</option><option value="none">Sin animación</option></select></label>
+        <button type="button" id="lab-play">Reproducir animación ↗</button>
+      </section>
+      <div class="lab-result"><section class="lab-stage" id="lab-stage" aria-label="Vista previa"><span class="lab-stage-label">VISTA PREVIA EN VIVO</span><p id="lab-preview">Las ideas cobran vida.</p><span class="lab-stage-foot">TIPOGRAFÍA · COLOR · MOVIMIENTO</span></section>
+        <section class="lab-code"><div><h2>CSS listo para copiar</h2><button type="button" id="lab-copy">Copiar CSS</button></div><pre><code id="lab-output"></code></pre><p id="lab-status" role="status"></p></section>
+        <section class="lab-code"><div><h2>Animación Anime.js</h2><button type="button" id="lab-copy-motion">Copiar JS</button></div><pre><code id="lab-motion-output"></code></pre><p>Instala Anime.js 4.5 o superior y aplica este código a un elemento con la clase <code>texto</code>.</p><p id="lab-motion-status" role="status"></p></section>
+      </div>
+    </div>
+  </div>
+</Layout>
+<script>
+  import { animate, stagger, splitText, scrambleText } from 'animejs';
+  const get = (id: string) => document.getElementById(id) as HTMLInputElement;
+  const preview = get('lab-preview');
+  const output = get('lab-output');
+  let split: ReturnType<typeof splitText> | null = null;
+  let animation: { pause: () => unknown } | null = null;
+  function reset() { animation?.pause(); animation = null; split?.revert(); split = null; }
+  function update() {
+    reset();
+    const text = get('lab-text').value || 'Tu texto aquí';
+    preview.textContent = text;
+    const font = get('lab-font').value, size = get('lab-size').value, weight = get('lab-weight').value, spacing = get('lab-spacing').value, angle = get('lab-angle').value;
+    const colorA = get('lab-color-a').value, colorB = get('lab-color-b').value;
+    const kind = get('lab-gradient').value, target = get('lab-target').value;
+    const background = kind === 'radial' ? `radial-gradient(circle, ${colorA}, ${colorB})` : kind === 'conic' ? `conic-gradient(from ${angle}deg, ${colorA}, ${colorB}, ${colorA})` : `linear-gradient(${angle}deg, ${colorA}, ${colorB})`;
+    const stage = get('lab-stage');
+    stage.style.backgroundImage = target === 'background' ? background : '';
+    Object.assign(preview.style, {fontFamily: font, fontSize: `clamp(24px, 6vw, ${size}px)`, fontWeight: weight, letterSpacing: `${spacing}px`, backgroundImage: target === 'text' ? background : 'none', color: target === 'text' ? 'transparent' : '#111827'});
+    get('lab-angle').disabled = kind === 'radial';
+    get('lab-size-output').textContent = `${size} px`; get('lab-spacing-output').textContent = `${spacing} px`; get('lab-angle-output').textContent = kind === 'radial' ? 'No aplica' : `${angle}°`;
+    const typeCss = `  font-family: ${font};\n  font-size: clamp(24px, 6vw, ${size}px);\n  font-weight: ${weight};\n  letter-spacing: ${spacing}px;`;
+    output.textContent = target === 'text' ? `.texto {\n${typeCss}\n  background-image: ${background};\n  background-clip: text;\n  -webkit-background-clip: text;\n  color: transparent;\n}` : `.superficie {\n  background-image: ${background};\n}\n\n.texto {\n${typeCss}\n  color: #111827;\n}`;
+    const mode = get('lab-motion').value;
+    const motionCode = get('lab-motion-output');
+    const safeText = JSON.stringify(text).replace(/</g, '\\u003c');
+    if (mode === 'none') motionCode.textContent = '// Selecciona una animación para generar código.';
+    else if (mode === 'scramble' && !/[<>&]/.test(text)) motionCode.textContent = `import { animate, scrambleText } from 'animejs';\nconst element = document.querySelector('.texto');\nelement.textContent = ${safeText};\nanimate(element, { innerHTML: scrambleText({ text: ${safeText} }), duration: 1200 });`;
+    else {
+      const splitMode = mode === 'scramble' ? 'chars' : mode;
+      motionCode.textContent = `import { animate, stagger, splitText } from 'animejs';\nconst element = document.querySelector('.texto');\nelement.textContent = ${safeText};\nconst split = splitText(element, { lines: ${splitMode === 'lines'}, words: ${splitMode === 'words'}, chars: ${splitMode === 'chars'} });\nanimate(split.${splitMode}, { opacity: [0, 1], y: ['0.8em', '0em'], rotate: ${mode === 'chars' ? '[-8, 0]' : '[0, 0]'}, delay: stagger(${mode === 'chars' ? 28 : 100}), duration: 700, ease: 'outExpo' });\n// Usa split.revert() antes de reemplazar el texto o desmontar la vista.`;
+    }
+  }
+  function play() {
+    update();
+    const mode = get('lab-motion').value;
+    if (mode === 'none') return;
+    // scrambleText writes HTML: use the character reveal for markup-like user input.
+    if (mode === 'scramble' && !/[<>&]/.test(preview.textContent || '')) { animation = animate(preview, { innerHTML: scrambleText({ text: preview.textContent || '' }), duration: 1200 }); return; }
+    split = splitText(preview, { lines: mode === 'lines', words: mode === 'words', chars: mode === 'chars' || mode === 'scramble' });
+    const targets = mode === 'lines' ? split.lines : mode === 'words' ? split.words : split.chars;
+    animation = animate(targets, { opacity: [0, 1], y: ['0.8em', '0em'], rotate: mode === 'chars' ? [-8, 0] : [0, 0], delay: stagger(mode === 'chars' ? 28 : 100), duration: 700, ease: 'outExpo' });
+  }
+  document.querySelectorAll('.lab-controls input, .lab-controls select').forEach(el => el.addEventListener('input', update));
+  get('lab-play').addEventListener('click', play);
+  get('lab-copy-motion').addEventListener('click', async () => { try { await navigator.clipboard.writeText(get('lab-motion-output').textContent || ''); get('lab-motion-status').textContent = 'JS copiado.'; } catch { get('lab-motion-status').textContent = 'No se pudo copiar. Selecciona el código manualmente.'; } });
+  get('lab-copy').addEventListener('click', async () => { try { await navigator.clipboard.writeText(output.textContent || ''); get('lab-status').textContent = 'CSS copiado.'; } catch { get('lab-status').textContent = 'No se pudo copiar. Selecciona el código manualmente.'; } });
+  update();
+</script>
+<style>
+.lab{max-width:1440px;margin:auto;padding:clamp(1.2rem,4vw,4rem) 1rem 6rem}.lab-heading{max-width:850px;margin-bottom:3rem}.lab-heading span,.lab-stage-label,.lab-stage-foot{font:600 .7rem/1.4 var(--cxd-font-mono);letter-spacing:.14em;color:var(--cxd-accent-secondary)}.lab-heading h1{font-size:clamp(3rem,7vw,6.8rem);line-height:.98;letter-spacing:-.06em;margin:1rem 0}.lab-heading p{font-size:1.1rem;line-height:1.7;color:var(--cxd-text-secondary)}.lab-layout{display:grid;grid-template-columns:minmax(240px,320px) minmax(0,1fr);gap:1rem}.lab-controls,.lab-code{padding:1.4rem;background:var(--cxd-bg-surface);border:1px solid var(--cxd-border);border-radius:var(--cxd-radius-md)}.lab-controls{display:grid;gap:1rem;align-content:start}.lab-controls h2,.lab-code h2{font-size:1rem;margin:0}.lab-controls label{display:grid;gap:.4rem;font-size:.8rem;color:var(--cxd-text-secondary)}.lab-controls input:not([type=color]),.lab-controls select{width:100%;accent-color:#a78bfa}.lab-controls input[type=text],.lab-controls select{background:var(--cxd-bg-base);color:var(--cxd-text-primary);border:1px solid var(--cxd-border-strong);border-radius:6px;padding:.65rem}.lab-controls output{font-size:.7rem}.lab-colors{display:flex;gap:2rem}.lab-colors input{width:3rem;height:2rem;border:0;background:transparent}.lab button{cursor:pointer;border:1px solid var(--cxd-border-strong);border-radius:7px;padding:.7rem 1rem;background:var(--cxd-accent);color:var(--cxd-bg-base);font-weight:700}.lab-result{display:grid;gap:1rem;min-width:0}.lab-stage{min-height:420px;padding:1.5rem;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden;border-radius:var(--cxd-radius-md);border:1px solid #343044;background:radial-gradient(ellipse at 50% 45%,#242042,#090b17 70%)}.lab-stage p{line-height:1.1;margin:2rem 0;background-clip:text;-webkit-background-clip:text;color:transparent;overflow-wrap:anywhere}.lab-stage-foot{color:#8c8ba6}.lab-code>div{display:flex;align-items:center;justify-content:space-between;gap:1rem}.lab-code pre{white-space:pre-wrap;overflow-wrap:anywhere;color:var(--cxd-text-secondary);line-height:1.6}.lab-code p{font-size:.8rem;color:var(--cxd-text-secondary)}@media(max-width:760px){.lab-layout{grid-template-columns:1fr}.lab-stage{min-height:300px}}
+</style>

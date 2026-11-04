@@ -1,6 +1,7 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import ComponentWorkbench from "../../components/ComponentWorkbench.astro";
+import MotionStudies from "../../components/MotionStudies.astro";
 import registry from "../../data/vaultRegistry.json";
 
 export function getStaticPaths() {
@@ -28,5 +29,7 @@ const { category } = Astro.props;
     </div>
   </div>
 
+  {category.slug === "special-hybrids" && <p><a href="#motion-title">Explorar los 20 estudios de movimiento ↓</a></p>}
   <ComponentWorkbench category={category} />
+  {category.slug === "special-hybrids" && <MotionStudies />}
 </Layout>

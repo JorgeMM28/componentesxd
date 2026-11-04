@@ -1,21 +1,4 @@
-/**
- * Variante 04 — Modal con Formulario de Creación de Proyecto — React / Next.js (TSX)
- * Archivo: components/modals/variants/form-creation-modal/FormCreationModal.tsx
- */
-import React, { useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { mountFormCreationModal } from './form-creation-modal.js';
 import './styles.css';
-
-export const FormCreationModal: React.FC<{ title?: string }> = ({
-  title = 'Variante 04 — Modal con Formulario de Creación de Proyecto'
-}) => {
-  const [active, setActive] = useState(false);
-  return (
-    <div className="cxd-modals-form-creation-modal" data-active={active}>
-      <h3>{title}</h3>
-      <p>Diálogo completo con inputs de nombre, selector de región, visibilidad y envío interactivo.</p>
-      <button type="button" onClick={() => setActive(!active)}>
-        Alternar Estado
-      </button>
-    </div>
-  );
-};
+export function FormCreationModal() { const root = useRef<HTMLDivElement>(null); useEffect(() => root.current ? mountFormCreationModal(root.current) : undefined, []); return <div className="cxd-dialog" data-cxd-control="form-creation-modal" ref={root}><button type="button" data-open>Crear instancia</button><span role="status">Listo</span><dialog aria-label="Crear instancia"><h3>Crear instancia</h3><form data-form><label>Nombre <input type="text" data-name required defaultValue="edge-analytics" /></label><label>Región <select data-region><option>us-east-1</option><option>eu-central-1</option><option>ap-northeast-1</option></select></label><div className="cxd-dialog__actions"><button type="submit">Crear</button><button type="button" data-close>Cancelar</button></div></form></dialog></div>; }

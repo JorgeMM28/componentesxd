@@ -1,21 +1,4 @@
-/**
- * Variante 02 — Dynamic Island Interactiva (3 Estados) — React / Next.js (TSX)
- * Archivo: components/toasts/variants/dynamic-island-morph/DynamicIslandMorph.tsx
- */
-import React, { useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { mountDynamicIslandMorph } from './dynamic-island-morph.js';
 import './styles.css';
-
-export const DynamicIslandMorph: React.FC<{ title?: string }> = ({
-  title = 'Variante 02 — Dynamic Island Interactiva (3 Estados)'
-}) => {
-  const [active, setActive] = useState(false);
-  return (
-    <div className="cxd-toasts-dynamic-island-morph" data-active={active}>
-      <h3>{title}</h3>
-      <p>Cápsula negra brillante que cambia de tamaño con Anime.js entre Compacto, Llamada/Proceso y Expandido.</p>
-      <button type="button" onClick={() => setActive(!active)}>
-        Alternar Estado
-      </button>
-    </div>
-  );
-};
+export function DynamicIslandMorph() { const root = useRef<HTMLDivElement>(null); useEffect(() => root.current ? mountDynamicIslandMorph(root.current) : undefined, []); return <div className="cxd-toast cxd-toast--island" data-cxd-control="dynamic-island-morph" ref={root}><strong data-title>MODO COMPACTO // IDLE</strong><button type="button" data-mode="compact">Compacto</button><button type="button" data-mode="expanded">Expandir detalles</button><p data-details hidden>Despliegue en curso hacia 12 regiones · 94% completado.</p><span role="status">Modo compacto</span></div>; }

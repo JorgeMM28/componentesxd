@@ -1,7 +1,6 @@
-{{-- Variante 08 — Carrusel Mazo de Tarjetas con Descarte Elástico (Swipe / Throw Deck) — Laravel Blade (components/carousels/variants/card-deck-throw/card-deck-throw.blade.php) --}}
-@props(['title' => 'Variante 08 — Carrusel Mazo de Tarjetas con Descarte Elástico (Swipe / Throw Deck)'])
-<div {{ $attributes->merge(['class' => 'cxd-carousels-card-deck-throw']) }}>
-    <h3>{{ $title }}</h3>
-    <p>Pila interactiva donde cada acción lanza la tarjeta activa con rotación física y promueve la siguiente del mazo.</p>
-    {{ $slot }}
-</div>
+{{-- Incluye styles.css y ajusta la ruta del módulo. --}}
+<div class="cxd-carousel" data-cxd-control="card-deck-throw"><div class="cxd-deck"><article class="cxd-carousel__item" data-slide><small>01 / 04</small><strong>Aurora</strong><p>Una nueva perspectiva para explorar.</p></article><article class="cxd-carousel__item" data-slide><small>02 / 04</small><strong>Órbita</strong><p>Una nueva perspectiva para explorar.</p></article><article class="cxd-carousel__item" data-slide><small>03 / 04</small><strong>Nébula</strong><p>Una nueva perspectiva para explorar.</p></article><article class="cxd-carousel__item" data-slide><small>04 / 04</small><strong>Horizonte</strong><p>Una nueva perspectiva para explorar.</p></article></div><div class="cxd-carousel__controls"><button type="button" data-dismiss>Descartar tarjeta</button><button type="button" data-reset>Restaurar mazo</button></div><span role="status"></span></div>
+<script type="module">
+import { mountCardDeckThrow } from '/assets/card-deck-throw.js';
+document.querySelectorAll('[data-cxd-control="card-deck-throw"]:not([data-ready])').forEach(root => { root.dataset.ready = 'true'; mountCardDeckThrow(root); });
+</script>

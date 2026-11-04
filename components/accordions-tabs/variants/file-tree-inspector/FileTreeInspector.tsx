@@ -1,21 +1,4 @@
-/**
- * Variante 06 — Árbol de Directorios Colapsable con Inspector de Archivo Activo — React / Next.js (TSX)
- * Archivo: components/accordions-tabs/variants/file-tree-inspector/FileTreeInspector.tsx
- */
-import React, { useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { mountFileTreeInspector } from './file-tree-inspector.js';
 import './styles.css';
-
-export const FileTreeInspector: React.FC<{ title?: string }> = ({
-  title = 'Variante 06 — Árbol de Directorios Colapsable con Inspector de Archivo Activo'
-}) => {
-  const [active, setActive] = useState(false);
-  return (
-    <div className="cxd-accordions-tabs-file-tree-inspector" data-active={active}>
-      <h3>{title}</h3>
-      <p>Estructura jerárquica de carpetas y archivos clicables que actualiza el visor de contenido derecho.</p>
-      <button type="button" onClick={() => setActive(!active)}>
-        Alternar Estado
-      </button>
-    </div>
-  );
-};
+export function FileTreeInspector() { const root = useRef<HTMLDivElement>(null); useEffect(() => root.current ? mountFileTreeInspector(root.current) : undefined, []); return <div className="cxd-widget" data-cxd-control="file-tree-inspector" ref={root}><div className="cxd-widget__columns"><div className="cxd-widget__list"><strong>src/</strong><div><button type="button" data-file="index.astro">index.astro</button></div><div><button type="button" data-file="tokens.css">tokens.css</button></div></div><div className="cxd-widget__list"><strong>Inspector</strong><p data-output>Selecciona un archivo</p></div></div></div>; }

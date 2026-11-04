@@ -1,17 +1,11 @@
 <?php
-// Variante 08 — Calendario y Selector Interactivo de Horarios / Turnos — Laravel Livewire 3 (components/accordions-tabs/variants/calendar-slot-Matrix/CalendarSlotMatrixWire.php)
-namespace App\Livewire\Cxd\AccordionsTabs;
+namespace App\Livewire;
 use Livewire\Component;
-
-class CalendarSlotMatrixWire extends Component {
-    public bool $active = false;
-    public function toggle(): void { $this->active = !$this->active; }
-    public function render() {
-        return <<<'HTML'
-        <div class="cxd-accordions-tabs-calendar-slot-Matrix">
-            <h3>Variante 08 — Calendario y Selector Interactivo de Horarios / Turnos</h3>
-            <button type="button" wire:click="toggle">Estado: {{ $active ? 'ON' : 'OFF' }}</button>
-        </div>
-        HTML;
-    }
-}
+// Incluye styles.css y ajusta la ruta del módulo.
+class CalendarSlotMatrixWire extends Component { public function render(): string { return <<<'HTML'
+<div class="cxd-widget" data-cxd-control="calendar-slot-Matrix" wire:ignore><label>Día <select data-day><option>Lunes</option><option>Martes</option><option>Miércoles</option><option>Jueves</option><option>Viernes</option></select></label><div class="cxd-widget__row"><button type="button" data-slot="09:00" aria-pressed="false">09:00</button><button type="button" data-slot="11:00" aria-pressed="false">11:00</button><button type="button" data-slot="15:00" aria-pressed="false">15:00</button></div><span role="status">Selecciona un horario</span>@script
+<script>
+import('/assets/calendar-slot-Matrix.js').then(module => module.mountCalendarSlotMatrix($wire.$el));
+</script>
+@endscript</div>
+HTML; } }

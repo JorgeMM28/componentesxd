@@ -1,21 +1,4 @@
-/**
- * Variante 08 — Botón Mecánico 3D de Presión Física — React / Next.js (TSX)
- * Archivo: components/buttons/variants/brutalist-3d-push/Brutalist3dPush.tsx
- */
-import React, { useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { mountBrutalist3dPush } from './brutalist-3d-push.js';
 import './styles.css';
-
-export const Brutalist3dPush: React.FC<{ title?: string }> = ({
-  title = 'Variante 08 — Botón Mecánico 3D de Presión Física'
-}) => {
-  const [active, setActive] = useState(false);
-  return (
-    <div className="cxd-buttons-brutalist-3d-push" data-active={active}>
-      <h3>{title}</h3>
-      <p>Borde grueso y sombra sólida inferior que se hunde físicamente cada vez que lo presionas.</p>
-      <button type="button" onClick={() => setActive(!active)}>
-        Alternar Estado
-      </button>
-    </div>
-  );
-};
+export function Brutalist3dPush() { const root = useRef<HTMLDivElement>(null); useEffect(() => root.current ? mountBrutalist3dPush(root.current) : undefined, []); return <div className="cxd-mechanical" ref={root}><button type="button" className="cxd-mechanical__button" data-push>Presión física 3D (<span data-count>0</span>)</button><button type="button" className="cxd-mechanical__button cxd-mechanical__button--secondary" data-toggle aria-pressed="true">Interruptor mecánico: <span data-state>ON</span></button></div>; }

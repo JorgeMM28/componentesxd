@@ -1,10 +1,10 @@
 <?php
-// Variante 04 — Breadcrumbs Interactivos con Selector de Rama/Proyecto — PHP 8.3 Renderer (components/navigation/variants/interactive-breadcrumbs/InteractiveBreadcrumbsRenderer.php)
 declare(strict_types=1);
-namespace ComponentesXD\Navigation;
-
-final class InteractiveBreadcrumbsRenderer {
-    public static function render(): string {
-        return '<div class="cxd-navigation-interactive-breadcrumbs"><h3>Variante 04 — Breadcrumbs Interactivos con Selector de Rama/Proyecto</h3><p>Ruta de navegación con menús desplegables integrados en cada nivel de jerarquía.</p></div>';
-    }
-}
+// Incluye styles.css y ajusta la ruta del módulo.
+function renderInteractiveBreadcrumbs(): string { return <<<'HTML'
+<div class="cxd-nav" data-cxd-control="interactive-breadcrumbs"><nav aria-label="Ruta de navegación"><button type="button" data-path="Inicio">Inicio</button><span> / </span><button type="button" data-path="Componentes">Componentes</button><span> / </span><button type="button" data-path="Botones">Botones</button></nav><span role="status">Ruta actual: Inicio / Componentes / Botones</span></div>
+<script type="module">
+import { mountInteractiveBreadcrumbs } from '/assets/interactive-breadcrumbs.js';
+document.querySelectorAll('[data-cxd-control="interactive-breadcrumbs"]:not([data-ready])').forEach(root => { root.dataset.ready = 'true'; mountInteractiveBreadcrumbs(root); });
+</script>
+HTML; }

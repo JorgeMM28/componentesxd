@@ -6,6 +6,20 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
+import { modernButtonsCode } from './modern-buttons-code.mjs';
+import { segmentedButtonsCode } from './segmented-buttons-code.mjs';
+import { stylelessButtonsCode } from './styleless-buttons-code.mjs';
+import { mechanicalButtonsCode } from './mechanical-buttons-code.mjs';
+import { interactiveButtonsCode } from './interactive-buttons-code.mjs';
+import { toastCode } from './toast-code.mjs';
+import { formCode } from './form-code.mjs';
+import { cardCode } from './card-code.mjs';
+import { dataCode } from './data-code.mjs';
+import { modalCode } from './modal-code.mjs';
+import { navigationCode } from './navigation-code.mjs';
+import { accordionCode } from './accordion-code.mjs';
+import { tableCode } from './table-code.mjs';
+import { carouselCode } from './carousel-code.mjs';
 
 const ROOT = process.cwd();
 
@@ -137,7 +151,7 @@ export const COMPONENT_CATEGORIES = [
     slug: 'navigation',
     code: 'CAT-07',
     name: 'Navbars, Menús Cascada y Navegación',
-    shortDesc: '6 sistemas de navegación funcionales: navbar flotante redondeada, menú en cascada estilo Microsoft, breadcrumbs interactivos, pestañas animadas, dock y paginación.',
+    shortDesc: '10 sistemas de navegación funcionales: navbar flotante redondeada, menú en cascada estilo Microsoft, breadcrumbs interactivos, pestañas animadas, dock y paginación.',
     icon: 'compass',
     variants: [
       { id: 'microsoft-cascade-nav', name: 'Variante 01 — Navbar con Menú en Cascada Multi-Nivel (Estilo Microsoft)', badge: 'CASCADE MENU', desc: 'Selecciona una categoría principal para desplegar sus sub-categorías y luego sus variantes finales.', previewType: 'nav-cascade' },
@@ -145,7 +159,11 @@ export const COMPONENT_CATEGORIES = [
       { id: 'styleless-minimal-nav', name: 'Variante 03 — Navegación Styleless Minimalista con Indicador Deslizante', badge: 'STYLELESS TABS', desc: 'Pestañas limpias sin bordes laterales donde la línea activa viaja suavemente al elemento clicado.', previewType: 'nav-styleless' },
       { id: 'interactive-breadcrumbs', name: 'Variante 04 — Breadcrumbs Interactivos con Selector de Rama/Proyecto', badge: 'BREADCRUMBS', desc: 'Ruta de navegación con menús desplegables integrados en cada nivel de jerarquía.', previewType: 'nav-breadcrumbs' },
       { id: 'floating-action-dock', name: 'Variante 05 — Dock Flotante Inferior con Escalado al Pasar el Cursor', badge: 'INTERACTIVE DOCK', desc: 'Barra de iconos de acceso rápido con insignias de estado e indicador de aplicación activa.', previewType: 'nav-dock' },
-      { id: 'interactive-pagination', name: 'Variante 06 — Barra de Paginación Interactiva con Salto de Página', badge: 'PAGINATION BAR', desc: 'Haz clic en los números o botones Anterior/Siguiente para actualizar la página activa en vivo.', previewType: 'nav-pagination' }
+      { id: 'interactive-pagination', name: 'Variante 06 — Barra de Paginación Interactiva con Salto de Página', badge: 'PAGINATION BAR', desc: 'Haz clic en los números o botones Anterior/Siguiente para actualizar la página activa en vivo.', previewType: 'nav-pagination' },
+      {"id": "collapsible-sidebar", "name": "Variante 07 — Sidebar Lateral Colapsable con Árbol de Proyectos y Estado de Clúster", "badge": "COLLAPSIBLE SIDEBAR", "desc": "Panel de navegación lateral con botón de colapso cinético (240px ↔ 68px), selector de entorno (Prod/Staging), árbol de módulos e indicador de salud.", "previewType": "nav-sidebar"},
+      {"id": "desktop-menubar", "name": "Variante 08 — Menubar Desktop Clásico con Menús Flotantes (Archivo, Edición, Git)", "badge": "DESKTOP MENUBAR", "desc": "Barra horizontal estilo aplicación de escritorio con menús desplegables en cascada al hacer hover o clic, atajos de teclado e indicador de sync.", "previewType": "nav-menubar"},
+      {"id": "compact-navigation-rail", "name": "Variante 09 — Navigation Rail Ultra-Compacto con Tooltips y Puntos Activos", "badge": "NAVIGATION RAIL", "desc": "Riel de navegación vertical ultra-delgado de 56px para consolas cloud con iconos vectoriales, tooltips flotantes e indicador de nodo activo.", "previewType": "nav-rail"},
+      {"id": "mobile-touch-tabbar", "name": "Variante 10 — Mobile Bottom Tab Bar Táctil con Micro-Interacciones Cinéticas", "badge": "MOBILE TABBAR", "desc": "Barra inferior flotante tipo iOS/Android con 5 destinos táctiles, pastilla indicadora animada con Anime.js v4 y badges de notificaciones.", "previewType": "nav-tabbar"}
     ]
   },
   {
@@ -216,7 +234,7 @@ export const COMPONENT_CATEGORIES = [
     slug: 'special-hybrids',
     code: 'CAT-12',
     name: 'Componentes Especiales Combinados (UI + Anime.js v4 en Vivo)',
-    shortDesc: '20 super-componentes híbridos que combinan Tablas en tiempo real, Step-by-Step con Carrusel 3D, Formularios con SVG Drawable, Kanban con Física Spring, Skeletons Hidratables y Timers SLA.',
+    shortDesc: '30 super-componentes híbridos que combinan Tablas en tiempo real, Step-by-Step con Carrusel 3D, Formularios con SVG Drawable, Kanban con Física Spring, Skeletons Hidratables y Timers SLA.',
     icon: 'sparkles',
     variants: [
       { id: 'stepper-carousel-wizard', name: 'Variante 01 — Step-by-Step Wizard + Carrusel 3D Sincronizado + Timeline', badge: 'STEPPER + CAROUSEL', desc: 'Asistente paso a paso donde avanzar o retroceder sincroniza la barra de progreso superior, desliza el carrusel 3D y anima los sub-elementos con stagger.', previewType: 'hybrid-01' },
@@ -390,6 +408,20 @@ function toPascalCase(str) {
 }
 
 function generateFrameworkCode(cat, variant, fw) {
+  if (cat.slug === 'carousels') { const code = carouselCode(variant.id, fw.id); if (code !== undefined) return code; }
+  if (cat.slug === 'tables') { const code = tableCode(variant.id, fw.id); if (code !== undefined) return code; }
+  if (cat.slug === 'accordions-tabs') { const code = accordionCode(variant.id, fw.id); if (code !== undefined) return code; }
+  if (cat.slug === 'navigation') { const code = navigationCode(variant.id, fw.id); if (code !== undefined) return code; }
+  if (cat.slug === 'modals') { const code = modalCode(variant.id, fw.id); if (code !== undefined) return code; }
+  if (cat.slug === 'badges-data') { const code = dataCode(variant.id, fw.id); if (code !== undefined) return code; }
+  if (cat.slug === 'cards') { const code = cardCode(variant.id, fw.id); if (code !== undefined) return code; }
+  if (cat.slug === 'forms') { const code = formCode(variant.id, fw.id); if (code !== undefined) return code; }
+  if (cat.slug === 'toasts') { const code = toastCode(variant.id, fw.id); if (code !== undefined) return code; }
+  if (cat.slug === 'buttons' && variant.id === 'modern-rounded-pills') return modernButtonsCode(fw.id);
+  if (cat.slug === 'buttons' && variant.id === 'segmented-toolbar-fit') return segmentedButtonsCode(fw.id);
+  if (cat.slug === 'buttons' && variant.id === 'styleless-text-links') return stylelessButtonsCode(fw.id);
+  if (cat.slug === 'buttons' && variant.id === 'brutalist-3d-push') return mechanicalButtonsCode(fw.id);
+  if (cat.slug === 'buttons') { const code = interactiveButtonsCode(variant.id, fw.id); if (code !== undefined) return code; }
   const pascal = toPascalCase(variant.id);
   const baseClass = `cxd-${cat.slug}-${variant.id}`;
 

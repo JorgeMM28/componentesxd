@@ -1,18 +1,4 @@
-// Variante 02 — Dynamic Island Interactiva (3 Estados) — Angular 18+ Signals (components/toasts/variants/dynamic-island-morph/dynamic-island-morph.component.ts)
-import { Component, signal } from '@angular/core';
-
-@Component({
-  selector: 'cxd-dynamic-island-morph',
-  standalone: true,
-  styleUrls: ['./styles.css'],
-  template: `
-    <div class="cxd-toasts-dynamic-island-morph" [attr.data-active]="active()">
-      <h3>Variante 02 — Dynamic Island Interactiva (3 Estados)</h3>
-      <p>Cápsula negra brillante que cambia de tamaño con Anime.js entre Compacto, Llamada/Proceso y Expandido.</p>
-      <button type="button" (click)="active.set(!active())">Alternar</button>
-    </div>
-  `
-})
-export class CxdDynamicIslandMorphComponent {
-  active = signal(false);
-}
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import { mountDynamicIslandMorph } from './dynamic-island-morph.js';
+@Component({ selector:'cxd-dynamic-island-morph', standalone:true, styleUrls:['./styles.css'], template:`<div class="cxd-toast cxd-toast--island" data-cxd-control="dynamic-island-morph" #root><strong data-title>MODO COMPACTO // IDLE</strong><button type="button" data-mode="compact">Compacto</button><button type="button" data-mode="expanded">Expandir detalles</button><p data-details hidden>Despliegue en curso hacia 12 regiones · 94% completado.</p><span role="status">Modo compacto</span></div>` })
+export class DynamicIslandMorphComponent implements AfterViewInit, OnDestroy { @ViewChild('root') root!: ElementRef<HTMLElement>; private unmount?: () => void; ngAfterViewInit() { this.unmount = mountDynamicIslandMorph(this.root.nativeElement); } ngOnDestroy() { this.unmount?.(); } }

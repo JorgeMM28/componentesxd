@@ -1,11 +1,6 @@
-<!-- Variante 02 — Acordeón Interactivo Multi-Sección — Svelte 5 Runes (components/badges-data/variants/interactive-accordion/InteractiveAccordion.svelte) -->
 <script lang="ts">
-  import './styles.css';
-  let active = $state(false);
+import { mountInteractiveAccordion } from './interactive-accordion.js';
+import './styles.css';
+function control(node: HTMLElement) { return { destroy: mountInteractiveAccordion(node) }; }
 </script>
-
-<div class="cxd-badges-data-interactive-accordion" data-active={active}>
-  <h3>Variante 02 — Acordeón Interactivo Multi-Sección</h3>
-  <p>Haz clic en cualquier cabecera para expandir o contraer su contenido suavemente.</p>
-  <button type="button" onclick={() => (active = !active)}>Alternar</button>
-</div>
+<div class="cxd-data" data-cxd-control="interactive-accordion" use:control><div class="cxd-data__list"><div class="cxd-data__item"><button type="button" data-open="one" aria-expanded="true">01 · Tokens CSS</button><p data-panel="one">Colores, radios y tipografías mediante variables.</p></div><div class="cxd-data__item"><button type="button" data-open="two" aria-expanded="false">02 · Arquitectura de islas</button><p data-panel="two" hidden>Hidratación selectiva de componentes interactivos.</p></div></div></div>

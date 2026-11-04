@@ -1,11 +1,6 @@
-<!-- Variante 07 — Barra de Botones Content-Fit con Indicador Activo — Svelte 5 Runes (components/buttons/variants/segmented-toolbar-fit/SegmentedToolbarFit.svelte) -->
 <script lang="ts">
-  import './styles.css';
-  let active = $state(false);
+import './styles.css';
+const items = [["one","Vista Tabla","Vista de Tabla Estructurada (10 Variantes)"],["two","Vista Tarjetas","Vista de Tarjetas Bento (8 Variantes)"],["three","Vista Grafo 3D","Vista de Grafo Vectorial 3D"],["four","JSON Raw","Inspector JSON Raw en Vivo"]];
+let active = $state(0);
 </script>
-
-<div class="cxd-buttons-segmented-toolbar-fit" data-active={active}>
-  <h3>Variante 07 — Barra de Botones Content-Fit con Indicador Activo</h3>
-  <p>Grupo compacto unido donde la selección activa cambia instantáneamente al hacer clic.</p>
-  <button type="button" onclick={() => (active = !active)}>Alternar</button>
-</div>
+<div class="cxd-segments">{#each items as [kind, label], index (kind)}<button type="button" class="cxd-segments__button cxd-segments__button--{kind}" aria-pressed={active === index} onclick={() => active = index}>{label}</button>{/each}<span class="cxd-segments__status" role="status">{active < 0 ? 'MODO ACTIVO: Vista de Tabla Estructurada (10 Variantes)' : 'MODO ACTIVO: ' + items[active][2]}</span></div>

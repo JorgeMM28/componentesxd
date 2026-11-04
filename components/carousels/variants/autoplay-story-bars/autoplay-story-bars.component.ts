@@ -1,18 +1,4 @@
-// Variante 07 — Carrusel con Barras de Tiempo Segmentadas (Autoplay + Pausa) — Angular 18+ Signals (components/carousels/variants/autoplay-story-bars/autoplay-story-bars.component.ts)
-import { Component, signal } from '@angular/core';
-
-@Component({
-  selector: 'cxd-autoplay-story-bars',
-  standalone: true,
-  styleUrls: ['./styles.css'],
-  template: `
-    <div class="cxd-carousels-autoplay-story-bars" [attr.data-active]="active()">
-      <h3>Variante 07 — Carrusel con Barras de Tiempo Segmentadas (Autoplay + Pausa)</h3>
-      <p>Cabecera con segmentos de progreso temporales que avanzan automáticamente y permiten saltar a cualquier historia.</p>
-      <button type="button" (click)="active.set(!active())">Alternar</button>
-    </div>
-  `
-})
-export class CxdAutoplayStoryBarsComponent {
-  active = signal(false);
-}
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import { mountAutoplayStoryBars } from './autoplay-story-bars.js';
+@Component({ selector:'cxd-autoplay-story-bars', standalone:true, styleUrls:['./styles.css'], template:`<div class="cxd-carousel" data-cxd-control="autoplay-story-bars" #root><div class="cxd-story-bars" aria-label="Historias"><button type="button" data-story="0" aria-label="Historia 1"><span></span></button><button type="button" data-story="1" aria-label="Historia 2"><span></span></button><button type="button" data-story="2" aria-label="Historia 3"><span></span></button></div><div class="cxd-carousel__item" data-content><strong>Historia 1</strong><p>Explora la colección.</p></div><div class="cxd-carousel__controls"><button type="button" data-play aria-pressed="false">Reproducir</button></div><span role="status"></span></div>` })
+export class AutoplayStoryBarsComponent implements AfterViewInit, OnDestroy { @ViewChild('root') root!: ElementRef<HTMLElement>; private unmount?: () => void; ngAfterViewInit() { this.unmount = mountAutoplayStoryBars(this.root.nativeElement); } ngOnDestroy() { this.unmount?.(); } }

@@ -1,7 +1,6 @@
-{{-- Variante 02 — Command Palette Interactiva (Buscador en Vivo) — Laravel Blade (components/modals/variants/interactive-cmdk-palette/interactive-cmdk-palette.blade.php) --}}
-@props(['title' => 'Variante 02 — Command Palette Interactiva (Buscador en Vivo)'])
-<div {{ $attributes->merge(['class' => 'cxd-modals-interactive-cmdk-palette']) }}>
-    <h3>{{ $title }}</h3>
-    <p>Escribe en el buscador para filtrar comandos al instante y haz clic en cualquiera para ejecutarlo.</p>
-    {{ $slot }}
-</div>
+{{-- Incluye styles.css y ajusta la ruta del módulo. --}}
+<div class="cxd-dialog" data-cxd-control="interactive-cmdk-palette"><button type="button" data-open>Abrir comandos</button><span role="status">Selecciona un comando</span><dialog aria-label="Paleta de comandos"><h3>Paleta de comandos</h3><label>Buscar <input type="search" data-search placeholder="Escribe un comando" /></label><div class="cxd-dialog__list"><button type="button" data-command="Abrir catálogo">Abrir catálogo</button><button type="button" data-command="Ver animaciones">Ver animaciones</button><button type="button" data-command="Cambiar interfaz">Cambiar interfaz</button></div><button type="button" data-close>Cerrar</button></dialog></div>
+<script type="module">
+import { mountInteractiveCmdkPalette } from '/assets/interactive-cmdk-palette.js';
+document.querySelectorAll('[data-cxd-control="interactive-cmdk-palette"]:not([data-ready])').forEach(root => { root.dataset.ready = 'true'; mountInteractiveCmdkPalette(root); });
+</script>

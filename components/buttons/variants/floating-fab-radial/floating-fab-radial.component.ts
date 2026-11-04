@@ -1,18 +1,4 @@
-// Variante 03 — Botón Flotante (FAB) con Menú Desplegable — Angular 18+ Signals (components/buttons/variants/floating-fab-radial/floating-fab-radial.component.ts)
-import { Component, signal } from '@angular/core';
-
-@Component({
-  selector: 'cxd-floating-fab-radial',
-  standalone: true,
-  styleUrls: ['./styles.css'],
-  template: `
-    <div class="cxd-buttons-floating-fab-radial" [attr.data-active]="active()">
-      <h3>Variante 03 — Botón Flotante (FAB) con Menú Desplegable</h3>
-      <p>Botón circular flotante que al hacer clic despliega 3 acciones satélite con física elástica.</p>
-      <button type="button" (click)="active.set(!active())">Alternar</button>
-    </div>
-  `
-})
-export class CxdFloatingFabRadialComponent {
-  active = signal(false);
-}
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import { mountFloatingFabRadial } from './floating-fab-radial.js';
+@Component({ selector:'cxd-floating-fab-radial', standalone:true, styleUrls:['./styles.css'], template:`<div class="cxd-control" data-cxd-control="floating-fab-radial" #root><button type="button" data-fab aria-expanded="true">Abrir / Cerrar menú flotante</button><span role="status">SATÉLITES ACTIVOS</span><div class="cxd-control__actions" data-actions><button type="button" data-action="Nuevo despliegue ejecutado">01. Nuevo despliegue</button><button type="button" data-action="Repositorio clonado">02. Clonar repositorio</button><button type="button" data-action="Logs exportados">03. Exportar logs</button></div></div>` })
+export class FloatingFabRadialComponent implements AfterViewInit, OnDestroy { @ViewChild('root') root!: ElementRef<HTMLElement>; private unmount?: () => void; ngAfterViewInit() { this.unmount = mountFloatingFabRadial(this.root.nativeElement); } ngOnDestroy() { this.unmount?.(); } }

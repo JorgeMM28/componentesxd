@@ -1,17 +1,11 @@
 <?php
-// Variante 06 — Barra de Paginación Interactiva con Salto de Página — Laravel Livewire 3 (components/navigation/variants/interactive-pagination/InteractivePaginationWire.php)
-namespace App\Livewire\Cxd\Navigation;
+namespace App\Livewire;
 use Livewire\Component;
-
-class InteractivePaginationWire extends Component {
-    public bool $active = false;
-    public function toggle(): void { $this->active = !$this->active; }
-    public function render() {
-        return <<<'HTML'
-        <div class="cxd-navigation-interactive-pagination">
-            <h3>Variante 06 — Barra de Paginación Interactiva con Salto de Página</h3>
-            <button type="button" wire:click="toggle">Estado: {{ $active ? 'ON' : 'OFF' }}</button>
-        </div>
-        HTML;
-    }
-}
+// Incluye styles.css y ajusta la ruta del módulo.
+class InteractivePaginationWire extends Component { public function render(): string { return <<<'HTML'
+<div class="cxd-nav" data-cxd-control="interactive-pagination" wire:ignore><button type="button" data-step="-1">Anterior</button><button type="button" data-page="1" aria-current="page">1</button><button type="button" data-page="2">2</button><button type="button" data-page="3">3</button><button type="button" data-step="1">Siguiente</button><span role="status">Página 1 de 3</span>@script
+<script>
+import('/assets/interactive-pagination.js').then(module => module.mountInteractivePagination($wire.$el));
+</script>
+@endscript</div>
+HTML; } }

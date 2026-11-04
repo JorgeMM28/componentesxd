@@ -1,21 +1,4 @@
-/**
- * Variante 05 — Tarjeta con Barra de Acciones (Favorito, Compartir, Archivar) — React / Next.js (TSX)
- * Archivo: components/cards/variants/action-toolbar-card/ActionToolbarCard.tsx
- */
-import React, { useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { mountActionToolbarCard } from './action-toolbar-card.js';
 import './styles.css';
-
-export const ActionToolbarCard: React.FC<{ title?: string }> = ({
-  title = 'Variante 05 — Tarjeta con Barra de Acciones (Favorito, Compartir, Archivar)'
-}) => {
-  const [active, setActive] = useState(false);
-  return (
-    <div className="cxd-cards-action-toolbar-card" data-active={active}>
-      <h3>{title}</h3>
-      <p>Incluye botones inferiores interactivos con contadores que se actualizan en tiempo real.</p>
-      <button type="button" onClick={() => setActive(!active)}>
-        Alternar Estado
-      </button>
-    </div>
-  );
-};
+export function ActionToolbarCard() { const root = useRef<HTMLDivElement>(null); useEffect(() => root.current ? mountActionToolbarCard(root.current) : undefined, []); return <div className="cxd-card" data-cxd-control="action-toolbar-card" ref={root}><span>REPOSITORIO // CORE-UI</span><h3>Paquete de componentes</h3><p>Una tarjeta con acciones independientes.</p><div className="cxd-card__actions"><button type="button" data-star aria-pressed="false">Estrella (<span data-count>142</span>)</button><button type="button" data-action="Enlace listo para compartir">Compartir</button><button type="button" data-action="Repositorio preparado">Clonar</button></div><span role="status">Listo</span></div>; }

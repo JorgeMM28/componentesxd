@@ -1,15 +1,1 @@
-/**
- * ============================================================================
- * COMPONENTESXD — TARJETAS Y CONTENEDORES
- * Variante 06 — Tarjeta con Formulario Rápido de Cotización / Config
- * Archivo: components/cards/variants/form-embedded-card/styles.css
- * ============================================================================
- */
-.cxd-cards-form-embedded-card {
-  background: var(--cxd-bg-surface);
-  color: var(--cxd-text-primary);
-  border: var(--cxd-border-width, 1px) solid var(--cxd-border);
-  border-radius: var(--cxd-radius-md);
-  font-family: var(--cxd-font-sans);
-  font-variant-numeric: tabular-nums;
-}
+.cxd-card{box-sizing:border-box;position:relative;width:min(100%,30rem);padding:1.3rem;border:1px solid #716492;border-radius:18px;background:radial-gradient(circle at var(--x,50%) var(--y,0%),#40366c,#171726 65%);color:#fff;font:500 .9rem/1.5 system-ui;box-shadow:0 14px 35px #0003;transition:transform .2s}.cxd-card *{box-sizing:border-box}.cxd-card h3,.cxd-card h4{margin:.5rem 0}.cxd-card p{color:#cbc6df}.cxd-card strong[data-metric]{font-size:2rem}.cxd-card button,.cxd-card input{font:inherit;border:1px solid #8f7bbd;border-radius:7px;padding:.5rem .65rem;background:#28233d;color:#fff}.cxd-card button{cursor:pointer}.cxd-card button:focus-visible,.cxd-card input:focus-visible{outline:3px solid #c4b5fd;outline-offset:2px}.cxd-card [aria-pressed=true]{background:#7253f4}.cxd-card [hidden]{display:none!important}.cxd-card__actions{display:flex;flex-wrap:wrap;gap:.4rem}.cxd-card--editorial{border:0;border-radius:0;border-top:1px solid #a78bfa;background:transparent;color:inherit;box-shadow:none}.cxd-card--editorial p{color:inherit}.cxd-card--fit{width:max-content;max-width:100%}.cxd-card [role=status]{display:block;margin-top:.7rem;color:#c8b8ff;font-size:.8rem}@media(prefers-reduced-motion:reduce){.cxd-card{transition:none}}

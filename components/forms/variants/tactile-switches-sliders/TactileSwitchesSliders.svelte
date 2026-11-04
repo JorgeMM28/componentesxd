@@ -1,11 +1,6 @@
-<!-- Variante 08 — Controles Interactivos (Switches, Stepper Numérico y Radios) — Svelte 5 Runes (components/forms/variants/tactile-switches-sliders/TactileSwitchesSliders.svelte) -->
 <script lang="ts">
-  import './styles.css';
-  let active = $state(false);
+import { mountTactileSwitchesSliders } from './tactile-switches-sliders.js';
+import './styles.css';
+function control(node: HTMLElement) { return { destroy: mountTactileSwitchesSliders(node) }; }
 </script>
-
-<div class="cxd-forms-tactile-switches-sliders" data-active={active}>
-  <h3>Variante 08 — Controles Interactivos (Switches, Stepper Numérico y Radios)</h3>
-  <p>Interruptores animados, contador con botones +/- y selector de tarjetas de opción.</p>
-  <button type="button" onclick={() => (active = !active)}>Alternar</button>
-</div>
+<div class="cxd-form" data-cxd-control="tactile-switches-sliders" use:control><label><input type="checkbox" checked /> Auto-deploy en push</label><label><input type="checkbox" /> Modo estricto WAF</label><button type="button" data-step="-1" aria-label="Reducir réplicas">−</button><span data-value>4</span><button type="button" data-step="1" aria-label="Aumentar réplicas">+</button><span role="status">4 réplicas</span></div>
