@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro build",
+    "build": "astro build && node scripts/prepare-vercel.mjs",
     "build:vercel": "astro build && node scripts/prepare-vercel.mjs",
     "generate:vault": "node scripts/generate-vault.mjs",
     "preview": "astro preview"
