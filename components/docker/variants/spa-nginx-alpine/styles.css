@@ -1,0 +1,15 @@
+/**
+ * ============================================================================
+ * COMPONENTESXD — DOCKERFILES Y ORQUESTACIÓN DE CONTENEDORES
+ * Variante 03 — React / Vue / Svelte / Angular SPA + Nginx
+ * Archivo: components/docker/variants/spa-nginx-alpine/styles.css
+ * ============================================================================
+ */
+.cxd-docker-spa-nginx-alpine {
+  background: var(--cxd-bg-surface);
+  color: var(--cxd-text-primary);
+  border: var(--cxd-border-width, 1px) solid var(--cxd-border);
+  border-radius: var(--cxd-radius-md);
+  font-family: var(--cxd-font-sans);
+  font-variant-numeric: tabular-nums;
+}

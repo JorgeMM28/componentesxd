@@ -1,0 +1,31 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import AnimeCategoryWorkbench from '../../components/AnimeCategoryWorkbench.astro';
+import registry from '../../data/vaultRegistry.json';
+
+export function getStaticPaths() {
+  return registry.animationCategories.map((category) => ({
+    params: { slug: category.slug },
+    props: { category }
+  }));
+}
+
+const { category } = Astro.props;
+---
+
+<Layout
+  title={`COMPONENTESXD // ${category.name} (${category.presets.length} Animaciones Anime.js v4)`}
+  section={`ANIMATIONS // ${category.slug.toUpperCase()}`}
+>
+  <div class="arch-page-header">
+    <div>
+      <span class="arch-eyebrow">
+        {category.code} // DOCUMENTACIÓN INTERACTIVA ANIME.JS v4 · {category.presets.length} ESCENARIOS EN VIVO
+      </span>
+      <h1 class="arch-title">{category.name}</h1>
+      <p class="arch-lead">{category.desc}</p>
+    </div>
+  </div>
+
+  <AnimeCategoryWorkbench category={category} />
+</Layout>

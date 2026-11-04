@@ -1,0 +1,15 @@
+/**
+ * ============================================================================
+ * COMPONENTESXD — TABLAS DE DATOS
+ * Variante 06 — Tabla con Acciones (Duplicar, Estado y Eliminar Fila)
+ * Archivo: components/tables/variants/crud-actions/styles.css
+ * ============================================================================
+ */
+.cxd-tables-crud-actions {
+  background: var(--cxd-bg-surface);
+  color: var(--cxd-text-primary);
+  border: var(--cxd-border-width, 1px) solid var(--cxd-border);
+  border-radius: var(--cxd-radius-md);
+  font-family: var(--cxd-font-sans);
+  font-variant-numeric: tabular-nums;
+}

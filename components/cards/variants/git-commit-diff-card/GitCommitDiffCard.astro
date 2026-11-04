@@ -1,0 +1,32 @@
+---
+/**
+ * ============================================================================
+ * COMPONENTESXD — 04. Git Commit & Code Diff Inspection Card (ASTRO 5)
+ * Archivo: components/cards/variants/git-commit-diff-card/GitCommitDiffCard.astro
+ * ============================================================================
+ */
+import './styles.css';
+
+interface Props {
+  title?: string;
+  badge?: string;
+  interfaceTheme?: string;
+}
+
+const {
+  title = '04. Git Commit & Code Diff Inspection Card',
+  badge = 'VERSION CONTROL',
+  interfaceTheme
+} = Astro.props;
+---
+
+<section class="cxd-cards-git-commit-diff-card" data-theme={interfaceTheme} data-variant="git-commit-diff-card">
+  <header class="cxd-cards-git-commit-diff-card__header">
+    <span>{title}</span>
+    <span class="cxd-badge">{badge}</span>
+  </header>
+  <div class="cxd-cards-git-commit-diff-card__body">
+    <p>Superficie para visualizar hash de commit, rama, líneas añadidas/eliminadas y bloque diff coloreado.</p>
+    <slot />
+  </div>
+</section>

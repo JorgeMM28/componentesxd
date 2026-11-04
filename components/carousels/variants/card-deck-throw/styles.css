@@ -1,0 +1,15 @@
+/**
+ * ============================================================================
+ * COMPONENTESXD — CARRUSELES, SLIDERS 3D Y MARQUESINAS CINÉTICAS
+ * Variante 08 — Carrusel Mazo de Tarjetas con Descarte Elástico (Swipe / Throw Deck)
+ * Archivo: components/carousels/variants/card-deck-throw/styles.css
+ * ============================================================================
+ */
+.cxd-carousels-card-deck-throw {
+  background: var(--cxd-bg-surface);
+  color: var(--cxd-text-primary);
+  border: var(--cxd-border-width, 1px) solid var(--cxd-border);
+  border-radius: var(--cxd-radius-md);
+  font-family: var(--cxd-font-sans);
+  font-variant-numeric: tabular-nums;
+}

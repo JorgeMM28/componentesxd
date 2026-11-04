@@ -1,0 +1,32 @@
+---
+/**
+ * ============================================================================
+ * COMPONENTESXD — 01. Architectural Tree Sidebar Navigation (ASTRO 5)
+ * Archivo: components/navigation/variants/collapsible-tree-sidebar/CollapsibleTreeSidebar.astro
+ * ============================================================================
+ */
+import './styles.css';
+
+interface Props {
+  title?: string;
+  badge?: string;
+  interfaceTheme?: string;
+}
+
+const {
+  title = '01. Architectural Tree Sidebar Navigation',
+  badge = 'APP SIDEBAR',
+  interfaceTheme
+} = Astro.props;
+---
+
+<section class="cxd-navigation-collapsible-tree-sidebar" data-theme={interfaceTheme} data-variant="collapsible-tree-sidebar">
+  <header class="cxd-navigation-collapsible-tree-sidebar__header">
+    <span>{title}</span>
+    <span class="cxd-badge">{badge}</span>
+  </header>
+  <div class="cxd-navigation-collapsible-tree-sidebar__body">
+    <p>Navegación vertical con secciones colapsables, contadores numéricos tabulares e indicador activo.</p>
+    <slot />
+  </div>
+</section>

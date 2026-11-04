@@ -1,0 +1,15 @@
+/**
+ * ============================================================================
+ * COMPONENTESXD — COMPONENTES ESPECIALES COMBINADOS (UI + ANIME.JS V4 EN VIVO)
+ * Variante 27 — Ciudadela Isométrica 3D de Servidores con Onda Espacial 4×4
+ * Archivo: components/special-hybrids/variants/isometric-3d-city-cluster/styles.css
+ * ============================================================================
+ */
+.cxd-special-hybrids-isometric-3d-city-cluster {
+  background: var(--cxd-bg-surface);
+  color: var(--cxd-text-primary);
+  border: var(--cxd-border-width, 1px) solid var(--cxd-border);
+  border-radius: var(--cxd-radius-md);
+  font-family: var(--cxd-font-sans);
+  font-variant-numeric: tabular-nums;
+}

@@ -1,0 +1,15 @@
+/**
+ * ============================================================================
+ * COMPONENTESXD — FORMULARIOS, INPUTS Y FILTROS
+ * Variante 07 — Panel de Filtros Interactivos (Chips + Rango + Buscador)
+ * Archivo: components/forms/variants/filter-search-facet/styles.css
+ * ============================================================================
+ */
+.cxd-forms-filter-search-facet {
+  background: var(--cxd-bg-surface);
+  color: var(--cxd-text-primary);
+  border: var(--cxd-border-width, 1px) solid var(--cxd-border);
+  border-radius: var(--cxd-radius-md);
+  font-family: var(--cxd-font-sans);
+  font-variant-numeric: tabular-nums;
+}

@@ -1,0 +1,97 @@
+/**
+ * ============================================================================
+ * COMPONENTESXD — SPOTLIGHT BENTO & TELEMETRY CARD (CSS)
+ * Archivo: components/cards/css-scss/cards.css
+ * ============================================================================
+ * Utiliza coordenadas CSS (`--spot-x`, `--spot-y`) actualizadas al mover el
+ * cursor para proyectar una luz radial dinámica sobre la superficie y el borde.
+ */
+
+.cxd-spotlight-card {
+  --spot-x: 50%;
+  --spot-y: 50%;
+  position: relative;
+  background: var(--cxd-bg-surface);
+  border: var(--cxd-border-width, 1px) solid var(--cxd-border);
+  border-radius: var(--cxd-radius-lg);
+  padding: 1.5rem;
+  overflow: hidden;
+  box-shadow: var(--cxd-shadow-md);
+  transition:
+    transform var(--cxd-duration-base) var(--cxd-ease-out),
+    border-color var(--cxd-duration-base) var(--cxd-ease-out),
+    box-shadow var(--cxd-duration-base) var(--cxd-ease-out);
+}
+
+.cxd-spotlight-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    420px circle at var(--spot-x) var(--spot-y),
+    var(--cxd-accent-glow),
+    transparent 65%
+  );
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--cxd-duration-base) var(--cxd-ease-out);
+}
+
+.cxd-spotlight-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--cxd-border-strong);
+}
+
+.cxd-spotlight-card:hover::before {
+  opacity: 0.45;
+}
+
+.cxd-card-header {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.cxd-card-tag {
+  font-family: var(--cxd-font-mono);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--cxd-accent-secondary);
+  background: var(--cxd-bg-elevated);
+  padding: 0.25rem 0.6rem;
+  border-radius: var(--cxd-radius-pill);
+  border: 1px solid var(--cxd-border);
+}
+
+.cxd-card-metric {
+  position: relative;
+  z-index: 1;
+  font-size: 2.15rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--cxd-text-primary);
+  margin: 0.25rem 0;
+}
+
+.cxd-card-delta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--cxd-success);
+}
+
+.cxd-card-desc {
+  position: relative;
+  z-index: 1;
+  font-size: 0.875rem;
+  line-height: 1.55;
+  color: var(--cxd-text-secondary);
+  margin-top: 0.5rem;
+}
+

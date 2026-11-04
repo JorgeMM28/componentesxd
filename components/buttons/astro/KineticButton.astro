@@ -1,0 +1,27 @@
+---
+/**
+ * ============================================================================
+ * COMPONENTESXD — KINETIC BUTTON (ASTRO)
+ * Archivo: components/buttons/astro/KineticButton.astro
+ * ============================================================================
+ */
+import '../css-scss/buttons.css';
+
+interface Props {
+  variant?: 'primary' | 'shimmer' | 'glass' | 'brutalist';
+  magnetic?: boolean;
+  loading?: boolean;
+}
+
+const { variant = 'primary', magnetic = true, loading = false } = Astro.props;
+---
+
+<button
+  type="button"
+  class={`cxd-btn cxd-btn--${variant} ${loading ? 'is-loading' : ''}`}
+  data-cxd-magnetic={magnetic ? 'true' : undefined}
+>
+  <span class="cxd-btn__spinner"></span>
+  <span data-btn-label><slot /></span>
+</button>
+

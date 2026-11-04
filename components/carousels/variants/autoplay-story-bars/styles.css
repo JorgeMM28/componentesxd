@@ -1,0 +1,15 @@
+/**
+ * ============================================================================
+ * COMPONENTESXD — CARRUSELES, SLIDERS 3D Y MARQUESINAS CINÉTICAS
+ * Variante 07 — Carrusel con Barras de Tiempo Segmentadas (Autoplay + Pausa)
+ * Archivo: components/carousels/variants/autoplay-story-bars/styles.css
+ * ============================================================================
+ */
+.cxd-carousels-autoplay-story-bars {
+  background: var(--cxd-bg-surface);
+  color: var(--cxd-text-primary);
+  border: var(--cxd-border-width, 1px) solid var(--cxd-border);
+  border-radius: var(--cxd-radius-md);
+  font-family: var(--cxd-font-sans);
+  font-variant-numeric: tabular-nums;
+}

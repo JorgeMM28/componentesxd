@@ -1,0 +1,15 @@
+/**
+ * ============================================================================
+ * COMPONENTESXD — TABLAS DE DATOS
+ * Variante 04 — Tabla de Filas Flotantes Separadas
+ * Archivo: components/tables/variants/floating-rows/styles.css
+ * ============================================================================
+ */
+.cxd-tables-floating-rows {
+  background: var(--cxd-bg-surface);
+  color: var(--cxd-text-primary);
+  border: var(--cxd-border-width, 1px) solid var(--cxd-border);
+  border-radius: var(--cxd-radius-md);
+  font-family: var(--cxd-font-sans);
+  font-variant-numeric: tabular-nums;
+}

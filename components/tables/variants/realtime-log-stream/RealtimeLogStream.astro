@@ -1,0 +1,32 @@
+---
+/**
+ * ============================================================================
+ * COMPONENTESXD — 03. Realtime Telemetry & Log Stream Table (ASTRO 5)
+ * Archivo: components/tables/variants/realtime-log-stream/RealtimeLogStream.astro
+ * ============================================================================
+ */
+import './styles.css';
+
+interface Props {
+  title?: string;
+  badge?: string;
+  interfaceTheme?: string;
+}
+
+const {
+  title = '03. Realtime Telemetry & Log Stream Table',
+  badge = 'NOC / STREAMING',
+  interfaceTheme
+} = Astro.props;
+---
+
+<section class="cxd-tables-realtime-log-stream" data-theme={interfaceTheme} data-variant="realtime-log-stream">
+  <header class="cxd-tables-realtime-log-stream__header">
+    <span>{title}</span>
+    <span class="cxd-badge">{badge}</span>
+  </header>
+  <div class="cxd-tables-realtime-log-stream__body">
+    <p>Matriz densa estilo consola de observabilidad con timestamps al milisegundo, nivel HTTP/Severidad, latencia p99 y filtro rápido.</p>
+    <slot />
+  </div>
+</section>

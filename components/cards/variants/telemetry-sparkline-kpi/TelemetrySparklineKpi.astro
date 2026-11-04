@@ -1,0 +1,32 @@
+---
+/**
+ * ============================================================================
+ * COMPONENTESXD — 02. Telemetry KPI + SVG Sparkline Card (ASTRO 5)
+ * Archivo: components/cards/variants/telemetry-sparkline-kpi/TelemetrySparklineKpi.astro
+ * ============================================================================
+ */
+import './styles.css';
+
+interface Props {
+  title?: string;
+  badge?: string;
+  interfaceTheme?: string;
+}
+
+const {
+  title = '02. Telemetry KPI + SVG Sparkline Card',
+  badge = 'LIVE METRIC',
+  interfaceTheme
+} = Astro.props;
+---
+
+<section class="cxd-cards-telemetry-sparkline-kpi" data-theme={interfaceTheme} data-variant="telemetry-sparkline-kpi">
+  <header class="cxd-cards-telemetry-sparkline-kpi__header">
+    <span>{title}</span>
+    <span class="cxd-badge">{badge}</span>
+  </header>
+  <div class="cxd-cards-telemetry-sparkline-kpi__body">
+    <p>Tarjeta de métrica operativa con curva SVG embebida, variación porcentual y estado de umbral.</p>
+    <slot />
+  </div>
+</section>

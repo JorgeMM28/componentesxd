@@ -1,0 +1,15 @@
+/**
+ * ============================================================================
+ * COMPONENTESXD — ACORDEONES, COMPARADORES BEFORE/AFTER, KANBAN Y CONMUTADORES
+ * Variante 06 — Árbol de Directorios Colapsable con Inspector de Archivo Activo
+ * Archivo: components/accordions-tabs/variants/file-tree-inspector/styles.css
+ * ============================================================================
+ */
+.cxd-accordions-tabs-file-tree-inspector {
+  background: var(--cxd-bg-surface);
+  color: var(--cxd-text-primary);
+  border: var(--cxd-border-width, 1px) solid var(--cxd-border);
+  border-radius: var(--cxd-radius-md);
+  font-family: var(--cxd-font-sans);
+  font-variant-numeric: tabular-nums;
+}

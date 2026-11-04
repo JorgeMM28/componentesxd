@@ -1,0 +1,15 @@
+/**
+ * ============================================================================
+ * COMPONENTESXD — FORMULARIOS, INPUTS Y FILTROS
+ * Variante 06 — Formulario con Validación y Medidor de Seguridad en Vivo
+ * Archivo: components/forms/variants/live-validation-meter/styles.css
+ * ============================================================================
+ */
+.cxd-forms-live-validation-meter {
+  background: var(--cxd-bg-surface);
+  color: var(--cxd-text-primary);
+  border: var(--cxd-border-width, 1px) solid var(--cxd-border);
+  border-radius: var(--cxd-radius-md);
+  font-family: var(--cxd-font-sans);
+  font-variant-numeric: tabular-nums;
+}

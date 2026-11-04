@@ -1,0 +1,15 @@
+/**
+ * ============================================================================
+ * COMPONENTESXD — DOCKERFILES Y ORQUESTACIÓN DE CONTENEDORES
+ * Variante 04 — Docker Compose Fullstack (App + Postgres 17 + Redis 7.4)
+ * Archivo: components/docker/variants/fullstack-compose-stack/styles.css
+ * ============================================================================
+ */
+.cxd-docker-fullstack-compose-stack {
+  background: var(--cxd-bg-surface);
+  color: var(--cxd-text-primary);
+  border: var(--cxd-border-width, 1px) solid var(--cxd-border);
+  border-radius: var(--cxd-radius-md);
+  font-family: var(--cxd-font-sans);
+  font-variant-numeric: tabular-nums;
+}

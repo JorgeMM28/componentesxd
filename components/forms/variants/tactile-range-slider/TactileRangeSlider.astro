@@ -1,0 +1,32 @@
+---
+/**
+ * ============================================================================
+ * COMPONENTESXD — 06. Precision Numeric Range & Step Control (ASTRO 5)
+ * Archivo: components/forms/variants/tactile-range-slider/TactileRangeSlider.astro
+ * ============================================================================
+ */
+import './styles.css';
+
+interface Props {
+  title?: string;
+  badge?: string;
+  interfaceTheme?: string;
+}
+
+const {
+  title = '06. Precision Numeric Range & Step Control',
+  badge = 'RANGE / STEPPER',
+  interfaceTheme
+} = Astro.props;
+---
+
+<section class="cxd-forms-tactile-range-slider" data-theme={interfaceTheme} data-variant="tactile-range-slider">
+  <header class="cxd-forms-tactile-range-slider__header">
+    <span>{title}</span>
+    <span class="cxd-badge">{badge}</span>
+  </header>
+  <div class="cxd-forms-tactile-range-slider__body">
+    <p>Deslizador calibrado con marcas de graduación, lectura numérica tabular en vivo y botones +/- finos.</p>
+    <slot />
+  </div>
+</section>

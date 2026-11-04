@@ -1,0 +1,40 @@
+/**
+ * ============================================================================
+ * COMPONENTESXD — BOTONES CINÉTICOS Y CONTROLES DE ACCIÓN
+ * Variante: 01. Magnetic Cursor-Tracking Button
+ * Archivo: components/buttons/variants/magnetic-precision/styles.css
+ * ============================================================================
+ * Compatible con las 12 interfaces de diseño definidas en styles/tokens.css
+ */
+
+.cxd-buttons-magnetic-precision {
+  position: relative;
+  background: var(--cxd-bg-surface);
+  color: var(--cxd-text-primary);
+  border: var(--cxd-border-width, 1px) solid var(--cxd-border);
+  border-radius: var(--cxd-radius-md);
+  box-shadow: var(--cxd-shadow-sm);
+  font-family: var(--cxd-font-sans);
+  font-variant-numeric: tabular-nums;
+  transition: border-color var(--cxd-duration-fast) var(--cxd-ease-out),
+              background-color var(--cxd-duration-fast) var(--cxd-ease-out);
+}
+
+.cxd-buttons-magnetic-precision:hover {
+  border-color: var(--cxd-border-strong);
+}
+
+.cxd-buttons-magnetic-precision__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  background: var(--cxd-bg-elevated);
+  border-bottom: 1px solid var(--cxd-border);
+  font-family: var(--cxd-font-mono);
+  font-size: 0.75rem;
+}
+
+.cxd-buttons-magnetic-precision__body {
+  padding: 1rem;
+}

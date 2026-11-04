@@ -1,0 +1,15 @@
+/**
+ * ============================================================================
+ * COMPONENTESXD — FORMULARIOS, INPUTS Y FILTROS
+ * Variante 03 — Formulario Content-Fit en Una Sola Línea
+ * Archivo: components/forms/variants/content-fit-inline-bar/styles.css
+ * ============================================================================
+ */
+.cxd-forms-content-fit-inline-bar {
+  background: var(--cxd-bg-surface);
+  color: var(--cxd-text-primary);
+  border: var(--cxd-border-width, 1px) solid var(--cxd-border);
+  border-radius: var(--cxd-radius-md);
+  font-family: var(--cxd-font-sans);
+  font-variant-numeric: tabular-nums;
+}

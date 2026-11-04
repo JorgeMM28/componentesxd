@@ -1,0 +1,15 @@
+/**
+ * ============================================================================
+ * COMPONENTESXD — COMPONENTES ESPECIALES COMBINADOS (UI + ANIME.JS V4 EN VIVO)
+ * Variante 21 — Escenario Relojería Cinética & Onda Radial (Inspirado en el Hero Oficial de Anime.js v4)
+ * Archivo: components/special-hybrids/variants/anime-hero-clockwork/styles.css
+ * ============================================================================
+ */
+.cxd-special-hybrids-anime-hero-clockwork {
+  background: var(--cxd-bg-surface);
+  color: var(--cxd-text-primary);
+  border: var(--cxd-border-width, 1px) solid var(--cxd-border);
+  border-radius: var(--cxd-radius-md);
+  font-family: var(--cxd-font-sans);
+  font-variant-numeric: tabular-nums;
+}

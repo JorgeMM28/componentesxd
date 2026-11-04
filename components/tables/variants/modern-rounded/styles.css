@@ -1,0 +1,15 @@
+/**
+ * ============================================================================
+ * COMPONENTESXD — TABLAS DE DATOS
+ * Variante 01 — Tabla Moderna de Bordes Redondeados
+ * Archivo: components/tables/variants/modern-rounded/styles.css
+ * ============================================================================
+ */
+.cxd-tables-modern-rounded {
+  background: var(--cxd-bg-surface);
+  color: var(--cxd-text-primary);
+  border: var(--cxd-border-width, 1px) solid var(--cxd-border);
+  border-radius: var(--cxd-radius-md);
+  font-family: var(--cxd-font-sans);
+  font-variant-numeric: tabular-nums;
+}

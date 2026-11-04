@@ -1,0 +1,983 @@
+---
+import Icon from './Icon.astro';
+import { readRepoFile } from '../utils/repoReader';
+
+const codeSimple = readRepoFile('animations/loaders/simple-pulse.js');
+const codeSpinner = readRepoFile('animations/loaders/orbital-spinner.js');
+const codeDots = readRepoFile('animations/loaders/three-dots.js');
+const codeSkeleton = readRepoFile('animations/loaders/skeleton-content.js');
+const codeSteps = readRepoFile('animations/workflows/step-by-step.js');
+const codeStacker = readRepoFile('animations/layouts/card-stacker.js');
+const codeCalc = readRepoFile('animations/metrics/calculating-engine.js');
+const codeDecompose = readRepoFile('animations/effects/component-decomposition.js');
+const codeTimer = readRepoFile('animations/timers/chrono-timer.js');
+---
+
+<section id="animaciones" class="anime-lab-section">
+  <div class="anime-lab-header">
+    <div>
+      <span class="section-eyebrow">INTERACTIVE MASTER STAGES // ANIME.JS v4</span>
+      <h2>Escenarios Interactivos de Control Directo</h2>
+      <p>
+        Cada escenario inferior ejecuta los controladores maestros de <code>animations/</code>:
+        simula hidratación de skeletons, avanza pipelines paso a paso, rota pilas 3D, descompone
+        componentes en capas isométricas y controla el cronómetro exacto con <code>createTimer()</code>.
+      </p>
+    </div>
+  </div>
+
+  <div class="anime-grid">
+    <!-- 01. CARGA SENCILLA -->
+    <article class="anime-card">
+      <div class="anime-card__top">
+        <div>
+          <span class="anime-tag">01 // LOADER</span>
+          <h3>Carga Sencilla (Morphing Bar & Pulse)</h3>
+        </div>
+        <button type="button" class="cxd-btn cxd-btn--glass anime-btn-sm" data-replay-simple>
+          <Icon name="refresh" size={13} />
+          <span>Reiniciar</span>
+        </button>
+      </div>
+      <div class="anime-stage">
+        <div class="simple-loader-box" id="stage-simple-loader">
+          <div class="simple-loader-status">
+            <span>SINCRONIZANDO PAQUETES EDGE</span>
+            <span class="mono-accent">STREAMING</span>
+          </div>
+          <div class="simple-loader-track">
+            <div class="cxd-loader-bar-fill"></div>
+          </div>
+        </div>
+      </div>
+      <details class="anime-code-drawer">
+        <summary>
+          <span>Ver código (<code>animations/loaders/simple-pulse.js</code>)</span>
+          <button type="button" class="copy-inline-btn" data-copy-raw={codeSimple}>Copiar JS</button>
+        </summary>
+        <pre><code>{codeSimple}</code></pre>
+      </details>
+    </article>
+
+    <!-- 02. SPINNER ORBITAL -->
+    <article class="anime-card">
+      <div class="anime-card__top">
+        <div>
+          <span class="anime-tag">02 // SPINNER SVG</span>
+          <h3>Spinner Orbital de Doble Anillo</h3>
+        </div>
+        <span class="mono-badge">SVG + Dashoffset</span>
+      </div>
+      <div class="anime-stage" id="stage-orbital-spinner">
+        <div class="orbital-wrap">
+          <svg viewBox="0 0 100 100" class="orbital-svg" data-spinner-outer>
+            <circle
+              cx="50"
+              cy="50"
+              r="38"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="5"
+              stroke-linecap="round"
+              stroke-dasharray="220"
+              stroke-dashoffset="120"
+            />
+          </svg>
+          <div class="orbital-inner-ring" data-spinner-inner></div>
+          <div class="orbital-core" data-spinner-core></div>
+        </div>
+      </div>
+      <details class="anime-code-drawer">
+        <summary>
+          <span>Ver código (<code>animations/loaders/orbital-spinner.js</code>)</span>
+          <button type="button" class="copy-inline-btn" data-copy-raw={codeSpinner}>Copiar JS</button>
+        </summary>
+        <pre><code>{codeSpinner}</code></pre>
+      </details>
+    </article>
+
+    <!-- 03. TRES PUNTOS ELÁSTICOS -->
+    <article class="anime-card">
+      <div class="anime-card__top">
+        <div>
+          <span class="anime-tag">03 // STAGGER WAVE</span>
+          <h3>Tres Puntos Elásticos Armónicos</h3>
+        </div>
+        <span class="mono-badge">stagger(140)</span>
+      </div>
+      <div class="anime-stage">
+        <div class="cxd-dot-wave">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+      <details class="anime-code-drawer">
+        <summary>
+          <span>Ver código (<code>animations/loaders/three-dots.js</code>)</span>
+          <button type="button" class="copy-inline-btn" data-copy-raw={codeDots}>Copiar JS</button>
+        </summary>
+        <pre><code>{codeDots}</code></pre>
+      </details>
+    </article>
+
+    <!-- 04. SKELETON CONTENT LOADER -> REVEAL -->
+    <article class="anime-card">
+      <div class="anime-card__top">
+        <div>
+          <span class="anime-tag">04 // SKELETON REVEAL</span>
+          <h3>Previsualización de Contenido Cargando</h3>
+        </div>
+        <button type="button" class="cxd-btn cxd-btn--primary anime-btn-sm" id="btn-toggle-skeleton">
+          <Icon name="layers" size={13} />
+          <span>Revelar Contenido Real</span>
+        </button>
+      </div>
+      <div class="anime-stage" id="stage-skeleton-box">
+        <div class="skeleton-layer" id="skeleton-layer">
+          <div class="sk-row">
+            <div class="sk-avatar sk-pulse"></div>
+            <div class="sk-lines">
+              <div class="sk-line sk-w70 sk-pulse"></div>
+              <div class="sk-line sk-w45 sk-pulse"></div>
+            </div>
+          </div>
+          <div class="sk-line sk-w100 sk-pulse"></div>
+          <div class="sk-line sk-w85 sk-pulse"></div>
+        </div>
+        <div class="real-content-layer" id="real-content-layer" style="display: none;">
+          <div class="real-item real-header">
+            <div class="cxd-entity-avatar">AI</div>
+            <div>
+              <strong>Cluster Inferencia Tensor-09</strong>
+              <p class="mono-sub">hidratado en 14.2ms · 0 errores</p>
+            </div>
+          </div>
+          <p class="real-item real-body">
+            Datos recibidos y renderizados con transición escalonada usando <code>createTimeline()</code>.
+          </p>
+        </div>
+      </div>
+      <details class="anime-code-drawer">
+        <summary>
+          <span>Ver código (<code>animations/loaders/skeleton-content.js</code>)</span>
+          <button type="button" class="copy-inline-btn" data-copy-raw={codeSkeleton}>Copiar JS</button>
+        </summary>
+        <pre><code>{codeSkeleton}</code></pre>
+      </details>
+    </article>
+
+    <!-- 05. STEP BY STEP WIZARD TIMELINE -->
+    <article class="anime-card anime-card--wide">
+      <div class="anime-card__top">
+        <div>
+          <span class="anime-tag">05 // WORKFLOW TIMELINE</span>
+          <h3>Step-by-Step Pipeline Interactiva (<code>createTimeline</code>)</h3>
+        </div>
+        <div class="btn-row">
+          <button type="button" class="cxd-btn cxd-btn--glass anime-btn-sm" id="btn-step-prev">
+            <span>Anterior</span>
+          </button>
+          <button type="button" class="cxd-btn cxd-btn--primary anime-btn-sm" id="btn-step-next">
+            <span>Siguiente Paso</span>
+            <Icon name="arrow-right" size={13} />
+          </button>
+        </div>
+      </div>
+      <div class="anime-stage" id="stage-step-wizard">
+        <div class="wizard-shell">
+          <div class="wizard-track-wrap">
+            <div class="wizard-track-bg">
+              <div class="wizard-track-fill" data-step-progress style="width: 0%"></div>
+            </div>
+            <div class="wizard-nodes">
+              <div class="wizard-node is-current" data-step-node>01</div>
+              <div class="wizard-node" data-step-node>02</div>
+              <div class="wizard-node" data-step-node>03</div>
+              <div class="wizard-node" data-step-node>04</div>
+            </div>
+          </div>
+          <div class="wizard-panels">
+            <div class="wizard-panel" data-step-panel>
+              <strong>Paso 01: Validación de Esquema & Tokens</strong>
+              <p>Verificando integridad de variables CSS/SCSS y árbol de componentes.</p>
+            </div>
+            <div class="wizard-panel" data-step-panel style="display:none">
+              <strong>Paso 02: Compilación Multi-Framework</strong>
+              <p>Generando adaptadores para React, Vue 3, Svelte 5, Angular, Astro y Blade.</p>
+            </div>
+            <div class="wizard-panel" data-step-panel style="display:none">
+              <strong>Paso 03: Inyección de Motor Anime.js v4</strong>
+              <p>Sincronizando curvas elásticas, timelines y contadores de alta precisión.</p>
+            </div>
+            <div class="wizard-panel" data-step-panel style="display:none">
+              <strong>Paso 04: Despliegue en Producción Verificado</strong>
+              <p>Todos los artefactos están listos para copiar y pegar sin fricción.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <details class="anime-code-drawer">
+        <summary>
+          <span>Ver código (<code>animations/workflows/step-by-step.js</code>)</span>
+          <button type="button" class="copy-inline-btn" data-copy-raw={codeSteps}>Copiar JS</button>
+        </summary>
+        <pre><code>{codeSteps}</code></pre>
+      </details>
+    </article>
+
+    <!-- 06. 3D CARD STACKER -->
+    <article class="anime-card">
+      <div class="anime-card__top">
+        <div>
+          <span class="anime-tag">06 // 3D STACKER</span>
+          <h3>Stacker 3D de Tarjetas Interactivo</h3>
+        </div>
+        <button type="button" class="cxd-btn cxd-btn--shimmer anime-btn-sm" id="btn-cycle-stack">
+          <Icon name="refresh" size={13} />
+          <span>Rotar Pila 3D</span>
+        </button>
+      </div>
+      <div class="anime-stage">
+        <div class="stacker-viewport" id="stage-card-stacker">
+          <div class="stack-card stack-card--1" data-stack-card>
+            <span class="cxd-card-tag">DEPLOY #409</span>
+            <strong>Production Edge US-East</strong>
+            <small>Latencia p99: 8.4ms · Activo</small>
+          </div>
+          <div class="stack-card stack-card--2" data-stack-card>
+            <span class="cxd-card-tag">DEPLOY #408</span>
+            <strong>Neural Worker Cluster</strong>
+            <small>GPU Utilización: 91.2% · Óptimo</small>
+          </div>
+          <div class="stack-card stack-card--3" data-stack-card>
+            <span class="cxd-card-tag">DEPLOY #407</span>
+            <strong>Realtime Redis Mesh</strong>
+            <small>Throughput: 145k ops/sec</small>
+          </div>
+        </div>
+      </div>
+      <details class="anime-code-drawer">
+        <summary>
+          <span>Ver código (<code>animations/layouts/card-stacker.js</code>)</span>
+          <button type="button" class="copy-inline-btn" data-copy-raw={codeStacker}>Copiar JS</button>
+        </summary>
+        <pre><code>{codeStacker}</code></pre>
+      </details>
+    </article>
+
+    <!-- 07. CALCULANDO / TELEMETRÍA -->
+    <article class="anime-card">
+      <div class="anime-card__top">
+        <div>
+          <span class="anime-tag">07 // CALCULATING ENGINE</span>
+          <h3>Calculando / Telemetría Numérica</h3>
+        </div>
+        <button type="button" class="cxd-btn cxd-btn--primary anime-btn-sm" id="btn-recalc">
+          <Icon name="cpu" size={13} />
+          <span>Recalcular</span>
+        </button>
+      </div>
+      <div class="anime-stage">
+        <div class="calc-readout-box">
+          <div class="calc-value" id="calc-main-val">$98,420.75</div>
+          <div class="calc-sub" id="calc-sub-val">CONFIDENCE 99.4% · CONVERGED</div>
+          <div class="cxd-telemetry-bar" style="margin-top: 0.85rem; height: 8px;">
+            <div class="cxd-telemetry-fill" id="calc-bar-fill" style="width: 94%;"></div>
+          </div>
+        </div>
+      </div>
+      <details class="anime-code-drawer">
+        <summary>
+          <span>Ver código (<code>animations/metrics/calculating-engine.js</code>)</span>
+          <button type="button" class="copy-inline-btn" data-copy-raw={codeCalc}>Copiar JS</button>
+        </summary>
+        <pre><code>{codeCalc}</code></pre>
+      </details>
+    </article>
+
+    <!-- 08. DESCOMPOSICIÓN DE COMPONENTE (EXPLODED VIEW + 2D GRID) -->
+    <article class="anime-card anime-card--wide">
+      <div class="anime-card__top">
+        <div>
+          <span class="anime-tag">08 // EXPLODED VIEW & 2D STAGGER</span>
+          <h3>Descomposición 3D de Componente + Matriz 2D Stagger</h3>
+        </div>
+        <div class="btn-row">
+          <button type="button" class="cxd-btn cxd-btn--primary anime-btn-sm" id="btn-decompose-3d">
+            <Icon name="layers" size={13} />
+            <span>Descomponer Capas 3D</span>
+          </button>
+          <button type="button" class="cxd-btn cxd-btn--glass anime-btn-sm" id="btn-grid-wave">
+            <Icon name="grid" size={13} />
+            <span>Onda Matriz 2D</span>
+          </button>
+        </div>
+      </div>
+      <div class="anime-stage anime-stage--split">
+        <div class="decompose-viewport" id="stage-decompose">
+          <div class="decompose-layer layer-base" data-decompose-layer>
+            <span>CAPA 01 // CHASIS BASE</span>
+          </div>
+          <div class="decompose-layer layer-glass" data-decompose-layer>
+            <span>CAPA 02 // SUPERFICIE CRISTAL</span>
+          </div>
+          <div class="decompose-layer layer-telemetry" data-decompose-layer>
+            <span>CAPA 03 // TELEMETRÍA & TOKENS</span>
+          </div>
+          <div class="decompose-layer layer-action" data-decompose-layer>
+            <span>CAPA 04 // INTERACCIÓN</span>
+          </div>
+        </div>
+
+        <div class="stagger-grid-wrap">
+          <div class="stagger-matrix" id="stage-stagger-grid">
+            {Array.from({ length: 24 }).map((_, idx) => (
+              <div class="matrix-cell" data-matrix-idx={idx}></div>
+            ))}
+          </div>
+          <small class="mono-sub">stagger(45, &#123; grid: [6, 4], from: 'center' &#125;)</small>
+        </div>
+      </div>
+      <details class="anime-code-drawer">
+        <summary>
+          <span>Ver código (<code>animations/effects/component-decomposition.js</code>)</span>
+          <button type="button" class="copy-inline-btn" data-copy-raw={codeDecompose}>Copiar JS</button>
+        </summary>
+        <pre><code>{codeDecompose}</code></pre>
+      </details>
+    </article>
+
+    <!-- 09. CHRONO TIMER (createTimer) -->
+    <article class="anime-card anime-card--wide">
+      <div class="anime-card__top">
+        <div>
+          <span class="anime-tag">09 // CREATE TIMER API</span>
+          <h3>Chrono Timer de Alta Precisión (<code>createTimer</code> + Anillo SVG)</h3>
+        </div>
+        <div class="btn-row">
+          <button type="button" class="cxd-btn cxd-btn--primary anime-btn-sm" id="btn-timer-play">
+            <Icon name="play" size={13} />
+            <span>Iniciar</span>
+          </button>
+          <button type="button" class="cxd-btn cxd-btn--glass anime-btn-sm" id="btn-timer-pause">
+            <Icon name="pause" size={13} />
+            <span>Pausar</span>
+          </button>
+          <button type="button" class="cxd-btn cxd-btn--glass anime-btn-sm" id="btn-timer-reset">
+            <Icon name="refresh" size={13} />
+            <span>Reiniciar</span>
+          </button>
+        </div>
+      </div>
+      <div class="anime-stage">
+        <div class="chrono-stage-wrap">
+          <div class="chrono-ring-box">
+            <svg viewBox="0 0 100 100" class="chrono-svg">
+              <circle cx="50" cy="50" r="45" class="chrono-bg" />
+              <circle
+                cx="50"
+                cy="50"
+                r="45"
+                class="chrono-progress"
+                id="chrono-ring-progress"
+                stroke-dasharray="283"
+                stroke-dashoffset="0"
+              />
+            </svg>
+            <div class="chrono-readout" id="chrono-display">15.00s</div>
+          </div>
+          <div class="chrono-info">
+            <h4>Motor Nativo <code>createTimer()</code> de Anime.js v4</h4>
+            <p>
+              Sincroniza cuenta regresiva con centésimas de segundo, trazado SVG circular y
+              callbacks deterministas sin drift de <code>setInterval</code>.
+            </p>
+          </div>
+        </div>
+      </div>
+      <details class="anime-code-drawer">
+        <summary>
+          <span>Ver código (<code>animations/timers/chrono-timer.js</code>)</span>
+          <button type="button" class="copy-inline-btn" data-copy-raw={codeTimer}>Copiar JS</button>
+        </summary>
+        <pre><code>{codeTimer}</code></pre>
+      </details>
+    </article>
+  </div>
+</section>
+
+<script>
+  import { createSimplePulseLoader } from '../../animations/loaders/simple-pulse.js';
+  import { createOrbitalSpinner } from '../../animations/loaders/orbital-spinner.js';
+  import { createThreeDotsLoader } from '../../animations/loaders/three-dots.js';
+  import { createSkeletonPulse, revealLoadedContent } from '../../animations/loaders/skeleton-content.js';
+  import { animateToStep } from '../../animations/workflows/step-by-step.js';
+  import { CardStacker } from '../../animations/layouts/card-stacker.js';
+  import { runCalculationAnimation } from '../../animations/metrics/calculating-engine.js';
+  import {
+    toggleComponentDecomposition,
+    triggerGridDecompositionWave
+  } from '../../animations/effects/component-decomposition.js';
+  import { ChronoTimerController } from '../../animations/timers/chrono-timer.js';
+
+  let simpleAnim = createSimplePulseLoader('#stage-simple-loader');
+  document.querySelector('[data-replay-simple]')?.addEventListener('click', () => {
+    simpleAnim?.restart();
+  });
+
+  createOrbitalSpinner('#stage-orbital-spinner');
+  createThreeDotsLoader('.cxd-dot-wave span');
+  createSkeletonPulse('#skeleton-layer .sk-pulse');
+
+  let showingRealContent = false;
+  const btnSkeleton = document.getElementById('btn-toggle-skeleton');
+  const skLayer = document.getElementById('skeleton-layer');
+  const realLayer = document.getElementById('real-content-layer');
+
+  btnSkeleton?.addEventListener('click', () => {
+    if (!skLayer || !realLayer) return;
+    showingRealContent = !showingRealContent;
+    if (showingRealContent) {
+      skLayer.style.display = 'none';
+      realLayer.style.display = 'block';
+      revealLoadedContent(skLayer, '#real-content-layer .real-item');
+    } else {
+      realLayer.style.display = 'none';
+      skLayer.style.display = 'block';
+      skLayer.style.opacity = '1';
+      skLayer.style.transform = 'scale(1)';
+    }
+  });
+
+  let currentStep = 0;
+  document.getElementById('btn-step-next')?.addEventListener('click', () => {
+    currentStep = (currentStep + 1) % 4;
+    animateToStep('#stage-step-wizard', currentStep, 4);
+  });
+  document.getElementById('btn-step-prev')?.addEventListener('click', () => {
+    currentStep = (currentStep - 1 + 4) % 4;
+    animateToStep('#stage-step-wizard', currentStep, 4);
+  });
+
+  const stacker = new CardStacker('#stage-card-stacker');
+  document.getElementById('btn-cycle-stack')?.addEventListener('click', () => {
+    stacker.cycleNext();
+  });
+
+  document.getElementById('btn-recalc')?.addEventListener('click', () => {
+    runCalculationAnimation({
+      valueEl: document.getElementById('calc-main-val'),
+      subValueEl: document.getElementById('calc-sub-val'),
+      barEl: document.getElementById('calc-bar-fill'),
+      targetValue: 42000 + Math.random() * 75000
+    });
+  });
+
+  let isDecomposed = false;
+  const btnDecompose = document.getElementById('btn-decompose-3d');
+  btnDecompose?.addEventListener('click', () => {
+    isDecomposed = !isDecomposed;
+    toggleComponentDecomposition('#stage-decompose', isDecomposed);
+  });
+
+  document.getElementById('btn-grid-wave')?.addEventListener('click', () => {
+    triggerGridDecompositionWave('#stage-stagger-grid .matrix-cell', 6, 4);
+  });
+
+  const chrono = new ChronoTimerController({
+    displayEl: document.getElementById('chrono-display'),
+    ringEl: document.getElementById('chrono-ring-progress'),
+    durationMs: 15000
+  });
+  document.getElementById('btn-timer-play')?.addEventListener('click', () => chrono.play());
+  document.getElementById('btn-timer-pause')?.addEventListener('click', () => chrono.pause());
+  document.getElementById('btn-timer-reset')?.addEventListener('click', () => chrono.restart());
+
+  document.querySelectorAll<HTMLButtonElement>('[data-copy-raw]').forEach((btn) => {
+    btn.addEventListener('click', async (e) => {
+      e.stopPropagation();
+      await navigator.clipboard.writeText(btn.dataset.copyRaw || '');
+      const prev = btn.textContent;
+      btn.textContent = 'Copiado';
+      setTimeout(() => {
+        btn.textContent = prev;
+      }, 1300);
+    });
+  });
+</script>
+
+<style>
+  .anime-lab-section {
+    padding-top: 1rem;
+  }
+
+  .anime-lab-header {
+    margin-bottom: 1.5rem;
+  }
+
+  .section-eyebrow {
+    display: inline-block;
+    font-family: var(--cxd-font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    color: var(--cxd-text-muted);
+    margin-bottom: 0.35rem;
+  }
+
+  .anime-lab-header h2 {
+    font-size: 1.45rem;
+    font-weight: 700;
+  }
+
+  .anime-lab-header p {
+    max-width: 720px;
+    color: var(--cxd-text-secondary);
+    font-size: 0.88rem;
+    margin-top: 0.35rem;
+    line-height: 1.55;
+  }
+
+  .anime-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 1.25rem;
+  }
+
+  .anime-card {
+    background: var(--cxd-bg-surface);
+    border: var(--cxd-border-width, 1px) solid var(--cxd-border);
+    border-radius: var(--cxd-radius-md);
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+  }
+
+  .anime-card--wide {
+    grid-column: 1 / -1;
+  }
+
+  .anime-card__top {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+  }
+
+  .anime-tag {
+    font-family: var(--cxd-font-mono);
+    font-size: 0.65rem;
+    color: var(--cxd-text-muted);
+  }
+
+  .anime-card__top h3 {
+    font-size: 0.96rem;
+    font-weight: 600;
+    margin-top: 0.15rem;
+  }
+
+  .anime-btn-sm {
+    padding: 0.38rem 0.75rem;
+    font-size: 0.74rem;
+  }
+
+  .btn-row {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .mono-badge {
+    font-family: var(--cxd-font-mono);
+    font-size: 0.68rem;
+    padding: 0.2rem 0.5rem;
+    border-radius: var(--cxd-radius-sm);
+    background: var(--cxd-bg-elevated);
+    border: 1px solid var(--cxd-border);
+    color: var(--cxd-text-secondary);
+  }
+
+  .anime-stage {
+    min-height: 150px;
+    background: var(--cxd-bg-base);
+    border: 1px solid var(--cxd-border);
+    border-radius: var(--cxd-radius-sm);
+    padding: 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .anime-stage--split {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+    min-height: 210px;
+  }
+
+  .simple-loader-box {
+    width: 100%;
+    max-width: 320px;
+  }
+
+  .simple-loader-status {
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--cxd-font-mono);
+    font-size: 0.68rem;
+    color: var(--cxd-text-secondary);
+    margin-bottom: 0.5rem;
+  }
+
+  .simple-loader-track {
+    height: 6px;
+    background: var(--cxd-bg-elevated);
+    overflow: hidden;
+    border: 1px solid var(--cxd-border);
+  }
+
+  .cxd-loader-bar-fill {
+    width: 100%;
+    height: 100%;
+    background: var(--cxd-accent);
+  }
+
+  .orbital-wrap {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--cxd-accent);
+  }
+
+  .orbital-svg {
+    width: 80px;
+    height: 80px;
+  }
+
+  .orbital-inner-ring {
+    position: absolute;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    border: 1.5px dashed var(--cxd-text-secondary);
+  }
+
+  .orbital-core {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: var(--cxd-accent);
+  }
+
+  .cxd-dot-wave {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+  }
+
+  .cxd-dot-wave span {
+    width: 12px;
+    height: 12px;
+    background: var(--cxd-accent);
+  }
+
+  .skeleton-layer,
+  .real-content-layer {
+    width: 100%;
+  }
+
+  .sk-row,
+  .real-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .sk-avatar {
+    width: 34px;
+    height: 34px;
+    background: var(--cxd-bg-elevated);
+    border: 1px solid var(--cxd-border);
+  }
+
+  .sk-lines {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .sk-line {
+    height: 8px;
+    background: var(--cxd-bg-elevated);
+    margin-bottom: 0.35rem;
+  }
+
+  .sk-w70 { width: 70%; }
+  .sk-w45 { width: 45%; }
+  .sk-w100 { width: 100%; }
+  .sk-w85 { width: 85%; }
+
+  .mono-sub {
+    font-family: var(--cxd-font-mono);
+    font-size: 0.68rem;
+    color: var(--cxd-text-muted);
+  }
+
+  .real-body {
+    font-size: 0.8rem;
+    color: var(--cxd-text-secondary);
+  }
+
+  .wizard-shell {
+    width: 100%;
+    max-width: 680px;
+  }
+
+  .wizard-track-wrap {
+    position: relative;
+    margin-bottom: 1.15rem;
+  }
+
+  .wizard-track-bg {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 2px;
+    transform: translateY(-50%);
+    background: var(--cxd-border-strong);
+  }
+
+  .wizard-track-fill {
+    height: 100%;
+    background: var(--cxd-accent);
+  }
+
+  .wizard-nodes {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .wizard-node {
+    width: 30px;
+    height: 30px;
+    background: var(--cxd-bg-surface);
+    border: 1px solid var(--cxd-border-strong);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--cxd-font-mono);
+    font-weight: 600;
+    font-size: 0.72rem;
+  }
+
+  .wizard-node.is-current,
+  .wizard-node.is-completed {
+    background: var(--cxd-accent);
+    color: var(--cxd-accent-fg, #000);
+    border-color: var(--cxd-accent);
+  }
+
+  .wizard-panel {
+    padding: 0.85rem 1rem;
+    background: var(--cxd-bg-surface);
+    border: 1px solid var(--cxd-border);
+  }
+
+  .wizard-panel p {
+    font-size: 0.8rem;
+    color: var(--cxd-text-secondary);
+    margin-top: 0.25rem;
+  }
+
+  .stacker-viewport {
+    position: relative;
+    width: 100%;
+    max-width: 280px;
+    height: 112px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+  }
+
+  .stack-card {
+    position: absolute;
+    width: 100%;
+    padding: 0.75rem 0.9rem;
+    background: var(--cxd-bg-surface);
+    border: 1px solid var(--cxd-border-strong);
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+
+  .stack-card small {
+    font-size: 0.72rem;
+    color: var(--cxd-text-secondary);
+  }
+
+  .calc-readout-box {
+    width: 100%;
+    text-align: center;
+  }
+
+  .calc-value {
+    font-family: var(--cxd-font-mono);
+    font-size: 1.85rem;
+    font-weight: 700;
+  }
+
+  .calc-sub {
+    font-family: var(--cxd-font-mono);
+    font-size: 0.68rem;
+    color: var(--cxd-success);
+    margin-top: 0.2rem;
+  }
+
+  .decompose-viewport {
+    position: relative;
+    height: 165px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    perspective: 800px;
+  }
+
+  .decompose-layer {
+    position: absolute;
+    width: 220px;
+    padding: 0.65rem 0.9rem;
+    font-family: var(--cxd-font-mono);
+    font-size: 0.68rem;
+    font-weight: 600;
+    text-align: center;
+    border: 1px solid var(--cxd-border-strong);
+    background: var(--cxd-bg-surface);
+  }
+
+  .layer-action {
+    background: var(--cxd-accent);
+    color: var(--cxd-accent-fg, #000);
+  }
+
+  .stagger-grid-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+  }
+
+  .stagger-matrix {
+    display: grid;
+    grid-template-columns: repeat(6, 22px);
+    grid-template-rows: repeat(4, 22px);
+    gap: 5px;
+  }
+
+  .matrix-cell {
+    width: 22px;
+    height: 22px;
+    background: var(--cxd-accent);
+  }
+
+  .chrono-stage-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+  }
+
+  .chrono-ring-box {
+    position: relative;
+    width: 104px;
+    height: 104px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .chrono-svg {
+    width: 104px;
+    height: 104px;
+    transform: rotate(-90deg);
+  }
+
+  .chrono-bg {
+    fill: none;
+    stroke: var(--cxd-bg-elevated);
+    stroke-width: 6;
+  }
+
+  .chrono-progress {
+    fill: none;
+    stroke: var(--cxd-accent);
+    stroke-width: 6;
+  }
+
+  .chrono-readout {
+    position: absolute;
+    font-family: var(--cxd-font-mono);
+    font-size: 0.96rem;
+    font-weight: 700;
+  }
+
+  .chrono-info {
+    max-width: 420px;
+  }
+
+  .chrono-info p {
+    font-size: 0.82rem;
+    color: var(--cxd-text-secondary);
+    margin-top: 0.3rem;
+    line-height: 1.5;
+  }
+
+  .anime-code-drawer {
+    background: #07080a;
+    border: 1px solid var(--cxd-border);
+    overflow: hidden;
+  }
+
+  .anime-code-drawer summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 0.85rem;
+    font-family: var(--cxd-font-mono);
+    font-size: 0.7rem;
+    color: #a1a1aa;
+    cursor: pointer;
+  }
+
+  .copy-inline-btn {
+    padding: 0.22rem 0.55rem;
+    font-family: var(--cxd-font-mono);
+    font-size: 0.66rem;
+    background: #18181b;
+    border: 1px solid #3f3f46;
+    color: #fff;
+    cursor: pointer;
+  }
+
+  .anime-code-drawer pre {
+    padding: 0.85rem 1rem;
+    font-family: var(--cxd-font-mono);
+    font-size: 0.72rem;
+    line-height: 1.55;
+    color: #e4e4e7;
+    overflow-x: auto;
+    border-top: 1px solid #18181b;
+  }
+</style>

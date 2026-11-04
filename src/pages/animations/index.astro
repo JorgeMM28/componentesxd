@@ -1,0 +1,119 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Icon from '../../components/Icon.astro';
+import AnimeLab from '../../components/AnimeLab.astro';
+import registry from '../../data/vaultRegistry.json';
+---
+
+<Layout title="COMPONENTESXD // Enciclopedia Interactiva Anime.js v4 (Getting Started)" section="ANIMATIONS-LAB">
+  <div class="arch-page-header">
+    <div>
+      <span class="arch-eyebrow">
+        ANIME.JS v4 DOCUMENTATION VAULT // {registry.stats.animationPresetsCount} ESCENARIOS EN VIVO EN {registry.stats.animationCategoriesCount} CAPÍTULOS
+      </span>
+      <h1 class="arch-title">Enciclopedia Interactiva de Anime.js v4</h1>
+      <p class="arch-lead">
+        Todos los módulos de <code>https://animejs.com/documentation/getting-started</code> implementados con escenarios interactivos en vivo: Targets, Keyframes & Stagger 2D, Easings & Física Spring, Timelines con Scrubber, SVG (<code>createDrawable</code>, <code>morphTo</code>, <code>createMotionPath</code>), <code>createTimer</code>, Loaders/Spinners/Skeletons y Descomposición 3D. En cada capítulo todas las animaciones se muestran una debajo de otra y la lista desplegable se usa únicamente para seleccionar el código del framework.
+      </p>
+    </div>
+  </div>
+
+  <!-- ÍNDICE DE LOS 8 CAPÍTULOS DE LA DOCUMENTACIÓN ANIME.JS V4 -->
+  <div class="arch-grid" style="margin-bottom: 2.5rem;">
+    {registry.animationCategories.map((anim) => (
+      <div class="arch-cell anim-dir-card">
+        <div class="anim-dir-card__top">
+          <span class="anim-dir-code">{anim.code} // {anim.presets.length} DEMOS EN VIVO</span>
+          <Icon name="activity" size={15} />
+        </div>
+        <h3>
+          <a href={`/animations/${anim.slug}`} style="color:inherit; text-decoration:none;">{anim.name}</a>
+        </h3>
+        <p>{anim.desc}</p>
+        <div class="anim-preset-pills">
+          {anim.presets.map((p, idx) => (
+            <a href={`/animations/${anim.slug}#${p.id}`} class="anim-preset-pill">
+              <span>{String(idx + 1).padStart(2, '0')}. {p.name}</span>
+            </a>
+          ))}
+        </div>
+        <a href={`/animations/${anim.slug}`} class="anim-dir-card__foot">
+          <span>Abrir capítulo completo ({anim.presets.length} escenarios apilados)</span>
+          <Icon name="arrow-right" size={13} />
+        </a>
+      </div>
+    ))}
+  </div>
+
+  <!-- ESCENARIO PRINCIPAL CON CONTROLES AVANZADOS -->
+  <AnimeLab />
+</Layout>
+
+<style>
+  .anim-dir-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+  }
+
+  .anim-dir-card__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: var(--cxd-text-muted);
+  }
+
+  .anim-dir-code {
+    font-family: var(--cxd-font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.06em;
+  }
+
+  .anim-dir-card h3 {
+    font-size: 0.98rem;
+    font-weight: 600;
+  }
+
+  .anim-dir-card p {
+    font-size: 0.8rem;
+    color: var(--cxd-text-secondary);
+    line-height: 1.5;
+  }
+
+  .anim-preset-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin-top: 0.25rem;
+  }
+
+  .anim-preset-pill {
+    padding: 0.2rem 0.5rem;
+    border-radius: var(--cxd-radius-sm);
+    border: 1px solid var(--cxd-border);
+    background: var(--cxd-bg-base);
+    color: var(--cxd-text-secondary);
+    font-family: var(--cxd-font-mono);
+    font-size: 0.65rem;
+    text-decoration: none;
+    transition: all 120ms ease;
+  }
+
+  .anim-preset-pill:hover {
+    color: var(--cxd-text-primary);
+    border-color: var(--cxd-accent);
+  }
+
+  .anim-dir-card__foot {
+    margin-top: auto;
+    padding-top: 0.65rem;
+    border-top: 1px solid var(--cxd-border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: var(--cxd-font-mono);
+    font-size: 0.7rem;
+    color: var(--cxd-text-primary);
+    text-decoration: none;
+  }
+</style>

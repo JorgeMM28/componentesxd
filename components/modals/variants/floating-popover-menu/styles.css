@@ -1,0 +1,15 @@
+/**
+ * ============================================================================
+ * COMPONENTESXD — MODALES, DIÁLOGOS Y COMMAND PALETTES
+ * Variante 03 — Menú Popover Flotante Content-Fit con Acciones
+ * Archivo: components/modals/variants/floating-popover-menu/styles.css
+ * ============================================================================
+ */
+.cxd-modals-floating-popover-menu {
+  background: var(--cxd-bg-surface);
+  color: var(--cxd-text-primary);
+  border: var(--cxd-border-width, 1px) solid var(--cxd-border);
+  border-radius: var(--cxd-radius-md);
+  font-family: var(--cxd-font-sans);
+  font-variant-numeric: tabular-nums;
+}

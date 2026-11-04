@@ -1,0 +1,15 @@
+/**
+ * ============================================================================
+ * COMPONENTESXD — COMPONENTES ESPECIALES COMBINADOS (UI + ANIME.JS V4 EN VIVO)
+ * Variante 19 — Transferencia Dual de Módulos + Sincronización Masiva en Cascada
+ * Archivo: components/special-hybrids/variants/dual-transfer-stagger-sync/styles.css
+ * ============================================================================
+ */
+.cxd-special-hybrids-dual-transfer-stagger-sync {
+  background: var(--cxd-bg-surface);
+  color: var(--cxd-text-primary);
+  border: var(--cxd-border-width, 1px) solid var(--cxd-border);
+  border-radius: var(--cxd-radius-md);
+  font-family: var(--cxd-font-sans);
+  font-variant-numeric: tabular-nums;
+}

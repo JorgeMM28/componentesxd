@@ -1,0 +1,15 @@
+/**
+ * ============================================================================
+ * COMPONENTESXD — COMPONENTES ESPECIALES COMBINADOS (UI + ANIME.JS V4 EN VIVO)
+ * Variante 28 — Analizador de Espectro de 28 Bandas + Osciloscopio Vectorial en Vivo
+ * Archivo: components/special-hybrids/variants/audio-synth-spectrum-analyzer/styles.css
+ * ============================================================================
+ */
+.cxd-special-hybrids-audio-synth-spectrum-analyzer {
+  background: var(--cxd-bg-surface);
+  color: var(--cxd-text-primary);
+  border: var(--cxd-border-width, 1px) solid var(--cxd-border);
+  border-radius: var(--cxd-radius-md);
+  font-family: var(--cxd-font-sans);
+  font-variant-numeric: tabular-nums;
+}

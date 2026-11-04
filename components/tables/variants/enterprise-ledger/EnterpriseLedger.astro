@@ -1,0 +1,32 @@
+---
+/**
+ * ============================================================================
+ * COMPONENTESXD — 01. Enterprise Financial Ledger Grid (ASTRO 5)
+ * Archivo: components/tables/variants/enterprise-ledger/EnterpriseLedger.astro
+ * ============================================================================
+ */
+import './styles.css';
+
+interface Props {
+  title?: string;
+  badge?: string;
+  interfaceTheme?: string;
+}
+
+const {
+  title = '01. Enterprise Financial Ledger Grid',
+  badge = 'FINTECH / LEDGER',
+  interfaceTheme
+} = Astro.props;
+---
+
+<section class="cxd-tables-enterprise-ledger" data-theme={interfaceTheme} data-variant="enterprise-ledger">
+  <header class="cxd-tables-enterprise-ledger__header">
+    <span>{title}</span>
+    <span class="cxd-badge">{badge}</span>
+  </header>
+  <div class="cxd-tables-enterprise-ledger__body">
+    <p>Tabla contable e institucional con búsqueda instantánea, filtros de estado, barras de carga CPU, selección por lote y totales tabulares.</p>
+    <slot />
+  </div>
+</section>

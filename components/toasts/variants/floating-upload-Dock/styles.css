@@ -1,0 +1,40 @@
+/**
+ * ============================================================================
+ * COMPONENTESXD — TOASTERS, ALERTAS & DYNAMIC ISLANDS
+ * Variante: 07. Multi-File Upload Progress Toaster
+ * Archivo: components/toasts/variants/floating-upload-Dock/styles.css
+ * ============================================================================
+ * Compatible con las 12 interfaces de diseño definidas en styles/tokens.css
+ */
+
+.cxd-toasts-floating-upload-Dock {
+  position: relative;
+  background: var(--cxd-bg-surface);
+  color: var(--cxd-text-primary);
+  border: var(--cxd-border-width, 1px) solid var(--cxd-border);
+  border-radius: var(--cxd-radius-md);
+  box-shadow: var(--cxd-shadow-sm);
+  font-family: var(--cxd-font-sans);
+  font-variant-numeric: tabular-nums;
+  transition: border-color var(--cxd-duration-fast) var(--cxd-ease-out),
+              background-color var(--cxd-duration-fast) var(--cxd-ease-out);
+}
+
+.cxd-toasts-floating-upload-Dock:hover {
+  border-color: var(--cxd-border-strong);
+}
+
+.cxd-toasts-floating-upload-Dock__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  background: var(--cxd-bg-elevated);
+  border-bottom: 1px solid var(--cxd-border);
+  font-family: var(--cxd-font-mono);
+  font-size: 0.75rem;
+}
+
+.cxd-toasts-floating-upload-Dock__body {
+  padding: 1rem;
+}

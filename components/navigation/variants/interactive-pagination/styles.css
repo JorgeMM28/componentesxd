@@ -1,0 +1,15 @@
+/**
+ * ============================================================================
+ * COMPONENTESXD — NAVBARS, MENÚS CASCADA Y NAVEGACIÓN
+ * Variante 06 — Barra de Paginación Interactiva con Salto de Página
+ * Archivo: components/navigation/variants/interactive-pagination/styles.css
+ * ============================================================================
+ */
+.cxd-navigation-interactive-pagination {
+  background: var(--cxd-bg-surface);
+  color: var(--cxd-text-primary);
+  border: var(--cxd-border-width, 1px) solid var(--cxd-border);
+  border-radius: var(--cxd-radius-md);
+  font-family: var(--cxd-font-sans);
+  font-variant-numeric: tabular-nums;
+}

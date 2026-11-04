@@ -1,0 +1,15 @@
+/**
+ * ============================================================================
+ * COMPONENTESXD — COMPONENTES ESPECIALES COMBINADOS (UI + ANIME.JS V4 EN VIVO)
+ * Variante 11 — Tarjeta Inspectora + Descomposición 3D de Capas Estructurales
+ * Archivo: components/special-hybrids/variants/card-3d-exploded-inspector/styles.css
+ * ============================================================================
+ */
+.cxd-special-hybrids-card-3d-exploded-inspector {
+  background: var(--cxd-bg-surface);
+  color: var(--cxd-text-primary);
+  border: var(--cxd-border-width, 1px) solid var(--cxd-border);
+  border-radius: var(--cxd-radius-md);
+  font-family: var(--cxd-font-sans);
+  font-variant-numeric: tabular-nums;
+}

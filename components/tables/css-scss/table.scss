@@ -1,0 +1,68 @@
+// ============================================================================
+// COMPONENTESXD — DATA TABLE PRO (VERSIÓN SCSS MODULAR)
+// Archivo: components/tables/css-scss/table.scss
+// ============================================================================
+@use '../../../styles/tokens' as cxd;
+
+.cxd-table-shell {
+  @include cxd.glass-surface;
+  border-radius: var(--cxd-radius-lg);
+  overflow: hidden;
+  font-family: var(--cxd-font-sans);
+
+  &__toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+    background: var(--cxd-bg-elevated);
+    border-bottom: 1px solid var(--cxd-border);
+  }
+
+  &__scroll {
+    width: 100%;
+    overflow-x: auto;
+    @include cxd.custom-scrollbar;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+
+    th {
+      padding: 0.85rem 1.25rem;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--cxd-text-muted);
+      border-bottom: 1px solid var(--cxd-border);
+
+      &.is-sortable {
+        cursor: pointer;
+        &:hover {
+          color: var(--cxd-text-primary);
+        }
+      }
+    }
+
+    tbody tr {
+      border-bottom: 1px solid var(--cxd-border);
+      transition: background var(--cxd-duration-fast);
+
+      &:hover {
+        background: var(--cxd-bg-hover);
+      }
+
+      &.is-selected {
+        background: var(--cxd-bg-active);
+      }
+    }
+
+    td {
+      padding: 0.9rem 1.25rem;
+      color: var(--cxd-text-primary);
+    }
+  }
+}
+

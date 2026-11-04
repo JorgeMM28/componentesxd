@@ -1,0 +1,32 @@
+---
+/**
+ * ============================================================================
+ * COMPONENTESXD — 04. Precision Tab Bar with Sliding Hairline (ASTRO 5)
+ * Archivo: components/navigation/variants/sliding-indicator-tabs/SlidingIndicatorTabs.astro
+ * ============================================================================
+ */
+import './styles.css';
+
+interface Props {
+  title?: string;
+  badge?: string;
+  interfaceTheme?: string;
+}
+
+const {
+  title = '04. Precision Tab Bar with Sliding Hairline',
+  badge = 'TABS BAR',
+  interfaceTheme
+} = Astro.props;
+---
+
+<section class="cxd-navigation-sliding-indicator-tabs" data-theme={interfaceTheme} data-variant="sliding-indicator-tabs">
+  <header class="cxd-navigation-sliding-indicator-tabs__header">
+    <span>{title}</span>
+    <span class="cxd-badge">{badge}</span>
+  </header>
+  <div class="cxd-navigation-sliding-indicator-tabs__body">
+    <p>Pestañas horizontales con línea inferior activa que se desliza suavemente hacia la pestaña seleccionada.</p>
+    <slot />
+  </div>
+</section>

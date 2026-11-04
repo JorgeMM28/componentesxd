@@ -1,0 +1,46 @@
+# ============================================================================
+# COMPONENTESXD — DOCKER COMPOSE FULLSTACK (APP + POSTGRES + REDIS + NGINX)
+# Archivo: components/docker/fullstack-compose/docker-compose.yml
+# ============================================================================
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - "4321:4321"
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: postgres://app:secret@postgres:5432/componentesxd
+      REDIS_URL: redis://redis:6379
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
+
+  postgres:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: app
+      POSTGRES_PASSWORD: secret
+      POSTGRES_DB: componentesxd
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U app -d componentesxd"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  redis:
+    image: redis:7.4-alpine
+    restart: unless-stopped
+    command: ["redis-server", "--appendonly", "yes"]
+
+volumes:
+  pgdata:
+

@@ -1,0 +1,233 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Icon from '../components/Icon.astro';
+import registry from '../data/vaultRegistry.json';
+import { readRepoFile } from '../utils/repoReader';
+
+const tokensCss = readRepoFile('styles/tokens.css');
+const tokensScss = readRepoFile('styles/_tokens.scss');
+---
+
+<Layout title="COMPONENTESXD // Estudio de las 12 Interfaces de Diseño" section="INTERFACES-STUDIO">
+  <div class="arch-page-header">
+    <div>
+      <span class="arch-eyebrow">ARCHITECTURAL THEME ENGINE // 12 INTERFACES COMPLETAS</span>
+      <h1 class="arch-title">Estudio Comparativo de las 12 Interfaces de Diseño</h1>
+      <p class="arch-lead">
+        Haz clic en cualquiera de las 12 arquitecturas inferiores (o desde el menú cascada superior) para transformar en vivo todos los componentes del sitio. Cada tarjeta previsualiza en tiempo real sus propios tokens aislados mediante <code>data-theme</code>.
+      </p>
+    </div>
+  </div>
+
+  <!-- MATRIZ DE PREVISUALIZACIÓN AISLADA DE LAS 12 INTERFACES -->
+  <div class="interfaces-grid">
+    {registry.interfaces.map((iface) => (
+      <article class="iface-card" data-theme={iface.id}>
+        <header class="iface-card__head">
+          <div>
+            <span class="iface-code">{iface.code} // {iface.origin.toUpperCase()}</span>
+            <h2>{iface.name}</h2>
+          </div>
+          <span class="cxd-badge cxd-badge--active">{iface.mode}</span>
+        </header>
+
+        <p class="iface-desc">{iface.desc}</p>
+
+        <!-- MINI COMPONENTE RENDERIZADO CON LOS TOKENS DE ESTA INTERFAZ -->
+        <div class="iface-sample-box">
+          <div class="iface-sample-row">
+            <span class="iface-mono">data-theme="{iface.id}"</span>
+            <span class="iface-swatch" style={`background:${iface.accent}`}></span>
+          </div>
+          <div class="cxd-telemetry-cell" style="margin: 0.65rem 0;">
+            <div class="cxd-telemetry-bar">
+              <div class="cxd-telemetry-fill" style="width: 78%"></div>
+            </div>
+            <span class="cxd-telemetry-val">78%</span>
+          </div>
+          <div class="iface-sample-actions">
+            <button
+              type="button"
+              class="cxd-btn cxd-btn--primary"
+              style="width:100%; padding:0.48rem 0.85rem; font-size:0.75rem;"
+              data-apply-iface={iface.id}
+            >
+              <Icon name="check" size={13} />
+              <span>Activar {iface.name} en Todo el Sitio</span>
+            </button>
+          </div>
+        </div>
+      </article>
+    ))}
+  </div>
+
+  <!-- CÓDIGO FUENTE DE TOKENS.CSS / _TOKENS.SCSS CON SELECTOR DE LENGUAJE -->
+  <section class="tokens-inspector">
+    <header class="tokens-inspector__bar">
+      <div>
+        <span class="arch-eyebrow" id="tokens-path-lbl">ARCHIVO EN RAÍZ // styles/tokens.css</span>
+        <h3>Código Completo de las 12 Interfaces (Listo para Copiar)</h3>
+      </div>
+      <div style="display:flex; align-items:center; gap:0.75rem; flex-wrap:wrap;">
+        <div class="select-control">
+          <label class="select-control__label">
+            <Icon name="code" size={13} />
+            <span>Formato de Código:</span>
+          </label>
+          <div class="select-wrap">
+            <select class="cxd-architect-select" id="tokens-lang-select">
+              <option value="css">CSS Custom Properties (styles/tokens.css)</option>
+              <option value="scss">SCSS Mixins & Tokens (styles/_tokens.scss)</option>
+            </select>
+            <Icon name="chevron-down" size={12} class="select-chevron" />
+          </div>
+        </div>
+        <button type="button" class="unit-action-btn unit-action-btn--primary" id="copy-tokens-btn">
+          <Icon name="copy" size={13} />
+          <span id="copy-tokens-txt">Copiar Código</span>
+        </button>
+      </div>
+    </header>
+    <pre class="tokens-pre" id="tokens-code-css"><code>{tokensCss}</code></pre>
+    <pre class="tokens-pre" id="tokens-code-scss" style="display:none;"><code>{tokensScss}</code></pre>
+  </section>
+</Layout>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>('[data-apply-iface]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const theme = btn.dataset.applyIface;
+      if (theme) {
+        window.dispatchEvent(new CustomEvent('cxd:request-theme', { detail: { theme } }));
+      }
+    });
+  });
+
+  const langSel = document.getElementById('tokens-lang-select') as HTMLSelectElement | null;
+  const cssPre = document.getElementById('tokens-code-css');
+  const scssPre = document.getElementById('tokens-code-scss');
+  const pathLbl = document.getElementById('tokens-path-lbl');
+
+  langSel?.addEventListener('change', () => {
+    const isScss = langSel.value === 'scss';
+    if (cssPre) cssPre.style.display = isScss ? 'none' : '';
+    if (scssPre) scssPre.style.display = isScss ? '' : 'none';
+    if (pathLbl) pathLbl.textContent = isScss ? 'ARCHIVO EN RAÍZ // styles/_tokens.scss' : 'ARCHIVO EN RAÍZ // styles/tokens.css';
+  });
+
+  const copyBtn = document.getElementById('copy-tokens-btn');
+  const copyTxt = document.getElementById('copy-tokens-txt');
+  copyBtn?.addEventListener('click', async () => {
+    const isScss = langSel?.value === 'scss';
+    const raw = (isScss ? scssPre?.textContent : cssPre?.textContent) || '';
+    await navigator.clipboard.writeText(raw);
+    if (copyTxt) {
+      copyTxt.textContent = 'Código Copiado';
+      setTimeout(() => {
+        copyTxt.textContent = 'Copiar Código';
+      }, 1500);
+    }
+  });
+</script>
+
+<style>
+  .interfaces-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 1.25rem;
+    margin-bottom: 3rem;
+  }
+
+  .iface-card {
+    background: var(--cxd-bg-surface);
+    color: var(--cxd-text-primary);
+    border: var(--cxd-border-width, 1px) solid var(--cxd-border-strong);
+    border-radius: var(--cxd-radius-lg);
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    box-shadow: var(--cxd-shadow-sm);
+  }
+
+  .iface-card__head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.5rem;
+  }
+
+  .iface-code {
+    font-family: var(--cxd-font-mono);
+    font-size: 0.65rem;
+    color: var(--cxd-text-muted);
+    display: block;
+    margin-bottom: 0.2rem;
+  }
+
+  .iface-card__head h2 {
+    font-size: 1rem;
+    font-weight: 700;
+  }
+
+  .iface-desc {
+    font-size: 0.8rem;
+    color: var(--cxd-text-secondary);
+    line-height: 1.5;
+  }
+
+  .iface-sample-box {
+    margin-top: auto;
+    padding: 0.85rem;
+    background: var(--cxd-bg-base);
+    border: 1px solid var(--cxd-border);
+    border-radius: var(--cxd-radius-sm);
+  }
+
+  .iface-sample-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .iface-mono {
+    font-family: var(--cxd-font-mono);
+    font-size: 0.7rem;
+    color: var(--cxd-text-secondary);
+  }
+
+  .iface-swatch {
+    width: 14px;
+    height: 14px;
+    border-radius: 2px;
+    border: 1px solid var(--cxd-border-strong);
+  }
+
+  .tokens-inspector {
+    border: 1px solid var(--cxd-border);
+    background: #07080a;
+    border-radius: var(--cxd-radius-md);
+    overflow: hidden;
+  }
+
+  .tokens-inspector__bar {
+    padding: 1rem 1.25rem;
+    background: var(--cxd-bg-surface);
+    border-bottom: 1px solid var(--cxd-border);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .tokens-pre {
+    max-height: 440px;
+    overflow: auto;
+    padding: 1.15rem;
+    font-family: var(--cxd-font-mono);
+    font-size: 0.74rem;
+    line-height: 1.6;
+    color: #e4e4e7;
+  }
+</style>

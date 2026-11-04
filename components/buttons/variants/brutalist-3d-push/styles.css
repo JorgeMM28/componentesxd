@@ -1,0 +1,15 @@
+/**
+ * ============================================================================
+ * COMPONENTESXD — BOTONES Y CONTROLES DE ACCIÓN
+ * Variante 08 — Botón Mecánico 3D de Presión Física
+ * Archivo: components/buttons/variants/brutalist-3d-push/styles.css
+ * ============================================================================
+ */
+.cxd-buttons-brutalist-3d-push {
+  background: var(--cxd-bg-surface);
+  color: var(--cxd-text-primary);
+  border: var(--cxd-border-width, 1px) solid var(--cxd-border);
+  border-radius: var(--cxd-radius-md);
+  font-family: var(--cxd-font-sans);
+  font-variant-numeric: tabular-nums;
+}

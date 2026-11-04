@@ -1,0 +1,32 @@
+---
+/**
+ * ============================================================================
+ * COMPONENTESXD — 03. Floating Bottom Command Dock (ASTRO 5)
+ * Archivo: components/navigation/variants/floating-command-dock/FloatingCommandDock.astro
+ * ============================================================================
+ */
+import './styles.css';
+
+interface Props {
+  title?: string;
+  badge?: string;
+  interfaceTheme?: string;
+}
+
+const {
+  title = '03. Floating Bottom Command Dock',
+  badge = 'FLOATING DOCK',
+  interfaceTheme
+} = Astro.props;
+---
+
+<section class="cxd-navigation-floating-command-dock" data-theme={interfaceTheme} data-variant="floating-command-dock">
+  <header class="cxd-navigation-floating-command-dock__header">
+    <span>{title}</span>
+    <span class="cxd-badge">{badge}</span>
+  </header>
+  <div class="cxd-navigation-floating-command-dock__body">
+    <p>Barra flotante inferior con tooltips instantáneos, separadores verticales y accesos rápidos.</p>
+    <slot />
+  </div>
+</section>

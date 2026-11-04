@@ -1,0 +1,15 @@
+/**
+ * ============================================================================
+ * COMPONENTESXD — MODALES, DIÁLOGOS Y COMMAND PALETTES
+ * Variante 02 — Command Palette Interactiva (Buscador en Vivo)
+ * Archivo: components/modals/variants/interactive-cmdk-palette/styles.css
+ * ============================================================================
+ */
+.cxd-modals-interactive-cmdk-palette {
+  background: var(--cxd-bg-surface);
+  color: var(--cxd-text-primary);
+  border: var(--cxd-border-width, 1px) solid var(--cxd-border);
+  border-radius: var(--cxd-radius-md);
+  font-family: var(--cxd-font-sans);
+  font-variant-numeric: tabular-nums;
+}

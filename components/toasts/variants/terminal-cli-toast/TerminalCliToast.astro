@@ -1,0 +1,32 @@
+---
+/**
+ * ============================================================================
+ * COMPONENTESXD — 04. CLI & Webhook Telemetry Toast (ASTRO 5)
+ * Archivo: components/toasts/variants/terminal-cli-toast/TerminalCliToast.astro
+ * ============================================================================
+ */
+import './styles.css';
+
+interface Props {
+  title?: string;
+  badge?: string;
+  interfaceTheme?: string;
+}
+
+const {
+  title = '04. CLI & Webhook Telemetry Toast',
+  badge = 'DEV / WEBHOOK',
+  interfaceTheme
+} = Astro.props;
+---
+
+<section class="cxd-toasts-terminal-cli-toast" data-theme={interfaceTheme} data-variant="terminal-cli-toast">
+  <header class="cxd-toasts-terminal-cli-toast__header">
+    <span>{title}</span>
+    <span class="cxd-badge">{badge}</span>
+  </header>
+  <div class="cxd-toasts-terminal-cli-toast__body">
+    <p>Notificación técnica con payload JSON resumido, código de estado HTTP y botón de copiado de trace ID.</p>
+    <slot />
+  </div>
+</section>

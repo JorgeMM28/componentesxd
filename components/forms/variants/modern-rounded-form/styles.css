@@ -1,0 +1,15 @@
+/**
+ * ============================================================================
+ * COMPONENTESXD — FORMULARIOS, INPUTS Y FILTROS
+ * Variante 01 — Formulario Moderno con Bordes Redondeados
+ * Archivo: components/forms/variants/modern-rounded-form/styles.css
+ * ============================================================================
+ */
+.cxd-forms-modern-rounded-form {
+  background: var(--cxd-bg-surface);
+  color: var(--cxd-text-primary);
+  border: var(--cxd-border-width, 1px) solid var(--cxd-border);
+  border-radius: var(--cxd-radius-md);
+  font-family: var(--cxd-font-sans);
+  font-variant-numeric: tabular-nums;
+}

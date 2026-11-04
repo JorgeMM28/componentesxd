@@ -1,0 +1,15 @@
+/**
+ * ============================================================================
+ * COMPONENTESXD — NAVBARS, MENÚS CASCADA Y NAVEGACIÓN
+ * Variante 04 — Breadcrumbs Interactivos con Selector de Rama/Proyecto
+ * Archivo: components/navigation/variants/interactive-breadcrumbs/styles.css
+ * ============================================================================
+ */
+.cxd-navigation-interactive-breadcrumbs {
+  background: var(--cxd-bg-surface);
+  color: var(--cxd-text-primary);
+  border: var(--cxd-border-width, 1px) solid var(--cxd-border);
+  border-radius: var(--cxd-radius-md);
+  font-family: var(--cxd-font-sans);
+  font-variant-numeric: tabular-nums;
+}

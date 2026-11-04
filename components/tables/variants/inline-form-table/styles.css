@@ -1,0 +1,15 @@
+/**
+ * ============================================================================
+ * COMPONENTESXD — TABLAS DE DATOS
+ * Variante 07 — Tabla con Formulario Integrado (Inputs, Selects y Cálculo)
+ * Archivo: components/tables/variants/inline-form-table/styles.css
+ * ============================================================================
+ */
+.cxd-tables-inline-form-table {
+  background: var(--cxd-bg-surface);
+  color: var(--cxd-text-primary);
+  border: var(--cxd-border-width, 1px) solid var(--cxd-border);
+  border-radius: var(--cxd-radius-md);
+  font-family: var(--cxd-font-sans);
+  font-variant-numeric: tabular-nums;
+}

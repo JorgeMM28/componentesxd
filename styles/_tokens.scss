@@ -1,0 +1,87 @@
+// ============================================================================
+// COMPONENTESXD — SCSS TOKENS & MIXINS ARQUITECTURA BASE
+// ============================================================================
+// Importa este archivo en tus proyectos Sass/SCSS (Angular, Vue, Svelte, Laravel Vite)
+// `@use 'styles/tokens' as cxd;`
+
+$themes: (
+  'obsidian': (
+    bg-base: #07080c,
+    bg-surface: #0e1017,
+    bg-elevated: #151822,
+    text-primary: #f3f5f8,
+    text-secondary: #9ba3b5,
+    accent: #6366f1,
+    accent-secondary: #22d3ee,
+    border: rgba(255, 255, 255, 0.08),
+    radius: 12px
+  ),
+  'brutalist': (
+    bg-base: #121212,
+    bg-surface: #1b1b1b,
+    bg-elevated: #242424,
+    text-primary: #ffffff,
+    text-secondary: #d4d4d8,
+    accent: #a3e635,
+    accent-secondary: #f472b6,
+    border: #ffffff,
+    radius: 4px
+  ),
+  'swiss': (
+    bg-base: #f8fafc,
+    bg-surface: #ffffff,
+    bg-elevated: #f1f5f9,
+    text-primary: #0f172a,
+    text-secondary: #475569,
+    accent: #0f172a,
+    accent-secondary: #2563eb,
+    border: #e2e8f0,
+    radius: 10px
+  ),
+  'cyber': (
+    bg-base: #040d0a,
+    bg-surface: #071712,
+    bg-elevated: #0b241c,
+    text-primary: #ecfdf5,
+    text-secondary: #6ee7b7,
+    accent: #10b981,
+    accent-secondary: #06b6d4,
+    border: rgba(16, 185, 129, 0.25),
+    radius: 8px
+  )
+);
+
+@mixin glass-surface($opacity: 0.72, $blur: 16px) {
+  background: var(--cxd-bg-glass);
+  backdrop-filter: var(--cxd-blur, blur($blur));
+  -webkit-backdrop-filter: var(--cxd-blur, blur($blur));
+  border: var(--cxd-border-width, 1px) solid var(--cxd-border);
+  box-shadow: var(--cxd-shadow-md);
+}
+
+@mixin interactive-ring {
+  outline: none;
+  transition: border-color var(--cxd-duration-fast) var(--cxd-ease-out),
+              box-shadow var(--cxd-duration-fast) var(--cxd-ease-out),
+              transform var(--cxd-duration-fast) var(--cxd-ease-out);
+
+  &:focus-visible {
+    border-color: var(--cxd-accent);
+    box-shadow: 0 0 0 3px var(--cxd-accent-glow);
+  }
+}
+
+@mixin custom-scrollbar {
+  &::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: var(--cxd-border-strong);
+    border-radius: 999px;
+  }
+}
+

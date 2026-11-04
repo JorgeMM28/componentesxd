@@ -1,0 +1,15 @@
+/**
+ * ============================================================================
+ * COMPONENTESXD — TABLAS DE DATOS
+ * Variante 09 — Tabla Expandible Master-Detail (Despliegue de Sub-Panel)
+ * Archivo: components/tables/variants/expandable-detail/styles.css
+ * ============================================================================
+ */
+.cxd-tables-expandable-detail {
+  background: var(--cxd-bg-surface);
+  color: var(--cxd-text-primary);
+  border: var(--cxd-border-width, 1px) solid var(--cxd-border);
+  border-radius: var(--cxd-radius-md);
+  font-family: var(--cxd-font-sans);
+  font-variant-numeric: tabular-nums;
+}

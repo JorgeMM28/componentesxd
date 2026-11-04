@@ -1,0 +1,32 @@
+---
+/**
+ * ============================================================================
+ * COMPONENTESXD — 05. Scoped Filter & Query Input Bar (ASTRO 5)
+ * Archivo: components/forms/variants/scoped-query-bar/ScopedQueryBar.astro
+ * ============================================================================
+ */
+import './styles.css';
+
+interface Props {
+  title?: string;
+  badge?: string;
+  interfaceTheme?: string;
+}
+
+const {
+  title = '05. Scoped Filter & Query Input Bar',
+  badge = 'QUERY BUILDER',
+  interfaceTheme
+} = Astro.props;
+---
+
+<section class="cxd-forms-scoped-query-bar" data-theme={interfaceTheme} data-variant="scoped-query-bar">
+  <header class="cxd-forms-scoped-query-bar__header">
+    <span>{title}</span>
+    <span class="cxd-badge">{badge}</span>
+  </header>
+  <div class="cxd-forms-scoped-query-bar__body">
+    <p>Barra de entrada con selector de ámbito (env:prod, region:us-east) integrado a la izquierda y botón limpiar.</p>
+    <slot />
+  </div>
+</section>

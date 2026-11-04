@@ -1,0 +1,32 @@
+---
+/**
+ * ============================================================================
+ * COMPONENTESXD — 06. Security Audit & Diff History Table (ASTRO 5)
+ * Archivo: components/tables/variants/compact-audit-trail/CompactAuditTrail.astro
+ * ============================================================================
+ */
+import './styles.css';
+
+interface Props {
+  title?: string;
+  badge?: string;
+  interfaceTheme?: string;
+}
+
+const {
+  title = '06. Security Audit & Diff History Table',
+  badge = 'SECURITY AUDIT',
+  interfaceTheme
+} = Astro.props;
+---
+
+<section class="cxd-tables-compact-audit-trail" data-theme={interfaceTheme} data-variant="compact-audit-trail">
+  <header class="cxd-tables-compact-audit-trail__header">
+    <span>{title}</span>
+    <span class="cxd-badge">{badge}</span>
+  </header>
+  <div class="cxd-tables-compact-audit-trail__body">
+    <p>Registro inmutable de eventos de seguridad con dirección IP, hash criptográfico, actor y diff de cambios inline.</p>
+    <slot />
+  </div>
+</section>

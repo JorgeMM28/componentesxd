@@ -1,0 +1,15 @@
+/**
+ * ============================================================================
+ * COMPONENTESXD — DOCKERFILES Y ORQUESTACIÓN DE CONTENEDORES
+ * Variante 01 — Astro / Node 22 Alpine Multi-Stage SSR
+ * Archivo: components/docker/variants/astro-node-ssr/styles.css
+ * ============================================================================
+ */
+.cxd-docker-astro-node-ssr {
+  background: var(--cxd-bg-surface);
+  color: var(--cxd-text-primary);
+  border: var(--cxd-border-width, 1px) solid var(--cxd-border);
+  border-radius: var(--cxd-radius-md);
+  font-family: var(--cxd-font-sans);
+  font-variant-numeric: tabular-nums;
+}

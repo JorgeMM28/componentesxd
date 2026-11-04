@@ -1,0 +1,32 @@
+---
+/**
+ * ============================================================================
+ * COMPONENTESXD — 02. 6-Digit 2FA OTP Auto-Advance Matrix (ASTRO 5)
+ * Archivo: components/forms/variants/otp-security-matrix/OtpSecurityMatrix.astro
+ * ============================================================================
+ */
+import './styles.css';
+
+interface Props {
+  title?: string;
+  badge?: string;
+  interfaceTheme?: string;
+}
+
+const {
+  title = '02. 6-Digit 2FA OTP Auto-Advance Matrix',
+  badge = 'AUTH / 2FA',
+  interfaceTheme
+} = Astro.props;
+---
+
+<section class="cxd-forms-otp-security-matrix" data-theme={interfaceTheme} data-variant="otp-security-matrix">
+  <header class="cxd-forms-otp-security-matrix__header">
+    <span>{title}</span>
+    <span class="cxd-badge">{badge}</span>
+  </header>
+  <div class="cxd-forms-otp-security-matrix__body">
+    <p>Cuadrícula de 6 dígitos con salto automático al escribir, soporte de pegado completo y retroceso inteligente.</p>
+    <slot />
+  </div>
+</section>

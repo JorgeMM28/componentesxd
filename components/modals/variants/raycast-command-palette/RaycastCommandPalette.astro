@@ -1,0 +1,32 @@
+---
+/**
+ * ============================================================================
+ * COMPONENTESXD — 01. Command Palette (Cmd+K) Action Center (ASTRO 5)
+ * Archivo: components/modals/variants/raycast-command-palette/RaycastCommandPalette.astro
+ * ============================================================================
+ */
+import './styles.css';
+
+interface Props {
+  title?: string;
+  badge?: string;
+  interfaceTheme?: string;
+}
+
+const {
+  title = '01. Command Palette (Cmd+K) Action Center',
+  badge = 'CMD+K PALETTE',
+  interfaceTheme
+} = Astro.props;
+---
+
+<section class="cxd-modals-raycast-command-palette" data-theme={interfaceTheme} data-variant="raycast-command-palette">
+  <header class="cxd-modals-raycast-command-palette__header">
+    <span>{title}</span>
+    <span class="cxd-badge">{badge}</span>
+  </header>
+  <div class="cxd-modals-raycast-command-palette__body">
+    <p>Buscador universal de comandos con filtrado instantáneo, navegación por flechas y atajos de teclado.</p>
+    <slot />
+  </div>
+</section>

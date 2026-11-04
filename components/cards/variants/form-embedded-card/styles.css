@@ -1,0 +1,15 @@
+/**
+ * ============================================================================
+ * COMPONENTESXD — TARJETAS Y CONTENEDORES
+ * Variante 06 — Tarjeta con Formulario Rápido de Cotización / Config
+ * Archivo: components/cards/variants/form-embedded-card/styles.css
+ * ============================================================================
+ */
+.cxd-cards-form-embedded-card {
+  background: var(--cxd-bg-surface);
+  color: var(--cxd-text-primary);
+  border: var(--cxd-border-width, 1px) solid var(--cxd-border);
+  border-radius: var(--cxd-radius-md);
+  font-family: var(--cxd-font-sans);
+  font-variant-numeric: tabular-nums;
+}

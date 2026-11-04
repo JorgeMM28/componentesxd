@@ -1,0 +1,15 @@
+/**
+ * ============================================================================
+ * COMPONENTESXD — DOCKERFILES Y ORQUESTACIÓN DE CONTENEDORES
+ * Variante 05 — Microservicio Ultra-Rápido con Bun Alpine
+ * Archivo: components/docker/variants/bun-microservice/styles.css
+ * ============================================================================
+ */
+.cxd-docker-bun-microservice {
+  background: var(--cxd-bg-surface);
+  color: var(--cxd-text-primary);
+  border: var(--cxd-border-width, 1px) solid var(--cxd-border);
+  border-radius: var(--cxd-radius-md);
+  font-family: var(--cxd-font-sans);
+  font-variant-numeric: tabular-nums;
+}

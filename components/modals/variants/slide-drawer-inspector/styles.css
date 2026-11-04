@@ -1,0 +1,15 @@
+/**
+ * ============================================================================
+ * COMPONENTESXD — MODALES, DIÁLOGOS Y COMMAND PALETTES
+ * Variante 06 — Panel Inspector Lateral (Drawer de Detalles)
+ * Archivo: components/modals/variants/slide-drawer-inspector/styles.css
+ * ============================================================================
+ */
+.cxd-modals-slide-drawer-inspector {
+  background: var(--cxd-bg-surface);
+  color: var(--cxd-text-primary);
+  border: var(--cxd-border-width, 1px) solid var(--cxd-border);
+  border-radius: var(--cxd-radius-md);
+  font-family: var(--cxd-font-sans);
+  font-variant-numeric: tabular-nums;
+}

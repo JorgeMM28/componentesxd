@@ -1,0 +1,32 @@
+---
+/**
+ * ============================================================================
+ * COMPONENTESXD — 06. Raw JSON / Schema Diff Modal Inspector (ASTRO 5)
+ * Archivo: components/modals/variants/json-payload-lightbox/JsonPayloadLightbox.astro
+ * ============================================================================
+ */
+import './styles.css';
+
+interface Props {
+  title?: string;
+  badge?: string;
+  interfaceTheme?: string;
+}
+
+const {
+  title = '06. Raw JSON / Schema Diff Modal Inspector',
+  badge = 'PAYLOAD VIEWER',
+  interfaceTheme
+} = Astro.props;
+---
+
+<section class="cxd-modals-json-payload-lightbox" data-theme={interfaceTheme} data-variant="json-payload-lightbox">
+  <header class="cxd-modals-json-payload-lightbox__header">
+    <span>{title}</span>
+    <span class="cxd-badge">{badge}</span>
+  </header>
+  <div class="cxd-modals-json-payload-lightbox__body">
+    <p>Visor modal con numeración de líneas, plegado de nodos y copiado directo de estructuras JSON.</p>
+    <slot />
+  </div>
+</section>

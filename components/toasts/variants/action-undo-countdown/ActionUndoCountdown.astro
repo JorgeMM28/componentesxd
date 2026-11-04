@@ -1,0 +1,32 @@
+---
+/**
+ * ============================================================================
+ * COMPONENTESXD — 03. Actionable Undo Toast + Progress Timer (ASTRO 5)
+ * Archivo: components/toasts/variants/action-undo-countdown/ActionUndoCountdown.astro
+ * ============================================================================
+ */
+import './styles.css';
+
+interface Props {
+  title?: string;
+  badge?: string;
+  interfaceTheme?: string;
+}
+
+const {
+  title = '03. Actionable Undo Toast + Progress Timer',
+  badge = 'UNDO / TIMER',
+  interfaceTheme
+} = Astro.props;
+---
+
+<section class="cxd-toasts-action-undo-countdown" data-theme={interfaceTheme} data-variant="action-undo-countdown">
+  <header class="cxd-toasts-action-undo-countdown__header">
+    <span>{title}</span>
+    <span class="cxd-badge">{badge}</span>
+  </header>
+  <div class="cxd-toasts-action-undo-countdown__body">
+    <p>Toaster con botón de acción ("Deshacer borrado") y barra inferior de cuenta regresiva sincronizada.</p>
+    <slot />
+  </div>
+</section>

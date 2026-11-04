@@ -1,0 +1,15 @@
+/**
+ * ============================================================================
+ * COMPONENTESXD — FORMULARIOS, INPUTS Y FILTROS
+ * Variante 05 — Matriz Interactiva OTP de 6 Dígitos (Auto-Avance)
+ * Archivo: components/forms/variants/interactive-otp-pin/styles.css
+ * ============================================================================
+ */
+.cxd-forms-interactive-otp-pin {
+  background: var(--cxd-bg-surface);
+  color: var(--cxd-text-primary);
+  border: var(--cxd-border-width, 1px) solid var(--cxd-border);
+  border-radius: var(--cxd-radius-md);
+  font-family: var(--cxd-font-sans);
+  font-variant-numeric: tabular-nums;
+}

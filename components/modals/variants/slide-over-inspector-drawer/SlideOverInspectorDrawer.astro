@@ -1,0 +1,32 @@
+---
+/**
+ * ============================================================================
+ * COMPONENTESXD — 02. Slide-Over Telemetry Inspector Drawer (ASTRO 5)
+ * Archivo: components/modals/variants/slide-over-inspector-drawer/SlideOverInspectorDrawer.astro
+ * ============================================================================
+ */
+import './styles.css';
+
+interface Props {
+  title?: string;
+  badge?: string;
+  interfaceTheme?: string;
+}
+
+const {
+  title = '02. Slide-Over Telemetry Inspector Drawer',
+  badge = 'SIDE DRAWER',
+  interfaceTheme
+} = Astro.props;
+---
+
+<section class="cxd-modals-slide-over-inspector-drawer" data-theme={interfaceTheme} data-variant="slide-over-inspector-drawer">
+  <header class="cxd-modals-slide-over-inspector-drawer__header">
+    <span>{title}</span>
+    <span class="cxd-badge">{badge}</span>
+  </header>
+  <div class="cxd-modals-slide-over-inspector-drawer__body">
+    <p>Panel lateral deslizable para inspeccionar metadatos de una fila, logs o configuración sin perder contexto.</p>
+    <slot />
+  </div>
+</section>

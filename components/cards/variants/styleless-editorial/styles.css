@@ -1,0 +1,15 @@
+/**
+ * ============================================================================
+ * COMPONENTESXD — TARJETAS Y CONTENEDORES
+ * Variante 02 — Tarjeta Styleless Editorial (Sin Caja, Puro Layout)
+ * Archivo: components/cards/variants/styleless-editorial/styles.css
+ * ============================================================================
+ */
+.cxd-cards-styleless-editorial {
+  background: var(--cxd-bg-surface);
+  color: var(--cxd-text-primary);
+  border: var(--cxd-border-width, 1px) solid var(--cxd-border);
+  border-radius: var(--cxd-radius-md);
+  font-family: var(--cxd-font-sans);
+  font-variant-numeric: tabular-nums;
+}

@@ -1,0 +1,2286 @@
+---
+import Icon from './Icon.astro';
+import LiveComponentPreview from './LiveComponentPreview.astro';
+import registry from '../data/vaultRegistry.json';
+
+interface Props {
+  category: (typeof registry.componentCategories)[number];
+}
+
+const { category } = Astro.props;
+const frameworks = registry.frameworks;
+---
+
+<div class="workbench" data-workbench-cat={category.slug}>
+  <!-- ÍNDICE RÁPIDO DE ANCLAS PARA SALTAR A CADA VARIANTE EN LA PÁGINA -->
+  <nav class="variant-jump-strip" aria-label="Variantes en esta página">
+    <span class="variant-jump-strip__label">En esta página ({category.variants.length} variantes):</span>
+    <div class="variant-jump-strip__pills">
+      {category.variants.map((v, idx) => (
+        <a href={`#${v.id}`} class="jump-pill">
+          <span class="jump-pill__num">{String(idx + 1).padStart(2, '0')}</span>
+          <span>{v.name.replace(/^Variante \d+ — /, '')}</span>
+        </a>
+      ))}
+    </div>
+  </nav>
+
+  <!-- LISTA COMPLETA DE VARIANTES EN ANCHO COMPLETO (UNA DEBAJO DE OTRA) -->
+  <div class="variant-full-stack">
+    {category.variants.map((variant, vIdx) => {
+      const filesMap = (variant as any).files || {};
+      const defaultFw = frameworks[0].id;
+      const defaultFile = filesMap[defaultFw];
+
+      return (
+        <section class="variant-showcase-block" id={variant.id} data-variant-card={variant.id}>
+          <!-- 1. CABECERA DE LA VARIANTE -->
+          <header class="variant-showcase-block__head">
+            <div class="variant-head-main">
+              <span class="variant-index-badge">{String(vIdx + 1).padStart(2, '0')} // {variant.badge}</span>
+              <h2>{variant.name}</h2>
+              <p>{variant.desc}</p>
+            </div>
+          </header>
+
+          <!-- 2. PREVISUALIZACIÓN EN VIVO EN ANCHO COMPLETO -->
+          <div class="variant-showcase-block__stage" data-unit-canvas>
+            <LiveComponentPreview
+              previewType={variant.previewType}
+              variantId={variant.id}
+              variantName={variant.name}
+              badge={variant.badge}
+            />
+          </div>
+
+          <!-- 3. BARRA INFERIOR CON LISTA DESPLEGABLE EXCLUSIVA PARA EL CÓDIGO DEL FRAMEWORK -->
+          <footer class="variant-showcase-block__codebar">
+            <div class="codebar-left">
+              <div class="select-control">
+                <label class="select-control__label">
+                  <Icon name="code" size={14} />
+                  <span>Código por Framework:</span>
+                </label>
+                <div class="select-wrap">
+                  <select class="cxd-architect-select" data-unit-fw-select>
+                    {frameworks.map((fw) => (
+                      <option value={fw.id}>{fw.label}</option>
+                    ))}
+                  </select>
+                  <Icon name="chevron-down" size={12} class="select-chevron" />
+                </div>
+              </div>
+
+              <code class="codebar-path" data-unit-path>{defaultFile?.path}</code>
+            </div>
+
+            <div class="codebar-actions">
+              <button type="button" class="unit-action-btn" data-toggle-code>
+                <Icon name="code" size={13} />
+                <span data-toggle-label>Ver / Ocultar Código</span>
+              </button>
+
+              <button type="button" class="unit-action-btn unit-action-btn--primary" data-copy-unit-code>
+                <Icon name="copy" size={13} />
+                <span data-copy-label>Copiar Código</span>
+              </button>
+            </div>
+          </footer>
+
+          <!-- 4. CAJÓN DE CÓDIGO FUENTE DEL FRAMEWORK SELECCIONADO -->
+          <div class="variant-unit__code-drawer" data-code-drawer>
+            <div class="code-drawer__meta">
+              <span>Comando para copiar desde la raíz del proyecto:</span>
+              <code class="mono-cp" data-unit-cp>cp {defaultFile?.path} ./tu-proyecto/</code>
+            </div>
+
+            {frameworks.map((fw, idx) => {
+              const f = filesMap[fw.id];
+              return (
+                <pre
+                  class={`unit-code-block ${idx === 0 ? 'is-active' : ''}`}
+                  data-fw-panel={fw.id}
+                  data-file-path={f?.path}
+                ><code>{f?.code}</code></pre>
+              );
+            })}
+          </div>
+        </section>
+      );
+    })}
+  </div>
+</div>
+
+<script>
+  import { animate, stagger, createTimeline, createTimer, createSpring, svg } from 'animejs';
+  import { initMagneticButtons, bindAsyncButton } from '../../components/buttons/vanilla-js/MagneticButton.js';
+  import { initSpotlightCards } from '../../components/cards/vanilla-js/SpotlightCard.js';
+
+  initMagneticButtons();
+  initSpotlightCards();
+
+  document.querySelectorAll<HTMLElement>('[data-async-demo]').forEach((btn) => {
+    bindAsyncButton(btn, () => new Promise((r) => setTimeout(r, 950)));
+  });
+
+  // 1. Tabla Interactiva (Sort + Selección en vivo)
+  document.querySelectorAll<HTMLElement>('[data-interactive-table]').forEach((tbl) => {
+    const tbody = tbl.querySelector('tbody');
+    const counter = tbl.querySelector('[data-sel-counter]');
+    const checkAll = tbl.querySelector<HTMLInputElement>('[data-check-all]');
+    const clearBtn = tbl.querySelector('[data-clear-sel]');
+    let sortAsc = true;
+
+    function updateSelectionCount() {
+      const checks = Array.from(tbl.querySelectorAll<HTMLInputElement>('[data-row-check]'));
+      const selected = checks.filter((c) => c.checked).length;
+      checks.forEach((c) => c.closest('tr')?.classList.toggle('is-selected', c.checked));
+      if (counter) counter.textContent = `${selected} de ${checks.length} filas seleccionadas`;
+    }
+
+    tbl.addEventListener('change', updateSelectionCount);
+
+    checkAll?.addEventListener('change', () => {
+      tbl.querySelectorAll<HTMLInputElement>('[data-row-check]').forEach((c) => {
+        c.checked = checkAll.checked;
+      });
+      updateSelectionCount();
+    });
+
+    clearBtn?.addEventListener('click', () => {
+      if (checkAll) checkAll.checked = false;
+      tbl.querySelectorAll<HTMLInputElement>('[data-row-check]').forEach((c) => {
+        c.checked = false;
+      });
+      updateSelectionCount();
+    });
+
+    tbl.querySelectorAll<HTMLElement>('[data-sort-col]').forEach((th) => {
+      th.addEventListener('click', () => {
+        if (!tbody) return;
+        const colIdx = Number(th.dataset.sortCol || 0) + 1;
+        const rows = Array.from(tbody.querySelectorAll('tr'));
+        sortAsc = !sortAsc;
+        rows.sort((a, b) => {
+          const vA = a.children[colIdx]?.getAttribute('data-val') || '';
+          const vB = b.children[colIdx]?.getAttribute('data-val') || '';
+          const nA = Number(vA);
+          const nB = Number(vB);
+          const cmp = !Number.isNaN(nA) && !Number.isNaN(nB) ? nA - nB : vA.localeCompare(vB);
+          return sortAsc ? cmp : -cmp;
+        });
+        rows.forEach((r) => tbody.appendChild(r));
+        animate(rows, { opacity: [0.3, 1], x: [-10, 0], duration: 280, delay: stagger(45), ease: 'outQuad' });
+      });
+    });
+  });
+
+  // 2. Tabla con Acciones CRUD (Alternar, Duplicar, Eliminar y Agregar con Anime.js)
+  document.querySelectorAll<HTMLElement>('[data-crud-table]').forEach((crud) => {
+    const tbody = crud.querySelector<HTMLElement>('[data-crud-tbody]');
+    const addBtn = crud.querySelector('[data-add-crud-row]');
+
+    addBtn?.addEventListener('click', () => {
+      if (!tbody) return;
+      const tr = document.createElement('tr');
+      const rand = Math.floor(100 + Math.random() * 899);
+      tr.innerHTML = `
+        <td><strong>/api/v2/edge/worker-${rand}</strong></td>
+        <td class="mono">production</td>
+        <td><span class="cxd-badge cxd-badge--active" data-status-pill>ACTIVE</span></td>
+        <td style="text-align:right">
+          <div class="row-actions">
+            <button type="button" class="mini-btn" data-row-toggle>Alternar Estado</button>
+            <button type="button" class="mini-btn" data-row-dup>Duplicar</button>
+            <button type="button" class="mini-btn mini-btn--danger" data-row-del>Eliminar</button>
+          </div>
+        </td>
+      `;
+      tbody.appendChild(tr);
+      animate(tr, { opacity: [0, 1], y: [-12, 0], duration: 320, ease: 'outExpo' });
+    });
+
+    tbody?.addEventListener('click', (e) => {
+      const target = e.target as HTMLElement;
+      const tr = target.closest('tr');
+      if (!tr) return;
+
+      if (target.hasAttribute('data-row-toggle')) {
+        const pill = tr.querySelector('[data-status-pill]');
+        if (pill) {
+          const isAct = pill.textContent === 'ACTIVE';
+          pill.textContent = isAct ? 'PAUSED' : 'ACTIVE';
+          pill.className = `cxd-badge ${isAct ? 'cxd-badge--pending' : 'cxd-badge--active'}`;
+        }
+      } else if (target.hasAttribute('data-row-dup')) {
+        const clone = tr.cloneNode(true) as HTMLElement;
+        tr.after(clone);
+        animate(clone, { opacity: [0, 1], scale: [0.96, 1], duration: 280, ease: 'outBack' });
+      } else if (target.hasAttribute('data-row-del')) {
+        animate(tr, {
+          opacity: [1, 0],
+          x: [0, 30],
+          duration: 220,
+          ease: 'inQuad',
+          onComplete: () => tr.remove()
+        });
+      }
+    });
+  });
+
+  // 3. Tabla con Formulario Integrado y Cálculo Automático
+  document.querySelectorAll<HTMLElement>('[data-form-table]').forEach((ft) => {
+    const grandTotalEl = ft.querySelector('[data-table-grand-total]');
+    function recalcTable() {
+      let total = 0;
+      ft.querySelectorAll<HTMLElement>('[data-calc-row]').forEach((row) => {
+        const price = Number(row.querySelector<HTMLSelectElement>('[data-row-price]')?.value || 0);
+        const qty = Number(row.querySelector<HTMLInputElement>('[data-row-qty]')?.value || 0);
+        const sub = price * qty;
+        total += sub;
+        const unitEl = row.querySelector('[data-unit-display]');
+        const subEl = row.querySelector('[data-row-subtotal]');
+        if (unitEl) unitEl.textContent = `$${price.toFixed(2)}`;
+        if (subEl) subEl.textContent = `$${sub.toFixed(2)}`;
+      });
+      if (grandTotalEl) grandTotalEl.textContent = `$${total.toFixed(2)}`;
+    }
+    ft.addEventListener('input', recalcTable);
+    ft.addEventListener('change', recalcTable);
+  });
+
+  // 4. Tabla con Filtros Combinados
+  document.querySelectorAll<HTMLElement>('[data-multi-filter-table]').forEach((mft) => {
+    const searchInp = mft.querySelector<HTMLInputElement>('[data-mf-search]');
+    const roleSel = mft.querySelector<HTMLSelectElement>('[data-mf-role]');
+    const statusBtns = mft.querySelectorAll<HTMLButtonElement>('[data-mf-status]');
+    const rows = mft.querySelectorAll<HTMLElement>('tbody tr');
+    let activeStatus = 'all';
+
+    function filterRows() {
+      const q = (searchInp?.value || '').toLowerCase();
+      const role = roleSel?.value || 'all';
+      rows.forEach((r) => {
+        const matchQ = !q || (r.textContent || '').toLowerCase().includes(q);
+        const matchR = role === 'all' || r.dataset.role === role;
+        const matchS = activeStatus === 'all' || r.dataset.status === activeStatus;
+        r.style.display = matchQ && matchR && matchS ? '' : 'none';
+      });
+    }
+
+    searchInp?.addEventListener('input', filterRows);
+    roleSel?.addEventListener('change', filterRows);
+    statusBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        activeStatus = btn.dataset.mfStatus || 'all';
+        statusBtns.forEach((b) => b.classList.toggle('is-active', b === btn));
+        filterRows();
+      });
+    });
+  });
+
+  // 5. Toasters Interactivos
+  document.querySelectorAll<HTMLElement>('[data-modern-toast]').forEach((mt) => {
+    const fill = mt.querySelector<HTMLElement>('[data-toast-fill]');
+    const btn = mt.querySelector('[data-replay-toast-bar]');
+    const runBar = () => {
+      if (fill) animate(fill, { scaleX: [1, 0], duration: 3500, ease: 'linear' });
+    };
+    runBar();
+    btn?.addEventListener('click', runBar);
+  });
+
+  document.querySelectorAll<HTMLElement>('[data-island-shell]').forEach((shell) => {
+    const title = shell.querySelector('[data-island-state-title]');
+    const body = shell.querySelector<HTMLElement>('[data-island-body]');
+    shell.querySelectorAll<HTMLButtonElement>('[data-island-mode]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const exp = btn.dataset.islandMode === 'expanded';
+        if (body) body.hidden = !exp;
+        if (title) title.textContent = exp ? 'DESPLIEGUE ACTIVO // 12 REGIONES' : 'MODO COMPACTO // IDLE';
+        animate(shell, { scale: [0.96, 1], duration: 320, ease: 'outBack' });
+      });
+    });
+  });
+
+  document.querySelectorAll<HTMLElement>('[data-toast-spawner]').forEach((sp) => {
+    const list = sp.querySelector<HTMLElement>('[data-spawn-list]');
+    sp.querySelectorAll<HTMLButtonElement>('[data-spawn-type]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        if (!list) return;
+        const type = btn.dataset.spawnType;
+        const card = document.createElement('div');
+        card.className = 'cxd-toast-card';
+        const badgeClass = type === 'ok' ? 'cxd-badge--active' : type === 'warn' ? 'cxd-badge--pending' : 'cxd-badge--failed';
+        const label = type === 'ok' ? 'DESPLIEGUE EXITOSO' : type === 'warn' ? 'LATENCIA ELEVADA' : 'ERROR DE CONEXIÓN';
+        card.innerHTML = `
+          <span>${label} · ${new Date().toLocaleTimeString()}</span>
+          <span class="cxd-badge ${badgeClass}">${type?.toUpperCase()}</span>
+        `;
+        list.prepend(card);
+        if (list.children.length > 3) list.lastElementChild?.remove();
+        animate(card, { opacity: [0, 1], y: [-14, 0], scale: [0.94, 1], duration: 320, ease: 'outBack' });
+      });
+    });
+  });
+
+  document.querySelectorAll<HTMLElement>('[data-upload-toast]').forEach((ut) => {
+    const pctEl = ut.querySelector('[data-up-pct]');
+    const barEl = ut.querySelector<HTMLElement>('[data-up-bar]');
+    ut.querySelector('[data-up-sim]')?.addEventListener('click', () => {
+      const state = { p: 0 };
+      animate(state, {
+        p: 100,
+        duration: 1600,
+        ease: 'outExpo',
+        onUpdate: () => {
+          const v = Math.round(state.p);
+          if (pctEl) pctEl.textContent = `${v}%`;
+          if (barEl) barEl.style.width = `${v}%`;
+        }
+      });
+    });
+  });
+
+  // 6. FAB Radial, 3D Tilt Card, Tabbed Card, OTP & Password Meter
+  document.querySelectorAll<HTMLElement>('[data-fab-stage]').forEach((st) => {
+    const items = st.querySelector<HTMLElement>('[data-fab-items]');
+    st.querySelector('[data-fab-toggle]')?.addEventListener('click', () => {
+      if (!items) return;
+      const children = items.querySelectorAll('button');
+      animate(children, { scale: [0.5, 1], opacity: [0, 1], y: [10, 0], delay: stagger(60), duration: 340, ease: 'outBack' });
+    });
+  });
+
+  document.querySelectorAll<HTMLElement>('[data-tilt-card]').forEach((card) => {
+    card.addEventListener('mousemove', (e) => {
+      const r = card.getBoundingClientRect();
+      const rx = ((e.clientY - r.top - r.height / 2) / r.height) * -14;
+      const ry = ((e.clientX - r.left - r.width / 2) / r.width) * 14;
+      card.style.transform = `perspective(600px) rotateX(${rx.toFixed(1)}deg) rotateY(${ry.toFixed(1)}deg)`;
+    });
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = 'perspective(600px) rotateX(0deg) rotateY(0deg)';
+    });
+  });
+
+  document.querySelectorAll<HTMLElement>('[data-tabbed-card]').forEach((tc) => {
+    const btns = tc.querySelectorAll<HTMLButtonElement>('[data-c-tab]');
+    const panels = tc.querySelectorAll<HTMLElement>('[data-c-panel]');
+    btns.forEach((b) => {
+      b.addEventListener('click', () => {
+        const target = b.dataset.cTab;
+        btns.forEach((x) => x.classList.toggle('is-active', x === b));
+        panels.forEach((p) => {
+          p.hidden = p.dataset.cPanel !== target;
+        });
+      });
+    });
+  });
+
+  document.querySelectorAll<HTMLElement>('[data-live-otp]').forEach((grid) => {
+    const slots = Array.from(grid.querySelectorAll<HTMLInputElement>('.cxd-otp-slot'));
+    slots.forEach((inp, idx) => {
+      inp.addEventListener('input', () => {
+        inp.value = inp.value.replace(/\D/g, '').slice(-1);
+        if (inp.value && idx < slots.length - 1) slots[idx + 1].focus();
+      });
+      inp.addEventListener('keydown', (e) => {
+        if (e.key === 'Backspace' && !inp.value && idx > 0) slots[idx - 1].focus();
+      });
+    });
+  });
+
+  document.querySelectorAll<HTMLElement>('[data-pwd-meter]').forEach((pm) => {
+    const inp = pm.querySelector<HTMLInputElement>('[data-pwd-input]');
+    const bars = pm.querySelectorAll('.pwd-bars span');
+    const lbl = pm.querySelector('[data-pwd-label]');
+    inp?.addEventListener('input', () => {
+      const len = inp.value.length;
+      const score = len > 12 ? 4 : len > 8 ? 3 : len > 4 ? 2 : len > 0 ? 1 : 0;
+      bars.forEach((b, i) => b.classList.toggle('is-on', i < score));
+      if (lbl) lbl.textContent = `Nivel ${score}/4 (${len} caracteres)`;
+    });
+  });
+
+  // 6B. CARRUSELES INTERACTIVOS CON ANIME.JS v4
+  document.querySelectorAll<HTMLElement>('[data-coverflow-carousel]').forEach((cf) => {
+    const slides = Array.from(cf.querySelectorAll<HTMLElement>('[data-cf-slide]'));
+    const dots = Array.from(cf.querySelectorAll<HTMLElement>('[data-cf-go]'));
+    let cur = 1;
+
+    function syncCoverflow(idx: number) {
+      cur = (idx + slides.length) % slides.length;
+      slides.forEach((s, i) => {
+        const active = i === cur;
+        s.classList.toggle('is-active', active);
+        const offset = i - cur;
+        animate(s, {
+          scale: active ? 1.03 : 0.9,
+          rotateY: offset * -14,
+          opacity: active ? 1 : 0.5,
+          duration: 380,
+          ease: 'outBack'
+        });
+      });
+      dots.forEach((d, i) => d.classList.toggle('is-active', i === cur));
+    }
+
+    cf.querySelector('[data-cf-prev]')?.addEventListener('click', () => syncCoverflow(cur - 1));
+    cf.querySelector('[data-cf-next]')?.addEventListener('click', () => syncCoverflow(cur + 1));
+    dots.forEach((d, i) => d.addEventListener('click', () => syncCoverflow(i)));
+  });
+
+  document.querySelectorAll<HTMLElement>('[data-marquee-carousel]').forEach((mq) => {
+    const track = mq.querySelector<HTMLElement>('[data-mq-track]');
+    if (!track) return;
+    let paused = false;
+    let dir = -1;
+    let speed = 1;
+    let pos = 0;
+
+    const tick = () => {
+      if (!paused) {
+        pos += dir * 0.7 * speed;
+        if (pos < -260) pos = 0;
+        if (pos > 0) pos = -260;
+        track.style.transform = `translateX(${pos}px)`;
+      }
+      requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+
+    mq.querySelector('[data-mq-toggle]')?.addEventListener('click', () => {
+      paused = !paused;
+    });
+    mq.querySelector('[data-mq-reverse]')?.addEventListener('click', () => {
+      dir *= -1;
+    });
+    mq.querySelector('[data-mq-fast]')?.addEventListener('click', () => {
+      speed = speed === 1 ? 2.4 : 1;
+    });
+  });
+
+  document.querySelectorAll<HTMLElement>('[data-peek-carousel]').forEach((pk) => {
+    const cards = Array.from(pk.querySelectorAll<HTMLElement>('.peek-card'));
+    const counter = pk.querySelector('[data-peek-counter]');
+    const bar = pk.querySelector<HTMLElement>('[data-peek-bar]');
+    let idx = 0;
+
+    function updatePeek(next: number) {
+      idx = (next + cards.length) % cards.length;
+      if (counter) counter.textContent = `DIAPOSITIVA 0${idx + 1} / 0${cards.length}`;
+      if (bar) bar.style.width = `${((idx + 1) / cards.length) * 100}%`;
+      animate(cards, {
+        scale: [0.94, 1],
+        opacity: [0.5, 1],
+        delay: stagger(45),
+        duration: 320,
+        ease: 'outQuad'
+      });
+    }
+
+    pk.querySelector('[data-peek-prev]')?.addEventListener('click', () => updatePeek(idx - 1));
+    pk.querySelector('[data-peek-next]')?.addEventListener('click', () => updatePeek(idx + 1));
+  });
+
+  document.querySelectorAll<HTMLElement>('[data-vertical-carousel]').forEach((vc) => {
+    const track = vc.querySelector<HTMLElement>('[data-v-track]');
+    const btns = vc.querySelectorAll<HTMLButtonElement>('[data-v-go]');
+    btns.forEach((b) => {
+      b.addEventListener('click', () => {
+        const i = Number(b.dataset.vGo || 0);
+        btns.forEach((x) => x.classList.toggle('is-active', x === b));
+        if (track) animate(track, { y: -i * 118, duration: 420, ease: 'outBack' });
+      });
+    });
+  });
+
+  document.querySelectorAll<HTMLElement>('[data-split-carousel]').forEach((sc) => {
+    const scenes = [
+      { tag: 'ARQUITECTURA 01 // GEIST', metric: '99.99%', title: 'Sistema de Alta Precisión Monocromática', desc: 'Contraste quirúrgico con bordes de 1px y tipografía tabular para paneles de ingeniería.' },
+      { tag: 'ARQUITECTURA 02 // TEENAGE', metric: '4.2 ms', title: 'Superficie Táctil de Ingeniería Industrial', desc: 'Acentos naranjas de alto impacto con retícula técnica y controles mecánicos.' },
+      { tag: 'ARQUITECTURA 03 // TOKYO', metric: '1.8M/s', title: 'Telemetría Nocturna de Alta Frecuencia', desc: 'Cian eléctrico y púrpura sobre obsidiana profunda para monitoreo en tiempo real.' }
+    ];
+    let idx = 0;
+    const tagEl = sc.querySelector('[data-split-tag]');
+    const metricEl = sc.querySelector('[data-split-metric]');
+    const titleEl = sc.querySelector('[data-split-title]');
+    const descEl = sc.querySelector('[data-split-desc]');
+    const visualPane = sc.querySelector('[data-split-visual]');
+
+    function renderSplit(next: number) {
+      idx = (next + scenes.length) % scenes.length;
+      const s = scenes[idx];
+      if (tagEl) tagEl.textContent = s.tag;
+      if (metricEl) metricEl.textContent = s.metric;
+      if (titleEl) titleEl.textContent = s.title;
+      if (descEl) descEl.textContent = s.desc;
+      if (visualPane) animate(visualPane, { scale: [0.95, 1], opacity: [0.5, 1], duration: 340, ease: 'outExpo' });
+    }
+
+    sc.querySelector('[data-split-prev]')?.addEventListener('click', () => renderSplit(idx - 1));
+    sc.querySelector('[data-split-next]')?.addEventListener('click', () => renderSplit(idx + 1));
+  });
+
+  document.querySelectorAll<HTMLElement>('[data-filmstrip-carousel]').forEach((fs) => {
+    const codeEl = fs.querySelector('[data-fs-code]');
+    const headEl = fs.querySelector('[data-fs-heading]');
+    const capEl = fs.querySelector('[data-fs-caption]');
+    const stageEl = fs.querySelector('[data-fs-stage]');
+    const thumbs = fs.querySelectorAll<HTMLButtonElement>('[data-fs-thumb]');
+
+    thumbs.forEach((t) => {
+      t.addEventListener('click', () => {
+        thumbs.forEach((x) => x.classList.toggle('is-active', x === t));
+        if (codeEl) codeEl.textContent = t.dataset.code || '';
+        if (headEl) headEl.textContent = t.dataset.title || '';
+        if (capEl) capEl.textContent = t.dataset.cap || '';
+        if (stageEl) animate(stageEl, { y: [8, 0], opacity: [0.4, 1], duration: 280, ease: 'outQuad' });
+      });
+    });
+  });
+
+  document.querySelectorAll<HTMLElement>('[data-stories-carousel]').forEach((st) => {
+    const titles = [
+      'Lanzamiento de Bóveda Multi-Framework',
+      'Integración Completa de Anime.js v4',
+      '12 Interfaces Listas para Producción'
+    ];
+    let cur = 0;
+    const fills = st.querySelectorAll<HTMLElement>('[data-story-fill]');
+    const stepEl = st.querySelector('[data-story-step]');
+    const titleEl = st.querySelector('[data-story-title]');
+    const bodyEl = st.querySelector('[data-story-body]');
+
+    function setStory(idx: number) {
+      cur = (idx + titles.length) % titles.length;
+      fills.forEach((f, i) => {
+        f.style.width = i <= cur ? '100%' : '0%';
+      });
+      if (stepEl) stepEl.textContent = `HISTORIA 0${cur + 1} / 03`;
+      if (titleEl) titleEl.textContent = titles[cur];
+      if (bodyEl) animate(bodyEl, { x: [12, 0], opacity: [0.4, 1], duration: 260, ease: 'outQuad' });
+    }
+
+    st.querySelector('[data-story-next]')?.addEventListener('click', () => setStory(cur + 1));
+    st.querySelector('[data-story-restart]')?.addEventListener('click', () => setStory(0));
+  });
+
+  document.querySelectorAll<HTMLElement>('[data-deck-carousel]').forEach((dk) => {
+    const cards = [
+      { badge: 'TARJETA ACTIVA #01', title: 'Despliegue Canario v4.8.0', desc: 'Cluster US-East listo para promover a producción.' },
+      { badge: 'TARJETA ACTIVA #02', title: 'Migración de Esquema SQL', desc: 'Índices optimizados sin bloqueo de tabla.' },
+      { badge: 'TARJETA ACTIVA #03', title: 'Auditoría TLS 1.3 Superada', desc: 'Certificados rotados automáticamente.' }
+    ];
+    let i = 0;
+    const cardEl = dk.querySelector<HTMLElement>('[data-swipe-card]');
+    const badgeEl = dk.querySelector('[data-deck-badge]');
+    const titleEl = dk.querySelector('[data-deck-title]');
+    const descEl = dk.querySelector('[data-deck-desc]');
+
+    dk.querySelectorAll<HTMLButtonElement>('[data-deck-throw]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const dir = btn.dataset.deckThrow === 'right' ? 1 : -1;
+        i = (i + 1) % cards.length;
+        if (cardEl) {
+          animate(cardEl, {
+            x: [0, dir * 60, 0],
+            rotate: [0, dir * 8, 0],
+            scale: [1, 0.94, 1],
+            duration: 380,
+            ease: 'outBack'
+          });
+        }
+        if (badgeEl) badgeEl.textContent = cards[i].badge;
+        if (titleEl) titleEl.textContent = cards[i].title;
+        if (descEl) descEl.textContent = cards[i].desc;
+      });
+    });
+  });
+
+  // 6C. ACORDEONES, BEFORE/AFTER, KANBAN, PRICING, FILETREE, TRANSFER & SCHEDULER
+  document.querySelectorAll<HTMLElement>('[data-exclusive-accordion]').forEach((acc) => {
+    const items = acc.querySelectorAll<HTMLElement>('[data-acc-item]');
+    items.forEach((item) => {
+      item.querySelector('[data-acc-btn]')?.addEventListener('click', () => {
+        items.forEach((other) => {
+          const isTarget = other === item;
+          const panel = other.querySelector<HTMLElement>('[data-acc-panel]');
+          const icon = other.querySelector('[data-acc-icon]');
+          if (panel) panel.hidden = !isTarget;
+          if (icon) icon.textContent = isTarget ? '−' : '+';
+        });
+      });
+    });
+  });
+
+  document.querySelectorAll<HTMLElement>('[data-multi-accordion]').forEach((macc) => {
+    macc.querySelector('[data-acc-expand-all]')?.addEventListener('click', () => {
+      macc.querySelectorAll<HTMLElement>('.acc-panel').forEach((p) => { p.hidden = false; });
+    });
+    macc.querySelector('[data-acc-collapse-all]')?.addEventListener('click', () => {
+      macc.querySelectorAll<HTMLElement>('.acc-panel').forEach((p) => { p.hidden = true; });
+    });
+  });
+
+  document.querySelectorAll<HTMLElement>('[data-before-after]').forEach((ba) => {
+    const range = ba.querySelector<HTMLInputElement>('[data-ba-range]');
+    const overlay = ba.querySelector<HTMLElement>('[data-ba-overlay]');
+    range?.addEventListener('input', () => {
+      if (overlay) overlay.style.width = `${range.value}%`;
+    });
+  });
+
+  document.querySelectorAll<HTMLElement>('[data-kanban-board]').forEach((kb) => {
+    function updateCounts() {
+      kb.querySelectorAll<HTMLElement>('[data-k-col]').forEach((col) => {
+        const c = col.querySelectorAll('[data-k-card]').length;
+        const cnt = col.querySelector('[data-k-count]');
+        if (cnt) cnt.textContent = String(c);
+      });
+    }
+    kb.addEventListener('click', (e) => {
+      const btn = (e.target as HTMLElement).closest<HTMLButtonElement>('[data-k-move]');
+      if (!btn) return;
+      const card = btn.closest<HTMLElement>('[data-k-card]');
+      const destCol = btn.dataset.kMove || 'doing';
+      const targetList = kb.querySelector<HTMLElement>(`[data-k-col="${destCol}"] [data-k-list]`);
+      if (card && targetList) {
+        targetList.appendChild(card);
+        btn.dataset.kMove = destCol === 'todo' ? 'doing' : destCol === 'doing' ? 'done' : 'todo';
+        btn.textContent = destCol === 'done' ? '↺ Reiniciar' : 'Mover →';
+        animate(card, { scale: [0.92, 1], opacity: [0.4, 1], duration: 260, ease: 'outBack' });
+        updateCounts();
+      }
+    });
+  });
+
+  document.querySelectorAll<HTMLElement>('[data-pricing-switch]').forEach((ps) => {
+    const btns = ps.querySelectorAll<HTMLButtonElement>('[data-bill-mode]');
+    const vals = ps.querySelectorAll<HTMLElement>('.pricing-val');
+    btns.forEach((b) => {
+      b.addEventListener('click', () => {
+        const annual = b.dataset.billMode === 'annual';
+        btns.forEach((x) => x.classList.toggle('is-active', x === b));
+        vals.forEach((v) => {
+          const price = annual ? v.dataset.priceY : v.dataset.priceM;
+          v.innerHTML = `$${price}<span>/mes</span>`;
+          animate(v, { y: [-6, 0], opacity: [0.4, 1], duration: 240, ease: 'outQuad' });
+        });
+      });
+    });
+  });
+
+  document.querySelectorAll<HTMLElement>('[data-filetree]').forEach((ft) => {
+    const pathEl = ft.querySelector('[data-ft-path]');
+    const codeEl = ft.querySelector('[data-ft-code]');
+    const items = ft.querySelectorAll<HTMLButtonElement>('[data-ft-file]');
+    items.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        items.forEach((x) => x.classList.toggle('is-active', x === btn));
+        if (pathEl) pathEl.textContent = btn.dataset.ftFile || '';
+        if (codeEl) codeEl.textContent = (btn.dataset.ftContent || '').replace(/\\n/g, '\n');
+      });
+    });
+  });
+
+  document.querySelectorAll<HTMLElement>('[data-transfer-list]').forEach((tr) => {
+    const left = tr.querySelector<HTMLElement>('[data-tr-left]');
+    const right = tr.querySelector<HTMLElement>('[data-tr-right]');
+    tr.addEventListener('click', (e) => {
+      const item = (e.target as HTMLElement).closest<HTMLButtonElement>('[data-tr-item]');
+      if (!item || !left || !right) return;
+      const inLeft = left.contains(item);
+      if (inLeft) {
+        item.classList.add('is-assigned');
+        item.textContent = '← ' + item.textContent?.replace('→', '').trim();
+        right.appendChild(item);
+      } else {
+        item.classList.remove('is-assigned');
+        item.textContent = item.textContent?.replace('←', '').trim() + ' →';
+        left.appendChild(item);
+      }
+      animate(item, { x: [inLeft ? -12 : 12, 0], opacity: [0.4, 1], duration: 240, ease: 'outQuad' });
+    });
+  });
+
+  document.querySelectorAll<HTMLElement>('[data-scheduler]').forEach((sch) => {
+    let day = 'Lunes 10';
+    let slot = '11:30 UTC';
+    const sum = sch.querySelector('[data-sch-summary]');
+    sch.querySelectorAll<HTMLButtonElement>('[data-sch-day]').forEach((b) => {
+      b.addEventListener('click', () => {
+        day = b.dataset.schDay || day;
+        sch.querySelectorAll('[data-sch-day]').forEach((x) => x.classList.toggle('mini-btn--accent', x === b));
+        if (sum) sum.textContent = `Ventana seleccionada: ${day} a las ${slot} · Lista para desplegar`;
+      });
+    });
+    sch.querySelectorAll<HTMLButtonElement>('[data-sch-slot]').forEach((b) => {
+      b.addEventListener('click', () => {
+        slot = b.dataset.schSlot || slot;
+        sch.querySelectorAll('[data-sch-slot]').forEach((x) => x.classList.toggle('mini-btn--accent', x === b));
+        if (sum) sum.textContent = `Ventana seleccionada: ${day} a las ${slot} · Lista para desplegar`;
+      });
+    });
+  });
+
+  // 6D. 20 COMPONENTES ESPECIALES COMBINADOS (UI + ANIME.JS v4 EN VIVO)
+  // H01: Step-by-Step Wizard + Carrusel 3D Sincronizado + Timeline
+  document.querySelectorAll<HTMLElement>('[data-hyb-01]').forEach((h) => {
+    const pills = Array.from(h.querySelectorAll<HTMLButtonElement>('[data-h01-go]'));
+    const slides = Array.from(h.querySelectorAll<HTMLElement>('[data-h01-slide]'));
+    const bar = h.querySelector<HTMLElement>('[data-h01-bar]');
+    const status = h.querySelector('[data-h01-status]');
+    let step = 0;
+
+    function goToStep(next: number) {
+      step = (next + slides.length) % slides.length;
+      pills.forEach((p, i) => p.classList.toggle('is-active', i <= step));
+      if (bar) animate(bar, { width: `${((step + 1) / slides.length) * 100}%`, duration: 480, ease: 'outExpo' });
+      if (status) status.textContent = `ETAPA 0${step + 1} DE 04 · SINCRONIZADO`;
+      slides.forEach((s, i) => {
+        const active = i === step;
+        s.hidden = !active;
+        if (active) {
+          animate(s, { x: [36, 0], rotateY: [-12, 0], opacity: [0.3, 1], duration: 420, ease: 'outBack' });
+          const chips = s.querySelectorAll('[data-h01-chip]');
+          animate(chips, { y: [10, 0], opacity: [0, 1], delay: stagger(70), duration: 300, ease: 'outQuad' });
+        }
+      });
+    }
+
+    pills.forEach((p, i) => p.addEventListener('click', () => goToStep(i)));
+    h.querySelector('[data-h01-prev]')?.addEventListener('click', () => goToStep(step - 1));
+    h.querySelector('[data-h01-next]')?.addEventListener('click', () => goToStep(step + 1));
+  });
+
+  // H02: Tabla Reactiva + Formulario de Inserción/Eliminación en Tiempo Real con Anime.js
+  document.querySelectorAll<HTMLElement>('[data-hyb-02]').forEach((h) => {
+    const form = h.querySelector<HTMLFormElement>('[data-h02-form]');
+    const nameInp = h.querySelector<HTMLInputElement>('[data-h02-name]');
+    const regSel = h.querySelector<HTMLSelectElement>('[data-h02-region]');
+    const costInp = h.querySelector<HTMLInputElement>('[data-h02-cost]');
+    const tbody = h.querySelector<HTMLElement>('[data-h02-tbody]');
+    const totalEl = h.querySelector('[data-h02-total]');
+    let currentTotal = 400;
+
+    function recalcAnimated() {
+      let targetSum = 0;
+      tbody?.querySelectorAll<HTMLElement>('[data-h02-row]').forEach((r) => {
+        targetSum += Number(r.dataset.cost || 0);
+      });
+      const state = { v: currentTotal };
+      currentTotal = targetSum;
+      animate(state, {
+        v: targetSum,
+        duration: 550,
+        ease: 'outExpo',
+        onUpdate: () => {
+          if (totalEl) totalEl.textContent = `$${state.v.toFixed(2)}`;
+        }
+      });
+    }
+
+    form?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (!tbody || !nameInp || !regSel || !costInp) return;
+      const cost = Number(costInp.value || 100);
+      const tr = document.createElement('tr');
+      tr.setAttribute('data-h02-row', '');
+      tr.dataset.cost = String(cost);
+      tr.innerHTML = `
+        <td><strong>${nameInp.value}</strong></td>
+        <td class="mono">${regSel.value}</td>
+        <td class="mono">$${cost.toFixed(2)}</td>
+        <td style="text-align:right"><button type="button" class="mini-btn mini-btn--danger" data-h02-del>Eliminar</button></td>
+      `;
+      tbody.prepend(tr);
+      animate(tr, { y: [-18, 0], scale: [0.95, 1], opacity: [0, 1], ease: createSpring({ mass: 1, stiffness: 140, damping: 10 }) });
+      recalcAnimated();
+    });
+
+    tbody?.addEventListener('click', (e) => {
+      const del = (e.target as HTMLElement).closest('[data-h02-del]');
+      if (!del) return;
+      const tr = del.closest<HTMLElement>('tr');
+      if (!tr) return;
+      animate(tr, {
+        x: [0, 45],
+        opacity: [1, 0],
+        duration: 240,
+        ease: 'inQuad',
+        onComplete: () => {
+          tr.remove();
+          recalcAnimated();
+        }
+      });
+    });
+  });
+
+  // H03: Tabla con Reordenamiento Cascada Stagger y Barras Cinéticas
+  document.querySelectorAll<HTMLElement>('[data-hyb-03]').forEach((h) => {
+    const tbody = h.querySelector<HTMLElement>('[data-h03-tbody]');
+    const allBtns = h.querySelectorAll<HTMLButtonElement>('.mini-btn');
+
+    function markActiveButton(activeBtn: Element) {
+      allBtns.forEach((b) => b.classList.toggle('mini-btn--accent', b === activeBtn));
+    }
+
+    h.querySelectorAll<HTMLButtonElement>('[data-h03-sort]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        if (!tbody) return;
+        markActiveButton(btn);
+        const asc = btn.dataset.h03Sort === 'load-asc';
+        const rows = Array.from(tbody.querySelectorAll<HTMLElement>('[data-h03-row]'));
+        rows.sort((a, b) => {
+          const lA = Number(a.dataset.load || 0);
+          const lB = Number(b.dataset.load || 0);
+          return asc ? lA - lB : lB - lA;
+        });
+        rows.forEach((r) => tbody.appendChild(r));
+        animate(rows, { x: [-22, 0], opacity: [0.2, 1], delay: stagger(65), duration: 360, ease: 'outBack' });
+      });
+    });
+
+    const shuffleBtn = h.querySelector('[data-h03-shuffle]');
+    shuffleBtn?.addEventListener('click', () => {
+      if (!tbody) return;
+      markActiveButton(shuffleBtn);
+      tbody.querySelectorAll<HTMLElement>('[data-h03-row]').forEach((r) => {
+        const nextLoad = Math.floor(20 + Math.random() * 78);
+        r.dataset.load = String(nextLoad);
+        const pct = r.querySelector('[data-h03-pct]');
+        const bar = r.querySelector<HTMLElement>('[data-h03-bar]');
+        if (pct) pct.textContent = `${nextLoad}%`;
+        if (bar) animate(bar, { width: `${nextLoad}%`, duration: 500, ease: 'outExpo' });
+      });
+    });
+  });
+
+  // H04: Carrusel de Escenas + Transformación Geométrica SVG Morph
+  document.querySelectorAll<HTMLElement>('[data-hyb-04]').forEach((h) => {
+    const poly = h.querySelector<SVGPolygonElement>('[data-h04-poly]');
+    const badge = h.querySelector('[data-h04-badge]');
+    const title = h.querySelector('[data-h04-title]');
+    const btns = h.querySelectorAll<HTMLButtonElement>('[data-h04-scene]');
+    const scenes = [
+      { pts: '100,12 175,38 175,85 100,110 25,85 25,38', badge: 'GEOMETRÍA 01 // HEXÁGONO ESCUDO', title: 'Protección Perimetral Activa' },
+      { pts: '100,10 124,42 170,48 136,78 144,114 100,92 56,114 64,78 30,48 76,42', badge: 'GEOMETRÍA 02 // ESTRELLA VECTORIAL', title: 'Nodo Central de Alta Prioridad' },
+      { pts: '100,8 185,60 100,112 15,60', badge: 'GEOMETRÍA 03 // DIAMANTE CUÁNTICO', title: 'Balanceador de Tráfico Simétrico' }
+    ];
+
+    btns.forEach((b) => {
+      b.addEventListener('click', () => {
+        const idx = Number(b.dataset.h04Scene || 0);
+        const sc = scenes[idx];
+        btns.forEach((x) => x.classList.toggle('mini-btn--accent', x === b));
+        if (badge) badge.textContent = sc.badge;
+        if (title) title.textContent = sc.title;
+        if (poly) animate(poly, { points: sc.pts, duration: 520, ease: 'outBack' });
+      });
+    });
+  });
+
+  // H05: Carrusel Mazo 3D con Física Spring + Odómetro
+  document.querySelectorAll<HTMLElement>('[data-hyb-05]').forEach((h) => {
+    const stack = h.querySelector<HTMLElement>('[data-h05-stack]');
+    const readout = h.querySelector('[data-h05-readout]');
+    let curVal = 84200;
+
+    h.querySelector('[data-h05-cycle]')?.addEventListener('click', () => {
+      if (!stack) return;
+      const first = stack.firstElementChild as HTMLElement | null;
+      if (first) stack.appendChild(first);
+      const cards = Array.from(stack.querySelectorAll<HTMLElement>('[data-h05-card]'));
+      const topVal = Number(cards[0]?.dataset.val || 84200);
+      cards.forEach((c, i) => {
+        animate(c, {
+          y: [14, 0],
+          scale: [0.92, 1 - i * 0.03],
+          delay: i * 50,
+          ease: createSpring({ mass: 1, stiffness: 150, damping: 9 })
+        });
+      });
+      const st = { v: curVal };
+      curVal = topVal;
+      animate(st, {
+        v: topVal,
+        duration: 600,
+        ease: 'outExpo',
+        onUpdate: () => {
+          if (readout) readout.textContent = '$' + st.v.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        }
+      });
+    });
+  });
+
+  // H06: Step-by-Step Configurador Cloud + Motor Calculando
+  document.querySelectorAll<HTMLElement>('[data-hyb-06]').forEach((h) => {
+    const priceEl = h.querySelector('[data-h06-price]');
+    const barEl = h.querySelector<HTMLElement>('[data-h06-bar]');
+    const btns = h.querySelectorAll<HTMLButtonElement>('[data-h06-preset]');
+    let cur = 64;
+
+    btns.forEach((b, idx) => {
+      b.addEventListener('click', () => {
+        const target = Number(b.dataset.price || 64);
+        btns.forEach((x) => x.classList.toggle('mini-btn--accent', x === b));
+        if (barEl) animate(barEl, { width: `${(idx + 1) * 33}%`, duration: 480, ease: 'outExpo' });
+        const st = { v: cur };
+        cur = target;
+        animate(st, {
+          v: target,
+          duration: 550,
+          ease: 'outExpo',
+          onUpdate: () => {
+            if (priceEl) priceEl.textContent = `$${st.v.toFixed(2)} / mes`;
+          }
+        });
+      });
+    });
+  });
+
+  // H07: Tabla Multi-Selección + Purga/Restauración Animada
+  document.querySelectorAll<HTMLElement>('[data-hyb-07]').forEach((h) => {
+    const rows = h.querySelectorAll<HTMLElement>('[data-h07-row]');
+    const countEl = h.querySelector('[data-h07-count]');
+    h.querySelector('[data-h07-purge]')?.addEventListener('click', () => {
+      animate(rows, { x: [0, 40], opacity: [1, 0.15], scale: [1, 0.95], delay: stagger(70), duration: 320, ease: 'inOutQuad' });
+      if (countEl) countEl.textContent = '0 contenedores activos (Purgados)';
+    });
+    h.querySelector('[data-h07-restore]')?.addEventListener('click', () => {
+      animate(rows, { x: [-20, 0], opacity: [0.15, 1], scale: [0.95, 1], delay: stagger(70), duration: 380, ease: 'outBack' });
+      if (countEl) countEl.textContent = '3 contenedores en ejecución';
+    });
+  });
+
+  // H08: Despachador de Toasts Apilados 3D + Cronómetro createTimer
+  document.querySelectorAll<HTMLElement>('[data-hyb-08]').forEach((h) => {
+    const list = h.querySelector<HTMLElement>('[data-h08-list]');
+    const timerEl = h.querySelector('[data-h08-timer]');
+    h.querySelector('[data-h08-spawn]')?.addEventListener('click', () => {
+      if (!list) return;
+      const div = document.createElement('div');
+      div.className = 'cxd-toast-card';
+      div.innerHTML = `<span>Evento sincronizado · ${new Date().toLocaleTimeString()}</span><span class="cxd-badge cxd-badge--active">NEW</span>`;
+      list.prepend(div);
+      if (list.children.length > 3) list.lastElementChild?.remove();
+      animate(div, { y: [-16, 0], scale: [0.92, 1], opacity: [0, 1], ease: createSpring({ mass: 1, stiffness: 140, damping: 9 }) });
+      createTimer({
+        duration: 5000,
+        onUpdate: (self) => {
+          const rem = Math.max(0, (5000 - self.currentTime) / 1000).toFixed(2);
+          if (timerEl) timerEl.textContent = `TIMER ACTIVO: 0${rem}s`;
+        }
+      });
+    });
+  });
+
+  // H09: Tablero Kanban con Física Spring + Barra de Progreso Global
+  document.querySelectorAll<HTMLElement>('[data-hyb-09]').forEach((h) => {
+    const tasks = h.querySelectorAll<HTMLButtonElement>('[data-h09-task]');
+    const bar = h.querySelector<HTMLElement>('[data-h09-bar]');
+    const pctEl = h.querySelector('[data-h09-pct]');
+
+    tasks.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const done = btn.dataset.h09Task === '1';
+        btn.dataset.h09Task = done ? '0' : '1';
+        btn.classList.toggle('mini-btn--accent', !done);
+        animate(btn, { scale: [0.9, 1], ease: createSpring({ mass: 1, stiffness: 160, damping: 8 }) });
+
+        const totalDone = Array.from(tasks).filter((t) => t.dataset.h09Task === '1').length;
+        const pct = Math.round((totalDone / tasks.length) * 100);
+        if (pctEl) pctEl.textContent = `${pct}% COMPLETADO`;
+        if (bar) animate(bar, { width: `${pct}%`, duration: 420, ease: 'outExpo' });
+      });
+    });
+  });
+
+  // H10: Bóveda PIN/OTP + Escudo Vectorial Autodibujable
+  document.querySelectorAll<HTMLElement>('[data-hyb-10]').forEach((h) => {
+    const shield = h.querySelector<SVGPathElement>('[data-h10-shield]');
+    const check = h.querySelector<SVGPathElement>('[data-h10-check]');
+    const slots = h.querySelectorAll<HTMLElement>('[data-h10-slot]');
+    h.querySelector('[data-h10-verify]')?.addEventListener('click', () => {
+      if (shield && check) {
+        animate(svg.createDrawable([shield, check]), {
+          draw: ['0 0', '0 1'],
+          duration: 750,
+          delay: stagger(180),
+          ease: 'outExpo'
+        });
+      }
+      animate(slots, { y: [0, -8, 0], scale: [1, 1.12, 1], delay: stagger(60), duration: 400, ease: 'outBack' });
+    });
+  });
+
+  // H11: Tarjeta Inspectora + Descomposición 3D de Capas
+  document.querySelectorAll<HTMLElement>('[data-hyb-11]').forEach((h) => {
+    const layers = Array.from(h.querySelectorAll<HTMLElement>('[data-h11-layer]'));
+    let exploded = false;
+    h.querySelector('[data-h11-toggle]')?.addEventListener('click', () => {
+      exploded = !exploded;
+      layers.forEach((l, i) => {
+        animate(l, {
+          x: exploded ? (i - 1) * 18 : 0,
+          y: exploded ? (i - 1) * -6 : 0,
+          scale: exploded ? 0.96 : 1,
+          duration: 460,
+          delay: i * 65,
+          ease: 'outBack'
+        });
+      });
+    });
+  });
+
+  // H12: Tabla con Skeleton Cargando -> Hidratación Real Escalonada
+  document.querySelectorAll<HTMLElement>('[data-hyb-12]').forEach((h) => {
+    const sk = h.querySelector<HTMLElement>('[data-h12-skeleton]');
+    const tbl = h.querySelector<HTMLElement>('[data-h12-table]');
+    const rows = h.querySelectorAll<HTMLElement>('[data-h12-row]');
+    const st = h.querySelector('[data-h12-state]');
+
+    h.querySelector('[data-h12-toggle]')?.addEventListener('click', () => {
+      if (!sk || !tbl) return;
+      sk.hidden = false;
+      tbl.hidden = true;
+      if (st) st.textContent = 'ESTADO: CARGANDO SKELETON SHIMMER...';
+      setTimeout(() => {
+        sk.hidden = true;
+        tbl.hidden = false;
+        if (st) st.textContent = 'ESTADO: DATOS HIDRATADOS CON STAGGER';
+        animate(rows, { y: [14, 0], opacity: [0, 1], delay: stagger(90), duration: 380, ease: 'outExpo' });
+      }, 650);
+    });
+  });
+
+  // H13: Carrusel Cinético Controlado por Slider Scrubber
+  document.querySelectorAll<HTMLElement>('[data-hyb-13]').forEach((h) => {
+    const cards = h.querySelectorAll<HTMLElement>('[data-h13-card]');
+    const range = h.querySelector<HTMLInputElement>('[data-h13-range]');
+    const tl = createTimeline({ autoplay: false, defaults: { duration: 600, ease: 'outBack' } });
+    tl.add(cards, { y: [0, -18, 0], scale: [1, 1.08, 1], rotate: ['0deg', '4deg', '0deg'] }, stagger(120));
+    range?.addEventListener('input', () => {
+      tl.seek((Number(range.value) / 100) * tl.duration);
+    });
+  });
+
+  // H14: Buscador de Nodos + Matriz 2D con Onda Radial
+  document.querySelectorAll<HTMLElement>('[data-hyb-14]').forEach((h) => {
+    const cells = h.querySelectorAll<HTMLElement>('[data-h14-cell]');
+    function rippleFrom(origin: 'center' | number) {
+      animate(cells, {
+        scale: [1, 0.75, 1.12, 1],
+        opacity: [1, 0.4, 1],
+        delay: stagger(45, { grid: [6, 3], from: origin }),
+        duration: 520,
+        ease: 'outBack'
+      });
+    }
+    cells.forEach((c, idx) => c.addEventListener('click', () => rippleFrom(idx)));
+    h.querySelector('[data-h14-pulse]')?.addEventListener('click', () => rippleFrom('center'));
+  });
+
+  // H15: Command Palette + Consola de Ejecución Paso a Paso Animada
+  document.querySelectorAll<HTMLElement>('[data-hyb-15]').forEach((h) => {
+    const lines = h.querySelectorAll<HTMLElement>('[data-h15-line]');
+    h.querySelectorAll<HTMLButtonElement>('[data-h15-run]').forEach((b) => {
+      b.addEventListener('click', () => {
+        animate(lines, { x: [-16, 0], opacity: [0, 1], delay: stagger(140), duration: 340, ease: 'outExpo' });
+      });
+    });
+  });
+
+  // H16: Calculadora con Slider + Odómetro + Barras Comparativas
+  document.querySelectorAll<HTMLElement>('[data-hyb-16]').forEach((h) => {
+    const slider = h.querySelector<HTMLInputElement>('[data-h16-slider]');
+    const out = h.querySelector('[data-h16-out]');
+    const bars = h.querySelectorAll<HTMLElement>('[data-h16-bar]');
+    slider?.addEventListener('input', () => {
+      const m = Number(slider.value || 5);
+      if (out) out.textContent = `${m}M req/mes // $${m * 19}/mes`;
+      bars.forEach((b, i) => {
+        b.style.width = `${Math.min(100, m * (i === 0 ? 4.5 : 5))}%`;
+      });
+    });
+  });
+
+  // H17: Topología Docker + Simulador de Paquetes en Red
+  document.querySelectorAll<HTMLElement>('[data-hyb-17]').forEach((h) => {
+    const nodes = h.querySelectorAll<HTMLElement>('[data-h17-node]');
+    h.querySelector('[data-h17-ping]')?.addEventListener('click', () => {
+      animate(nodes, { scale: [1, 1.08, 1], y: [0, -6, 0], delay: stagger(130), duration: 420, ease: 'outBack' });
+    });
+  });
+
+  // H18: Acordeón Técnico Multi-Sección + Telemetría que Anima al Expandir
+  document.querySelectorAll<HTMLElement>('[data-hyb-18]').forEach((h) => {
+    const items = h.querySelectorAll<HTMLElement>('[data-h18-item]');
+    items.forEach((item) => {
+      const btn = item.querySelector('[data-h18-btn]');
+      const panel = item.querySelector<HTMLElement>('[data-h18-panel]');
+      const icon = item.querySelector('[data-h18-icon]');
+      btn?.addEventListener('click', () => {
+        if (!panel) return;
+        const willOpen = panel.hidden;
+        panel.hidden = !willOpen;
+        item.classList.toggle('is-open', willOpen);
+        if (icon) icon.textContent = willOpen ? '-' : '+';
+        if (willOpen) {
+          panel.querySelectorAll<HTMLElement>('[data-h18-fill]').forEach((fill, idx) => {
+            const target = fill.dataset.h18Fill || '95';
+            animate(fill, { width: ['0%', `${target}%`], duration: 720, delay: idx * 100, ease: 'outExpo' });
+          });
+          panel.querySelectorAll<HTMLElement>('[data-h18-val]').forEach((valEl) => {
+            const target = Number(valEl.dataset.h18Val || 95);
+            const st = { v: 0 };
+            animate(st, {
+              v: target,
+              duration: 720,
+              ease: 'outExpo',
+              onUpdate: () => {
+                valEl.textContent = `${st.v.toFixed(1)}%`;
+              }
+            });
+          });
+        }
+      });
+    });
+  });
+
+  // H19: Transferencia Dual de Módulos + Sincronización Masiva con Stagger
+  document.querySelectorAll<HTMLElement>('[data-hyb-19]').forEach((h) => {
+    const chips = h.querySelectorAll<HTMLElement>('[data-h19-chip]');
+    const st = h.querySelector('[data-h19-status]');
+    h.querySelector('[data-h19-sync]')?.addEventListener('click', () => {
+      animate(chips, { y: [-12, 0], scale: [0.85, 1.06, 1], delay: stagger(80), duration: 440, ease: 'outBack' });
+      if (st) st.textContent = '4 MÓDULOS SINCRONIZADOS EN PRODUCCIÓN';
+    });
+  });
+
+  // H20: Tabla de Incidentes en Vivo + Cronómetro SLA + Resolución
+  document.querySelectorAll<HTMLElement>('[data-hyb-20]').forEach((h) => {
+    const clock = h.querySelector('[data-h20-clock]');
+    const badge = h.querySelector('[data-h20-badge]');
+    const row = h.querySelector<HTMLElement>('[data-h20-row]');
+    const timer = createTimer({
+      duration: 60000,
+      onUpdate: (self) => {
+        if (clock) clock.textContent = `${(self.currentTime / 1000).toFixed(2)}s`;
+      }
+    });
+    h.querySelector('[data-h20-resolve]')?.addEventListener('click', () => {
+      timer.pause();
+      if (badge) {
+        badge.textContent = 'RESOLVED';
+        badge.className = 'cxd-badge cxd-badge--active';
+      }
+      if (row) animate(row, { scale: [0.98, 1], duration: 340, ease: 'outBack' });
+    });
+  });
+
+  // ============================================================================
+  // H21 A H30: LOS 10 COMPONENTES ESPECTACULARES (HERO ANIME.JS, MAPA, LABERINTO, ORDENAMIENTO, SISTEMA SOLAR, GIT GRAPH)
+  // ============================================================================
+
+  // H21: Escenario Relojería Cinética & Onda Radial (Estilo Hero Oficial de Anime.js v4)
+  document.querySelectorAll<HTMLElement>('[data-hyb-21]').forEach((h) => {
+    const rays = h.querySelectorAll<HTMLElement>('[data-h21-ray]');
+    const dots = h.querySelectorAll<HTMLElement>('[data-h21-dot]');
+    const halo = h.querySelector<HTMLElement>('[data-h21-halo]');
+    const label = h.querySelector('[data-h21-label]');
+    const btns = h.querySelectorAll<HTMLButtonElement>('[data-h21-mode]');
+
+    if (halo) {
+      animate(halo, { scale: [0.92, 1.06, 0.92], opacity: [0.35, 0.85, 0.35], duration: 3200, loop: true, ease: 'inOutSine' });
+    }
+
+    function runHeroMode(mode: string) {
+      if (label) label.textContent = mode.toUpperCase();
+      if (mode === 'clockwork') {
+        animate(rays, {
+          scaleY: [0.35, 1.55, 0.7, 1],
+          translateY: [0, -16, 0],
+          delay: stagger(20, { from: 'first' }),
+          duration: 1050,
+          ease: 'outBack'
+        });
+        animate(dots, {
+          scale: [0.3, 1.18, 1],
+          rotate: ['0deg', '90deg'],
+          delay: stagger(26, { grid: [6, 6], from: 'center' }),
+          duration: 900,
+          ease: 'outBack'
+        });
+      } else if (mode === 'solar') {
+        animate(rays, {
+          scaleY: [0.2, 2.05, 0.9],
+          translateY: [0, -26, -6],
+          delay: stagger(14, { from: 'center' }),
+          duration: 840,
+          ease: createSpring({ mass: 1, stiffness: 150, damping: 8 })
+        });
+        animate(dots, {
+          scale: [1, 0.2, 1.28, 1],
+          borderRadius: ['4px', '50%', '4px'],
+          delay: stagger(30, { grid: [6, 6], from: 'center' }),
+          duration: 920,
+          ease: 'inOutQuad'
+        });
+      } else if (mode === 'vortex') {
+        animate(rays, {
+          rotate: [-32, 32, 0],
+          scaleY: [1, 1.65, 1],
+          delay: stagger(18),
+          duration: 920,
+          ease: 'inOutCubic'
+        });
+        animate(dots, {
+          rotate: ['0deg', '180deg'],
+          scale: [0.45, 1.15, 1],
+          delay: stagger(24, { grid: [6, 6], from: 'first' }),
+          duration: 860,
+          ease: 'outExpo'
+        });
+      } else {
+        animate(rays, {
+          scaleY: [1, 0.25, 1.8, 1],
+          opacity: [0.3, 1],
+          delay: stagger(12, { from: 'last' }),
+          duration: 760,
+          ease: 'outExpo'
+        });
+        animate(dots, {
+          scale: [1, 1.38, 0.6, 1],
+          delay: stagger(26, { grid: [6, 6], from: 'last' }),
+          duration: 780,
+          ease: 'outBack'
+        });
+      }
+    }
+
+    runHeroMode('clockwork');
+
+    btns.forEach((b) => {
+      b.addEventListener('click', () => {
+        btns.forEach((x) => x.classList.toggle('mini-btn--accent', x === b));
+        runHeroMode(b.dataset.h21Mode || 'clockwork');
+      });
+    });
+  });
+
+  // H22: Mapa Mundial Interactivo con Rutas de Tráfico en Vivo y Paquetes MotionPath
+  document.querySelectorAll<HTMLElement>('[data-hyb-22]').forEach((h) => {
+    const arcs = Array.from(h.querySelectorAll<SVGPathElement>('[data-h22-arc]'));
+    const pkts = Array.from(h.querySelectorAll<SVGCircleElement>('[data-h22-pkt]'));
+    const ping = h.querySelector<SVGCircleElement>('[data-h22-ping]');
+    const focus = h.querySelector<SVGCircleElement>('[data-h22-focus]');
+    const status = h.querySelector('[data-h22-status]');
+    const btns = h.querySelectorAll<HTMLButtonElement>('[data-h22-hub]');
+
+    // Iniciar paquetes viajando continuamente por los arcos intercontinentales
+    pkts.forEach((pkt, idx) => {
+      const targetArc = arcs[idx % arcs.length];
+      if (targetArc) {
+        try {
+          const mp = svg.createMotionPath(targetArc);
+          animate(pkt, {
+            ...mp,
+            duration: 2400 + idx * 550,
+            ease: 'inOutSine',
+            loop: true
+          });
+        } catch {
+          // Fallback suave si el navegador aún no mide el path
+        }
+      }
+    });
+
+    function triggerWorldTraffic(cx: string, cy: string, name: string) {
+      if (ping && focus) {
+        ping.setAttribute('cx', cx);
+        ping.setAttribute('cy', cy);
+        focus.setAttribute('cx', cx);
+        focus.setAttribute('cy', cy);
+        animate(ping, { r: [6, 40], opacity: [1, 0], duration: 950, ease: 'outExpo' });
+      }
+      if (arcs.length) {
+        animate(svg.createDrawable(arcs), {
+          draw: ['0 0', '0 1'],
+          duration: 850,
+          delay: stagger(110),
+          ease: 'outQuart'
+        });
+      }
+      if (status) {
+        const rate = (1.2 + Math.random() * 1.6).toFixed(2);
+        status.textContent = `HUB ACTIVO: ${name} · ${rate}M PAQUETES/S`;
+      }
+    }
+
+    btns.forEach((b) => {
+      b.addEventListener('click', () => {
+        btns.forEach((x) => x.classList.toggle('mini-btn--accent', x === b));
+        triggerWorldTraffic(b.dataset.x || '565', b.dataset.y || '88', b.dataset.name || 'TOKYO');
+      });
+    });
+  });
+
+  // H23: Visualizador Interactivo de Algoritmo Pathfinding A* / BFS (24x10 = 240 Micro-Celdas, Caminos Largos)
+  document.querySelectorAll<HTMLElement>('[data-hyb-23]').forEach((h) => {
+    const cells = Array.from(h.querySelectorAll<HTMLButtonElement>('[data-pf-idx]'));
+    const info = h.querySelector('[data-h23-info]');
+    const stepsBadge = h.querySelector('[data-h23-steps-badge]');
+    const visitedBadge = h.querySelector('[data-h23-visited-badge]');
+    const cols = 24;
+    const rows = 10;
+    const total = cols * rows; // 240
+    const endIdx = total - 1;  // 239
+    let activeTimers: ReturnType<typeof setTimeout>[] = [];
+
+    function cancelTimers() {
+      activeTimers.forEach((t) => clearTimeout(t));
+      activeTimers = [];
+    }
+
+    function clearVisited() {
+      cancelTimers();
+      cells.forEach((c) => c.classList.remove('is-visited', 'is-path'));
+    }
+
+    cells.forEach((c, idx) => {
+      c.addEventListener('click', () => {
+        if (idx === 0 || idx === endIdx) return;
+        clearVisited();
+        c.classList.toggle('is-wall');
+      });
+    });
+
+    function buildSerpentineLabyrinth() {
+      clearVisited();
+      cells.forEach((cell, idx) => {
+        if (idx === 0 || idx === endIdx) return;
+        const r = Math.floor(idx / cols);
+        const c = idx % cols;
+        const w1 = c === 4 && r < 8;
+        const w2 = c === 9 && r > 1;
+        const w3 = c === 14 && r < 8;
+        const w4 = c === 19 && r > 1;
+        cell.classList.toggle('is-wall', w1 || w2 || w3 || w4);
+      });
+      if (info) info.textContent = 'LABERINTO SERPENTEANTE DE CAMINO LARGO CARGADO';
+    }
+
+    h.querySelector('[data-h23-labyrinth]')?.addEventListener('click', () => {
+      buildSerpentineLabyrinth();
+      runPathfinding();
+    });
+
+    h.querySelector('[data-h23-clear]')?.addEventListener('click', () => {
+      clearVisited();
+      cells.forEach((c, i) => {
+        if (i !== 0 && i !== endIdx) c.classList.remove('is-wall');
+      });
+      if (stepsBadge) stepsBadge.textContent = 'PASOS: --';
+      if (visitedBadge) visitedBadge.textContent = 'EXPLORADOS: --';
+      if (info) info.textContent = 'TABLERO LIMPIO (240 CELDAS) · HAZ CLIC PARA CREAR MUROS';
+    });
+
+    h.querySelector('[data-h23-maze]')?.addEventListener('click', () => {
+      clearVisited();
+      cells.forEach((c, i) => {
+        if (i === 0 || i === endIdx) return;
+        const r = Math.floor(i / cols);
+        const col = i % cols;
+        // Evitar bloquear la salida o entrada directa
+        if ((r <= 1 && col <= 1) || (r >= rows - 2 && col >= cols - 2)) {
+          c.classList.remove('is-wall');
+          return;
+        }
+        c.classList.toggle('is-wall', Math.random() < 0.27);
+      });
+      if (info) info.textContent = 'OBSTÁCULOS DENSOS GENERADOS · EJECUTANDO BÚSQUEDA...';
+      runPathfinding();
+    });
+
+    function runPathfinding() {
+      clearVisited();
+      const walls = new Set(cells.map((c, i) => (c.classList.contains('is-wall') ? i : -1)).filter((i) => i >= 0));
+      const queue: number[] = [0];
+      const cameFrom = new Map<number, number>();
+      const visitedOrder: number[] = [];
+      const seen = new Set<number>([0]);
+
+      while (queue.length > 0) {
+        const cur = queue.shift()!;
+        if (cur === endIdx) break;
+        const r = Math.floor(cur / cols);
+        const c = cur % cols;
+        const neighbors: number[] = [];
+        if (c + 1 < cols) neighbors.push(r * cols + (c + 1));
+        if (r + 1 < rows) neighbors.push((r + 1) * cols + c);
+        if (r - 1 >= 0) neighbors.push((r - 1) * cols + c);
+        if (c - 1 >= 0) neighbors.push(r * cols + (c - 1));
+
+        for (const nb of neighbors) {
+          if (!seen.has(nb) && !walls.has(nb)) {
+            seen.add(nb);
+            cameFrom.set(nb, cur);
+            visitedOrder.push(nb);
+            queue.push(nb);
+          }
+        }
+      }
+
+      const stepDelay = 7;
+      visitedOrder.forEach((idx, step) => {
+        const timer = setTimeout(() => {
+          if (idx !== endIdx) cells[idx]?.classList.add('is-visited');
+          if (visitedBadge) visitedBadge.textContent = `EXPLORADOS: ${step + 1}`;
+        }, step * stepDelay);
+        activeTimers.push(timer);
+      });
+
+      const path: number[] = [];
+      if (cameFrom.has(endIdx)) {
+        let cur = endIdx;
+        while (cur !== 0) {
+          path.unshift(cur);
+          cur = cameFrom.get(cur)!;
+        }
+        path.unshift(0);
+      }
+
+      const finalTimer = setTimeout(() => {
+        if (path.length > 0) {
+          const pathEls = path.map((i) => cells[i]);
+          pathEls.forEach((el) => el.classList.add('is-path'));
+          animate(pathEls, {
+            scale: [0.6, 1.18, 1],
+            delay: stagger(16),
+            duration: 320,
+            ease: 'outBack'
+          });
+          if (stepsBadge) stepsBadge.textContent = `PASOS: ${path.length}`;
+          if (visitedBadge) visitedBadge.textContent = `EXPLORADOS: ${visitedOrder.length}`;
+          if (info) info.textContent = `RUTA ÓPTIMA ENCONTRADA EN ${path.length} PASOS (${visitedOrder.length} NODOS EXPLORADOS)`;
+        } else {
+          if (stepsBadge) stepsBadge.textContent = 'SIN RUTA';
+          if (info) info.textContent = 'CAMINO BLOQUEADO · HAZ CLIC EN UN MURO PARA ABRIR PASO';
+        }
+      }, visitedOrder.length * stepDelay + 60);
+      activeTimers.push(finalTimer);
+    }
+
+    h.querySelector('[data-h23-run]')?.addEventListener('click', () => runPathfinding());
+  });
+
+  // H24: Visualizador de Algoritmos de Ordenamiento Paso a Paso en Tiempo Real (QuickSort, BubbleSort, SelectionSort, InsertionSort)
+  document.querySelectorAll<HTMLElement>('[data-hyb-24]').forEach((h) => {
+    const cols = Array.from(h.querySelectorAll<HTMLElement>('[data-h24-col]'));
+    const status = h.querySelector('[data-h24-status]');
+    const cmpBadge = h.querySelector('[data-h24-cmp]');
+    const swpBadge = h.querySelector('[data-h24-swp]');
+    const btns = h.querySelectorAll<HTMLButtonElement>('.mini-btn');
+    let currentRunId = 0;
+
+    type SortStep =
+      | { type: 'cmp'; i: number; j: number; pivot?: number }
+      | { type: 'set'; idx: number; val: number }
+      | { type: 'swap'; i: number; j: number; valI: number; valJ: number };
+
+    function setColValue(idx: number, val: number) {
+      const col = cols[idx];
+      if (!col) return;
+      col.dataset.val = String(val);
+      const bar = col.querySelector<HTMLElement>('.sort-col-bar');
+      const num = col.querySelector('.sort-col-num');
+      if (bar) bar.style.height = `${val}%`;
+      if (num) num.textContent = String(val);
+    }
+
+    function clearHighlights() {
+      cols.forEach((c) => c.classList.remove('is-comparing', 'is-pivot', 'is-sorted'));
+    }
+
+    function generateQuickSortSteps(arr: number[]): SortStep[] {
+      const steps: SortStep[] = [];
+      const a = [...arr];
+      function partition(low: number, high: number): number {
+        const pivotVal = a[high];
+        let i = low - 1;
+        for (let j = low; j < high; j++) {
+          steps.push({ type: 'cmp', i: j, j: high, pivot: high });
+          if (a[j] < pivotVal) {
+            i++;
+            if (i !== j) {
+              const tmp = a[i];
+              a[i] = a[j];
+              a[j] = tmp;
+              steps.push({ type: 'swap', i, j, valI: a[i], valJ: a[j] });
+            }
+          }
+        }
+        if (i + 1 !== high) {
+          const tmp = a[i + 1];
+          a[i + 1] = a[high];
+          a[high] = tmp;
+          steps.push({ type: 'swap', i: i + 1, j: high, valI: a[i + 1], valJ: a[high] });
+        }
+        return i + 1;
+      }
+      function qs(low: number, high: number) {
+        if (low < high) {
+          const pi = partition(low, high);
+          qs(low, pi - 1);
+          qs(pi + 1, high);
+        }
+      }
+      qs(0, a.length - 1);
+      return steps;
+    }
+
+    function generateBubbleSortSteps(arr: number[]): SortStep[] {
+      const steps: SortStep[] = [];
+      const a = [...arr];
+      for (let i = 0; i < a.length - 1; i++) {
+        let swapped = false;
+        for (let j = 0; j < a.length - i - 1; j++) {
+          steps.push({ type: 'cmp', i: j, j: j + 1 });
+          if (a[j] > a[j + 1]) {
+            const tmp = a[j];
+            a[j] = a[j + 1];
+            a[j + 1] = tmp;
+            swapped = true;
+            steps.push({ type: 'swap', i: j, j: j + 1, valI: a[j], valJ: a[j + 1] });
+          }
+        }
+        if (!swapped) break;
+      }
+      return steps;
+    }
+
+    function generateSelectionSortSteps(arr: number[]): SortStep[] {
+      const steps: SortStep[] = [];
+      const a = [...arr];
+      for (let i = 0; i < a.length - 1; i++) {
+        let minIdx = i;
+        for (let j = i + 1; j < a.length; j++) {
+          steps.push({ type: 'cmp', i: minIdx, j, pivot: i });
+          if (a[j] < a[minIdx]) minIdx = j;
+        }
+        if (minIdx !== i) {
+          const tmp = a[i];
+          a[i] = a[minIdx];
+          a[minIdx] = tmp;
+          steps.push({ type: 'swap', i, j: minIdx, valI: a[i], valJ: a[minIdx] });
+        }
+      }
+      return steps;
+    }
+
+    function generateInsertionSortSteps(arr: number[]): SortStep[] {
+      const steps: SortStep[] = [];
+      const a = [...arr];
+      for (let i = 1; i < a.length; i++) {
+        let j = i;
+        while (j > 0) {
+          steps.push({ type: 'cmp', i: j - 1, j, pivot: i });
+          if (a[j - 1] > a[j]) {
+            const tmp = a[j - 1];
+            a[j - 1] = a[j];
+            a[j] = tmp;
+            steps.push({ type: 'swap', i: j - 1, j, valI: a[j - 1], valJ: a[j] });
+            j--;
+          } else {
+            break;
+          }
+        }
+      }
+      return steps;
+    }
+
+    async function playSort(algo: string) {
+      const runId = ++currentRunId;
+      clearHighlights();
+      const initialVals = cols.map((c) => Number(c.dataset.val || 50));
+      const steps =
+        algo === 'quick'
+          ? generateQuickSortSteps(initialVals)
+          : algo === 'selection'
+            ? generateSelectionSortSteps(initialVals)
+            : algo === 'insertion'
+              ? generateInsertionSortSteps(initialVals)
+              : generateBubbleSortSteps(initialVals);
+
+      let comparisons = 0;
+      let swaps = 0;
+      if (cmpBadge) cmpBadge.textContent = 'COMPARACIONES: 0';
+      if (swpBadge) swpBadge.textContent = 'INTERCAMBIOS: 0';
+      const algoLabel = algo.toUpperCase() + 'SORT';
+      if (status) status.textContent = `EJECUTANDO ${algoLabel} PASO A PASO...`;
+
+      const stepMs = algo === 'bubble' ? 16 : 24;
+
+      for (const st of steps) {
+        if (runId !== currentRunId) return;
+        cols.forEach((c) => c.classList.remove('is-comparing', 'is-pivot'));
+
+        if (st.type === 'cmp') {
+          comparisons++;
+          if (cmpBadge) cmpBadge.textContent = `COMPARACIONES: ${comparisons}`;
+          cols[st.i]?.classList.add('is-comparing');
+          cols[st.j]?.classList.add('is-comparing');
+          if (st.pivot !== undefined) cols[st.pivot]?.classList.add('is-pivot');
+        } else if (st.type === 'swap') {
+          swaps++;
+          if (swpBadge) swpBadge.textContent = `INTERCAMBIOS: ${swaps}`;
+          cols[st.i]?.classList.add('is-pivot');
+          cols[st.j]?.classList.add('is-pivot');
+          setColValue(st.i, st.valI);
+          setColValue(st.j, st.valJ);
+          animate([cols[st.i], cols[st.j]], { y: [-8, 0], duration: 90, ease: 'outQuad' });
+        }
+
+        await new Promise((r) => setTimeout(r, stepMs));
+      }
+
+      if (runId !== currentRunId) return;
+      cols.forEach((c) => c.classList.remove('is-comparing', 'is-pivot'));
+
+      // Barrido verde de verificación final
+      cols.forEach((c, idx) => {
+        setTimeout(() => {
+          if (runId !== currentRunId) return;
+          c.classList.add('is-sorted');
+          animate(c, { y: [-12, 0], scaleY: [0.85, 1], duration: 240, ease: 'outBack' });
+        }, idx * 18);
+      });
+
+      if (status) {
+        status.textContent = `${algoLabel} COMPLETADO // ${comparisons} COMPARACIONES · ${swaps} INTERCAMBIOS`;
+      }
+    }
+
+    h.querySelectorAll<HTMLButtonElement>('[data-h24-sort]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        btns.forEach((x) => x.classList.toggle('mini-btn--accent', x === btn));
+        playSort(btn.dataset.h24Sort || 'quick');
+      });
+    });
+
+    const shufBtn = h.querySelector('[data-h24-shuffle]');
+    shufBtn?.addEventListener('click', () => {
+      currentRunId++;
+      clearHighlights();
+      btns.forEach((x) => x.classList.toggle('mini-btn--accent', x === shufBtn));
+      cols.forEach((_, idx) => {
+        setColValue(idx, Math.floor(14 + Math.random() * 84));
+      });
+      if (cmpBadge) cmpBadge.textContent = 'COMPARACIONES: 0';
+      if (swpBadge) swpBadge.textContent = 'INTERCAMBIOS: 0';
+      animate(cols, { scaleY: [0.4, 1], delay: stagger(18), duration: 320, ease: 'outBack' });
+      if (status) status.textContent = 'ARREGLO DE 28 BARRAS DESORDENADO · SELECCIONA UN ALGORITMO';
+    });
+  });
+
+  // H25: Grafo de Red Neuronal Multicapa con Propagación de Sinapsis SVG
+  document.querySelectorAll<HTMLElement>('[data-hyb-25]').forEach((h) => {
+    const layers = [0, 1, 2, 3].map((i) => h.querySelectorAll<HTMLElement>(`[data-nn-layer="${i}"] [data-nn-node]`));
+    const synapses = h.querySelectorAll<SVGLineElement>('[data-nn-syn]');
+    const probs = h.querySelectorAll<HTMLElement>('[data-nn-prob]');
+    const out = h.querySelector('[data-h25-out]');
+
+    function fireInference() {
+      if (synapses.length) {
+        animate(svg.createDrawable(synapses), {
+          draw: ['0 0', '0 1'],
+          duration: 620,
+          delay: stagger(28),
+          ease: 'outQuart'
+        });
+      }
+      const tl = createTimeline({ defaults: { duration: 320, ease: 'outBack' } });
+      layers.forEach((nodes) => {
+        tl.add(nodes, { scale: [1, 1.28, 1], backgroundColor: ['var(--cxd-bg-surface)', 'var(--cxd-accent)', 'var(--cxd-bg-surface)'] }, '-=140');
+      });
+      const p1 = (88 + Math.random() * 11).toFixed(1);
+      const p2 = ((100 - Number(p1)) * 0.7).toFixed(1);
+      const p3 = (100 - Number(p1) - Number(p2)).toFixed(1);
+      if (probs[0]) probs[0].textContent = `${p1}%`;
+      if (probs[1]) probs[1].textContent = `${p2}%`;
+      if (probs[2]) probs[2].textContent = `${p3}%`;
+      if (out) out.textContent = `PREDICCIÓN SOFTMAX: CLASE A (${p1}% CONFIANZA)`;
+    }
+
+    h.querySelector('[data-h25-fire]')?.addEventListener('click', () => fireInference());
+  });
+
+  // H26: Sistema Solar Animado Completo (Sol + 8 Planetas + Luna + Cinturón de Asteroides + Telemetría)
+  document.querySelectorAll<HTMLElement>('[data-hyb-26]').forEach((h) => {
+    const carriers = Array.from(h.querySelectorAll<HTMLElement>('[data-h26-carrier]'));
+    const moon = h.querySelector<HTMLElement>('[data-h26-moon]');
+    const sun = h.querySelector<HTMLElement>('[data-h26-sun]');
+    const targetRing = h.querySelector<HTMLElement>('[data-h26-target-ring]');
+    const tel = h.querySelector('[data-h26-telemetry]');
+    const planetBtns = h.querySelectorAll<HTMLButtonElement>('[data-h26-planet]');
+    const speedBtns = h.querySelectorAll<HTMLButtonElement>('[data-h26-speed]');
+    let activeAnims: ReturnType<typeof animate>[] = [];
+
+    if (sun) {
+      animate(sun, { scale: [0.95, 1.08, 0.95], duration: 2600, loop: true, ease: 'inOutSine' });
+    }
+    if (moon) {
+      animate(moon, { rotate: '1turn', duration: 1600, ease: 'linear', loop: true });
+    }
+
+    function startOrbits(speedMultiplier: number) {
+      activeAnims.forEach((a) => a.pause());
+      activeAnims = carriers.map((c, idx) => {
+        const basePeriod = Number(c.dataset.period || 6000);
+        // Ángulo inicial escalonado para distribución armónica
+        c.style.transform = `rotate(${idx * 42}deg)`;
+        return animate(c, {
+          rotate: [`${idx * 42}deg`, `${idx * 42 + 360}deg`],
+          duration: Math.max(450, Math.round(basePeriod / speedMultiplier)),
+          ease: 'linear',
+          loop: true
+        });
+      });
+    }
+
+    startOrbits(1);
+
+    speedBtns.forEach((sb) => {
+      sb.addEventListener('click', () => {
+        speedBtns.forEach((x) => x.classList.toggle('mini-btn--accent', x === sb));
+        const mult = Number(sb.dataset.h26Speed || 1);
+        startOrbits(mult);
+      });
+    });
+
+    planetBtns.forEach((pb) => {
+      pb.addEventListener('click', () => {
+        planetBtns.forEach((x) => x.classList.toggle('mini-btn--accent', x === pb));
+        const r = Number(pb.dataset.r || 72);
+        const diameter = r * 2;
+        if (targetRing) {
+          targetRing.style.width = `${diameter}px`;
+          targetRing.style.height = `${diameter}px`;
+          animate(targetRing, { scale: [0.9, 1.05, 1], duration: 420, ease: 'outBack' });
+        }
+        if (tel && pb.dataset.info) {
+          tel.textContent = pb.dataset.info;
+        }
+      });
+    });
+  });
+
+  // H27: Ciudadela Isométrica 3D de Servidores
+  document.querySelectorAll<HTMLElement>('[data-hyb-27]').forEach((h) => {
+    const towers = h.querySelectorAll<HTMLElement>('[data-h27-tower]');
+    const btns = h.querySelectorAll<HTMLButtonElement>('[data-h27-wave]');
+
+    function waveIso(origin: 'center' | 'first' | number) {
+      animate(towers, {
+        translateZ: [0, 34, 0],
+        scale: [1, 1.12, 1],
+        delay: stagger(55, { grid: [4, 4], from: origin }),
+        duration: 680,
+        ease: 'outBack'
+      });
+    }
+
+    btns.forEach((b) => {
+      b.addEventListener('click', () => {
+        btns.forEach((x) => x.classList.toggle('mini-btn--accent', x === b));
+        const mode = b.dataset.h27Wave;
+        waveIso(mode === 'first' ? 'first' : mode === 'random' ? Math.floor(Math.random() * 16) : 'center');
+      });
+    });
+
+    towers.forEach((t, idx) => t.addEventListener('click', () => waveIso(idx)));
+  });
+
+  // H28: Analizador de Espectro de 28 Bandas + Osciloscopio
+  document.querySelectorAll<HTMLElement>('[data-hyb-28]').forEach((h) => {
+    const bars = h.querySelectorAll<HTMLElement>('[data-h28-bar]');
+    const wave = h.querySelector<SVGPathElement>('[data-h28-wave]');
+    const lbl = h.querySelector('[data-h28-label]');
+    const btns = h.querySelectorAll<HTMLButtonElement>('[data-h28-mode]');
+
+    function pulseSpectrum(mode: string) {
+      bars.forEach((bar, i) => {
+        const height =
+          mode === 'bass'
+            ? Math.max(15, 95 - i * 3)
+            : mode === 'vocal'
+              ? 25 + Math.sin(i * 0.4) * 55
+              : 20 + ((i * 29 + Math.floor(Math.random() * 60)) % 78);
+        animate(bar, { height: `${Math.abs(height)}%`, duration: 380, delay: i * 12, ease: 'outBack' });
+      });
+      if (wave) {
+        animate(svg.createDrawable(wave), { draw: ['0 0', '0 1'], duration: 650, ease: 'outExpo' });
+      }
+    }
+
+    btns.forEach((b) => {
+      b.addEventListener('click', () => {
+        btns.forEach((x) => x.classList.toggle('mini-btn--accent', x === b));
+        const m = b.dataset.h28Mode || 'arp';
+        if (lbl) lbl.textContent = `PERFIL ACÚSTICO: ${b.textContent?.trim().toUpperCase()} // 20Hz - 20kHz`;
+        pulseSpectrum(m);
+      });
+    });
+  });
+
+  // H29: Diagrama Interactivo de Grafo Git Multirama (main, develop, feat/anime, tags, merges)
+  document.querySelectorAll<HTMLElement>('[data-hyb-29]').forEach((h) => {
+    const svgEl = h.querySelector<SVGSVGElement>('[data-h29-svg]');
+    const baseEdges = h.querySelectorAll<SVGPathElement>('[data-h29-edge]');
+    const dynEdges = h.querySelector<SVGGElement>('[data-h29-dynamic-edges]');
+    const dynNodes = h.querySelector<SVGGElement>('[data-h29-dynamic-nodes]');
+    const headEl = h.querySelector('[data-h29-head]');
+    const tagBadge = h.querySelector('[data-h29-tag-badge]');
+    const detailEl = h.querySelector('[data-h29-detail]');
+
+    let mainX = 580;
+    let featX = 380;
+    let commitCount = 9;
+    let tagVersion = 2;
+
+    if (baseEdges.length) {
+      animate(svg.createDrawable(baseEdges), {
+        draw: ['0 0', '0 1'],
+        duration: 1100,
+        delay: stagger(140),
+        ease: 'outQuart'
+      });
+    }
+
+    function clearHeadMarks() {
+      svgEl?.querySelectorAll('.git-svg-node').forEach((n) => n.classList.remove('is-head'));
+    }
+
+    function updateHeadSummary(branchName: string) {
+      if (headEl) headEl.textContent = `HEAD // ${branchName} (${commitCount} commits · 3 ramas · v4.${tagVersion}.0)`;
+    }
+
+    function createSvgCommitNode(x: number, y: number, sha: string, branch: string, msg: string, tagText?: string) {
+      if (!dynNodes) return;
+      clearHeadMarks();
+      const ns = 'http://www.w3.org/2000/svg';
+      const g = document.createElementNS(ns, 'g');
+      g.setAttribute('class', 'git-svg-node is-head');
+      g.setAttribute('data-h29-commit-item', '');
+      g.dataset.sha = sha;
+      g.dataset.branch = branch;
+      g.dataset.msg = msg;
+
+      const circle = document.createElementNS(ns, 'circle');
+      circle.setAttribute('cx', String(x));
+      circle.setAttribute('cy', String(y));
+      circle.setAttribute('r', '8.5');
+      g.appendChild(circle);
+
+      const txt = document.createElementNS(ns, 'text');
+      txt.setAttribute('x', String(x));
+      txt.setAttribute('y', String(y === 45 ? 25 : y + 23));
+      txt.setAttribute('text-anchor', 'middle');
+      txt.setAttribute('class', 'git-sha-txt');
+      txt.textContent = sha;
+      g.appendChild(txt);
+
+      if (tagText) {
+        const rect = document.createElementNS(ns, 'rect');
+        rect.setAttribute('x', String(x - 28));
+        rect.setAttribute('y', String(y === 45 ? 56 : y - 28));
+        rect.setAttribute('width', '56');
+        rect.setAttribute('height', '16');
+        rect.setAttribute('rx', '3');
+        rect.setAttribute('class', 'git-tag-pill');
+        g.appendChild(rect);
+
+        const tTxt = document.createElementNS(ns, 'text');
+        tTxt.setAttribute('x', String(x));
+        tTxt.setAttribute('y', String(y === 45 ? 67 : y - 17));
+        tTxt.setAttribute('text-anchor', 'middle');
+        tTxt.setAttribute('class', 'git-tag-txt');
+        tTxt.textContent = tagText;
+        g.appendChild(tTxt);
+      }
+
+      dynNodes.appendChild(g);
+      animate(circle, { r: [0, 10, 8.5], duration: 420, ease: 'outBack' });
+      if (detailEl) detailEl.textContent = `[${sha}] (${branch}) — ${msg}`;
+    }
+
+    function drawDynamicEdge(d: string) {
+      if (!dynEdges) return;
+      const ns = 'http://www.w3.org/2000/svg';
+      const path = document.createElementNS(ns, 'path');
+      path.setAttribute('d', d);
+      dynEdges.appendChild(path);
+      animate(svg.createDrawable(path), { draw: ['0 0', '0 1'], duration: 550, ease: 'outExpo' });
+    }
+
+    // Inspector de clic en cualquier nodo del diagrama
+    svgEl?.addEventListener('click', (e) => {
+      const node = (e.target as Element).closest<SVGGElement>('[data-h29-commit-item]');
+      if (!node) return;
+      clearHeadMarks();
+      node.classList.add('is-head');
+      const sha = node.dataset.sha || '';
+      const br = node.dataset.branch || 'main';
+      const msg = node.dataset.msg || '';
+      if (detailEl) detailEl.textContent = `[${sha}] (${br}) — ${msg}`;
+      const c = node.querySelector('circle');
+      if (c) animate(c, { r: [12, 8.5], duration: 320, ease: 'outBack' });
+    });
+
+    h.querySelector('[data-h29-commit-main]')?.addEventListener('click', () => {
+      const nextX = Math.min(825, mainX + 75);
+      if (nextX === mainX) mainX = 520;
+      const sha = Math.random().toString(16).slice(2, 9);
+      drawDynamicEdge(`M ${mainX},45 L ${nextX},45`);
+      mainX = nextX;
+      commitCount++;
+      createSvgCommitNode(mainX, 45, sha, 'main', 'feat(core): sincronización directa en main');
+      updateHeadSummary('main');
+    });
+
+    h.querySelector('[data-h29-commit-feat]')?.addEventListener('click', () => {
+      const startX = Math.max(featX, mainX - 60);
+      const nextX = Math.min(810, startX + 75);
+      const sha = Math.random().toString(16).slice(2, 9);
+      if (featX === 380) {
+        // Nueva bifurcación desde main hacia feat/anime
+        drawDynamicEdge(`M ${mainX},45 C ${mainX + 28},45 ${nextX - 28},175 ${nextX},175`);
+      } else {
+        drawDynamicEdge(`M ${featX},175 L ${nextX},175`);
+      }
+      featX = nextX;
+      commitCount++;
+      createSvgCommitNode(featX, 175, sha, 'feat/anime', 'feat(anime): nueva curva cinética SVG');
+      updateHeadSummary('feat/anime');
+    });
+
+    h.querySelector('[data-h29-merge]')?.addEventListener('click', () => {
+      const mergeX = Math.min(830, Math.max(mainX, featX) + 70);
+      const sha = Math.random().toString(16).slice(2, 9);
+      drawDynamicEdge(`M ${mainX},45 L ${mergeX},45`);
+      drawDynamicEdge(`M ${featX},175 C ${featX + 30},175 ${mergeX - 30},45 ${mergeX},45`);
+      mainX = mergeX;
+      commitCount++;
+      createSvgCommitNode(mainX, 45, sha, 'main', 'merge: pull request #42 desde feat/anime');
+      updateHeadSummary('main');
+    });
+
+    h.querySelector('[data-h29-tag]')?.addEventListener('click', () => {
+      tagVersion++;
+      const tagStr = `v4.${tagVersion}.0`;
+      const sha = Math.random().toString(16).slice(2, 9);
+      const nextX = Math.min(830, mainX + 65);
+      drawDynamicEdge(`M ${mainX},45 L ${nextX},45`);
+      mainX = nextX;
+      commitCount++;
+      createSvgCommitNode(mainX, 45, sha, 'main', `release: publicación oficial ${tagStr}`, tagStr);
+      if (tagBadge) tagBadge.textContent = `TAG: ${tagStr}`;
+      updateHeadSummary('main');
+    });
+
+    h.querySelector('[data-h29-reset]')?.addEventListener('click', () => {
+      if (dynEdges) dynEdges.innerHTML = '';
+      if (dynNodes) dynNodes.innerHTML = '';
+      mainX = 580;
+      featX = 380;
+      commitCount = 9;
+      tagVersion = 2;
+      clearHeadMarks();
+      const baseNodes = svgEl?.querySelectorAll('.git-svg-node');
+      baseNodes?.[baseNodes.length - 1]?.classList.add('is-head');
+      if (tagBadge) tagBadge.textContent = 'TAG: v4.2.0';
+      if (detailEl) detailEl.textContent = '[7e3b9c4] (main) — deploy: .vercel/output static build ready';
+      updateHeadSummary('main');
+      if (baseEdges.length) {
+        animate(svg.createDrawable(baseEdges), {
+          draw: ['0 0', '0 1'],
+          duration: 850,
+          delay: stagger(100),
+          ease: 'outQuart'
+        });
+      }
+    });
+  });
+
+  // H30: Radar Sonar Táctico de 360°
+  document.querySelectorAll<HTMLElement>('[data-hyb-30]').forEach((h) => {
+    const sweep = h.querySelector<HTMLElement>('[data-h30-sweep]');
+    const blips = h.querySelectorAll<HTMLElement>('[data-h30-blip]');
+    const status = h.querySelector('[data-h30-status]');
+
+    if (sweep) {
+      animate(sweep, { rotate: '1turn', duration: 2800, ease: 'linear', loop: true });
+    }
+
+    h.querySelector('[data-h30-scan]')?.addEventListener('click', () => {
+      animate(blips, { scale: [0.4, 1.6, 1], opacity: [0.2, 1], delay: stagger(120), duration: 500, ease: 'outBack' });
+      if (status) status.textContent = 'SONAR ACTIVO // 3 CONTACTOS DETECTADOS CON PRECISIÓN';
+    });
+
+    h.querySelector('[data-h30-intercept]')?.addEventListener('click', () => {
+      animate(blips, { scale: [1, 2.2, 0], opacity: [1, 0], delay: stagger(100), duration: 460, ease: 'outExpo' });
+      if (status) status.textContent = 'AMENAZAS NEUTRALIZADAS · ESPACIO DESPEJADO';
+    });
+  });
+
+  // 7. Selector Desplegable Exclusivo para el Código de cada Framework
+  document.querySelectorAll<HTMLElement>('[data-variant-card]').forEach((card) => {
+    const fwSelect = card.querySelector<HTMLSelectElement>('[data-unit-fw-select]');
+    const panels = card.querySelectorAll<HTMLElement>('[data-fw-panel]');
+    const pathEl = card.querySelector<HTMLElement>('[data-unit-path]');
+    const cpEl = card.querySelector<HTMLElement>('[data-unit-cp]');
+    const toggleBtn = card.querySelector<HTMLButtonElement>('[data-toggle-code]');
+    const drawer = card.querySelector<HTMLElement>('[data-code-drawer]');
+    const copyBtn = card.querySelector<HTMLButtonElement>('[data-copy-unit-code]');
+    const copyLabel = card.querySelector<HTMLElement>('[data-copy-label]');
+
+    fwSelect?.addEventListener('change', () => {
+      const fwId = fwSelect.value;
+      panels.forEach((p) => {
+        const active = p.dataset.fwPanel === fwId;
+        p.classList.toggle('is-active', active);
+        if (active && p.dataset.filePath) {
+          if (pathEl) pathEl.textContent = p.dataset.filePath;
+          if (cpEl) cpEl.textContent = `cp ${p.dataset.filePath} ./tu-proyecto/`;
+        }
+      });
+    });
+
+    toggleBtn?.addEventListener('click', () => {
+      drawer?.classList.toggle('is-collapsed');
+    });
+
+    copyBtn?.addEventListener('click', async () => {
+      const activeCode = card.querySelector('.unit-code-block.is-active code');
+      if (!activeCode) return;
+      await navigator.clipboard.writeText(activeCode.textContent || '');
+      if (copyLabel) {
+        const prev = copyLabel.textContent;
+        copyLabel.textContent = '¡Código Copiado!';
+        setTimeout(() => {
+          copyLabel.textContent = prev;
+        }, 1400);
+      }
+    });
+  });
+</script>
+
+<style>
+  .workbench {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  /* Barra de Salto Rápido a cada Variante en la Página */
+  .variant-jump-strip {
+    padding: 0.9rem 1.25rem;
+    background: var(--cxd-bg-surface);
+    border: 1px solid var(--cxd-border);
+    border-radius: var(--cxd-radius-md);
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+  }
+
+  .variant-jump-strip__label {
+    font-family: var(--cxd-font-mono);
+    font-size: 0.7rem;
+    color: var(--cxd-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .variant-jump-strip__pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+  }
+
+  .jump-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.35rem 0.7rem;
+    background: var(--cxd-bg-base);
+    border: 1px solid var(--cxd-border-strong);
+    border-radius: var(--cxd-radius-sm);
+    color: var(--cxd-text-secondary);
+    text-decoration: none;
+    font-size: 0.76rem;
+    font-weight: 500;
+    transition: all 140ms ease;
+  }
+
+  .jump-pill:hover {
+    border-color: var(--cxd-accent);
+    color: var(--cxd-text-primary);
+    background: var(--cxd-bg-hover);
+  }
+
+  .jump-pill__num {
+    font-family: var(--cxd-font-mono);
+    font-size: 0.66rem;
+    color: var(--cxd-accent);
+    font-weight: 700;
+  }
+
+  /* Pila de Variantes en Ancho Completo */
+  .variant-full-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 2.75rem;
+  }
+
+  .variant-showcase-block {
+    background: var(--cxd-bg-surface);
+    border: var(--cxd-border-width, 1px) solid var(--cxd-border-strong);
+    border-radius: var(--cxd-radius-lg);
+    overflow: hidden;
+    box-shadow: var(--cxd-shadow-sm);
+  }
+
+  .variant-showcase-block__head {
+    padding: 1.25rem 1.5rem;
+    background: var(--cxd-bg-elevated);
+    border-bottom: 1px solid var(--cxd-border);
+  }
+
+  .variant-index-badge {
+    font-family: var(--cxd-font-mono);
+    font-size: 0.68rem;
+    font-weight: 600;
+    color: var(--cxd-accent);
+    display: block;
+    margin-bottom: 0.25rem;
+    letter-spacing: 0.06em;
+  }
+
+  .variant-head-main h2 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  .variant-head-main p {
+    font-size: 0.86rem;
+    color: var(--cxd-text-secondary);
+    margin-top: 0.3rem;
+    max-width: 880px;
+  }
+
+  .variant-showcase-block__stage {
+    padding: 2rem 1.5rem;
+    background: var(--cxd-bg-base);
+    border-bottom: 1px solid var(--cxd-border);
+  }
+
+  .variant-showcase-block__codebar {
+    padding: 0.85rem 1.5rem;
+    background: var(--cxd-bg-elevated);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .codebar-left {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .codebar-path {
+    font-family: var(--cxd-font-mono);
+    font-size: 0.72rem;
+    color: var(--cxd-text-muted);
+    background: var(--cxd-bg-base);
+    padding: 0.3rem 0.6rem;
+    border-radius: var(--cxd-radius-sm);
+    border: 1px solid var(--cxd-border);
+  }
+
+  .codebar-actions {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .unit-action-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.42rem 0.8rem;
+    background: var(--cxd-bg-base);
+    color: var(--cxd-text-primary);
+    border: 1px solid var(--cxd-border-strong);
+    border-radius: var(--cxd-radius-sm);
+    font-family: var(--cxd-font-mono);
+    font-size: 0.73rem;
+    font-weight: 500;
+    cursor: pointer;
+  }
+
+  .unit-action-btn--primary {
+    background: var(--cxd-accent);
+    color: var(--cxd-accent-fg, #000);
+    border-color: var(--cxd-accent);
+    font-weight: 600;
+  }
+
+  .variant-unit__code-drawer {
+    border-top: 1px solid var(--cxd-border);
+    background: #07080a;
+  }
+
+  .variant-unit__code-drawer.is-collapsed {
+    display: none;
+  }
+
+  .code-drawer__meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    padding: 0.55rem 1.5rem;
+    background: #0d0f13;
+    border-bottom: 1px solid #1e222a;
+    font-family: var(--cxd-font-mono);
+    font-size: 0.72rem;
+    color: #a1a1aa;
+  }
+
+  .mono-cp {
+    color: #e4e4e7;
+  }
+
+  .unit-code-block {
+    display: none;
+    max-height: 300px;
+    overflow: auto;
+    padding: 1rem 1.5rem;
+    font-family: var(--cxd-font-mono);
+    font-size: 0.75rem;
+    line-height: 1.58;
+    color: #e4e4e7;
+  }
+
+  .unit-code-block.is-active {
+    display: block;
+  }
+</style>

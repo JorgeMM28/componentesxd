@@ -1,0 +1,15 @@
+/**
+ * ============================================================================
+ * COMPONENTESXD — BADGES, TIMELINES, ACORDEONES Y MICRO-UI
+ * Variante 03 — Medidores Circulares SVG con Control Deslizante en Vivo
+ * Archivo: components/badges-data/variants/interactive-svg-gauges/styles.css
+ * ============================================================================
+ */
+.cxd-badges-data-interactive-svg-gauges {
+  background: var(--cxd-bg-surface);
+  color: var(--cxd-text-primary);
+  border: var(--cxd-border-width, 1px) solid var(--cxd-border);
+  border-radius: var(--cxd-radius-md);
+  font-family: var(--cxd-font-sans);
+  font-variant-numeric: tabular-nums;
+}

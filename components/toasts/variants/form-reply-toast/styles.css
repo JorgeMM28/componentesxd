@@ -1,0 +1,15 @@
+/**
+ * ============================================================================
+ * COMPONENTESXD — TOASTERS Y NOTIFICACIONES
+ * Variante 04 — Toaster con Formulario de Respuesta Rápida
+ * Archivo: components/toasts/variants/form-reply-toast/styles.css
+ * ============================================================================
+ */
+.cxd-toasts-form-reply-toast {
+  background: var(--cxd-bg-surface);
+  color: var(--cxd-text-primary);
+  border: var(--cxd-border-width, 1px) solid var(--cxd-border);
+  border-radius: var(--cxd-radius-md);
+  font-family: var(--cxd-font-sans);
+  font-variant-numeric: tabular-nums;
+}

@@ -1,0 +1,15 @@
+/**
+ * ============================================================================
+ * COMPONENTESXD — ACORDEONES, COMPARADORES BEFORE/AFTER, KANBAN Y CONMUTADORES
+ * Variante 03 — Comparador Visual Before / After con Cortina Deslizable
+ * Archivo: components/accordions-tabs/variants/before-after-split/styles.css
+ * ============================================================================
+ */
+.cxd-accordions-tabs-before-after-split {
+  background: var(--cxd-bg-surface);
+  color: var(--cxd-text-primary);
+  border: var(--cxd-border-width, 1px) solid var(--cxd-border);
+  border-radius: var(--cxd-radius-md);
+  font-family: var(--cxd-font-sans);
+  font-variant-numeric: tabular-nums;
+}

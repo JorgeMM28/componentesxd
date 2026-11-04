@@ -1,0 +1,15 @@
+/**
+ * ============================================================================
+ * COMPONENTESXD — MODALES, DIÁLOGOS Y COMMAND PALETTES
+ * Variante 04 — Modal con Formulario de Creación de Proyecto
+ * Archivo: components/modals/variants/form-creation-modal/styles.css
+ * ============================================================================
+ */
+.cxd-modals-form-creation-modal {
+  background: var(--cxd-bg-surface);
+  color: var(--cxd-text-primary);
+  border: var(--cxd-border-width, 1px) solid var(--cxd-border);
+  border-radius: var(--cxd-radius-md);
+  font-family: var(--cxd-font-sans);
+  font-variant-numeric: tabular-nums;
+}

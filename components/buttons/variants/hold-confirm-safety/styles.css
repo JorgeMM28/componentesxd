@@ -1,0 +1,15 @@
+/**
+ * ============================================================================
+ * COMPONENTESXD — BOTONES Y CONTROLES DE ACCIÓN
+ * Variante 05 — Botón con Seguridad Hold-to-Confirm (Mantener Presionado)
+ * Archivo: components/buttons/variants/hold-confirm-safety/styles.css
+ * ============================================================================
+ */
+.cxd-buttons-hold-confirm-safety {
+  background: var(--cxd-bg-surface);
+  color: var(--cxd-text-primary);
+  border: var(--cxd-border-width, 1px) solid var(--cxd-border);
+  border-radius: var(--cxd-radius-md);
+  font-family: var(--cxd-font-sans);
+  font-variant-numeric: tabular-nums;
+}

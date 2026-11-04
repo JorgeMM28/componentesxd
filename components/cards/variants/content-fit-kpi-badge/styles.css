@@ -1,0 +1,15 @@
+/**
+ * ============================================================================
+ * COMPONENTESXD — TARJETAS Y CONTENEDORES
+ * Variante 07 — Tarjeta Content-Fit Compacta de Telemetría
+ * Archivo: components/cards/variants/content-fit-kpi-badge/styles.css
+ * ============================================================================
+ */
+.cxd-cards-content-fit-kpi-badge {
+  background: var(--cxd-bg-surface);
+  color: var(--cxd-text-primary);
+  border: var(--cxd-border-width, 1px) solid var(--cxd-border);
+  border-radius: var(--cxd-radius-md);
+  font-family: var(--cxd-font-sans);
+  font-variant-numeric: tabular-nums;
+}

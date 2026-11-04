@@ -1,0 +1,15 @@
+/**
+ * ============================================================================
+ * COMPONENTESXD — TABLAS DE DATOS
+ * Variante 10 — Tabla Industrial Cebra con Pie de Sumatoria
+ * Archivo: components/tables/variants/brutalist-ledger/styles.css
+ * ============================================================================
+ */
+.cxd-tables-brutalist-ledger {
+  background: var(--cxd-bg-surface);
+  color: var(--cxd-text-primary);
+  border: var(--cxd-border-width, 1px) solid var(--cxd-border);
+  border-radius: var(--cxd-radius-md);
+  font-family: var(--cxd-font-sans);
+  font-variant-numeric: tabular-nums;
+}

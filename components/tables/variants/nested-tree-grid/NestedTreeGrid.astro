@@ -1,0 +1,32 @@
+---
+/**
+ * ============================================================================
+ * COMPONENTESXD — 02. Hierarchical Tree & Sub-Row Table (ASTRO 5)
+ * Archivo: components/tables/variants/nested-tree-grid/NestedTreeGrid.astro
+ * ============================================================================
+ */
+import './styles.css';
+
+interface Props {
+  title?: string;
+  badge?: string;
+  interfaceTheme?: string;
+}
+
+const {
+  title = '02. Hierarchical Tree & Sub-Row Table',
+  badge = 'TREE / EXPANDABLE',
+  interfaceTheme
+} = Astro.props;
+---
+
+<section class="cxd-tables-nested-tree-grid" data-theme={interfaceTheme} data-variant="nested-tree-grid">
+  <header class="cxd-tables-nested-tree-grid__header">
+    <span>{title}</span>
+    <span class="cxd-badge">{badge}</span>
+  </header>
+  <div class="cxd-tables-nested-tree-grid__body">
+    <p>Tabla jerárquica con filas padre/hijo desplegables para desglose de clusters, microservicios, carpetas o centros de costos.</p>
+    <slot />
+  </div>
+</section>

@@ -1,0 +1,32 @@
+---
+/**
+ * ============================================================================
+ * COMPONENTESXD — 02. Multi-Tenant Breadcrumb + Context Switcher (ASTRO 5)
+ * Archivo: components/navigation/variants/dropdown-breadcrumb-bar/DropdownBreadcrumbBar.astro
+ * ============================================================================
+ */
+import './styles.css';
+
+interface Props {
+  title?: string;
+  badge?: string;
+  interfaceTheme?: string;
+}
+
+const {
+  title = '02. Multi-Tenant Breadcrumb + Context Switcher',
+  badge = 'BREADCRUMBS',
+  interfaceTheme
+} = Astro.props;
+---
+
+<section class="cxd-navigation-dropdown-breadcrumb-bar" data-theme={interfaceTheme} data-variant="dropdown-breadcrumb-bar">
+  <header class="cxd-navigation-dropdown-breadcrumb-bar__header">
+    <span>{title}</span>
+    <span class="cxd-badge">{badge}</span>
+  </header>
+  <div class="cxd-navigation-dropdown-breadcrumb-bar__body">
+    <p>Ruta de navegación estilo Vercel/GitHub con listas desplegables para cambiar organización, proyecto o rama.</p>
+    <slot />
+  </div>
+</section>

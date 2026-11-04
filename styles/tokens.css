@@ -1,0 +1,325 @@
+/**
+ * ============================================================================
+ * COMPONENTESXD — ARCHITECTURAL DESIGN SYSTEM & 12 INTERFACE ENGINES
+ * Archivo: styles/tokens.css
+ * ============================================================================
+ * Estética de ingeniería de diseño (inspirada en Geist, Swiss Grid, Teenage
+ * Engineering, Carbon y Linear). Cero gradientes genéricos; precisión
+ * tipográfica tabular, bordes estructurales de 1px y 12 interfaces completas.
+ */
+
+:root,
+[data-theme="geist-dark"] {
+  --cxd-bg-base: #000000;
+  --cxd-bg-surface: #0a0a0a;
+  --cxd-bg-elevated: #111111;
+  --cxd-bg-glass: rgba(10, 10, 10, 0.86);
+  --cxd-bg-hover: #161616;
+  --cxd-bg-active: #1f1f1f;
+  --cxd-text-primary: #ededed;
+  --cxd-text-secondary: #a1a1aa;
+  --cxd-text-muted: #666666;
+  --cxd-text-inverse: #000000;
+  --cxd-accent: #ededed;
+  --cxd-accent-fg: #000000;
+  --cxd-accent-hover: #ffffff;
+  --cxd-accent-glow: rgba(255, 255, 255, 0.12);
+  --cxd-accent-secondary: #0070f3;
+  --cxd-success: #10b981;
+  --cxd-success-bg: rgba(16, 185, 129, 0.1);
+  --cxd-warning: #f59e0b;
+  --cxd-warning-bg: rgba(245, 158, 11, 0.1);
+  --cxd-danger: #ef4444;
+  --cxd-danger-bg: rgba(239, 68, 68, 0.1);
+  --cxd-border: #1f1f1f;
+  --cxd-border-strong: #333333;
+  --cxd-border-width: 1px;
+  --cxd-radius-sm: 4px;
+  --cxd-radius-md: 6px;
+  --cxd-radius-lg: 8px;
+  --cxd-radius-pill: 9999px;
+  --cxd-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.8);
+  --cxd-shadow-md: 0 8px 24px rgba(0, 0, 0, 0.85);
+  --cxd-shadow-lg: 0 20px 48px rgba(0, 0, 0, 0.92);
+  --cxd-font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --cxd-font-mono: 'JetBrains Mono', monospace;
+  --cxd-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --cxd-ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --cxd-duration-fast: 140ms;
+  --cxd-duration-base: 240ms;
+}
+
+/* 02. Swiss International Editorial Grid (Light) */
+[data-theme="swiss-editorial"] {
+  --cxd-bg-base: #f5f4f0;
+  --cxd-bg-surface: #ffffff;
+  --cxd-bg-elevated: #ebe9e2;
+  --cxd-bg-glass: rgba(245, 244, 240, 0.92);
+  --cxd-bg-hover: #eceae3;
+  --cxd-bg-active: #e2dfd6;
+  --cxd-text-primary: #111111;
+  --cxd-text-secondary: #4a4a48;
+  --cxd-text-muted: #787774;
+  --cxd-text-inverse: #ffffff;
+  --cxd-accent: #ff3b00;
+  --cxd-accent-fg: #ffffff;
+  --cxd-accent-hover: #d93200;
+  --cxd-accent-glow: rgba(255, 59, 0, 0.15);
+  --cxd-accent-secondary: #111111;
+  --cxd-border: #d4d2c8;
+  --cxd-border-strong: #111111;
+  --cxd-border-width: 1px;
+  --cxd-radius-sm: 0px;
+  --cxd-radius-md: 0px;
+  --cxd-radius-lg: 0px;
+  --cxd-shadow-sm: none;
+  --cxd-shadow-md: none;
+  --cxd-shadow-lg: 0 12px 32px rgba(17, 17, 17, 0.08);
+}
+
+/* 03. Teenage Engineering Field Industrial */
+[data-theme="teenage-industrial"] {
+  --cxd-bg-base: #dcdbd6;
+  --cxd-bg-surface: #e8e7e3;
+  --cxd-bg-elevated: #cfceca;
+  --cxd-bg-glass: rgba(232, 231, 227, 0.92);
+  --cxd-bg-hover: #d4d3ce;
+  --cxd-bg-active: #c4c3be;
+  --cxd-text-primary: #141414;
+  --cxd-text-secondary: #3d3d3d;
+  --cxd-text-muted: #6e6e6e;
+  --cxd-text-inverse: #ffffff;
+  --cxd-accent: #ff5000;
+  --cxd-accent-fg: #ffffff;
+  --cxd-accent-hover: #e04600;
+  --cxd-accent-glow: rgba(255, 80, 0, 0.22);
+  --cxd-accent-secondary: #141414;
+  --cxd-border: #b5b4ae;
+  --cxd-border-strong: #141414;
+  --cxd-border-width: 1px;
+  --cxd-radius-sm: 3px;
+  --cxd-radius-md: 4px;
+  --cxd-radius-lg: 6px;
+  --cxd-shadow-sm: inset 0 1px 0 #ffffff, 0 1px 2px rgba(0, 0, 0, 0.12);
+  --cxd-shadow-md: inset 0 1px 0 #ffffff, 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+/* 04. Linear Precision Obsidian */
+[data-theme="linear-obsidian"] {
+  --cxd-bg-base: #08090a;
+  --cxd-bg-surface: #0f1012;
+  --cxd-bg-elevated: #16181b;
+  --cxd-bg-glass: rgba(15, 16, 18, 0.82);
+  --cxd-bg-hover: #1b1d21;
+  --cxd-bg-active: #23262b;
+  --cxd-text-primary: #f7f8f8;
+  --cxd-text-secondary: #8a8f98;
+  --cxd-text-muted: #575c66;
+  --cxd-text-inverse: #08090a;
+  --cxd-accent: #5e6ad2;
+  --cxd-accent-fg: #ffffff;
+  --cxd-accent-hover: #6e7ae2;
+  --cxd-accent-glow: rgba(94, 106, 210, 0.28);
+  --cxd-accent-secondary: #26b5ce;
+  --cxd-border: #1e2025;
+  --cxd-border-strong: #2c2f36;
+  --cxd-radius-sm: 5px;
+  --cxd-radius-md: 7px;
+  --cxd-radius-lg: 10px;
+}
+
+/* 05. IBM Carbon Industrial Dark */
+[data-theme="carbon-ibm"] {
+  --cxd-bg-base: #161616;
+  --cxd-bg-surface: #262626;
+  --cxd-bg-elevated: #393939;
+  --cxd-bg-glass: rgba(38, 38, 38, 0.92);
+  --cxd-bg-hover: #353535;
+  --cxd-bg-active: #4c4c4c;
+  --cxd-text-primary: #f4f4f4;
+  --cxd-text-secondary: #c6c6c6;
+  --cxd-text-muted: #8d8d8d;
+  --cxd-text-inverse: #161616;
+  --cxd-accent: #0f62fe;
+  --cxd-accent-fg: #ffffff;
+  --cxd-accent-hover: #0353e9;
+  --cxd-accent-glow: rgba(15, 98, 254, 0.3);
+  --cxd-accent-secondary: #3ddbd9;
+  --cxd-border: #393939;
+  --cxd-border-strong: #6f6f6f;
+  --cxd-radius-sm: 0px;
+  --cxd-radius-md: 0px;
+  --cxd-radius-lg: 0px;
+}
+
+/* 06. Bauhaus Neo-Brutalist */
+[data-theme="bauhaus-brutalist"] {
+  --cxd-bg-base: #0d0d0d;
+  --cxd-bg-surface: #151515;
+  --cxd-bg-elevated: #202020;
+  --cxd-bg-glass: #151515;
+  --cxd-bg-hover: #252525;
+  --cxd-bg-active: #c8ff00;
+  --cxd-text-primary: #ffffff;
+  --cxd-text-secondary: #d4d4d4;
+  --cxd-text-muted: #888888;
+  --cxd-text-inverse: #000000;
+  --cxd-accent: #c8ff00;
+  --cxd-accent-fg: #000000;
+  --cxd-accent-hover: #d8ff4d;
+  --cxd-accent-glow: rgba(200, 255, 0, 0.25);
+  --cxd-accent-secondary: #ff3e00;
+  --cxd-border: #ffffff;
+  --cxd-border-strong: #c8ff00;
+  --cxd-border-width: 2px;
+  --cxd-radius-sm: 0px;
+  --cxd-radius-md: 2px;
+  --cxd-radius-lg: 4px;
+  --cxd-shadow-sm: 3px 3px 0px #ffffff;
+  --cxd-shadow-md: 4px 4px 0px #c8ff00;
+}
+
+/* 07. Tokyo Night Telemetry */
+[data-theme="tokyo-telemetry"] {
+  --cxd-bg-base: #0b0e14;
+  --cxd-bg-surface: #0f141c;
+  --cxd-bg-elevated: #151b26;
+  --cxd-bg-glass: rgba(15, 20, 28, 0.88);
+  --cxd-bg-hover: #19212e;
+  --cxd-bg-active: #1f293a;
+  --cxd-text-primary: #e6e1cf;
+  --cxd-text-secondary: #959cbd;
+  --cxd-text-muted: #5c6773;
+  --cxd-accent: #39bae6;
+  --cxd-accent-fg: #0b0e14;
+  --cxd-accent-hover: #59c2ff;
+  --cxd-accent-glow: rgba(57, 186, 230, 0.22);
+  --cxd-accent-secondary: #7fd962;
+  --cxd-border: #1d2533;
+  --cxd-border-strong: #2d3b52;
+  --cxd-radius-sm: 4px;
+  --cxd-radius-md: 6px;
+  --cxd-radius-lg: 8px;
+}
+
+/* 08. Nordic Studio Paper (Light) */
+[data-theme="nordic-paper"] {
+  --cxd-bg-base: #faf9f5;
+  --cxd-bg-surface: #ffffff;
+  --cxd-bg-elevated: #f1efe8;
+  --cxd-bg-glass: rgba(255, 255, 255, 0.9);
+  --cxd-bg-hover: #f3f1ea;
+  --cxd-bg-active: #e7e4da;
+  --cxd-text-primary: #1c1e1c;
+  --cxd-text-secondary: #525753;
+  --cxd-text-muted: #878c88;
+  --cxd-text-inverse: #ffffff;
+  --cxd-accent: #1b4332;
+  --cxd-accent-fg: #ffffff;
+  --cxd-accent-hover: #2d6a4f;
+  --cxd-accent-glow: rgba(27, 67, 50, 0.14);
+  --cxd-accent-secondary: #d97706;
+  --cxd-border: #e2dfd5;
+  --cxd-border-strong: #b8b4a6;
+  --cxd-radius-sm: 4px;
+  --cxd-radius-md: 6px;
+  --cxd-radius-lg: 8px;
+}
+
+/* 09. Aerospace Avionics HUD */
+[data-theme="aerospace-hud"] {
+  --cxd-bg-base: #050608;
+  --cxd-bg-surface: #0b0d10;
+  --cxd-bg-elevated: #12151a;
+  --cxd-bg-glass: rgba(11, 13, 16, 0.9);
+  --cxd-bg-hover: #181c22;
+  --cxd-bg-active: #241d0a;
+  --cxd-text-primary: #ffb000;
+  --cxd-text-secondary: #cc8d00;
+  --cxd-text-muted: #735000;
+  --cxd-text-inverse: #050608;
+  --cxd-accent: #ffb000;
+  --cxd-accent-fg: #050608;
+  --cxd-accent-hover: #ffc233;
+  --cxd-accent-glow: rgba(255, 176, 0, 0.24);
+  --cxd-accent-secondary: #00e5ff;
+  --cxd-border: rgba(255, 176, 0, 0.22);
+  --cxd-border-strong: rgba(255, 176, 0, 0.55);
+  --cxd-radius-sm: 2px;
+  --cxd-radius-md: 3px;
+  --cxd-radius-lg: 4px;
+}
+
+/* 10. Fintech Emerald Institutional */
+[data-theme="fintech-emerald"] {
+  --cxd-bg-base: #040907;
+  --cxd-bg-surface: #08120e;
+  --cxd-bg-elevated: #0e1f18;
+  --cxd-bg-glass: rgba(8, 18, 14, 0.88);
+  --cxd-bg-hover: #132a21;
+  --cxd-bg-active: #18362a;
+  --cxd-text-primary: #ecfdf5;
+  --cxd-text-secondary: #86efac;
+  --cxd-text-muted: #34d399;
+  --cxd-text-inverse: #040907;
+  --cxd-accent: #10b981;
+  --cxd-accent-fg: #040907;
+  --cxd-accent-hover: #34d399;
+  --cxd-accent-glow: rgba(16, 185, 129, 0.25);
+  --cxd-accent-secondary: #eab308;
+  --cxd-border: #142e24;
+  --cxd-border-strong: #1f4738;
+  --cxd-radius-sm: 5px;
+  --cxd-radius-md: 8px;
+  --cxd-radius-lg: 10px;
+}
+
+/* 11. Solarized Warm Studio */
+[data-theme="solarized-craft"] {
+  --cxd-bg-base: #00212b;
+  --cxd-bg-surface: #002b36;
+  --cxd-bg-elevated: #073642;
+  --cxd-bg-glass: rgba(0, 43, 54, 0.9);
+  --cxd-bg-hover: #0a3f4d;
+  --cxd-bg-active: #0f4c5c;
+  --cxd-text-primary: #fdf6e3;
+  --cxd-text-secondary: #93a1a1;
+  --cxd-text-muted: #657b83;
+  --cxd-text-inverse: #002b36;
+  --cxd-accent: #2aa198;
+  --cxd-accent-fg: #00212b;
+  --cxd-accent-hover: #35bdb2;
+  --cxd-accent-glow: rgba(42, 161, 152, 0.25);
+  --cxd-accent-secondary: #b58900;
+  --cxd-border: #094352;
+  --cxd-border-strong: #2aa198;
+  --cxd-radius-sm: 4px;
+  --cxd-radius-md: 6px;
+  --cxd-radius-lg: 8px;
+}
+
+/* 12. Ceramic Tactile Daylight */
+[data-theme="ceramic-light"] {
+  --cxd-bg-base: #eef0f4;
+  --cxd-bg-surface: #f8f9fb;
+  --cxd-bg-elevated: #e3e6ec;
+  --cxd-bg-glass: rgba(248, 249, 251, 0.9);
+  --cxd-bg-hover: #e6e9ef;
+  --cxd-bg-active: #dadfe7;
+  --cxd-text-primary: #0f172a;
+  --cxd-text-secondary: #475569;
+  --cxd-text-muted: #94a3b8;
+  --cxd-text-inverse: #ffffff;
+  --cxd-accent: #0f172a;
+  --cxd-accent-fg: #ffffff;
+  --cxd-accent-hover: #1e293b;
+  --cxd-accent-glow: rgba(15, 23, 42, 0.12);
+  --cxd-accent-secondary: #2563eb;
+  --cxd-border: #d5dae2;
+  --cxd-border-strong: #94a3b8;
+  --cxd-radius-sm: 6px;
+  --cxd-radius-md: 8px;
+  --cxd-radius-lg: 12px;
+  --cxd-shadow-sm: 0 2px 4px rgba(15, 23, 42, 0.04), inset 0 1px 0 #ffffff;
+  --cxd-shadow-md: 0 8px 20px rgba(15, 23, 42, 0.06), inset 0 1px 0 #ffffff;
+}

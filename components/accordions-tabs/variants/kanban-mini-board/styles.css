@@ -1,0 +1,15 @@
+/**
+ * ============================================================================
+ * COMPONENTESXD — ACORDEONES, COMPARADORES BEFORE/AFTER, KANBAN Y CONMUTADORES
+ * Variante 04 — Tablero Kanban Interactivo (Mover Tareas entre Columnas en Vivo)
+ * Archivo: components/accordions-tabs/variants/kanban-mini-board/styles.css
+ * ============================================================================
+ */
+.cxd-accordions-tabs-kanban-mini-board {
+  background: var(--cxd-bg-surface);
+  color: var(--cxd-text-primary);
+  border: var(--cxd-border-width, 1px) solid var(--cxd-border);
+  border-radius: var(--cxd-radius-md);
+  font-family: var(--cxd-font-sans);
+  font-variant-numeric: tabular-nums;
+}

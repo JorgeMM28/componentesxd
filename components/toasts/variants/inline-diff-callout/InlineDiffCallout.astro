@@ -1,0 +1,32 @@
+---
+/**
+ * ============================================================================
+ * COMPONENTESXD — 06. Architectural Callout & Warning Block (ASTRO 5)
+ * Archivo: components/toasts/variants/inline-diff-callout/InlineDiffCallout.astro
+ * ============================================================================
+ */
+import './styles.css';
+
+interface Props {
+  title?: string;
+  badge?: string;
+  interfaceTheme?: string;
+}
+
+const {
+  title = '06. Architectural Callout & Warning Block',
+  badge = 'CALLOUT BOX',
+  interfaceTheme
+} = Astro.props;
+---
+
+<section class="cxd-toasts-inline-diff-callout" data-theme={interfaceTheme} data-variant="inline-diff-callout">
+  <header class="cxd-toasts-inline-diff-callout__header">
+    <span>{title}</span>
+    <span class="cxd-badge">{badge}</span>
+  </header>
+  <div class="cxd-toasts-inline-diff-callout__body">
+    <p>Bloque de alerta embebido con borde lateral de precisión, icono SVG técnico y acciones correctivas.</p>
+    <slot />
+  </div>
+</section>

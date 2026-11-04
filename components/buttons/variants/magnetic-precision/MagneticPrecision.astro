@@ -1,0 +1,32 @@
+---
+/**
+ * ============================================================================
+ * COMPONENTESXD — 01. Magnetic Cursor-Tracking Button (ASTRO 5)
+ * Archivo: components/buttons/variants/magnetic-precision/MagneticPrecision.astro
+ * ============================================================================
+ */
+import './styles.css';
+
+interface Props {
+  title?: string;
+  badge?: string;
+  interfaceTheme?: string;
+}
+
+const {
+  title = '01. Magnetic Cursor-Tracking Button',
+  badge = 'MAGNETIC',
+  interfaceTheme
+} = Astro.props;
+---
+
+<section class="cxd-buttons-magnetic-precision" data-theme={interfaceTheme} data-variant="magnetic-precision">
+  <header class="cxd-buttons-magnetic-precision__header">
+    <span>{title}</span>
+    <span class="cxd-badge">{badge}</span>
+  </header>
+  <div class="cxd-buttons-magnetic-precision__body">
+    <p>Calcula el centro geométrico y aplica traslación proporcional al cursor con retorno elástico.</p>
+    <slot />
+  </div>
+</section>

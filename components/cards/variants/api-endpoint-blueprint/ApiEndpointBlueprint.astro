@@ -1,0 +1,32 @@
+---
+/**
+ * ============================================================================
+ * COMPONENTESXD — 03. REST / GraphQL Endpoint Spec Card (ASTRO 5)
+ * Archivo: components/cards/variants/api-endpoint-blueprint/ApiEndpointBlueprint.astro
+ * ============================================================================
+ */
+import './styles.css';
+
+interface Props {
+  title?: string;
+  badge?: string;
+  interfaceTheme?: string;
+}
+
+const {
+  title = '03. REST / GraphQL Endpoint Spec Card',
+  badge = 'API SPEC',
+  interfaceTheme
+} = Astro.props;
+---
+
+<section class="cxd-cards-api-endpoint-blueprint" data-theme={interfaceTheme} data-variant="api-endpoint-blueprint">
+  <header class="cxd-cards-api-endpoint-blueprint__header">
+    <span>{title}</span>
+    <span class="cxd-badge">{badge}</span>
+  </header>
+  <div class="cxd-cards-api-endpoint-blueprint__body">
+    <p>Muestra método HTTP, ruta parametrizada, latencia media y esquema de respuesta con botón de prueba.</p>
+    <slot />
+  </div>
+</section>

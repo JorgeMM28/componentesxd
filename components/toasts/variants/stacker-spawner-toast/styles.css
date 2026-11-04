@@ -1,0 +1,15 @@
+/**
+ * ============================================================================
+ * COMPONENTESXD — TOASTERS Y NOTIFICACIONES
+ * Variante 05 — Generador Interactivo de Pila de Toasters
+ * Archivo: components/toasts/variants/stacker-spawner-toast/styles.css
+ * ============================================================================
+ */
+.cxd-toasts-stacker-spawner-toast {
+  background: var(--cxd-bg-surface);
+  color: var(--cxd-text-primary);
+  border: var(--cxd-border-width, 1px) solid var(--cxd-border);
+  border-radius: var(--cxd-radius-md);
+  font-family: var(--cxd-font-sans);
+  font-variant-numeric: tabular-nums;
+}

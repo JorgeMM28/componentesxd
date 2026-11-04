@@ -1,0 +1,15 @@
+/**
+ * ============================================================================
+ * COMPONENTESXD — BOTONES Y CONTROLES DE ACCIÓN
+ * Variante 04 — Botón Interactivo de 3 Estados (Reposo -> Cargando -> Éxito)
+ * Archivo: components/buttons/variants/interactive-async-morph/styles.css
+ * ============================================================================
+ */
+.cxd-buttons-interactive-async-morph {
+  background: var(--cxd-bg-surface);
+  color: var(--cxd-text-primary);
+  border: var(--cxd-border-width, 1px) solid var(--cxd-border);
+  border-radius: var(--cxd-radius-md);
+  font-family: var(--cxd-font-sans);
+  font-variant-numeric: tabular-nums;
+}

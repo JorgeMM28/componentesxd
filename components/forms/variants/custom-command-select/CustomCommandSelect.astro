@@ -1,0 +1,32 @@
+---
+/**
+ * ============================================================================
+ * COMPONENTESXD — 03. Searchable Multi-Option Dropdown Select (ASTRO 5)
+ * Archivo: components/forms/variants/custom-command-select/CustomCommandSelect.astro
+ * ============================================================================
+ */
+import './styles.css';
+
+interface Props {
+  title?: string;
+  badge?: string;
+  interfaceTheme?: string;
+}
+
+const {
+  title = '03. Searchable Multi-Option Dropdown Select',
+  badge = 'CUSTOM SELECT',
+  interfaceTheme
+} = Astro.props;
+---
+
+<section class="cxd-forms-custom-command-select" data-theme={interfaceTheme} data-variant="custom-command-select">
+  <header class="cxd-forms-custom-command-select__header">
+    <span>{title}</span>
+    <span class="cxd-badge">{badge}</span>
+  </header>
+  <div class="cxd-forms-custom-command-select__body">
+    <p>Lista desplegable organizada con categorías, prefijos técnicos y selección instantánea sin desorden visual.</p>
+    <slot />
+  </div>
+</section>

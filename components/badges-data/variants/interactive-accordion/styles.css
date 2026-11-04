@@ -1,0 +1,15 @@
+/**
+ * ============================================================================
+ * COMPONENTESXD — BADGES, TIMELINES, ACORDEONES Y MICRO-UI
+ * Variante 02 — Acordeón Interactivo Multi-Sección
+ * Archivo: components/badges-data/variants/interactive-accordion/styles.css
+ * ============================================================================
+ */
+.cxd-badges-data-interactive-accordion {
+  background: var(--cxd-bg-surface);
+  color: var(--cxd-text-primary);
+  border: var(--cxd-border-width, 1px) solid var(--cxd-border);
+  border-radius: var(--cxd-radius-md);
+  font-family: var(--cxd-font-sans);
+  font-variant-numeric: tabular-nums;
+}

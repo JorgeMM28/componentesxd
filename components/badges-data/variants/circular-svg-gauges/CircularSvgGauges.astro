@@ -1,0 +1,32 @@
+---
+/**
+ * ============================================================================
+ * COMPONENTESXD — 03. Radial SVG Telemetry Gauges (ASTRO 5)
+ * Archivo: components/badges-data/variants/circular-svg-gauges/CircularSvgGauges.astro
+ * ============================================================================
+ */
+import './styles.css';
+
+interface Props {
+  title?: string;
+  badge?: string;
+  interfaceTheme?: string;
+}
+
+const {
+  title = '03. Radial SVG Telemetry Gauges',
+  badge = 'SVG GAUGES',
+  interfaceTheme
+} = Astro.props;
+---
+
+<section class="cxd-badges-data-circular-svg-gauges" data-theme={interfaceTheme} data-variant="circular-svg-gauges">
+  <header class="cxd-badges-data-circular-svg-gauges__header">
+    <span>{title}</span>
+    <span class="cxd-badge">{badge}</span>
+  </header>
+  <div class="cxd-badges-data-circular-svg-gauges__body">
+    <p>Medidores circulares y semicirculares en SVG puro para CPU, Memoria, Disco y SLA.</p>
+    <slot />
+  </div>
+</section>

@@ -1,0 +1,41 @@
+/**
+ * ============================================================================
+ * COMPONENTESXD — DYNAMIC ISLAND & STACKABLE TOASTS (CSS + JS)
+ * Archivo: components/alerts-toasts/css-scss/toasts.css
+ * ============================================================================
+ */
+
+.cxd-dynamic-island {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.55rem 1.1rem;
+  background: #050609;
+  color: #f8fafc;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 999px;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.65), 0 0 20px var(--cxd-accent-glow);
+  transition: all 360ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.cxd-dynamic-island__dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--cxd-accent-secondary);
+  box-shadow: 0 0 10px var(--cxd-accent-secondary);
+}
+
+.cxd-toast-card {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.85rem;
+  padding: 0.9rem 1.1rem;
+  background: var(--cxd-bg-surface);
+  border: var(--cxd-border-width, 1px) solid var(--cxd-border-strong);
+  border-left: 3px solid var(--cxd-accent);
+  border-radius: var(--cxd-radius-md);
+  box-shadow: var(--cxd-shadow-md);
+}
+

@@ -1,0 +1,15 @@
+/**
+ * ============================================================================
+ * COMPONENTESXD — BADGES, TIMELINES, ACORDEONES Y MICRO-UI
+ * Variante 05 — Lista Clave-Valor con Copiado al Portapapeles por Fila
+ * Archivo: components/badges-data/variants/copyable-spec-grid/styles.css
+ * ============================================================================
+ */
+.cxd-badges-data-copyable-spec-grid {
+  background: var(--cxd-bg-surface);
+  color: var(--cxd-text-primary);
+  border: var(--cxd-border-width, 1px) solid var(--cxd-border);
+  border-radius: var(--cxd-radius-md);
+  font-family: var(--cxd-font-sans);
+  font-variant-numeric: tabular-nums;
+}

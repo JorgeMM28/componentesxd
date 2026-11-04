@@ -1,0 +1,32 @@
+---
+/**
+ * ============================================================================
+ * COMPONENTESXD — 01. Semantic Status Badges & Live Pulse Dots (ASTRO 5)
+ * Archivo: components/badges-data/variants/status-pulse-pills/StatusPulsePills.astro
+ * ============================================================================
+ */
+import './styles.css';
+
+interface Props {
+  title?: string;
+  badge?: string;
+  interfaceTheme?: string;
+}
+
+const {
+  title = '01. Semantic Status Badges & Live Pulse Dots',
+  badge = 'STATUS BADGES',
+  interfaceTheme
+} = Astro.props;
+---
+
+<section class="cxd-badges-data-status-pulse-pills" data-theme={interfaceTheme} data-variant="status-pulse-pills">
+  <header class="cxd-badges-data-status-pulse-pills__header">
+    <span>{title}</span>
+    <span class="cxd-badge">{badge}</span>
+  </header>
+  <div class="cxd-badges-data-status-pulse-pills__body">
+    <p>Colección de insignias semánticas (Operational, Degraded, Outage, Maintenance) con indicador luminoso.</p>
+    <slot />
+  </div>
+</section>

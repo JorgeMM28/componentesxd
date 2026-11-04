@@ -1,0 +1,15 @@
+/**
+ * ============================================================================
+ * COMPONENTESXD — TABLAS DE DATOS
+ * Variante 05 — Tabla Interactiva (Ordenamiento + Selección en Vivo)
+ * Archivo: components/tables/variants/interactive-sort-select/styles.css
+ * ============================================================================
+ */
+.cxd-tables-interactive-sort-select {
+  background: var(--cxd-bg-surface);
+  color: var(--cxd-text-primary);
+  border: var(--cxd-border-width, 1px) solid var(--cxd-border);
+  border-radius: var(--cxd-radius-md);
+  font-family: var(--cxd-font-sans);
+  font-variant-numeric: tabular-nums;
+}

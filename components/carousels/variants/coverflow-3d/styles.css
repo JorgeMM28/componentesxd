@@ -1,0 +1,15 @@
+/**
+ * ============================================================================
+ * COMPONENTESXD — CARRUSELES, SLIDERS 3D Y MARQUESINAS CINÉTICAS
+ * Variante 01 — Carrusel 3D Coverflow con Perspectiva e Inclinación
+ * Archivo: components/carousels/variants/coverflow-3d/styles.css
+ * ============================================================================
+ */
+.cxd-carousels-coverflow-3d {
+  background: var(--cxd-bg-surface);
+  color: var(--cxd-text-primary);
+  border: var(--cxd-border-width, 1px) solid var(--cxd-border);
+  border-radius: var(--cxd-radius-md);
+  font-family: var(--cxd-font-sans);
+  font-variant-numeric: tabular-nums;
+}

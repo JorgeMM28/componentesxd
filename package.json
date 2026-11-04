@@ -1,0 +1,19 @@
+{
+  "name": "componentesxd-vault",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Librería universal de componentes UI de alto nivel (CSS, SCSS, JS, PHP, React, Vue, Svelte, Angular, Astro, Blade, Livewire, Docker) y laboratorio de animaciones con Anime.js v4 listos para copiar y pegar.",
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "build:vercel": "astro build && node scripts/prepare-vercel.mjs",
+    "generate:vault": "node scripts/generate-vault.mjs",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "animejs": "^4.0.0",
+    "astro": "^5.4.0"
+  }
+}

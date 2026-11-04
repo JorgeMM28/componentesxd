@@ -1,0 +1,32 @@
+---
+/**
+ * ============================================================================
+ * COMPONENTESXD — 07. 3D Isometric Perspective Hover Card (ASTRO 5)
+ * Archivo: components/cards/variants/isometric-layer-card/IsometricLayerCard.astro
+ * ============================================================================
+ */
+import './styles.css';
+
+interface Props {
+  title?: string;
+  badge?: string;
+  interfaceTheme?: string;
+}
+
+const {
+  title = '07. 3D Isometric Perspective Hover Card',
+  badge = '3D TILT',
+  interfaceTheme
+} = Astro.props;
+---
+
+<section class="cxd-cards-isometric-layer-card" data-theme={interfaceTheme} data-variant="isometric-layer-card">
+  <header class="cxd-cards-isometric-layer-card__header">
+    <span>{title}</span>
+    <span class="cxd-badge">{badge}</span>
+  </header>
+  <div class="cxd-cards-isometric-layer-card__body">
+    <p>Calcula ángulos de rotación X/Y según posición del cursor con capas internas en paralaje.</p>
+    <slot />
+  </div>
+</section>

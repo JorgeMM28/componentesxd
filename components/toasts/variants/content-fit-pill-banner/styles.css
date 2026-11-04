@@ -1,0 +1,15 @@
+/**
+ * ============================================================================
+ * COMPONENTESXD — TOASTERS Y NOTIFICACIONES
+ * Variante 07 — Banner Content-Fit Flotante Tipo Píldora
+ * Archivo: components/toasts/variants/content-fit-pill-banner/styles.css
+ * ============================================================================
+ */
+.cxd-toasts-content-fit-pill-banner {
+  background: var(--cxd-bg-surface);
+  color: var(--cxd-text-primary);
+  border: var(--cxd-border-width, 1px) solid var(--cxd-border);
+  border-radius: var(--cxd-radius-md);
+  font-family: var(--cxd-font-sans);
+  font-variant-numeric: tabular-nums;
+}

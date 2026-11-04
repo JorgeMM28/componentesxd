@@ -1,0 +1,15 @@
+/**
+ * ============================================================================
+ * COMPONENTESXD — ACORDEONES, COMPARADORES BEFORE/AFTER, KANBAN Y CONMUTADORES
+ * Variante 02 — Acordeón Multi-Apertura con Insignias de Estado y Buscador
+ * Archivo: components/accordions-tabs/variants/accordion-multi-bento/styles.css
+ * ============================================================================
+ */
+.cxd-accordions-tabs-accordion-multi-bento {
+  background: var(--cxd-bg-surface);
+  color: var(--cxd-text-primary);
+  border: var(--cxd-border-width, 1px) solid var(--cxd-border);
+  border-radius: var(--cxd-radius-md);
+  font-family: var(--cxd-font-sans);
+  font-variant-numeric: tabular-nums;
+}

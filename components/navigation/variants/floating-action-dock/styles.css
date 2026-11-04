@@ -1,0 +1,15 @@
+/**
+ * ============================================================================
+ * COMPONENTESXD — NAVBARS, MENÚS CASCADA Y NAVEGACIÓN
+ * Variante 05 — Dock Flotante Inferior con Escalado al Pasar el Cursor
+ * Archivo: components/navigation/variants/floating-action-dock/styles.css
+ * ============================================================================
+ */
+.cxd-navigation-floating-action-dock {
+  background: var(--cxd-bg-surface);
+  color: var(--cxd-text-primary);
+  border: var(--cxd-border-width, 1px) solid var(--cxd-border);
+  border-radius: var(--cxd-radius-md);
+  font-family: var(--cxd-font-sans);
+  font-variant-numeric: tabular-nums;
+}

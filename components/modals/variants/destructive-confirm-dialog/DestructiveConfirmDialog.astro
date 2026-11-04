@@ -1,0 +1,32 @@
+---
+/**
+ * ============================================================================
+ * COMPONENTESXD — 03. Critical Action Verification Modal (ASTRO 5)
+ * Archivo: components/modals/variants/destructive-confirm-dialog/DestructiveConfirmDialog.astro
+ * ============================================================================
+ */
+import './styles.css';
+
+interface Props {
+  title?: string;
+  badge?: string;
+  interfaceTheme?: string;
+}
+
+const {
+  title = '03. Critical Action Verification Modal',
+  badge = 'SAFETY DIALOG',
+  interfaceTheme
+} = Astro.props;
+---
+
+<section class="cxd-modals-destructive-confirm-dialog" data-theme={interfaceTheme} data-variant="destructive-confirm-dialog">
+  <header class="cxd-modals-destructive-confirm-dialog__header">
+    <span>{title}</span>
+    <span class="cxd-badge">{badge}</span>
+  </header>
+  <div class="cxd-modals-destructive-confirm-dialog__body">
+    <p>Diálogo de seguridad que solicita escribir el nombre del recurso antes de habilitar el botón de borrado.</p>
+    <slot />
+  </div>
+</section>

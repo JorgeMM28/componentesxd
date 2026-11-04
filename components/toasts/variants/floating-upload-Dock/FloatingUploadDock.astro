@@ -1,0 +1,32 @@
+---
+/**
+ * ============================================================================
+ * COMPONENTESXD — 07. Multi-File Upload Progress Toaster (ASTRO 5)
+ * Archivo: components/toasts/variants/floating-upload-Dock/FloatingUploadDock.astro
+ * ============================================================================
+ */
+import './styles.css';
+
+interface Props {
+  title?: string;
+  badge?: string;
+  interfaceTheme?: string;
+}
+
+const {
+  title = '07. Multi-File Upload Progress Toaster',
+  badge = 'UPLOAD MANAGER',
+  interfaceTheme
+} = Astro.props;
+---
+
+<section class="cxd-toasts-floating-upload-Dock" data-theme={interfaceTheme} data-variant="floating-upload-Dock">
+  <header class="cxd-toasts-floating-upload-Dock__header">
+    <span>{title}</span>
+    <span class="cxd-badge">{badge}</span>
+  </header>
+  <div class="cxd-toasts-floating-upload-Dock__body">
+    <p>Panel flotante compacto con barra de transferencia en tiempo real, velocidad MB/s y control de cancelación.</p>
+    <slot />
+  </div>
+</section>

@@ -1,0 +1,15 @@
+/**
+ * ============================================================================
+ * COMPONENTESXD — NAVBARS, MENÚS CASCADA Y NAVEGACIÓN
+ * Variante 02 — Navbar Flotante Redondeada Tipo Cápsula
+ * Archivo: components/navigation/variants/floating-pill-navbar/styles.css
+ * ============================================================================
+ */
+.cxd-navigation-floating-pill-navbar {
+  background: var(--cxd-bg-surface);
+  color: var(--cxd-text-primary);
+  border: var(--cxd-border-width, 1px) solid var(--cxd-border);
+  border-radius: var(--cxd-radius-md);
+  font-family: var(--cxd-font-sans);
+  font-variant-numeric: tabular-nums;
+}

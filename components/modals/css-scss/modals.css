@@ -1,0 +1,69 @@
+/**
+ * ============================================================================
+ * COMPONENTESXD — COMMAND PALETTE (CMD+K) & GLASS DIALOG (CSS)
+ * Archivo: components/modals/css-scss/modals.css
+ * ============================================================================
+ */
+
+.cxd-cmd-palette {
+  width: 100%;
+  max-width: 580px;
+  background: var(--cxd-bg-surface);
+  border: var(--cxd-border-width, 1px) solid var(--cxd-border-strong);
+  border-radius: var(--cxd-radius-lg);
+  box-shadow: var(--cxd-shadow-lg);
+  overflow: hidden;
+  font-family: var(--cxd-font-sans);
+}
+
+.cxd-cmd-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.9rem 1.15rem;
+  background: var(--cxd-bg-elevated);
+  border-bottom: 1px solid var(--cxd-border);
+}
+
+.cxd-cmd-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: var(--cxd-text-primary);
+  font-size: 0.95rem;
+  outline: none;
+}
+
+.cxd-cmd-kbd {
+  font-family: var(--cxd-font-mono);
+  font-size: 0.7rem;
+  padding: 0.2rem 0.45rem;
+  border-radius: 5px;
+  background: var(--cxd-bg-base);
+  border: 1px solid var(--cxd-border-strong);
+  color: var(--cxd-text-secondary);
+}
+
+.cxd-cmd-list {
+  padding: 0.5rem;
+  max-height: 280px;
+  overflow-y: auto;
+}
+
+.cxd-cmd-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.65rem 0.85rem;
+  border-radius: var(--cxd-radius-sm);
+  color: var(--cxd-text-secondary);
+  cursor: pointer;
+  transition: all var(--cxd-duration-fast);
+}
+
+.cxd-cmd-item:hover,
+.cxd-cmd-item.is-active {
+  background: var(--cxd-bg-active);
+  color: var(--cxd-text-primary);
+}
+

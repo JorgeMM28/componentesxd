@@ -1,0 +1,32 @@
+---
+/**
+ * ============================================================================
+ * COMPONENTESXD — 04. Fullstack Compose (App + Postgres 17 + Redis 7.4) (ASTRO 5)
+ * Archivo: components/docker/variants/fullstack-postgres-redis/FullstackPostgresRedis.astro
+ * ============================================================================
+ */
+import './styles.css';
+
+interface Props {
+  title?: string;
+  badge?: string;
+  interfaceTheme?: string;
+}
+
+const {
+  title = '04. Fullstack Compose (App + Postgres 17 + Redis 7.4)',
+  badge = 'DOCKER COMPOSE',
+  interfaceTheme
+} = Astro.props;
+---
+
+<section class="cxd-docker-fullstack-postgres-redis" data-theme={interfaceTheme} data-variant="fullstack-postgres-redis">
+  <header class="cxd-docker-fullstack-postgres-redis__header">
+    <span>{title}</span>
+    <span class="cxd-badge">{badge}</span>
+  </header>
+  <div class="cxd-docker-fullstack-postgres-redis__body">
+    <p>Orquestación completa con volúmenes persistentes, redes aisladas y healthchecks deterministas.</p>
+    <slot />
+  </div>
+</section>

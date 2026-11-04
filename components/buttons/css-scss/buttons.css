@@ -1,0 +1,142 @@
+/**
+ * ============================================================================
+ * COMPONENTESXD — KINETIC & MAGNETIC BUTTON SYSTEM (CSS)
+ * Archivo: components/buttons/css-scss/buttons.css
+ * ============================================================================
+ * Variantes incluidas:
+ *  - .cxd-btn--primary   (Brillo volumétrico + elevación elástica)
+ *  - .cxd-btn--shimmer   (Borde rotativo cónico de luz continua)
+ *  - .cxd-btn--glass     (Superficie translúcida con borde reactivo)
+ *  - .cxd-btn--brutalist (Desplazamiento físico con sombra sólida)
+ *  - .cxd-btn--async     (Estado de carga integrado con transición a check)
+ */
+
+@property --cxd-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes cxd-spin-angle {
+  to {
+    --cxd-angle: 360deg;
+  }
+}
+
+@keyframes cxd-btn-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.cxd-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  padding: 0.68rem 1.35rem;
+  font-family: var(--cxd-font-sans);
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--cxd-text-primary);
+  background: var(--cxd-bg-elevated);
+  border: var(--cxd-border-width, 1px) solid var(--cxd-border-strong);
+  border-radius: var(--cxd-radius-sm);
+  cursor: pointer;
+  user-select: none;
+  text-decoration: none;
+  overflow: hidden;
+  transition:
+    transform var(--cxd-duration-fast) var(--cxd-ease-spring),
+    box-shadow var(--cxd-duration-fast) var(--cxd-ease-out),
+    background-color var(--cxd-duration-fast) var(--cxd-ease-out),
+    border-color var(--cxd-duration-fast) var(--cxd-ease-out);
+}
+
+.cxd-btn:active {
+  transform: scale(0.97);
+}
+
+/* Primary Volumetric Glow */
+.cxd-btn--primary {
+  background: linear-gradient(135deg, var(--cxd-accent), #4f46e5);
+  border-color: rgba(255, 255, 255, 0.22);
+  color: #ffffff;
+  box-shadow: 0 6px 20px -4px var(--cxd-accent-glow), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+.cxd-btn--primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px -4px var(--cxd-accent-glow), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+/* Conic Shimmer Border */
+.cxd-btn--shimmer {
+  background:
+    linear-gradient(var(--cxd-bg-surface), var(--cxd-bg-surface)) padding-box,
+    conic-gradient(from var(--cxd-angle), transparent 65%, var(--cxd-accent), var(--cxd-accent-secondary)) border-box;
+  border: 1.5px solid transparent;
+  animation: cxd-spin-angle 3.2s linear infinite;
+}
+
+.cxd-btn--shimmer:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px -6px var(--cxd-accent-glow);
+}
+
+/* Glassmorphic */
+.cxd-btn--glass {
+  background: var(--cxd-bg-glass);
+  backdrop-filter: blur(12px);
+  border-color: var(--cxd-border-strong);
+}
+
+.cxd-btn--glass:hover {
+  border-color: var(--cxd-accent);
+  background: var(--cxd-bg-active);
+}
+
+/* Neo-Brutalist Hard Offset */
+.cxd-btn--brutalist {
+  background: #a3e635;
+  color: #09090b;
+  border: 2px solid #ffffff;
+  border-radius: 3px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  box-shadow: 4px 4px 0px #ffffff;
+}
+
+.cxd-btn--brutalist:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0px #ffffff;
+}
+
+.cxd-btn--brutalist:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0px #ffffff;
+}
+
+/* Async Loading Spinner inside Button */
+.cxd-btn__spinner {
+  width: 15px;
+  height: 15px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: currentColor;
+  border-radius: 50%;
+  animation: cxd-btn-spin 0.65s linear infinite;
+  display: none;
+}
+
+.cxd-btn.is-loading {
+  pointer-events: none;
+  opacity: 0.88;
+}
+
+.cxd-btn.is-loading .cxd-btn__spinner {
+  display: inline-block;
+}
+

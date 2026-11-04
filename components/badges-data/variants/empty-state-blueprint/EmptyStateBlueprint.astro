@@ -1,0 +1,32 @@
+---
+/**
+ * ============================================================================
+ * COMPONENTESXD — 06. Technical Wireframe Empty State (ASTRO 5)
+ * Archivo: components/badges-data/variants/empty-state-blueprint/EmptyStateBlueprint.astro
+ * ============================================================================
+ */
+import './styles.css';
+
+interface Props {
+  title?: string;
+  badge?: string;
+  interfaceTheme?: string;
+}
+
+const {
+  title = '06. Technical Wireframe Empty State',
+  badge = 'EMPTY STATE',
+  interfaceTheme
+} = Astro.props;
+---
+
+<section class="cxd-badges-data-empty-state-blueprint" data-theme={interfaceTheme} data-variant="empty-state-blueprint">
+  <header class="cxd-badges-data-empty-state-blueprint__header">
+    <span>{title}</span>
+    <span class="cxd-badge">{badge}</span>
+  </header>
+  <div class="cxd-badges-data-empty-state-blueprint__body">
+    <p>Estado vacío con ilustración geométrica en SVG, explicación clara y acción rápida de creación.</p>
+    <slot />
+  </div>
+</section>

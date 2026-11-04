@@ -1,0 +1,32 @@
+---
+/**
+ * ============================================================================
+ * COMPONENTESXD — 05. Collaborator Avatar Stack + Presence Ring (ASTRO 5)
+ * Archivo: components/badges-data/variants/avatar-presence-stack/AvatarPresenceStack.astro
+ * ============================================================================
+ */
+import './styles.css';
+
+interface Props {
+  title?: string;
+  badge?: string;
+  interfaceTheme?: string;
+}
+
+const {
+  title = '05. Collaborator Avatar Stack + Presence Ring',
+  badge = 'PRESENCE UI',
+  interfaceTheme
+} = Astro.props;
+---
+
+<section class="cxd-badges-data-avatar-presence-stack" data-theme={interfaceTheme} data-variant="avatar-presence-stack">
+  <header class="cxd-badges-data-avatar-presence-stack__header">
+    <span>{title}</span>
+    <span class="cxd-badge">{badge}</span>
+  </header>
+  <div class="cxd-badges-data-avatar-presence-stack__body">
+    <p>Grupo superpuesto de colaboradores activos con contador de excedente (+8) y estado online.</p>
+    <slot />
+  </div>
+</section>

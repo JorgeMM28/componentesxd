@@ -1,0 +1,32 @@
+---
+/**
+ * ============================================================================
+ * COMPONENTESXD — 03. Destructive Hold-to-Confirm Button (ASTRO 5)
+ * Archivo: components/buttons/variants/hold-to-confirm/HoldToConfirm.astro
+ * ============================================================================
+ */
+import './styles.css';
+
+interface Props {
+  title?: string;
+  badge?: string;
+  interfaceTheme?: string;
+}
+
+const {
+  title = '03. Destructive Hold-to-Confirm Button',
+  badge = 'SAFETY LOCK',
+  interfaceTheme
+} = Astro.props;
+---
+
+<section class="cxd-buttons-hold-to-confirm" data-theme={interfaceTheme} data-variant="hold-to-confirm">
+  <header class="cxd-buttons-hold-to-confirm__header">
+    <span>{title}</span>
+    <span class="cxd-badge">{badge}</span>
+  </header>
+  <div class="cxd-buttons-hold-to-confirm__body">
+    <p>Previene clics accidentales en acciones críticas exigiendo mantener presionado 1.2s mientras se llena la barra.</p>
+    <slot />
+  </div>
+</section>

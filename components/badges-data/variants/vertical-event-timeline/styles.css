@@ -1,0 +1,15 @@
+/**
+ * ============================================================================
+ * COMPONENTESXD — BADGES, TIMELINES, ACORDEONES Y MICRO-UI
+ * Variante 04 — Línea de Tiempo (Timeline) con Filtro de Eventos
+ * Archivo: components/badges-data/variants/vertical-event-timeline/styles.css
+ * ============================================================================
+ */
+.cxd-badges-data-vertical-event-timeline {
+  background: var(--cxd-bg-surface);
+  color: var(--cxd-text-primary);
+  border: var(--cxd-border-width, 1px) solid var(--cxd-border);
+  border-radius: var(--cxd-radius-md);
+  font-family: var(--cxd-font-sans);
+  font-variant-numeric: tabular-nums;
+}

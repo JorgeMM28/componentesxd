@@ -1,0 +1,15 @@
+/**
+ * ============================================================================
+ * COMPONENTESXD — ACORDEONES, COMPARADORES BEFORE/AFTER, KANBAN Y CONMUTADORES
+ * Variante 01 — Acordeón Exclusivo (Single-Open) con Animación de Altura
+ * Archivo: components/accordions-tabs/variants/accordion-exclusive/styles.css
+ * ============================================================================
+ */
+.cxd-accordions-tabs-accordion-exclusive {
+  background: var(--cxd-bg-surface);
+  color: var(--cxd-text-primary);
+  border: var(--cxd-border-width, 1px) solid var(--cxd-border);
+  border-radius: var(--cxd-radius-md);
+  font-family: var(--cxd-font-sans);
+  font-variant-numeric: tabular-nums;
+}

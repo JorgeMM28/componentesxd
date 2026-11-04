@@ -1,0 +1,40 @@
+/**
+ * ============================================================================
+ * COMPONENTESXD — FORMULARIOS, INPUTS & CONTROLES DE PRECISIÓN
+ * Variante: 01. Architectural Floating-Label Input
+ * Archivo: components/forms/variants/floating-precision-input/styles.css
+ * ============================================================================
+ * Compatible con las 12 interfaces de diseño definidas en styles/tokens.css
+ */
+
+.cxd-forms-floating-precision-input {
+  position: relative;
+  background: var(--cxd-bg-surface);
+  color: var(--cxd-text-primary);
+  border: var(--cxd-border-width, 1px) solid var(--cxd-border);
+  border-radius: var(--cxd-radius-md);
+  box-shadow: var(--cxd-shadow-sm);
+  font-family: var(--cxd-font-sans);
+  font-variant-numeric: tabular-nums;
+  transition: border-color var(--cxd-duration-fast) var(--cxd-ease-out),
+              background-color var(--cxd-duration-fast) var(--cxd-ease-out);
+}
+
+.cxd-forms-floating-precision-input:hover {
+  border-color: var(--cxd-border-strong);
+}
+
+.cxd-forms-floating-precision-input__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  background: var(--cxd-bg-elevated);
+  border-bottom: 1px solid var(--cxd-border);
+  font-family: var(--cxd-font-mono);
+  font-size: 0.75rem;
+}
+
+.cxd-forms-floating-precision-input__body {
+  padding: 1rem;
+}

@@ -1,0 +1,32 @@
+---
+/**
+ * ============================================================================
+ * COMPONENTESXD — 07. Keyboard Shortcut Chord Display (ASTRO 5)
+ * Archivo: components/badges-data/variants/keyboard-shortcut-matrix/KeyboardShortcutMatrix.astro
+ * ============================================================================
+ */
+import './styles.css';
+
+interface Props {
+  title?: string;
+  badge?: string;
+  interfaceTheme?: string;
+}
+
+const {
+  title = '07. Keyboard Shortcut Chord Display',
+  badge = 'KBD CHORDS',
+  interfaceTheme
+} = Astro.props;
+---
+
+<section class="cxd-badges-data-keyboard-shortcut-matrix" data-theme={interfaceTheme} data-variant="keyboard-shortcut-matrix">
+  <header class="cxd-badges-data-keyboard-shortcut-matrix__header">
+    <span>{title}</span>
+    <span class="cxd-badge">{badge}</span>
+  </header>
+  <div class="cxd-badges-data-keyboard-shortcut-matrix__body">
+    <p>Representación visual de combinaciones de teclas (Ctrl + Shift + P) con relieve táctil.</p>
+    <slot />
+  </div>
+</section>

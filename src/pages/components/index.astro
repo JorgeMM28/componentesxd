@@ -1,0 +1,144 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Icon from '../../components/Icon.astro';
+import registry from '../../data/vaultRegistry.json';
+---
+
+<Layout title="COMPONENTESXD // Índice General de Componentes Multi-Framework" section="COMPONENTS-INDEX">
+  <div class="arch-page-header">
+    <div>
+      <span class="arch-eyebrow">
+        COMPONENT VAULT // {registry.stats.componentVariantsCount} VARIANTES RADICALMENTE DISTINTAS × 10 FRAMEWORKS = {registry.stats.totalComponentFiles} ARCHIVOS
+      </span>
+      <h1 class="arch-title">Índice General de Apartados de Componentes</h1>
+      <p class="arch-lead">
+        Cada categoría cuenta con su propia página donde todas las variantes se despliegan de arriba hacia abajo a ancho completo, con su previsualización interactiva en vivo y una lista desplegable exclusiva para elegir el código de tu framework (React, Vue 3, Svelte 5, Angular, Astro, Laravel Blade, Livewire 3, PHP 8.3, Vanilla JS y CSS/SCSS).
+      </p>
+    </div>
+  </div>
+
+  <div class="cat-directory-stack">
+    {registry.componentCategories.map((cat) => (
+      <section class="cat-overview-block">
+        <header class="cat-overview-block__head">
+          <div class="cat-head-left">
+            <span class="cat-badge">{cat.code}</span>
+            <div>
+              <h2>{cat.name}</h2>
+              <p>{cat.shortDesc}</p>
+            </div>
+          </div>
+          <a href={`/components/${cat.slug}`} class="arch-btn arch-btn--primary">
+            <span>Abrir Página Completa ({cat.variants.length} Variantes Apiladas)</span>
+            <Icon name="arrow-right" size={14} />
+          </a>
+        </header>
+
+        <div class="cat-variants-table-wrap">
+          <table class="cxd-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Variante Diferenciada</th>
+                <th>Arquitectura Visual / Funcional</th>
+                <th>Descripción</th>
+                <th>Ruta Copy & Paste</th>
+                <th>Acción Directa</th>
+              </tr>
+            </thead>
+            <tbody>
+              {cat.variants.map((v, idx) => (
+                <tr>
+                  <td style="font-family:var(--cxd-font-mono); font-size:0.74rem; color:var(--cxd-text-muted);">
+                    {String(idx + 1).padStart(2, '0')}
+                  </td>
+                  <td><strong>{v.name}</strong></td>
+                  <td><span class="cxd-badge cxd-badge--active">{v.badge}</span></td>
+                  <td style="color:var(--cxd-text-secondary); font-size:0.8rem;">{v.desc}</td>
+                  <td style="font-family:var(--cxd-font-mono); font-size:0.72rem;">components/{cat.slug}/variants/{v.id}/</td>
+                  <td>
+                    <a href={`/components/${cat.slug}#${v.id}`} class="table-jump-link">
+                      <span>Ir a Variante</span>
+                      <Icon name="arrow-right" size={12} />
+                    </a>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+    ))}
+  </div>
+</Layout>
+
+<style>
+  .cat-directory-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .cat-overview-block {
+    border: 1px solid var(--cxd-border);
+    background: var(--cxd-bg-surface);
+    border-radius: var(--cxd-radius-md);
+    overflow: hidden;
+  }
+
+  .cat-overview-block__head {
+    padding: 1.15rem 1.35rem;
+    background: var(--cxd-bg-elevated);
+    border-bottom: 1px solid var(--cxd-border);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .cat-head-left {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.85rem;
+  }
+
+  .cat-badge {
+    font-family: var(--cxd-font-mono);
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 0.25rem 0.55rem;
+    background: var(--cxd-bg-base);
+    border: 1px solid var(--cxd-border-strong);
+    border-radius: var(--cxd-radius-sm);
+  }
+
+  .cat-head-left h2 {
+    font-size: 1.12rem;
+    font-weight: 700;
+  }
+
+  .cat-head-left p {
+    font-size: 0.82rem;
+    color: var(--cxd-text-secondary);
+    margin-top: 0.2rem;
+  }
+
+  .cat-variants-table-wrap {
+    overflow-x: auto;
+  }
+
+  .table-jump-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-family: var(--cxd-font-mono);
+    font-size: 0.72rem;
+    color: var(--cxd-text-primary);
+    text-decoration: none;
+  }
+
+  .table-jump-link:hover {
+    text-decoration: underline;
+  }
+</style>

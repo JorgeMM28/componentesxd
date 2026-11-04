@@ -1,0 +1,15 @@
+/**
+ * ============================================================================
+ * COMPONENTESXD — ACORDEONES, COMPARADORES BEFORE/AFTER, KANBAN Y CONMUTADORES
+ * Variante 07 — Lista Dual de Transferencia (Mover Permisos Izquierda ↔ Derecha)
+ * Archivo: components/accordions-tabs/variants/transfer-dual-list/styles.css
+ * ============================================================================
+ */
+.cxd-accordions-tabs-transfer-dual-list {
+  background: var(--cxd-bg-surface);
+  color: var(--cxd-text-primary);
+  border: var(--cxd-border-width, 1px) solid var(--cxd-border);
+  border-radius: var(--cxd-radius-md);
+  font-family: var(--cxd-font-sans);
+  font-variant-numeric: tabular-nums;
+}

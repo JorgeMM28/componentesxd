@@ -1,0 +1,32 @@
+---
+/**
+ * ============================================================================
+ * COMPONENTESXD — 01. Cursor-Tracking Radial Spotlight Card (ASTRO 5)
+ * Archivo: components/cards/variants/spotlight-radial-bento/SpotlightRadialBento.astro
+ * ============================================================================
+ */
+import './styles.css';
+
+interface Props {
+  title?: string;
+  badge?: string;
+  interfaceTheme?: string;
+}
+
+const {
+  title = '01. Cursor-Tracking Radial Spotlight Card',
+  badge = 'RADIAL LIGHT',
+  interfaceTheme
+} = Astro.props;
+---
+
+<section class="cxd-cards-spotlight-radial-bento" data-theme={interfaceTheme} data-variant="spotlight-radial-bento">
+  <header class="cxd-cards-spotlight-radial-bento__header">
+    <span>{title}</span>
+    <span class="cxd-badge">{badge}</span>
+  </header>
+  <div class="cxd-cards-spotlight-radial-bento__body">
+    <p>Proyecta iluminación radial siguiendo las coordenadas X/Y del puntero sobre el chasis y el borde.</p>
+    <slot />
+  </div>
+</section>

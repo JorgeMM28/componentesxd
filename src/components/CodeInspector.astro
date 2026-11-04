@@ -1,0 +1,184 @@
+---
+import type { CodeVariant } from '../utils/repoReader';
+
+interface Props {
+  groupId: string;
+  variants: CodeVariant[];
+}
+
+const { groupId, variants } = Astro.props;
+---
+
+<div class="cxd-inspector" data-inspector-group={groupId}>
+  <div class="cxd-inspector__bar">
+    <div class="cxd-inspector__tabs" role="tablist">
+      {variants.map((v, idx) => (
+        <button
+          type="button"
+          role="tab"
+          class={`cxd-inspector__tab ${idx === 0 ? 'is-active' : ''}`}
+          data-tab-target={`${groupId}-${v.id}`}
+          data-file-path={v.filePath}
+        >
+          <span class="cxd-inspector__tab-badge">{v.badge}</span>
+          <span>{v.label}</span>
+        </button>
+      ))}
+    </div>
+
+    <div class="cxd-inspector__actions">
+      <code class="cxd-inspector__path" data-active-path>{variants[0]?.filePath}</code>
+      <button type="button" class="cxd-inspector__copy" data-copy-code>
+        Copiar Código
+      </button>
+    </div>
+  </div>
+
+  <div class="cxd-inspector__panels">
+    {variants.map((v, idx) => (
+      <div
+        class={`cxd-inspector__panel ${idx === 0 ? 'is-active' : ''}`}
+        id={`${groupId}-${v.id}`}
+        data-code-panel
+      >
+        <div class="cxd-inspector__cmd-strip">
+          <span>Comando rápido desde la raíz:</span>
+          <code>cp {v.filePath} ./tu-proyecto/</code>
+        </div>
+        <pre><code>{v.code}</code></pre>
+      </div>
+    ))}
+  </div>
+</div>
+
+<style>
+  .cxd-inspector {
+    margin-top: 1.25rem;
+    background: #08090f;
+    border: var(--cxd-border-width, 1px) solid var(--cxd-border-strong);
+    border-radius: var(--cxd-radius-md);
+    overflow: hidden;
+  }
+
+  .cxd-inspector__bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 0.6rem 0.9rem;
+    background: #0d1018;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .cxd-inspector__tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+  }
+
+  .cxd-inspector__tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.38rem 0.7rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 6px;
+    color: #9ba3b5;
+    font-size: 0.76rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 150ms ease;
+  }
+
+  .cxd-inspector__tab:hover {
+    color: #ffffff;
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+
+  .cxd-inspector__tab.is-active {
+    background: var(--cxd-accent);
+    border-color: var(--cxd-accent);
+    color: #ffffff;
+    box-shadow: 0 2px 12px var(--cxd-accent-glow);
+  }
+
+  .cxd-inspector__tab-badge {
+    font-family: var(--cxd-font-mono);
+    font-size: 0.65rem;
+    padding: 0.1rem 0.32rem;
+    border-radius: 4px;
+    background: rgba(0, 0, 0, 0.35);
+  }
+
+  .cxd-inspector__actions {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+  }
+
+  .cxd-inspector__path {
+    font-family: var(--cxd-font-mono);
+    font-size: 0.73rem;
+    color: var(--cxd-accent-secondary);
+    background: rgba(34, 211, 238, 0.08);
+    padding: 0.28rem 0.55rem;
+    border-radius: 5px;
+    border: 1px solid rgba(34, 211, 238, 0.2);
+  }
+
+  .cxd-inspector__copy {
+    padding: 0.38rem 0.8rem;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 6px;
+    color: #f8fafc;
+    font-size: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 150ms ease;
+  }
+
+  .cxd-inspector__copy:hover {
+    background: var(--cxd-accent);
+    border-color: var(--cxd-accent);
+  }
+
+  .cxd-inspector__panel {
+    display: none;
+  }
+
+  .cxd-inspector__panel.is-active {
+    display: block;
+  }
+
+  .cxd-inspector__cmd-strip {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding: 0.45rem 1rem;
+    background: rgba(99, 102, 241, 0.08);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    font-size: 0.74rem;
+    color: #9ba3b5;
+  }
+
+  .cxd-inspector__cmd-strip code {
+    font-family: var(--cxd-font-mono);
+    color: #e2e8f0;
+  }
+
+  .cxd-inspector__panel pre {
+    max-height: 360px;
+    overflow: auto;
+    padding: 1rem 1.15rem;
+    font-family: var(--cxd-font-mono);
+    font-size: 0.78rem;
+    line-height: 1.6;
+    color: #e2e8f0;
+  }
+</style>
+

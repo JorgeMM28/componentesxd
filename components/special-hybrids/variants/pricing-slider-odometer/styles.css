@@ -1,0 +1,15 @@
+/**
+ * ============================================================================
+ * COMPONENTESXD — COMPONENTES ESPECIALES COMBINADOS (UI + ANIME.JS V4 EN VIVO)
+ * Variante 16 — Calculadora Interactiva con Slider + Odómetro + Barras Comparativas
+ * Archivo: components/special-hybrids/variants/pricing-slider-odometer/styles.css
+ * ============================================================================
+ */
+.cxd-special-hybrids-pricing-slider-odometer {
+  background: var(--cxd-bg-surface);
+  color: var(--cxd-text-primary);
+  border: var(--cxd-border-width, 1px) solid var(--cxd-border);
+  border-radius: var(--cxd-radius-md);
+  font-family: var(--cxd-font-sans);
+  font-variant-numeric: tabular-nums;
+}

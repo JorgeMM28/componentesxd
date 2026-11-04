@@ -1,0 +1,32 @@
+---
+/**
+ * ============================================================================
+ * COMPONENTESXD — 05. Bun Distroless High-Performance Runtime (ASTRO 5)
+ * Archivo: components/docker/variants/bun-ultra-fast-api/BunUltraFastApi.astro
+ * ============================================================================
+ */
+import './styles.css';
+
+interface Props {
+  title?: string;
+  badge?: string;
+  interfaceTheme?: string;
+}
+
+const {
+  title = '05. Bun Distroless High-Performance Runtime',
+  badge = 'BUN RUNTIME',
+  interfaceTheme
+} = Astro.props;
+---
+
+<section class="cxd-docker-bun-ultra-fast-api" data-theme={interfaceTheme} data-variant="bun-ultra-fast-api">
+  <header class="cxd-docker-bun-ultra-fast-api__header">
+    <span>{title}</span>
+    <span class="cxd-badge">{badge}</span>
+  </header>
+  <div class="cxd-docker-bun-ultra-fast-api__body">
+    <p>Contenedor basado en oven/bun:alpine para microservicios TypeScript de arranque instantáneo.</p>
+    <slot />
+  </div>
+</section>

@@ -1,0 +1,15 @@
+/**
+ * ============================================================================
+ * COMPONENTESXD — TOASTERS Y NOTIFICACIONES
+ * Variante 02 — Dynamic Island Interactiva (3 Estados)
+ * Archivo: components/toasts/variants/dynamic-island-morph/styles.css
+ * ============================================================================
+ */
+.cxd-toasts-dynamic-island-morph {
+  background: var(--cxd-bg-surface);
+  color: var(--cxd-text-primary);
+  border: var(--cxd-border-width, 1px) solid var(--cxd-border);
+  border-radius: var(--cxd-radius-md);
+  font-family: var(--cxd-font-sans);
+  font-variant-numeric: tabular-nums;
+}

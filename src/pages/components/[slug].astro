@@ -1,0 +1,32 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import ComponentWorkbench from "../../components/ComponentWorkbench.astro";
+import registry from "../../data/vaultRegistry.json";
+
+export function getStaticPaths() {
+  return registry.componentCategories.map((category) => ({
+    params: { slug: category.slug },
+    props: { category },
+  }));
+}
+
+const { category } = Astro.props;
+---
+
+<Layout
+  title={`COMPONENTESXD // ${category.name} (${category.variants.length} Variantes)`}
+  section={`COMPONENTS // ${category.slug.toUpperCase()}`}
+>
+  <div class="arch-page-header">
+    <div>
+      <span class="arch-eyebrow">
+        {category.code} // APARTADO DE COMPONENTE · {category.variants.length} VARIANTES
+        EN ANCHO COMPLETO
+      </span>
+      <h1 class="arch-title">{category.name}</h1>
+      <p class="arch-lead">{category.shortDesc}</p>
+    </div>
+  </div>
+
+  <ComponentWorkbench category={category} />
+</Layout>

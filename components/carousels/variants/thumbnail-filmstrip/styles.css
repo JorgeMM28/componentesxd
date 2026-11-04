@@ -1,0 +1,15 @@
+/**
+ * ============================================================================
+ * COMPONENTESXD — CARRUSELES, SLIDERS 3D Y MARQUESINAS CINÉTICAS
+ * Variante 06 — Carrusel Galería con Tira Inferior de Miniaturas (Filmstrip)
+ * Archivo: components/carousels/variants/thumbnail-filmstrip/styles.css
+ * ============================================================================
+ */
+.cxd-carousels-thumbnail-filmstrip {
+  background: var(--cxd-bg-surface);
+  color: var(--cxd-text-primary);
+  border: var(--cxd-border-width, 1px) solid var(--cxd-border);
+  border-radius: var(--cxd-radius-md);
+  font-family: var(--cxd-font-sans);
+  font-variant-numeric: tabular-nums;
+}

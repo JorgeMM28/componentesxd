@@ -1,0 +1,15 @@
+/**
+ * ============================================================================
+ * COMPONENTESXD — BADGES, TIMELINES, ACORDEONES Y MICRO-UI
+ * Variante 01 — Colección de Badges Modernos, Outline y Con Punto Pulsante
+ * Archivo: components/badges-data/variants/modern-pulse-badges/styles.css
+ * ============================================================================
+ */
+.cxd-badges-data-modern-pulse-badges {
+  background: var(--cxd-bg-surface);
+  color: var(--cxd-text-primary);
+  border: var(--cxd-border-width, 1px) solid var(--cxd-border);
+  border-radius: var(--cxd-radius-md);
+  font-family: var(--cxd-font-sans);
+  font-variant-numeric: tabular-nums;
+}

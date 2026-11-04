@@ -1,0 +1,15 @@
+/**
+ * ============================================================================
+ * COMPONENTESXD — TOASTERS Y NOTIFICACIONES
+ * Variante 03 — Toaster con Acciones (Aceptar, Posponer, Deshacer)
+ * Archivo: components/toasts/variants/action-buttons-toast/styles.css
+ * ============================================================================
+ */
+.cxd-toasts-action-buttons-toast {
+  background: var(--cxd-bg-surface);
+  color: var(--cxd-text-primary);
+  border: var(--cxd-border-width, 1px) solid var(--cxd-border);
+  border-radius: var(--cxd-radius-md);
+  font-family: var(--cxd-font-sans);
+  font-variant-numeric: tabular-nums;
+}

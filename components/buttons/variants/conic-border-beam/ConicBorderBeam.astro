@@ -1,0 +1,32 @@
+---
+/**
+ * ============================================================================
+ * COMPONENTESXD — 02. Conic Border Beam Button (ASTRO 5)
+ * Archivo: components/buttons/variants/conic-border-beam/ConicBorderBeam.astro
+ * ============================================================================
+ */
+import './styles.css';
+
+interface Props {
+  title?: string;
+  badge?: string;
+  interfaceTheme?: string;
+}
+
+const {
+  title = '02. Conic Border Beam Button',
+  badge = 'CSS @PROPERTY',
+  interfaceTheme
+} = Astro.props;
+---
+
+<section class="cxd-buttons-conic-border-beam" data-theme={interfaceTheme} data-variant="conic-border-beam">
+  <header class="cxd-buttons-conic-border-beam__header">
+    <span>{title}</span>
+    <span class="cxd-badge">{badge}</span>
+  </header>
+  <div class="cxd-buttons-conic-border-beam__body">
+    <p>Haz de luz perimetral continuo renderizado por GPU mediante @property sin elementos DOM extra.</p>
+    <slot />
+  </div>
+</section>

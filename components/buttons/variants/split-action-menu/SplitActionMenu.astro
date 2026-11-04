@@ -1,0 +1,32 @@
+---
+/**
+ * ============================================================================
+ * COMPONENTESXD — 05. Split Primary + Context Dropdown Button (ASTRO 5)
+ * Archivo: components/buttons/variants/split-action-menu/SplitActionMenu.astro
+ * ============================================================================
+ */
+import './styles.css';
+
+interface Props {
+  title?: string;
+  badge?: string;
+  interfaceTheme?: string;
+}
+
+const {
+  title = '05. Split Primary + Context Dropdown Button',
+  badge = 'SPLIT ACTION',
+  interfaceTheme
+} = Astro.props;
+---
+
+<section class="cxd-buttons-split-action-menu" data-theme={interfaceTheme} data-variant="split-action-menu">
+  <header class="cxd-buttons-split-action-menu__header">
+    <span>{title}</span>
+    <span class="cxd-badge">{badge}</span>
+  </header>
+  <div class="cxd-buttons-split-action-menu__body">
+    <p>Combina la ejecución principal inmediata con un selector desplegable de opciones secundarias (Deploy / Dry-run).</p>
+    <slot />
+  </div>
+</section>

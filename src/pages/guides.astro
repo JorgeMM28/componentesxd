@@ -1,0 +1,179 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Icon from '../components/Icon.astro';
+import { readRepoFile } from '../utils/repoReader';
+
+const installGuide = readRepoFile('docs/INSTALLATION_GUIDE.md');
+const animeMasterGuide = readRepoFile('animations/ANIMEJS_MASTER_GUIDE.md');
+const agentSkill = readRepoFile('.agents/skills/componentesxd-vault/SKILL.md');
+const adaptersCode = readRepoFile('animations/framework-adapters/adapters.ts');
+---
+
+<Layout title="COMPONENTESXD // Guías de Instalación, Anime.js v4 & Agent Skill" section="DOCUMENTATION">
+  <div class="arch-page-header">
+    <div>
+      <span class="arch-eyebrow">SYSTEM DOCUMENTATION & AI AGENT SKILL</span>
+      <h1 class="arch-title">Guía de Instalación (Copy & Paste), Anime.js v4 y Skill de Agentes</h1>
+      <p class="arch-lead">
+        Todos los documentos técnicos y adaptadores están desplegados uno debajo de otro listos para consultar o copiar directamente desde la raíz del repositorio sin depender de publicar paquetes en NPM.
+      </p>
+    </div>
+  </div>
+
+  <!-- PASOS ESTRUCTURALES DE INSTALACIÓN -->
+  <div class="arch-grid" style="margin-bottom: 2.5rem;">
+    <div class="arch-cell">
+      <span class="arch-eyebrow">STEP 01 // DESIGN TOKENS</span>
+      <h3>Copia el Motor de Interfaces</h3>
+      <p style="font-size:0.82rem; color:var(--cxd-text-secondary);">
+        Copia <code>styles/tokens.css</code> (o <code>styles/_tokens.scss</code>) a tu proyecto para activar las 12 interfaces visuales.
+      </p>
+      <code class="cmd-snippet">cp styles/tokens.css ./tu-proyecto/src/styles/</code>
+    </div>
+
+    <div class="arch-cell">
+      <span class="arch-eyebrow">STEP 02 // MULTI-FRAMEWORK COMPONENT</span>
+      <h3>Copia el Componente de tu Stack</h3>
+      <p style="font-size:0.82rem; color:var(--cxd-text-secondary);">
+        Entra a <code>components/&lt;categoria&gt;/variants/&lt;variante&gt;/</code> y toma el archivo de tu framework junto con <code>styles.css</code>.
+      </p>
+      <code class="cmd-snippet">cp components/tables/variants/modern-rounded/* ./tu-app/</code>
+    </div>
+
+    <div class="arch-cell">
+      <span class="arch-eyebrow">STEP 03 // ANIME.JS v4 ENGINE</span>
+      <h3>Inyecta Animaciones Modulares</h3>
+      <p style="font-size:0.82rem; color:var(--cxd-text-secondary);">
+        Instala <code>npm i animejs</code> en tu proyecto destino y copia cualquiera de los 48 presets desde <code>animations/</code>.
+      </p>
+      <code class="cmd-snippet">cp animations/svg-animations/svg-line-drawable.js ./tu-app/</code>
+    </div>
+  </div>
+
+  <!-- VISOR DE DOCUMENTOS APILADOS -->
+  <div class="docs-stack">
+    <article class="doc-box" id="doc-install">
+      <header class="doc-box__bar">
+        <div>
+          <span class="arch-eyebrow">docs/INSTALLATION_GUIDE.md</span>
+          <h2>01. Guía de Instalación y Flujo Copy & Paste</h2>
+        </div>
+        <button type="button" class="unit-action-btn unit-action-btn--primary" data-copy-doc={installGuide}>
+          <Icon name="copy" size={13} />
+          <span data-lbl>Copiar Markdown</span>
+        </button>
+      </header>
+      <pre class="doc-content"><code>{installGuide}</code></pre>
+    </article>
+
+    <article class="doc-box" id="doc-skill">
+      <header class="doc-box__bar">
+        <div>
+          <span class="arch-eyebrow">.agents/skills/componentesxd-vault/SKILL.md</span>
+          <h2>02. Skill Oficial para Agentes de IA (Antigravity, Claude, Cursor)</h2>
+        </div>
+        <button type="button" class="unit-action-btn unit-action-btn--primary" data-copy-doc={agentSkill}>
+          <Icon name="copy" size={13} />
+          <span data-lbl>Copiar SKILL.md</span>
+        </button>
+      </header>
+      <pre class="doc-content"><code>{agentSkill}</code></pre>
+    </article>
+
+    <article class="doc-box" id="doc-anime">
+      <header class="doc-box__bar">
+        <div>
+          <span class="arch-eyebrow">animations/ANIMEJS_MASTER_GUIDE.md</span>
+          <h2>03. Enciclopedia Maestra de Anime.js v4</h2>
+        </div>
+        <button type="button" class="unit-action-btn unit-action-btn--primary" data-copy-doc={animeMasterGuide}>
+          <Icon name="copy" size={13} />
+          <span data-lbl>Copiar Guía Anime.js</span>
+        </button>
+      </header>
+      <pre class="doc-content"><code>{animeMasterGuide}</code></pre>
+    </article>
+
+    <article class="doc-box" id="doc-adapters">
+      <header class="doc-box__bar">
+        <div>
+          <span class="arch-eyebrow">animations/framework-adapters/adapters.ts</span>
+          <h2>04. Adaptadores Multi-Framework para Anime.js v4</h2>
+        </div>
+        <button type="button" class="unit-action-btn unit-action-btn--primary" data-copy-doc={adaptersCode}>
+          <Icon name="copy" size={13} />
+          <span data-lbl>Copiar Adaptadores</span>
+        </button>
+      </header>
+      <pre class="doc-content"><code>{adaptersCode}</code></pre>
+    </article>
+  </div>
+</Layout>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>('[data-copy-doc]').forEach((btn) => {
+    btn.addEventListener('click', async () => {
+      await navigator.clipboard.writeText(btn.dataset.copyDoc || '');
+      const lbl = btn.querySelector('[data-lbl]');
+      if (lbl) {
+        const prev = lbl.textContent;
+        lbl.textContent = 'Copiado';
+        setTimeout(() => {
+          lbl.textContent = prev;
+        }, 1400);
+      }
+    });
+  });
+</script>
+
+<style>
+  .cmd-snippet {
+    margin-top: auto;
+    padding: 0.5rem 0.75rem;
+    background: var(--cxd-bg-base);
+    border: 1px solid var(--cxd-border-strong);
+    font-family: var(--cxd-font-mono);
+    font-size: 0.72rem;
+    color: var(--cxd-text-primary);
+  }
+
+  .docs-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .doc-box {
+    border: 1px solid var(--cxd-border);
+    background: #07080a;
+    border-radius: var(--cxd-radius-md);
+    overflow: hidden;
+  }
+
+  .doc-box__bar {
+    padding: 1rem 1.25rem;
+    background: var(--cxd-bg-surface);
+    border-bottom: 1px solid var(--cxd-border);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .doc-box__bar h2 {
+    font-size: 1rem;
+    font-weight: 600;
+  }
+
+  .doc-content {
+    max-height: 440px;
+    overflow: auto;
+    padding: 1.15rem;
+    font-family: var(--cxd-font-mono);
+    font-size: 0.74rem;
+    line-height: 1.6;
+    color: #e4e4e7;
+    white-space: pre-wrap;
+  }
+</style>

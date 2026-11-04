@@ -1,0 +1,15 @@
+/**
+ * ============================================================================
+ * COMPONENTESXD — COMPONENTES ESPECIALES COMBINADOS (UI + ANIME.JS V4 EN VIVO)
+ * Variante 08 — Despachador de Toasts Apilados 3D + Cronómetro createTimer()
+ * Archivo: components/special-hybrids/variants/toast-timeline-dispatcher/styles.css
+ * ============================================================================
+ */
+.cxd-special-hybrids-toast-timeline-dispatcher {
+  background: var(--cxd-bg-surface);
+  color: var(--cxd-text-primary);
+  border: var(--cxd-border-width, 1px) solid var(--cxd-border);
+  border-radius: var(--cxd-radius-md);
+  font-family: var(--cxd-font-sans);
+  font-variant-numeric: tabular-nums;
+}

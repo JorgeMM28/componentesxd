@@ -1,0 +1,32 @@
+---
+/**
+ * ============================================================================
+ * COMPONENTESXD — 04. Async 3-State Morph Button (Idle -> Run -> Done) (ASTRO 5)
+ * Archivo: components/buttons/variants/async-state-morph/AsyncStateMorph.astro
+ * ============================================================================
+ */
+import './styles.css';
+
+interface Props {
+  title?: string;
+  badge?: string;
+  interfaceTheme?: string;
+}
+
+const {
+  title = '04. Async 3-State Morph Button (Idle -> Run -> Done)',
+  badge = 'STATE MACHINE',
+  interfaceTheme
+} = Astro.props;
+---
+
+<section class="cxd-buttons-async-state-morph" data-theme={interfaceTheme} data-variant="async-state-morph">
+  <header class="cxd-buttons-async-state-morph__header">
+    <span>{title}</span>
+    <span class="cxd-badge">{badge}</span>
+  </header>
+  <div class="cxd-buttons-async-state-morph__body">
+    <p>Transiciona automáticamente entre etiqueta normal, spinner SVG de precisión y confirmación vectorial.</p>
+    <slot />
+  </div>
+</section>

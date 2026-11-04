@@ -1,0 +1,32 @@
+---
+/**
+ * ============================================================================
+ * COMPONENTESXD — 01. Architectural Floating-Label Input (ASTRO 5)
+ * Archivo: components/forms/variants/floating-precision-input/FloatingPrecisionInput.astro
+ * ============================================================================
+ */
+import './styles.css';
+
+interface Props {
+  title?: string;
+  badge?: string;
+  interfaceTheme?: string;
+}
+
+const {
+  title = '01. Architectural Floating-Label Input',
+  badge = 'FLOATING LABEL',
+  interfaceTheme
+} = Astro.props;
+---
+
+<section class="cxd-forms-floating-precision-input" data-theme={interfaceTheme} data-variant="floating-precision-input">
+  <header class="cxd-forms-floating-precision-input__header">
+    <span>{title}</span>
+    <span class="cxd-badge">{badge}</span>
+  </header>
+  <div class="cxd-forms-floating-precision-input__body">
+    <p>Etiqueta que asciende con transición cúbica al enfocar o contener valor, con indicador de validación.</p>
+    <slot />
+  </div>
+</section>

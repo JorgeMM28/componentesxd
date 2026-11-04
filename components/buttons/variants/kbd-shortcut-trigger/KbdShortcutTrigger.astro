@@ -1,0 +1,32 @@
+---
+/**
+ * ============================================================================
+ * COMPONENTESXD — 06. Tactical KBD Shortcut Command Button (ASTRO 5)
+ * Archivo: components/buttons/variants/kbd-shortcut-trigger/KbdShortcutTrigger.astro
+ * ============================================================================
+ */
+import './styles.css';
+
+interface Props {
+  title?: string;
+  badge?: string;
+  interfaceTheme?: string;
+}
+
+const {
+  title = '06. Tactical KBD Shortcut Command Button',
+  badge = 'HOTKEY READY',
+  interfaceTheme
+} = Astro.props;
+---
+
+<section class="cxd-buttons-kbd-shortcut-trigger" data-theme={interfaceTheme} data-variant="kbd-shortcut-trigger">
+  <header class="cxd-buttons-kbd-shortcut-trigger__header">
+    <span>{title}</span>
+    <span class="cxd-badge">{badge}</span>
+  </header>
+  <div class="cxd-buttons-kbd-shortcut-trigger__body">
+    <p>Incluye insignia física de atajo de teclado (Cmd+Enter) y responde tanto a clic como a evento keydown.</p>
+    <slot />
+  </div>
+</section>

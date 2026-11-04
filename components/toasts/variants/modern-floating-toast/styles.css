@@ -1,0 +1,15 @@
+/**
+ * ============================================================================
+ * COMPONENTESXD — TOASTERS Y NOTIFICACIONES
+ * Variante 01 — Toaster Moderno Flotante con Barra de Tiempo
+ * Archivo: components/toasts/variants/modern-floating-toast/styles.css
+ * ============================================================================
+ */
+.cxd-toasts-modern-floating-toast {
+  background: var(--cxd-bg-surface);
+  color: var(--cxd-text-primary);
+  border: var(--cxd-border-width, 1px) solid var(--cxd-border);
+  border-radius: var(--cxd-radius-md);
+  font-family: var(--cxd-font-sans);
+  font-variant-numeric: tabular-nums;
+}

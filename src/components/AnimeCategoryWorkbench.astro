@@ -1,0 +1,823 @@
+---
+import Icon from './Icon.astro';
+import type registry from '../data/vaultRegistry.json';
+import { buildAnimeFrameworkSnippets } from '../utils/animeWorkbenchClient';
+
+interface Props {
+  category: (typeof registry.animationCategories)[number];
+}
+
+const { category } = Astro.props;
+---
+
+<div class="anime-workbench" data-anime-cat={category.slug}>
+  <!-- ÍNDICE DE SALTO RÁPIDO A CADA ANIMACIÓN EN ESTA PÁGINA -->
+  <nav class="variant-jump-strip" aria-label="Animaciones en esta página">
+    <span class="variant-jump-strip__label">En esta página ({category.presets.length} animaciones Anime.js v4):</span>
+    <div class="variant-jump-strip__pills">
+      {category.presets.map((p, idx) => (
+        <a href={`#${p.id}`} class="jump-pill">
+          <span class="jump-pill__num">0{idx + 1}</span>
+          <span>{p.name.replace(/^\d+\.\s*/, '')}</span>
+        </a>
+      ))}
+    </div>
+  </nav>
+
+  <!-- PILA EN ANCHO COMPLETO DE CADA ANIMACIÓN INTERACTIVA -->
+  <div class="anime-full-stack">
+    {category.presets.map((preset, idx) => {
+      const stageType = preset.stageType || 'transforms-xyz';
+      const { reactSnippet, vueSnippet, svelteSnippet, astroSnippet } = buildAnimeFrameworkSnippets(preset);
+
+      return (
+        <section
+          class="anime-showcase-block"
+          id={preset.id}
+          data-preset-block={preset.id}
+          data-stage-type={stageType}
+          data-default-ease={preset.ease}
+          data-default-duration={preset.duration}
+        >
+          <!-- 1. CABECERA Y CONTROLES DE REPRODUCCIÓN EN VIVO -->
+          <header class="anime-showcase-block__head">
+            <div>
+              <span class="variant-index-badge">{category.code} // 0{idx + 1} · EASE: {preset.ease} · {preset.duration}ms</span>
+              <h2>{preset.name}</h2>
+              <p>{preset.desc}</p>
+            </div>
+
+            <div class="playback-controls">
+              <button type="button" class="ctrl-btn ctrl-btn--primary" data-anim-play>
+                <Icon name="play" size={13} />
+                <span>Ejecutar / Reiniciar</span>
+              </button>
+              <button type="button" class="ctrl-btn" data-anim-pause>
+                <Icon name="pause" size={13} />
+                <span>Pausar</span>
+              </button>
+              <button type="button" class="ctrl-btn" data-anim-reverse>
+                <Icon name="refresh" size={13} />
+                <span>Invertir</span>
+              </button>
+              <div class="speed-pills">
+                <button type="button" class="spd-btn" data-spd="0.5">0.5x</button>
+                <button type="button" class="spd-btn is-active" data-spd="1">1x</button>
+                <button type="button" class="spd-btn" data-spd="2">2x</button>
+              </div>
+            </div>
+          </header>
+
+          <!-- 2. ESCENARIO INTERACTIVO ESPECÍFICO DE ANIME.JS v4 -->
+          <div class="anime-showcase-block__stage" data-stage-viewport>
+            {/* CARRERA DE CURVAS EASING */}
+            {stageType === 'easing-race' && (
+              <div class="race-tracks">
+                <div class="race-lane"><span class="lane-lbl">linear</span><div class="race-runner" data-runner="linear"></div></div>
+                <div class="race-lane"><span class="lane-lbl">outQuad</span><div class="race-runner" data-runner="outQuad"></div></div>
+                <div class="race-lane"><span class="lane-lbl">outExpo</span><div class="race-runner" data-runner="outExpo"></div></div>
+                <div class="race-lane"><span class="lane-lbl">createSpring()</span><div class="race-runner" data-runner="spring"></div></div>
+              </div>
+            )}
+
+            {/* CUADRÍCULA 2D STAGGER RIPPLE */}
+            {(stageType === 'stagger-grid-2d' || stageType === 'space-shatter') && (
+              <div class="grid-2d-stage">
+                <div class="grid-2d-matrix" data-grid-matrix>
+                  {Array.from({ length: 32 }).map((_, cIdx) => (
+                    <button type="button" class="grid-2d-cell" data-cell-idx={cIdx} title="Haz clic en cualquier celda para expandir onda desde aquí"></button>
+                  ))}
+                </div>
+                <span class="mono-caption">Haz clic en cualquier celda o presiona Ejecutar para disparar stagger(45, &#123; grid: [8, 4], from: index &#125;)</span>
+              </div>
+            )}
+
+            {/* SVG DRAWABLE, MORPHING & MOTION PATH */}
+            {stageType.startsWith('svg-') && (
+              <div class="svg-lab-stage">
+                {stageType === 'svg-morph' ? (
+                  <svg viewBox="0 0 240 120" class="lab-svg-wide">
+                    <polygon
+                      data-morph-poly
+                      points="120,12 148,44 190,50 158,80 166,114 120,94 74,114 82,80 50,50 92,44"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="3"
+                    />
+                  </svg>
+                ) : stageType === 'svg-motionpath' ? (
+                  <div class="motion-path-wrap">
+                    <svg viewBox="0 0 360 120" class="lab-svg-wide">
+                      <path
+                        data-motion-track
+                        d="M 20,60 C 90,10 150,110 220,60 C 280,15 320,105 340,60"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-dasharray="4 4"
+                      />
+                    </svg>
+                    <div class="motion-rider" data-motion-rider></div>
+                  </div>
+                ) : (
+                  <svg viewBox="0 0 380 110" class="lab-svg-wide">
+                    <path
+                      data-drawable-path
+                      d="M 20,85 L 75,25 L 130,85 L 185,20 L 240,85 L 295,30 L 355,60"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="3.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                    <circle data-drawable-path cx="185" cy="55" r="38" fill="none" stroke="currentColor" stroke-width="2.5" />
+                  </svg>
+                )}
+              </div>
+            )}
+
+            {/* TIMELINE CON SLIDER SCRUBBER */}
+            {stageType === 'tl-scrub' && (
+              <div class="scrub-stage">
+                <div class="scrub-boxes">
+                  <div class="kinetic-node" data-anim-el>01</div>
+                  <div class="kinetic-node" data-anim-el>02</div>
+                  <div class="kinetic-node" data-anim-el>03</div>
+                  <div class="kinetic-node" data-anim-el>04</div>
+                </div>
+                <div class="scrub-slider-row">
+                  <span class="mono-caption">Arrastra para controlar la línea de tiempo (seek):</span>
+                  <input type="range" min="0" max="100" value="0" class="scrub-range" data-tl-scrubber />
+                </div>
+              </div>
+            )}
+
+            {/* WIZARD STEP-BY-STEP */}
+            {stageType === 'tl-stepper' && (
+              <div class="stepper-live-stage" data-stepper-box>
+                <div class="stepper-nodes-row">
+                  <span class="st-step is-on" data-st-node>01. INIT</span>
+                  <span class="st-step" data-st-node>02. BUILD</span>
+                  <span class="st-step" data-st-node>03. VERIFY</span>
+                  <span class="st-step" data-st-node>04. LIVE</span>
+                </div>
+                <div class="stepper-bar-bg"><div class="stepper-bar-fill" data-st-bar style="width:25%"></div></div>
+                <button type="button" class="ctrl-btn ctrl-btn--primary" data-st-advance>Avanzar Siguiente Etapa →</button>
+              </div>
+            )}
+
+            {/* TIMERS & CALCULANDO */}
+            {(stageType.startsWith('timer-') || stageType.startsWith('calc-')) && (
+              <div class="telemetry-live-stage">
+                <div class="telemetry-big-readout" data-telemetry-readout>
+                  {stageType === 'calc-scramble' ? 'SHA256 // 9F84A2C0E1B7' : stageType.startsWith('timer-') ? '00.00s' : '$148,920.50'}
+                </div>
+                <div class="telemetry-bars-row">
+                  <div class="t-bar"><span data-anim-el style="width:88%"></span></div>
+                  <div class="t-bar"><span data-anim-el style="width:64%"></span></div>
+                  <div class="t-bar"><span data-anim-el style="width:92%"></span></div>
+                </div>
+              </div>
+            )}
+
+            {/* LOADERS, SPINNERS, 3-DOTS & SKELETONS */}
+            {stageType.startsWith('load-') && (
+              <div class="loaders-live-stage">
+                {stageType === 'load-spinner' ? (
+                  <div class="dual-rotor-box">
+                    <div class="rotor-outer" data-anim-el></div>
+                    <div class="rotor-inner" data-anim-el></div>
+                  </div>
+                ) : stageType === 'load-dots' ? (
+                  <div class="dots-wave-row">
+                    <span class="wave-dot" data-anim-el></span>
+                    <span class="wave-dot" data-anim-el></span>
+                    <span class="wave-dot" data-anim-el></span>
+                    <span class="wave-dot" data-anim-el></span>
+                  </div>
+                ) : stageType === 'load-skeleton' ? (
+                  <div class="skeleton-demo-card" data-sk-card>
+                    <div class="sk-lines-group">
+                      <span class="sk-shimmer-line w40" data-anim-el></span>
+                      <span class="sk-shimmer-line w90" data-anim-el></span>
+                      <span class="sk-shimmer-line w75" data-anim-el></span>
+                    </div>
+                  </div>
+                ) : (
+                  <div class="bars-equalizer-row">
+                    {Array.from({ length: 10 }).map(() => (
+                      <span class="eq-bar" data-anim-el></span>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* STACKERS 3D & DESCOMPOSICIÓN DE COMPONENTE */}
+            {(stageType === 'space-stacker' || stageType === 'space-decompose' || stageType === 'space-fan' || stageType === 'space-flip' || stageType === 'space-collapse') && (
+              <div class="spatial-3d-stage">
+                <div class="spatial-deck" data-spatial-deck>
+                  <div class="spatial-layer" data-anim-el><span>CAPA 01 // CHASIS ESTRUCTURAL</span><strong>SURFACE LAYER</strong></div>
+                  <div class="spatial-layer" data-anim-el><span>CAPA 02 // CRISTAL & BLUR</span><strong>GLASS LAYER</strong></div>
+                  <div class="spatial-layer" data-anim-el><span>CAPA 03 // TELEMETRÍA</span><strong>DATA LAYER</strong></div>
+                  <div class="spatial-layer spatial-layer--accent" data-anim-el><span>CAPA 04 // INTERACCIÓN</span><strong>ACTION LAYER</strong></div>
+                </div>
+              </div>
+            )}
+
+            {/* ESCENARIO POR DEFECTO PARA TRANSFORMS, KEYFRAMES, SPRINGS & TIMELINES */}
+            {!stageType.startsWith('svg-') &&
+              !stageType.startsWith('timer-') &&
+              !stageType.startsWith('calc-') &&
+              !stageType.startsWith('load-') &&
+              !stageType.startsWith('space-') &&
+              stageType !== 'easing-race' &&
+              stageType !== 'stagger-grid-2d' &&
+              stageType !== 'tl-scrub' &&
+              stageType !== 'tl-stepper' && (
+                <div class="kinetic-track-stage">
+                  <div class="kinetic-nodes-row">
+                    {Array.from({ length: 7 }).map((_, nIdx) => (
+                      <div class="kinetic-node" data-anim-el data-node-idx={nIdx}>
+                        <span>0{nIdx + 1}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+          </div>
+
+          <!-- 3. BARRA INFERIOR CON LISTA DESPLEGABLE EXCLUSIVA PARA EL FRAMEWORK -->
+          <footer class="anime-showcase-block__codebar">
+            <div class="codebar-left">
+              <div class="select-control">
+                <label class="select-control__label">
+                  <Icon name="code" size={14} />
+                  <span>Adaptador de Código:</span>
+                </label>
+                <div class="select-wrap">
+                  <select class="cxd-architect-select" data-anime-fw-select>
+                    <option value="vanilla">Anime.js v4 Module ({preset.filePath})</option>
+                    <option value="react">React / Next.js Hook (TSX)</option>
+                    <option value="vue">Vue 3 Composable (SFC)</option>
+                    <option value="svelte">Svelte 5 Action (Runes)</option>
+                    <option value="astro">Astro 5 Client Script</option>
+                  </select>
+                  <Icon name="chevron-down" size={12} class="select-chevron" />
+                </div>
+              </div>
+              <code class="codebar-path">{preset.filePath}</code>
+            </div>
+
+            <div class="codebar-actions">
+              <button type="button" class="unit-action-btn" data-toggle-anime-code>
+                <Icon name="code" size={13} />
+                <span>Ver / Ocultar Código</span>
+              </button>
+              <button type="button" class="unit-action-btn unit-action-btn--primary" data-copy-anime-code>
+                <Icon name="copy" size={13} />
+                <span data-copy-lbl>Copiar Código</span>
+              </button>
+            </div>
+          </footer>
+
+          <!-- 4. CAJÓN DE CÓDIGO -->
+          <div class="variant-unit__code-drawer" data-anime-drawer>
+            <pre class="unit-code-block is-active" data-afw-panel="vanilla"><code>{preset.code}</code></pre>
+            <pre class="unit-code-block" data-afw-panel="react"><code>{reactSnippet}</code></pre>
+            <pre class="unit-code-block" data-afw-panel="vue"><code>{vueSnippet}</code></pre>
+            <pre class="unit-code-block" data-afw-panel="svelte"><code>{svelteSnippet}</code></pre>
+            <pre class="unit-code-block" data-afw-panel="astro"><code>{astroSnippet}</code></pre>
+          </div>
+        </section>
+      );
+    })}
+  </div>
+</div>
+
+<script>
+  import { initAnimeCategoryWorkbench } from '../utils/animeWorkbenchClient';
+  initAnimeCategoryWorkbench();
+</script>
+
+<style>
+  .anime-workbench {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .variant-jump-strip {
+    padding: 0.9rem 1.25rem;
+    background: var(--cxd-bg-surface);
+    border: 1px solid var(--cxd-border);
+    border-radius: var(--cxd-radius-md);
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+  }
+
+  .variant-jump-strip__label {
+    font-family: var(--cxd-font-mono);
+    font-size: 0.7rem;
+    color: var(--cxd-text-muted);
+    text-transform: uppercase;
+  }
+
+  .variant-jump-strip__pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+  }
+
+  .jump-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.35rem 0.7rem;
+    background: var(--cxd-bg-base);
+    border: 1px solid var(--cxd-border-strong);
+    border-radius: var(--cxd-radius-sm);
+    color: var(--cxd-text-secondary);
+    text-decoration: none;
+    font-size: 0.76rem;
+  }
+
+  .jump-pill:hover {
+    border-color: var(--cxd-accent);
+    color: var(--cxd-text-primary);
+  }
+
+  .jump-pill__num {
+    font-family: var(--cxd-font-mono);
+    font-size: 0.66rem;
+    color: var(--cxd-accent);
+    font-weight: 700;
+  }
+
+  .anime-full-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 2.75rem;
+  }
+
+  .anime-showcase-block {
+    background: var(--cxd-bg-surface);
+    border: var(--cxd-border-width, 1px) solid var(--cxd-border-strong);
+    border-radius: var(--cxd-radius-lg);
+    overflow: hidden;
+  }
+
+  .anime-showcase-block__head {
+    padding: 1.25rem 1.5rem;
+    background: var(--cxd-bg-elevated);
+    border-bottom: 1px solid var(--cxd-border);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1.25rem;
+  }
+
+  .variant-index-badge {
+    font-family: var(--cxd-font-mono);
+    font-size: 0.68rem;
+    color: var(--cxd-accent);
+    display: block;
+    margin-bottom: 0.25rem;
+  }
+
+  .anime-showcase-block__head h2 {
+    font-size: 1.18rem;
+    font-weight: 700;
+  }
+
+  .anime-showcase-block__head p {
+    font-size: 0.85rem;
+    color: var(--cxd-text-secondary);
+    margin-top: 0.25rem;
+    max-width: 740px;
+  }
+
+  .playback-controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.45rem;
+  }
+
+  .ctrl-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.4rem 0.75rem;
+    background: var(--cxd-bg-base);
+    color: var(--cxd-text-primary);
+    border: 1px solid var(--cxd-border-strong);
+    border-radius: var(--cxd-radius-sm);
+    font-family: var(--cxd-font-mono);
+    font-size: 0.72rem;
+    cursor: pointer;
+  }
+
+  .ctrl-btn--primary {
+    background: var(--cxd-accent);
+    color: var(--cxd-accent-fg, #000);
+    border-color: var(--cxd-accent);
+    font-weight: 600;
+  }
+
+  .speed-pills {
+    display: inline-flex;
+    border: 1px solid var(--cxd-border-strong);
+    border-radius: var(--cxd-radius-sm);
+    overflow: hidden;
+  }
+
+  .spd-btn {
+    padding: 0.38rem 0.55rem;
+    background: var(--cxd-bg-base);
+    color: var(--cxd-text-secondary);
+    border: none;
+    font-family: var(--cxd-font-mono);
+    font-size: 0.68rem;
+    cursor: pointer;
+  }
+
+  .spd-btn.is-active {
+    background: var(--cxd-accent);
+    color: var(--cxd-accent-fg, #000);
+    font-weight: 700;
+  }
+
+  .anime-showcase-block__stage {
+    min-height: 210px;
+    padding: 2rem 1.5rem;
+    background: var(--cxd-bg-base);
+    border-bottom: 1px solid var(--cxd-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .race-tracks {
+    width: 100%;
+    max-width: 460px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .race-lane {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: var(--cxd-bg-surface);
+    border: 1px solid var(--cxd-border);
+    padding: 0.45rem 0.75rem;
+  }
+
+  .lane-lbl {
+    width: 105px;
+    font-family: var(--cxd-font-mono);
+    font-size: 0.7rem;
+    color: var(--cxd-text-secondary);
+  }
+
+  .race-runner {
+    width: 24px;
+    height: 24px;
+    background: var(--cxd-accent);
+    border-radius: 4px;
+  }
+
+  .grid-2d-stage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .grid-2d-matrix {
+    display: grid;
+    grid-template-columns: repeat(8, 30px);
+    grid-template-rows: repeat(4, 30px);
+    gap: 6px;
+  }
+
+  .grid-2d-cell {
+    width: 30px;
+    height: 30px;
+    background: var(--cxd-accent);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .mono-caption {
+    font-family: var(--cxd-font-mono);
+    font-size: 0.7rem;
+    color: var(--cxd-text-muted);
+  }
+
+  .lab-svg-wide {
+    width: 100%;
+    max-width: 420px;
+    height: 120px;
+    color: var(--cxd-accent);
+  }
+
+  .motion-path-wrap {
+    position: relative;
+    width: 360px;
+    height: 120px;
+  }
+
+  .motion-rider {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 16px;
+    height: 16px;
+    margin-left: -8px;
+    margin-top: -8px;
+    background: var(--cxd-accent);
+    border-radius: 3px;
+  }
+
+  .scrub-stage,
+  .stepper-live-stage,
+  .telemetry-live-stage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+    max-width: 520px;
+  }
+
+  .scrub-boxes,
+  .kinetic-nodes-row {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .kinetic-node {
+    width: 46px;
+    height: 46px;
+    background: var(--cxd-bg-surface);
+    border: 1.5px solid var(--cxd-accent);
+    border-radius: var(--cxd-radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--cxd-font-mono);
+    font-size: 0.78rem;
+    font-weight: 700;
+  }
+
+  .scrub-slider-row {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+    width: 100%;
+  }
+
+  .scrub-range {
+    width: 100%;
+  }
+
+  .stepper-nodes-row {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    gap: 0.5rem;
+  }
+
+  .st-step {
+    font-family: var(--cxd-font-mono);
+    font-size: 0.72rem;
+    padding: 0.35rem 0.65rem;
+    border: 1px solid var(--cxd-border-strong);
+    background: var(--cxd-bg-surface);
+  }
+
+  .st-step.is-on {
+    background: var(--cxd-accent);
+    color: var(--cxd-accent-fg, #000);
+    font-weight: 700;
+  }
+
+  .stepper-bar-bg {
+    width: 100%;
+    height: 6px;
+    background: var(--cxd-bg-elevated);
+  }
+
+  .stepper-bar-fill {
+    height: 100%;
+    background: var(--cxd-accent);
+  }
+
+  .telemetry-big-readout {
+    font-family: var(--cxd-font-mono);
+    font-size: 1.9rem;
+    font-weight: 800;
+  }
+
+  .telemetry-bars-row {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .t-bar {
+    height: 7px;
+    background: var(--cxd-bg-elevated);
+  }
+
+  .t-bar span {
+    display: block;
+    height: 100%;
+    background: var(--cxd-accent);
+    transform-origin: left;
+  }
+
+  .dual-rotor-box {
+    position: relative;
+    width: 76px;
+    height: 76px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .rotor-outer {
+    position: absolute;
+    inset: 0;
+    border: 3px solid var(--cxd-accent);
+    border-right-color: transparent;
+    border-radius: 50%;
+  }
+
+  .rotor-inner {
+    width: 44px;
+    height: 44px;
+    border: 2px dashed var(--cxd-text-secondary);
+    border-radius: 50%;
+  }
+
+  .dots-wave-row {
+    display: flex;
+    gap: 0.75rem;
+  }
+
+  .wave-dot {
+    width: 14px;
+    height: 14px;
+    background: var(--cxd-accent);
+    border-radius: 50%;
+  }
+
+  .bars-equalizer-row {
+    display: flex;
+    gap: 6px;
+    height: 48px;
+    align-items: center;
+  }
+
+  .eq-bar {
+    width: 8px;
+    height: 100%;
+    background: var(--cxd-accent);
+  }
+
+  .skeleton-demo-card {
+    width: 100%;
+    max-width: 340px;
+    padding: 1rem;
+    background: var(--cxd-bg-surface);
+    border: 1px solid var(--cxd-border-strong);
+  }
+
+  .sk-lines-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .sk-shimmer-line {
+    display: block;
+    height: 10px;
+    background: var(--cxd-accent);
+  }
+
+  .w40 { width: 40%; }
+  .w90 { width: 90%; }
+  .w75 { width: 75%; }
+
+  .spatial-deck {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+    width: 100%;
+    max-width: 320px;
+    perspective: 700px;
+  }
+
+  .spatial-layer {
+    padding: 0.65rem 1rem;
+    background: var(--cxd-bg-surface);
+    border: 1px solid var(--cxd-border-strong);
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--cxd-font-mono);
+    font-size: 0.7rem;
+  }
+
+  .spatial-layer--accent {
+    background: var(--cxd-accent);
+    color: var(--cxd-accent-fg, #000);
+  }
+
+  .anime-showcase-block__codebar {
+    padding: 0.85rem 1.5rem;
+    background: var(--cxd-bg-elevated);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .codebar-left {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .codebar-path {
+    font-family: var(--cxd-font-mono);
+    font-size: 0.72rem;
+    color: var(--cxd-text-muted);
+    background: var(--cxd-bg-base);
+    padding: 0.3rem 0.6rem;
+    border-radius: var(--cxd-radius-sm);
+    border: 1px solid var(--cxd-border);
+  }
+
+  .codebar-actions {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .unit-action-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.42rem 0.8rem;
+    background: var(--cxd-bg-base);
+    color: var(--cxd-text-primary);
+    border: 1px solid var(--cxd-border-strong);
+    border-radius: var(--cxd-radius-sm);
+    font-family: var(--cxd-font-mono);
+    font-size: 0.73rem;
+    cursor: pointer;
+  }
+
+  .unit-action-btn--primary {
+    background: var(--cxd-accent);
+    color: var(--cxd-accent-fg, #000);
+    border-color: var(--cxd-accent);
+    font-weight: 600;
+  }
+
+  .variant-unit__code-drawer {
+    border-top: 1px solid var(--cxd-border);
+    background: #07080a;
+  }
+
+  .variant-unit__code-drawer.is-collapsed {
+    display: none;
+  }
+
+  .unit-code-block {
+    display: none;
+    max-height: 290px;
+    overflow: auto;
+    padding: 1rem 1.5rem;
+    font-family: var(--cxd-font-mono);
+    font-size: 0.75rem;
+    line-height: 1.58;
+    color: #e4e4e7;
+  }
+
+  .unit-code-block.is-active {
+    display: block;
+  }
+</style>

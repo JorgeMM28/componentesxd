@@ -1,0 +1,32 @@
+---
+/**
+ * ============================================================================
+ * COMPONENTESXD — 05. Architectural Pricing & Quota Tier Card (ASTRO 5)
+ * Archivo: components/cards/variants/pricing-architecture-tier/PricingArchitectureTier.astro
+ * ============================================================================
+ */
+import './styles.css';
+
+interface Props {
+  title?: string;
+  badge?: string;
+  interfaceTheme?: string;
+}
+
+const {
+  title = '05. Architectural Pricing & Quota Tier Card',
+  badge = 'BILLING TIER',
+  interfaceTheme
+} = Astro.props;
+---
+
+<section class="cxd-cards-pricing-architecture-tier" data-theme={interfaceTheme} data-variant="pricing-architecture-tier">
+  <header class="cxd-cards-pricing-architecture-tier__header">
+    <span>{title}</span>
+    <span class="cxd-badge">{badge}</span>
+  </header>
+  <div class="cxd-cards-pricing-architecture-tier__body">
+    <p>Desglose técnico de plan con medidor de cuota consumida, lista verificada con SVGs y CTA integrado.</p>
+    <slot />
+  </div>
+</section>

@@ -1,0 +1,15 @@
+/**
+ * ============================================================================
+ * COMPONENTESXD — TABLAS DE DATOS
+ * Variante 08 — Tabla con Filtros Avanzados (Buscador + Categoría + Estado)
+ * Archivo: components/tables/variants/multi-filter-table/styles.css
+ * ============================================================================
+ */
+.cxd-tables-multi-filter-table {
+  background: var(--cxd-bg-surface);
+  color: var(--cxd-text-primary);
+  border: var(--cxd-border-width, 1px) solid var(--cxd-border);
+  border-radius: var(--cxd-radius-md);
+  font-family: var(--cxd-font-sans);
+  font-variant-numeric: tabular-nums;
+}

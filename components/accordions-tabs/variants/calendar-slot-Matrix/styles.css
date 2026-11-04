@@ -1,0 +1,15 @@
+/**
+ * ============================================================================
+ * COMPONENTESXD — ACORDEONES, COMPARADORES BEFORE/AFTER, KANBAN Y CONMUTADORES
+ * Variante 08 — Calendario y Selector Interactivo de Horarios / Turnos
+ * Archivo: components/accordions-tabs/variants/calendar-slot-Matrix/styles.css
+ * ============================================================================
+ */
+.cxd-accordions-tabs-calendar-slot-Matrix {
+  background: var(--cxd-bg-surface);
+  color: var(--cxd-text-primary);
+  border: var(--cxd-border-width, 1px) solid var(--cxd-border);
+  border-radius: var(--cxd-radius-md);
+  font-family: var(--cxd-font-sans);
+  font-variant-numeric: tabular-nums;
+}

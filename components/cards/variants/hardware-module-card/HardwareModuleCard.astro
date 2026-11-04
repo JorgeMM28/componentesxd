@@ -1,0 +1,32 @@
+---
+/**
+ * ============================================================================
+ * COMPONENTESXD — 08. Teenage-Style Hardware Synth Module Card (ASTRO 5)
+ * Archivo: components/cards/variants/hardware-module-card/HardwareModuleCard.astro
+ * ============================================================================
+ */
+import './styles.css';
+
+interface Props {
+  title?: string;
+  badge?: string;
+  interfaceTheme?: string;
+}
+
+const {
+  title = '08. Teenage-Style Hardware Synth Module Card',
+  badge = 'INDUSTRIAL UI',
+  interfaceTheme
+} = Astro.props;
+---
+
+<section class="cxd-cards-hardware-module-card" data-theme={interfaceTheme} data-variant="hardware-module-card">
+  <header class="cxd-cards-hardware-module-card__header">
+    <span>{title}</span>
+    <span class="cxd-badge">{badge}</span>
+  </header>
+  <div class="cxd-cards-hardware-module-card__body">
+    <p>Estética de módulo físico con tornillos vectoriales en las esquinas, indicadores LED y lecturas mono.</p>
+    <slot />
+  </div>
+</section>

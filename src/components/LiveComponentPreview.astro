@@ -1,0 +1,4211 @@
+---
+import Icon from './Icon.astro';
+
+interface Props {
+  previewType: string;
+  variantId: string;
+  variantName: string;
+  badge: string;
+}
+
+const { previewType, variantId, variantName, badge } = Astro.props;
+---
+
+<div class="live-preview-host" data-preview-type={previewType} data-variant-id={variantId}>
+  {/* ==========================================================================
+      CATEGORÍA 01: TABLAS DE DATOS (10 VARIANTES RADICALMENTE DIFERENTES)
+      ========================================================================== */}
+
+  {/* 1. TABLA MODERNA BORDES REDONDEADOS */}
+  {previewType === 'table-modern-rounded' && (
+    <div class="tbl-modern-rounded">
+      <table class="tbl-modern-rounded__table">
+        <thead>
+          <tr>
+            <th>Miembro del Equipo</th>
+            <th>Departamento</th>
+            <th>Estado</th>
+            <th>Rendimiento</th>
+            <th style="text-align:right"> Presupuesto</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <div class="user-pill-cell">
+                <span class="avatar-circle">AL</span>
+                <div><strong>Elena Rostova</strong><small>elena@studio.io</small></div>
+              </div>
+            </td>
+            <td><span class="soft-tag">Arquitectura UI</span></td>
+            <td><span class="pill-status pill-status--ok">En Línea</span></td>
+            <td><div class="rounded-bar"><span style="width:92%"></span></div></td>
+            <td style="text-align:right; font-weight:700;">$14,800</td>
+          </tr>
+          <tr>
+            <td>
+              <div class="user-pill-cell">
+                <span class="avatar-circle avatar-circle--alt">MK</span>
+                <div><strong>Marco Kovacs</strong><small>marco@studio.io</small></div>
+              </div>
+            </td>
+            <td><span class="soft-tag">Core Infraestructura</span></td>
+            <td><span class="pill-status pill-status--warn">En Revisión</span></td>
+            <td><div class="rounded-bar"><span style="width:68%"></span></div></td>
+            <td style="text-align:right; font-weight:700;">$9,450</td>
+          </tr>
+          <tr>
+            <td>
+              <div class="user-pill-cell">
+                <span class="avatar-circle">SV</span>
+                <div><strong>Sofía Vance</strong><small>sofia@studio.io</small></div>
+              </div>
+            </td>
+            <td><span class="soft-tag">Sistemas IA</span></td>
+            <td><span class="pill-status pill-status--ok">En Línea</span></td>
+            <td><div class="rounded-bar"><span style="width:96%"></span></div></td>
+            <td style="text-align:right; font-weight:700;">$19,200</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  )}
+
+  {/* 2. TABLA STYLELESS (SIN BORDES NI CAJA EXTERIOR) */}
+  {previewType === 'table-styleless' && (
+    <div class="tbl-styleless-wrap">
+      <table class="tbl-styleless">
+        <thead>
+          <tr>
+            <th>01 / Publicación</th>
+            <th>02 / Autoría</th>
+            <th>03 / Categoría</th>
+            <th style="text-align:right">04 / Lecturas</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="styleless-title">Sistemas Reticulares en Interfaces Contemporáneas</td>
+            <td>J. Müller-Brockmann</td>
+            <td>Tipografía & Layout</td>
+            <td style="text-align:right" class="mono">142,890</td>
+          </tr>
+          <tr>
+            <td class="styleless-title">Física de Resortes y Movimiento Determinista en la Web</td>
+            <td>R. Freiberg</td>
+            <td>Ingeniería Cinética</td>
+            <td style="text-align:right" class="mono">98,410</td>
+          </tr>
+          <tr>
+            <td class="styleless-title">Arquitectura de Contenedores Multi-Etapa sin Root</td>
+            <td>K. Hightower</td>
+            <td>Infraestructura Cloud</td>
+            <td style="text-align:right" class="mono">64,120</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  )}
+
+  {/* 3. TABLA CONTENT-FIT (AJUSTADA EXACTAMENTE AL CONTENIDO) */}
+  {previewType === 'table-content-fit' && (
+    <div class="tbl-content-fit-outer">
+      <span class="fit-helper-note">Ancho automático ajustado al texto (width: max-content):</span>
+      <table class="tbl-content-fit">
+        <thead>
+          <tr>
+            <th>COD</th>
+            <th>REGIÓN</th>
+            <th>PING</th>
+            <th>UPTIME</th>
+            <th>ESTADO</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>IAD-01</td>
+            <td>Virginia</td>
+            <td>8.2ms</td>
+            <td>99.99%</td>
+            <td><span class="dot-ok"></span>OK</td>
+          </tr>
+          <tr>
+            <td>FRA-04</td>
+            <td>Frankfurt</td>
+            <td>14.7ms</td>
+            <td>99.98%</td>
+            <td><span class="dot-ok"></span>OK</td>
+          </tr>
+          <tr>
+            <td>NRT-02</td>
+            <td>Tokyo</td>
+            <td>41.1ms</td>
+            <td>99.95%</td>
+            <td><span class="dot-warn"></span>WARN</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  )}
+
+  {/* 4. TABLA DE FILAS FLOTANTES SEPARADAS */}
+  {previewType === 'table-floating' && (
+    <div class="tbl-floating-wrap">
+      <table class="tbl-floating">
+        <thead>
+          <tr>
+            <th>Servidor / Nodo</th>
+            <th>Dirección IP</th>
+            <th>Carga GPU</th>
+            <th>Estado Operativo</th>
+            <th style="text-align:right">Latencia</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="floating-row">
+            <td><strong>tensor-node-alpha-01</strong></td>
+            <td class="mono">10.240.12.88</td>
+            <td class="mono">78.4% (H100)</td>
+            <td><span class="cxd-badge cxd-badge--active">OPERATIONAL</span></td>
+            <td style="text-align:right" class="mono">4.2ms</td>
+          </tr>
+          <tr class="floating-row">
+            <td><strong>tensor-node-beta-02</strong></td>
+            <td class="mono">10.240.12.89</td>
+            <td class="mono">91.0% (H100)</td>
+            <td><span class="cxd-badge cxd-badge--active">OPERATIONAL</span></td>
+            <td style="text-align:right" class="mono">5.8ms</td>
+          </tr>
+          <tr class="floating-row">
+            <td><strong>storage-cold-replica-09</strong></td>
+            <td class="mono">10.240.99.14</td>
+            <td class="mono">12.1% (NVMe)</td>
+            <td><span class="cxd-badge cxd-badge--pending">SYNCING</span></td>
+            <td style="text-align:right" class="mono">19.4ms</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  )}
+
+  {/* 5. TABLA INTERACTIVA (ORDENAMIENTO EN VIVO + SELECCIÓN MÚLTIPLE) */}
+  {previewType === 'table-interactive' && (
+    <div class="cxd-table-shell" data-interactive-table>
+      <div class="cxd-table-toolbar">
+        <span class="mono" data-sel-counter>0 filas seleccionadas (Haz clic en cabeceras para ordenar)</span>
+        <button type="button" class="mini-btn" data-clear-sel>Limpiar Selección</button>
+      </div>
+      <table class="cxd-table">
+        <thead>
+          <tr>
+            <th style="width:42px"><input type="checkbox" data-check-all /></th>
+            <th class="is-sortable" data-sort-col="0">Servicio (Click Ordenar)</th>
+            <th class="is-sortable" data-sort-col="1">Peticiones/s (Click Ordenar)</th>
+            <th>Estado</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><input type="checkbox" data-row-check /></td>
+            <td data-val="Auth Gateway"><strong>Auth Gateway</strong></td>
+            <td data-val="42500" class="mono">42,500 req/s</td>
+            <td><span class="cxd-badge cxd-badge--active">ACTIVE</span></td>
+          </tr>
+          <tr>
+            <td><input type="checkbox" data-row-check /></td>
+            <td data-val="Billing Engine"><strong>Billing Engine</strong></td>
+            <td data-val="12800" class="mono">12,800 req/s</td>
+            <td><span class="cxd-badge cxd-badge--active">ACTIVE</span></td>
+          </tr>
+          <tr>
+            <td><input type="checkbox" data-row-check /></td>
+            <td data-val="Search Indexer"><strong>Search Indexer</strong></td>
+            <td data-val="89400" class="mono">89,400 req/s</td>
+            <td><span class="cxd-badge cxd-badge--pending">INDEXING</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  )}
+
+  {/* 6. TABLA CON ACCIONES CRUD EN VIVO */}
+  {previewType === 'table-actions' && (
+    <div class="cxd-table-shell" data-crud-table>
+      <div class="cxd-table-toolbar">
+        <span class="mono">Prueba los botones de acción a la derecha de cada fila:</span>
+        <button type="button" class="mini-btn mini-btn--accent" data-add-crud-row>+ Agregar Nueva Fila</button>
+      </div>
+      <table class="cxd-table">
+        <thead>
+          <tr>
+            <th>Recurso / Endpoint</th>
+            <th>Ambiente</th>
+            <th>Estado</th>
+            <th style="text-align:right">Acciones Rápidas</th>
+          </tr>
+        </thead>
+        <tbody data-crud-tbody>
+          <tr>
+            <td><strong>/api/v2/payments/webhook</strong></td>
+            <td class="mono">production</td>
+            <td><span class="cxd-badge cxd-badge--active" data-status-pill>ACTIVE</span></td>
+            <td style="text-align:right">
+              <div class="row-actions">
+                <button type="button" class="mini-btn" data-row-toggle>Alternar Estado</button>
+                <button type="button" class="mini-btn" data-row-dup>Duplicar</button>
+                <button type="button" class="mini-btn mini-btn--danger" data-row-del>Eliminar</button>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>/api/v2/users/export-csv</strong></td>
+            <td class="mono">staging</td>
+            <td><span class="cxd-badge cxd-badge--pending" data-status-pill>PAUSED</span></td>
+            <td style="text-align:right">
+              <div class="row-actions">
+                <button type="button" class="mini-btn" data-row-toggle>Alternar Estado</button>
+                <button type="button" class="mini-btn" data-row-dup>Duplicar</button>
+                <button type="button" class="mini-btn mini-btn--danger" data-row-del>Eliminar</button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  )}
+
+  {/* 7. TABLA CON FORMULARIO INTEGRADO Y CÁLCULO EN VIVO */}
+  {previewType === 'table-form' && (
+    <div class="cxd-table-shell" data-form-table>
+      <table class="cxd-table">
+        <thead>
+          <tr>
+            <th>Concepto / Servidor (Editable)</th>
+            <th>Plan (Select)</th>
+            <th>Cantidad (Input)</th>
+            <th>Precio Unitario</th>
+            <th style="text-align:right">Subtotal</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr data-calc-row>
+            <td><input type="text" value="Instancia GPU A100" class="tbl-input" /></td>
+            <td>
+              <select class="tbl-select" data-row-price>
+                <option value="120">Dedicated ($120)</option>
+                <option value="65">Spot ($65)</option>
+              </select>
+            </td>
+            <td><input type="number" value="3" min="1" max="50" class="tbl-input tbl-input--num" data-row-qty /></td>
+            <td class="mono" data-unit-display>$120.00</td>
+            <td style="text-align:right; font-weight:700;" class="mono" data-row-subtotal>$360.00</td>
+          </tr>
+          <tr data-calc-row>
+            <td><input type="text" value="Bloque NVMe Replica" class="tbl-input" /></td>
+            <td>
+              <select class="tbl-select" data-row-price>
+                <option value="45">High-IOPS ($45)</option>
+                <option value="20">Standard ($20)</option>
+              </select>
+            </td>
+            <td><input type="number" value="4" min="1" max="50" class="tbl-input tbl-input--num" data-row-qty /></td>
+            <td class="mono" data-unit-display>$45.00</td>
+            <td style="text-align:right; font-weight:700;" class="mono" data-row-subtotal>$180.00</td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr style="background:var(--cxd-bg-elevated)">
+            <td colspan="4" style="text-align:right; font-weight:700;">TOTAL MENSUAL ESTIMADO (Edita cantidades o planes arriba):</td>
+            <td style="text-align:right; font-weight:800; color:var(--cxd-accent);" class="mono" data-table-grand-total>$540.00</td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  )}
+
+  {/* 8. TABLA CON FILTROS COMBINADOS EN VIVO */}
+  {previewType === 'table-filters' && (
+    <div class="cxd-table-shell" data-multi-filter-table>
+      <div class="cxd-table-toolbar">
+        <input type="search" class="tbl-input" style="max-width:240px" placeholder="Buscar por nombre..." data-mf-search />
+        <select class="tbl-select" data-mf-role>
+          <option value="all">Todas las Áreas</option>
+          <option value="Frontend">Área: Frontend</option>
+          <option value="Backend">Área: Backend</option>
+          <option value="DevOps">Área: DevOps</option>
+        </select>
+        <div class="cxd-table-filter-group">
+          <button type="button" class="cxd-table-filter-btn is-active" data-mf-status="all">Todos</button>
+          <button type="button" class="cxd-table-filter-btn" data-mf-status="online">Online</button>
+          <button type="button" class="cxd-table-filter-btn" data-mf-status="busy">Busy</button>
+        </div>
+      </div>
+      <table class="cxd-table">
+        <thead>
+          <tr><th>Ingeniero</th><th>Área</th><th>Estado</th><th>Commits Mes</th></tr>
+        </thead>
+        <tbody>
+          <tr data-role="Frontend" data-status="online"><td><strong>Lucas Meyer</strong></td><td>Frontend</td><td><span class="cxd-badge cxd-badge--active">online</span></td><td class="mono">148</td></tr>
+          <tr data-role="Backend" data-status="busy"><td><strong>Daria Novak</strong></td><td>Backend</td><td><span class="cxd-badge cxd-badge--pending">busy</span></td><td class="mono">219</td></tr>
+          <tr data-role="DevOps" data-status="online"><td><strong>Kenji Sato</strong></td><td>DevOps</td><td><span class="cxd-badge cxd-badge--active">online</span></td><td class="mono">94</td></tr>
+          <tr data-role="Frontend" data-status="busy"><td><strong>Clara Lindqvist</strong></td><td>Frontend</td><td><span class="cxd-badge cxd-badge--pending">busy</span></td><td class="mono">176</td></tr>
+        </tbody>
+      </table>
+    </div>
+  )}
+
+  {/* 9. TABLA EXPANDIBLE MASTER-DETAIL */}
+  {previewType === 'table-expandable' && (
+    <div class="cxd-table-shell">
+      <table class="cxd-table">
+        <thead>
+          <tr><th>Incidente / Despliegue (Haz clic en la fila para expandir detalles)</th><th>Severidad</th><th>Duración</th></tr>
+        </thead>
+        <tbody>
+          <tr class="expand-trigger-row" onclick="const n=this.nextElementSibling; n.style.display=n.style.display==='none'?'table-row':'none'">
+            <td><Icon name="chevron-down" size={14} /> <strong>INC-4091 — Latencia elevada en balanceador US-East</strong></td>
+            <td><span class="cxd-badge cxd-badge--pending">SEV-2</span></td>
+            <td class="mono">14m 22s</td>
+          </tr>
+          <tr class="expand-detail-row">
+            <td colspan="3">
+              <div class="expanded-panel-box">
+                <strong>Diagnóstico Técnico Desplegado:</strong>
+                <p>Rebalanceo automático ejecutado hacia el pool de respaldo <code>us-east-1b</code>. Tráfico normalizado al 100%.</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="expand-trigger-row" onclick="const n=this.nextElementSibling; n.style.display=n.style.display==='none'?'table-row':'none'">
+            <td><Icon name="chevron-down" size={14} /> <strong>DEP-8820 — Actualización de Kernel en Nodos Worker</strong></td>
+            <td><span class="cxd-badge cxd-badge--active">COMPLETED</span></td>
+            <td class="mono">04m 10s</td>
+          </tr>
+          <tr class="expand-detail-row" style="display:none">
+            <td colspan="3">
+              <div class="expanded-panel-box">
+                <strong>Resumen de Nodos:</strong>
+                <p>24 de 24 contenedores reiniciados con cero pérdida de paquetes.</p>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  )}
+
+  {/* 10. TABLA INDUSTRIAL CEBRA CON PIE DE SUMATORIA */}
+  {previewType === 'table-ledger-striped' && (
+    <div class="tbl-brutalist-zebra-wrap">
+      <table class="tbl-brutalist-zebra">
+        <thead>
+          <tr><th>LOTE #</th><th>OPERACIÓN</th><th>CUENTA</th><th style="text-align:right">IMPORTE NETO</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>#001</td><td>LIQUIDACIÓN INTERBANCARIA</td><td>CH-9941-ZUR</td><td style="text-align:right">$420,000.00</td></tr>
+          <tr><td>#002</td><td>COBERTURA DIVISAS EUR/USD</td><td>DE-4410-FRA</td><td style="text-align:right">$185,500.00</td></tr>
+          <tr><td>#003</td><td>CUSTODIA BONOS TESORO</td><td>US-1102-NYC</td><td style="text-align:right">$910,250.00</td></tr>
+        </tbody>
+        <tfoot>
+          <tr><td colspan="3">BALANCE CONSOLIDADO VERIFICADO</td><td style="text-align:right">$1,515,750.00</td></tr>
+        </tfoot>
+      </table>
+    </div>
+  )}
+
+  {/* ==========================================================================
+      CATEGORÍA 02: TOASTERS Y NOTIFICACIONES (8 VARIANTES DISTINTAS)
+      ========================================================================== */}
+  {previewType === 'toast-modern' && (
+    <div class="stage-center">
+      <div class="toast-modern-box" data-modern-toast>
+        <div class="toast-modern-box__row">
+          <span class="toast-icon-circle"><Icon name="check" size={15} /></span>
+          <div style="flex:1">
+            <strong>Copia de seguridad completada con éxito</strong>
+            <p>14.2 GB sincronizados en el almacenamiento encriptado.</p>
+          </div>
+          <button type="button" class="mini-btn" data-replay-toast-bar>Reiniciar Barra</button>
+        </div>
+        <div class="toast-timer-bar"><span data-toast-fill></span></div>
+      </div>
+    </div>
+  )}
+
+  {previewType === 'toast-island' && (
+    <div class="stage-center">
+      <div class="island-morph-shell" data-island-shell>
+        <div class="island-top-row">
+          <span class="cxd-dynamic-island__dot"></span>
+          <strong class="mono" data-island-state-title>MODO COMPACTO // IDLE</strong>
+          <div class="row-actions">
+            <button type="button" class="mini-btn" data-island-mode="compact">Compacto</button>
+            <button type="button" class="mini-btn" data-island-mode="expanded">Expandir Detalles</button>
+          </div>
+        </div>
+        <div class="island-extra-body" data-island-body hidden>
+          <p>Despliegue en curso hacia 12 regiones de borde · 94% completado · 0 errores reportados.</p>
+        </div>
+      </div>
+    </div>
+  )}
+
+  {previewType === 'toast-actions' && (
+    <div class="stage-center">
+      <div class="cxd-toast-card" style="width:100%; max-width:520px; align-items:center;">
+        <div>
+          <strong>Solicitud de fusión en rama principal (#409)</strong>
+          <p class="sub-p" data-action-toast-msg>¿Deseas aprobar y desplegar los cambios ahora mismo?</p>
+        </div>
+        <div class="row-actions">
+          <button type="button" class="mini-btn mini-btn--accent" onclick="this.closest('.cxd-toast-card').querySelector('[data-action-toast-msg]').textContent='Estado: Aprobado y desplegado en producción.'">Aprobar</button>
+          <button type="button" class="mini-btn" onclick="this.closest('.cxd-toast-card').querySelector('[data-action-toast-msg]').textContent='Estado: Pospuesto por 1 hora.'">Posponer</button>
+        </div>
+      </div>
+    </div>
+  )}
+
+  {previewType === 'toast-form' && (
+    <div class="stage-center">
+      <div class="cxd-toast-card" style="width:100%; max-width:520px; flex-direction:column;">
+        <div style="display:flex; justify-content:space-between; width:100%;">
+          <strong>Comentario de Revisión — @sofia_vance</strong>
+          <span class="mono" style="font-size:0.7rem">hace 1 min</span>
+        </div>
+        <p class="sub-p">"¿Podemos subir el límite de rate-limiting a 5,000 req/min?"</p>
+        <form class="toast-inline-form" onsubmit="event.preventDefault(); this.querySelector('button').textContent='Respuesta Enviada'">
+          <input type="text" class="tbl-input" placeholder="Escribe una respuesta rápida..." required />
+          <button type="submit" class="mini-btn mini-btn--accent">Responder</button>
+        </form>
+      </div>
+    </div>
+  )}
+
+  {previewType === 'toast-spawner' && (
+    <div class="stage-center" style="flex-direction:column; gap:1rem;" data-toast-spawner>
+      <div class="row-actions">
+        <button type="button" class="mini-btn mini-btn--accent" data-spawn-type="ok">+ Disparar Toast Éxito</button>
+        <button type="button" class="mini-btn" data-spawn-type="warn">+ Disparar Toast Alerta</button>
+        <button type="button" class="mini-btn mini-btn--danger" data-spawn-type="err">+ Disparar Toast Error</button>
+      </div>
+      <div class="spawned-toast-list" data-spawn-list>
+        <div class="cxd-toast-card">
+          <span>Notificación activa en cola (Haz clic arriba para apilar más)</span>
+          <span class="cxd-badge cxd-badge--active">READY</span>
+        </div>
+      </div>
+    </div>
+  )}
+
+  {previewType === 'toast-styleless' && (
+    <div class="stage-center">
+      <div class="toast-styleless-line">
+        <span class="mono">AVISO DEL SISTEMA // 23:40 UTC</span>
+        <p>La ventana de mantenimiento programado iniciará en 15 minutos sin interrupción de tráfico activo.</p>
+      </div>
+    </div>
+  )}
+
+  {previewType === 'toast-pill' && (
+    <div class="stage-center">
+      <div class="toast-pill-fit">
+        <span class="cxd-badge cxd-badge--active">NUEVO</span>
+        <span>Motor Anime.js v4 integrado en todas las rutas</span>
+        <button type="button" class="mini-btn" onclick="this.textContent='Verificado'">Entendido</button>
+      </div>
+    </div>
+  )}
+
+  {previewType === 'toast-upload' && (
+    <div class="stage-center">
+      <div class="cxd-toast-card" style="width:100%; max-width:460px; flex-direction:column;" data-upload-toast>
+        <div style="display:flex; justify-content:space-between; width:100%;">
+          <strong>Subiendo artefactos de producción (3 archivos)</strong>
+          <span class="mono" data-up-pct>76%</span>
+        </div>
+        <div class="cxd-telemetry-bar" style="width:100%; margin:0.4rem 0;">
+          <div class="cxd-telemetry-fill" data-up-bar style="width:76%"></div>
+        </div>
+        <div style="display:flex; justify-content:space-between; width:100%; align-items:center;">
+          <span class="mono" style="font-size:0.7rem">48.4 MB / s · release-v4.tar.zst</span>
+          <button type="button" class="mini-btn" data-up-sim>Simular 0% -> 100%</button>
+        </div>
+      </div>
+    </div>
+  )}
+
+  {/* ==========================================================================
+      CATEGORÍA 03: BOTONES Y CONTROLES (8 VARIANTES DISTINTAS)
+      ========================================================================== */}
+  {previewType === 'btn-modern' && (
+    <div class="stage-center" style="gap:1rem; flex-wrap:wrap;">
+      <button type="button" class="btn-pill-modern btn-pill-modern--primary">Botón Píldora Moderno</button>
+      <button type="button" class="btn-pill-modern btn-pill-modern--soft">Secundario Suave</button>
+      <button type="button" class="btn-pill-modern btn-pill-modern--outline">Contorno Redondeado</button>
+    </div>
+  )}
+
+  {previewType === 'btn-styleless' && (
+    <div class="stage-center" style="gap:2.5rem; flex-wrap:wrap;">
+      <button type="button" class="btn-styleless-minimal">
+        <span>Explorar Documentación Técnica</span>
+        <Icon name="arrow-right" size={15} />
+      </button>
+      <button type="button" class="btn-styleless-minimal">
+        <span>Descargar Especificación Raw</span>
+        <Icon name="arrow-right" size={15} />
+      </button>
+    </div>
+  )}
+
+  {previewType === 'btn-floating' && (
+    <div class="stage-center" data-fab-stage>
+      <div class="fab-cluster">
+        <button type="button" class="fab-main-trigger" data-fab-toggle>
+          <Icon name="layers" size={18} />
+          <span>Menú Flotante FAB (Click)</span>
+        </button>
+        <div class="fab-satellites" data-fab-items>
+          <button type="button" class="mini-btn">01. Nuevo Despliegue</button>
+          <button type="button" class="mini-btn">02. Clonar Repositorio</button>
+          <button type="button" class="mini-btn">03. Exportar Logs</button>
+        </div>
+      </div>
+    </div>
+  )}
+
+  {previewType === 'btn-interactive' && (
+    <div class="stage-center" style="gap:1rem; flex-wrap:wrap;">
+      <button type="button" class="cxd-btn cxd-btn--primary" data-async-demo>
+        <span class="cxd-btn__spinner"></span>
+        <span data-btn-label>Haz Clic para Probar Ciclo Asíncrono</span>
+      </button>
+      <button type="button" class="cxd-btn cxd-btn--shimmer" data-cxd-magnetic="true">
+        <span>Pasa el Cursor (Magnético + Haz Cónico)</span>
+      </button>
+    </div>
+  )}
+
+  {previewType === 'btn-hold' && (
+    <div class="stage-center">
+      <button type="button" class="cxd-btn hold-confirm-btn" onmousedown="this.querySelector('.hold-label').textContent='Mantén presionado...'" onmouseup="this.querySelector('.hold-label').textContent=' Acción Confirmada'">
+        <span class="hold-fill"></span>
+        <Icon name="shield" size={15} />
+        <span class="hold-label">Mantén Presionado 1.2s para Purgar Caché</span>
+      </button>
+    </div>
+  )}
+
+  {previewType === 'btn-split' && (
+    <div class="stage-center">
+      <div class="split-btn-group">
+        <button type="button" class="cxd-btn cxd-btn--primary" style="border-top-right-radius:0; border-bottom-right-radius:0;" onclick="this.textContent='Ejecutado Correctamente'">
+          Ejecutar Acción Principal
+        </button>
+        <select class="cxd-architect-select" style="border-top-left-radius:0; border-bottom-left-radius:0; height:38px;">
+          <option>Modo: Producción Directa</option>
+          <option>Modo: Simulación Dry-Run</option>
+          <option>Modo: Rollback Instantáneo</option>
+        </select>
+      </div>
+    </div>
+  )}
+
+  {previewType === 'btn-segmented' && (
+    <div class="stage-center">
+      <div class="cxd-table-filter-group" data-seg-group>
+        <button type="button" class="cxd-table-filter-btn is-active" onclick="this.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('is-active'));this.classList.add('is-active')">Vista Tabla</button>
+        <button type="button" class="cxd-table-filter-btn" onclick="this.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('is-active'));this.classList.add('is-active')">Vista Tarjetas</button>
+        <button type="button" class="cxd-table-filter-btn" onclick="this.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('is-active'));this.classList.add('is-active')">Vista Grafo 3D</button>
+        <button type="button" class="cxd-table-filter-btn" onclick="this.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('is-active'));this.classList.add('is-active')">JSON Raw</button>
+      </div>
+    </div>
+  )}
+
+  {previewType === 'btn-3d' && (
+    <div class="stage-center" style="gap:1.25rem; flex-wrap:wrap;">
+      <button type="button" class="cxd-btn cxd-btn--brutalist">PRESIÓN FÍSICA 3D PRIMARIA</button>
+      <button type="button" class="btn-3d-secondary">INTERRUPTOR MECÁNICO</button>
+    </div>
+  )}
+
+  {/* ==========================================================================
+      CATEGORÍA 04: TARJETAS Y CONTENEDORES (8 VARIANTES DISTINTAS)
+      ========================================================================== */}
+  {previewType === 'card-modern' && (
+    <div class="stage-center">
+      <article class="cxd-spotlight-card" style="max-width:460px; width:100%; border-radius:20px;">
+        <div class="cxd-card-header">
+          <span class="cxd-card-tag">MODERN BENTO</span>
+          <span class="cxd-card-delta">+31.4%</span>
+        </div>
+        <h4>Rendimiento Global de Red</h4>
+        <div class="cxd-card-metric">2.48M req/s</div>
+        <p class="cxd-card-desc">Bordes redondeados suaves de 20px y luz radial que sigue el movimiento de tu cursor.</p>
+      </article>
+    </div>
+  )}
+
+  {previewType === 'card-styleless' && (
+    <div class="stage-center">
+      <article class="card-styleless-editorial">
+        <span class="mono">ENSAYO ARQUITECTÓNICO // Nº 04</span>
+        <h3>La Eliminación del Contenedor Innecesario</h3>
+        <p>Una tarjeta no necesita cuatro bordes ni sombras artificiales cuando la jerarquía tipográfica, el espacio negativo y una línea estructural definen el bloque.</p>
+        <a href="#styleless-editorial" class="btn-styleless-minimal"><span>Leer especificación completa</span><Icon name="arrow-right" size={14} /></a>
+      </article>
+    </div>
+  )}
+
+  {previewType === 'card-floating' && (
+    <div class="stage-center">
+      <article class="card-floating-3d" data-tilt-card>
+        <span class="cxd-badge cxd-badge--active">PERSPECTIVA 3D ACTIVA</span>
+        <h4 style="margin-top:0.6rem;">Mueve el cursor sobre esta tarjeta</h4>
+        <p class="sub-p">Calcula en vivo los ángulos rotateX y rotateY proyectando sombra flotante dinámica.</p>
+      </article>
+    </div>
+  )}
+
+  {previewType === 'card-interactive' && (
+    <div class="stage-center">
+      <article class="card-tabbed-box" data-tabbed-card>
+        <div class="card-tabbed-box__nav">
+          <button type="button" class="is-active" data-c-tab="resumen">01. Resumen</button>
+          <button type="button" data-c-tab="metricas">02. Métricas</button>
+          <button type="button" data-c-tab="config">03. Ajustes</button>
+        </div>
+        <div class="card-tabbed-box__body">
+          <div data-c-panel="resumen"><strong>Estado General del Cluster:</strong> Operando al 99.99% de disponibilidad en 14 zonas.</div>
+          <div data-c-panel="metricas" hidden><strong>Telemetría:</strong> Latencia media 7.2ms · Memoria utilizada 41.2 GB / 64 GB.</div>
+          <div data-c-panel="config" hidden><strong>Configuración:</strong> Auto-escalado habilitado (Mín: 4 nodos, Máx: 32 nodos).</div>
+        </div>
+      </article>
+    </div>
+  )}
+
+  {previewType === 'card-actions' && (
+    <div class="stage-center">
+      <article class="card-with-actions">
+        <div>
+          <span class="mono" style="font-size:0.7rem">REPOSITORIO // CORE-UI</span>
+          <h4>Paquete de Componentes Multi-Framework</h4>
+          <p class="sub-p">Incluye plantillas para React, Vue, Svelte, Angular, Astro, Blade y Livewire.</p>
+        </div>
+        <div class="card-action-footer">
+          <button type="button" class="mini-btn" onclick="const s=this.querySelector('span');s.textContent=Number(s.textContent)+1">Estrella (<span>142</span>)</button>
+          <button type="button" class="mini-btn" onclick="this.textContent='Enlace Copiado'">Compartir</button>
+          <button type="button" class="mini-btn mini-btn--accent" onclick="this.textContent='Clonado'">Clonar</button>
+        </div>
+      </article>
+    </div>
+  )}
+
+  {previewType === 'card-form' && (
+    <div class="stage-center">
+      <article class="card-with-actions" style="max-width:440px; width:100%;">
+        <h4>Calculadora Rápida de Instancia</h4>
+        <div style="display:flex; gap:0.6rem; margin:0.75rem 0;">
+          <input type="number" value="8" min="1" class="tbl-input" id="card-cores-inp" oninput="document.getElementById('card-cost-out').textContent='$'+(this.value*24)+'/mes'" />
+          <span class="mono" style="align-self:center;">Núcleos vCPU × $24</span>
+        </div>
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <span>Costo Estimado:</span>
+          <strong class="mono" id="card-cost-out" style="font-size:1.25rem; color:var(--cxd-accent);">$192/mes</strong>
+        </div>
+      </article>
+    </div>
+  )}
+
+  {previewType === 'card-fit' && (
+    <div class="stage-center">
+      <div class="card-content-fit-kpi">
+        <span class="mono">LATENCIA P99</span>
+        <strong>6.42 ms</strong>
+        <span class="pill-status pill-status--ok">-1.8ms hoy</span>
+      </div>
+    </div>
+  )}
+
+  {previewType === 'card-expand' && (
+    <div class="stage-center">
+      <article class="card-with-actions" style="max-width:480px; width:100%;">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <strong>Reporte de Seguridad Automático</strong>
+          <button type="button" class="mini-btn" onclick="const d=this.closest('article').querySelector('[data-exp-area]'); d.hidden=!d.hidden">
+            Desplegar / Ocultar Diagnóstico
+          </button>
+        </div>
+        <div data-exp-area style="margin-top:0.75rem; padding-top:0.75rem; border-top:1px dashed var(--cxd-border);">
+          <p class="sub-p">0 vulnerabilidades críticas detectadas · Certificados TLS renovados por 90 días.</p>
+        </div>
+      </article>
+    </div>
+  )}
+
+  {/* ==========================================================================
+      CATEGORÍA 05: FORMULARIOS, INPUTS Y FILTROS (8 VARIANTES DISTINTAS)
+      ========================================================================== */}
+  {previewType === 'form-modern' && (
+    <div class="stage-center">
+      <div class="form-modern-box">
+        <label>Correo Electrónico Corporativo</label>
+        <input type="email" value="arquitectura@componentesxd.dev" class="input-modern-rounded" />
+      </div>
+    </div>
+  )}
+
+  {previewType === 'form-styleless' && (
+    <div class="stage-center">
+      <div class="form-styleless-box">
+        <input type="text" placeholder="Escribe el título del documento (Estilo Subrayado Puro)..." value="Manifiesto de Diseño Industrial" class="input-styleless-line" />
+      </div>
+    </div>
+  )}
+
+  {previewType === 'form-fit' && (
+    <div class="stage-center">
+      <div class="form-inline-fit">
+        <span class="mono" style="padding:0 0.6rem; color:var(--cxd-text-muted);">https://</span>
+        <input type="text" value="mi-proyecto.dev" class="tbl-input" style="width:160px; border:none;" />
+        <button type="button" class="mini-btn mini-btn--accent" onclick="this.textContent='Conectado'">Conectar Dominio</button>
+      </div>
+    </div>
+  )}
+
+  {previewType === 'form-floating' && (
+    <div class="stage-center">
+      <div class="cxd-field" style="width:100%; max-width:380px;">
+        <div class="cxd-floating-wrap">
+          <input type="text" placeholder=" " value="us-east-production-01" class="cxd-floating-input" />
+          <label class="cxd-floating-label">Nombre del Cluster (Etiqueta Flotante)</label>
+        </div>
+      </div>
+    </div>
+  )}
+
+  {previewType === 'form-otp' && (
+    <div class="stage-center" style="flex-direction:column; gap:0.75rem;">
+      <div class="cxd-otp-grid" data-live-otp>
+        <input maxlength="1" value="8" class="cxd-otp-slot" />
+        <input maxlength="1" value="4" class="cxd-otp-slot" />
+        <input maxlength="1" value="1" class="cxd-otp-slot" />
+        <input maxlength="1" placeholder="·" class="cxd-otp-slot" />
+        <input maxlength="1" placeholder="·" class="cxd-otp-slot" />
+        <input maxlength="1" placeholder="·" class="cxd-otp-slot" />
+      </div>
+      <span class="mono" style="font-size:0.7rem; color:var(--cxd-text-muted);">Teclea números para auto-avanzar de casilla</span>
+    </div>
+  )}
+
+  {previewType === 'form-validation' && (
+    <div class="stage-center">
+      <div style="width:100%; max-width:400px;" data-pwd-meter>
+        <label class="mono" style="font-size:0.72rem;">Escribe para probar el medidor de fortaleza en vivo:</label>
+        <input type="text" value="K9#mP2$vL9_xQ!" class="tbl-input" style="width:100%; margin:0.4rem 0;" data-pwd-input />
+        <div class="pwd-bars">
+          <span class="is-on"></span><span class="is-on"></span><span class="is-on"></span><span class="is-on"></span>
+        </div>
+        <small class="mono" data-pwd-label style="color:var(--cxd-success)">Entropía Alta (14 caracteres)</small>
+      </div>
+    </div>
+  )}
+
+  {previewType === 'form-filters' && (
+    <div class="stage-center">
+      <div class="filter-facet-box">
+        <div class="row-actions" style="flex-wrap:wrap;">
+          <button type="button" class="mini-btn mini-btn--accent" onclick="this.classList.toggle('mini-btn--accent')">SSR Activo</button>
+          <button type="button" class="mini-btn mini-btn--accent" onclick="this.classList.toggle('mini-btn--accent')">Edge Ready</button>
+          <button type="button" class="mini-btn" onclick="this.classList.toggle('mini-btn--accent')">TypeScript Strict</button>
+          <button type="button" class="mini-btn" onclick="this.classList.toggle('mini-btn--accent')">Dockerizado</button>
+        </div>
+      </div>
+    </div>
+  )}
+
+  {previewType === 'form-controls' && (
+    <div class="stage-center" style="gap:1.5rem; flex-wrap:wrap;">
+      <label class="switch-row">
+        <input type="checkbox" checked />
+        <span>Auto-Deploy en Push</span>
+      </label>
+      <label class="switch-row">
+        <input type="checkbox" />
+        <span>Modo Estricto WAF</span>
+      </label>
+    </div>
+  )}
+
+  {/* ==========================================================================
+      CATEGORÍAS 06, 07, 08, 09: MODALES, NAVEGACIÓN, BADGES & DOCKER
+      ========================================================================== */}
+  {previewType.startsWith('modal-') && (
+    <div class="stage-center">
+      <div class="cxd-cmd-palette" style="max-width:500px; width:100%;">
+        <div class="cxd-cmd-header">
+          <Icon name="search" size={14} />
+          <input class="cxd-cmd-input" placeholder={`Filtrar en ${variantName}...`} oninput="const q=this.value.toLowerCase(); this.closest('.cxd-cmd-palette').querySelectorAll('.cxd-cmd-item').forEach(i=>i.style.display=i.textContent.toLowerCase().includes(q)?'flex':'none')" />
+          <kbd class="cxd-cmd-kbd">{badge}</kbd>
+        </div>
+        <div class="cxd-cmd-list">
+          <div class="cxd-cmd-item is-active" onclick="this.querySelector('span').textContent='Comando Ejecutado Correctamente'">
+            <span>Ejecutar despliegue inmediato en producción</span>
+            <kbd class="cxd-cmd-kbd">ENTER</kbd>
+          </div>
+          <div class="cxd-cmd-item" onclick="this.querySelector('span').textContent='Caché Global Limpiada'">
+            <span>Purgar caché de CDN en todas las regiones</span>
+            <kbd class="cxd-cmd-kbd">CMD+P</kbd>
+          </div>
+        </div>
+      </div>
+    </div>
+  )}
+
+  {previewType.startsWith('nav-') && (
+    <div class="stage-center">
+      <nav class="demo-nav-bar">
+        <span class="cxd-badge cxd-badge--active">{badge}</span>
+        <button type="button" class="mini-btn mini-btn--accent" onclick="this.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('mini-btn--accent'));this.classList.add('mini-btn--accent')">01. General</button>
+        <button type="button" class="mini-btn" onclick="this.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('mini-btn--accent'));this.classList.add('mini-btn--accent')">02. Topología</button>
+        <button type="button" class="mini-btn" onclick="this.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('mini-btn--accent'));this.classList.add('mini-btn--accent')">03. Seguridad</button>
+        <button type="button" class="mini-btn" onclick="this.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('mini-btn--accent'));this.classList.add('mini-btn--accent')">04. Facturación</button>
+      </nav>
+    </div>
+  )}
+
+  {previewType.startsWith('data-') && (
+    <div class="stage-center" style="gap:1rem; flex-wrap:wrap;">
+      {previewType === 'data-gauges' ? (
+        <div style="display:flex; align-items:center; gap:1.25rem;">
+          <input type="range" min="5" max="100" value="84" oninput="this.nextElementSibling.textContent=this.value+'% SLA'" />
+          <strong class="mono" style="font-size:1.3rem;">84% SLA</strong>
+        </div>
+      ) : (
+        <>
+          <span class="cxd-badge cxd-badge--active"><span class="cxd-badge-dot"></span>OPERATIONAL</span>
+          <span class="cxd-badge cxd-badge--pending"><span class="cxd-badge-dot"></span>DEGRADED</span>
+          <span class="cxd-badge cxd-badge--failed"><span class="cxd-badge-dot"></span>OUTAGE</span>
+          <span class="mono" style="font-size:0.76rem">{variantName}</span>
+        </>
+      )}
+    </div>
+  )}
+
+  {previewType.startsWith('docker-') && (
+    <div class="stage-center">
+      <div class="docker-topology-box">
+        <div class="docker-node">
+          <Icon name="box" size={16} />
+          <div><strong>{variantName}</strong><small class="mono">IMAGE READY // MULTI-STAGE</small></div>
+        </div>
+        <Icon name="arrow-right" size={15} />
+        <div class="docker-node">
+          <Icon name="cpu" size={16} />
+          <div><strong>Runtime Container</strong><small class="mono">NON-ROOT · HEALTHY</small></div>
+        </div>
+      </div>
+    </div>
+  )}
+
+  {/* ==========================================================================
+      CATEGORÍA 10: CARRUSELES, SLIDERS 3D Y MARQUESINAS (8 VARIANTES DISTINTAS)
+      ========================================================================== */}
+  {previewType === 'carousel-coverflow' && (
+    <div class="carousel-stage" data-coverflow-carousel>
+      <div class="coverflow-viewport">
+        <article class="coverflow-slide" data-cf-slide="0">
+          <span class="mono">SLIDE 01 // EDGE NODE</span>
+          <h4>Cluster Frankfurt EU-Central</h4>
+          <p>Latencia 4.2ms · 128 GB NVMe · TLS 1.3</p>
+        </article>
+        <article class="coverflow-slide is-active" data-cf-slide="1">
+          <span class="mono">SLIDE 02 // CORE ENGINE</span>
+          <h4>Motor Cinético Anime.js v4</h4>
+          <p>Interpolación spring, timelines, SVG morph y 2D stagger.</p>
+        </article>
+        <article class="coverflow-slide" data-cf-slide="2">
+          <span class="mono">SLIDE 03 // DESIGN SYSTEM</span>
+          <h4>12 Interfaces Arquitectónicas</h4>
+          <p>Conmutación instantánea mediante CSS Custom Properties.</p>
+        </article>
+        <article class="coverflow-slide" data-cf-slide="3">
+          <span class="mono">SLIDE 04 // MULTI-FRAMEWORK</span>
+          <h4>10 Frameworks Listos para Copiar</h4>
+          <p>React, Vue 3, Svelte 5, Angular, Astro, Blade y Livewire.</p>
+        </article>
+      </div>
+      <div class="carousel-controls-row">
+        <button type="button" class="mini-btn" data-cf-prev>← Anterior</button>
+        <div class="carousel-dots" data-cf-dots>
+          <button type="button" class="c-dot" data-cf-go="0"></button>
+          <button type="button" class="c-dot is-active" data-cf-go="1"></button>
+          <button type="button" class="c-dot" data-cf-go="2"></button>
+          <button type="button" class="c-dot" data-cf-go="3"></button>
+        </div>
+        <button type="button" class="mini-btn mini-btn--accent" data-cf-next>Siguiente →</button>
+      </div>
+    </div>
+  )}
+
+  {previewType === 'carousel-marquee' && (
+    <div class="carousel-stage" data-marquee-carousel>
+      <div class="marquee-toolbar">
+        <span class="mono" style="font-size:0.72rem;">MARQUESINA CONTINUA INFINITA</span>
+        <div class="row-actions">
+          <button type="button" class="mini-btn" data-mq-toggle>Pausar / Reanudar</button>
+          <button type="button" class="mini-btn" data-mq-reverse>Invertir Dirección ↔</button>
+          <button type="button" class="mini-btn mini-btn--accent" data-mq-fast>Turbo 2x</button>
+        </div>
+      </div>
+      <div class="marquee-window">
+        <div class="marquee-track" data-mq-track>
+          <div class="marquee-chip"><strong>REACT 19</strong><span>TSX HOOKS</span></div>
+          <div class="marquee-chip"><strong>VUE 3.5</strong><span>COMPOSITION SFC</span></div>
+          <div class="marquee-chip"><strong>SVELTE 5</strong><span>RUNES ENGINE</span></div>
+          <div class="marquee-chip"><strong>ANGULAR 18</strong><span>SIGNALS STANDALONE</span></div>
+          <div class="marquee-chip"><strong>ASTRO 5</strong><span>ZERO-JS ISLANDS</span></div>
+          <div class="marquee-chip"><strong>LARAVEL BLADE</strong><span>LIVEWIRE 3</span></div>
+          <div class="marquee-chip"><strong>ANIME.JS v4</strong><span>SPRING & SVG</span></div>
+          <div class="marquee-chip"><strong>DOCKER</strong><span>MULTI-STAGE</span></div>
+        </div>
+      </div>
+    </div>
+  )}
+
+  {previewType === 'carousel-peek' && (
+    <div class="carousel-stage" data-peek-carousel>
+      <div class="peek-header">
+        <div>
+          <span class="mono" data-peek-counter>DIAPOSITIVA 01 / 05</span>
+        </div>
+        <div class="row-actions">
+          <button type="button" class="mini-btn" data-peek-prev>←</button>
+          <button type="button" class="mini-btn mini-btn--accent" data-peek-next>→</button>
+        </div>
+      </div>
+      <div class="peek-viewport">
+        <div class="peek-track" data-peek-track>
+          <div class="peek-card">
+            <span class="cxd-badge cxd-badge--active">01 · EDGE</span>
+            <h5>Gateway US-East</h5>
+            <p class="sub-p">99.998% uptime · 4.1ms</p>
+          </div>
+          <div class="peek-card">
+            <span class="cxd-badge cxd-badge--active">02 · CACHE</span>
+            <h5>Redis Cluster Mesh</h5>
+            <p class="sub-p">1.4M ops/sec · En memoria</p>
+          </div>
+          <div class="peek-card">
+            <span class="cxd-badge cxd-badge--pending">03 · WORKER</span>
+            <h5>Queue Processor</h5>
+            <p class="sub-p">32 hilos concurrentes</p>
+          </div>
+          <div class="peek-card">
+            <span class="cxd-badge cxd-badge--active">04 · STORAGE</span>
+            <h5>S3 Object Vault</h5>
+            <p class="sub-p">Replicación multi-región</p>
+          </div>
+          <div class="peek-card">
+            <span class="cxd-badge cxd-badge--active">05 · AI GPU</span>
+            <h5>Tensor Inference Node</h5>
+            <p class="sub-p">FP8 Quantized · 12ms</p>
+          </div>
+        </div>
+      </div>
+      <div class="cxd-telemetry-bar" style="width:100%; height:5px; margin-top:0.75rem;">
+        <div class="cxd-telemetry-fill" data-peek-bar style="width:20%"></div>
+      </div>
+    </div>
+  )}
+
+  {previewType === 'carousel-vertical' && (
+    <div class="carousel-stage" data-vertical-carousel>
+      <div class="v-reel-shell">
+        <div class="v-reel-nav">
+          <button type="button" class="v-reel-btn is-active" data-v-go="0">01 · Telemetría</button>
+          <button type="button" class="v-reel-btn" data-v-go="1">02 · Seguridad</button>
+          <button type="button" class="v-reel-btn" data-v-go="2">03 · Réplicas</button>
+        </div>
+        <div class="v-reel-window">
+          <div class="v-reel-track" data-v-track>
+            <div class="v-reel-slide">
+              <span class="mono">REEL VERTICAL // 01</span>
+              <h4>Rendimiento de Tráfico en Tiempo Real</h4>
+              <p class="sub-p">248,900 peticiones por segundo procesadas con balanceo automático L7.</p>
+            </div>
+            <div class="v-reel-slide">
+              <span class="mono">REEL VERTICAL // 02</span>
+              <h4>Escudo WAF & Mitigación DDoS</h4>
+              <p class="sub-p">Reglas zero-trust activas con inspección TLS en el borde.</p>
+            </div>
+            <div class="v-reel-slide">
+              <span class="mono">REEL VERTICAL // 03</span>
+              <h4>Sincronización de Base de Datos</h4>
+              <p class="sub-p">Réplicas de lectura en 6 continentes con lag inferior a 9ms.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  )}
+
+  {previewType === 'carousel-split' && (
+    <div class="carousel-stage" data-split-carousel>
+      <div class="split-showcase-box">
+        <div class="split-visual-pane" data-split-visual>
+          <span class="cxd-badge cxd-badge--active" data-split-tag>ARQUITECTURA 01 // GEIST</span>
+          <div class="split-big-metric" data-split-metric>99.99%</div>
+        </div>
+        <div class="split-info-pane">
+          <h4 data-split-title>Sistema de Alta Precisión Monocromática</h4>
+          <p class="sub-p" data-split-desc>Contraste quirúrgico con bordes de 1px y tipografía tabular para paneles de ingeniería.</p>
+          <div class="row-actions" style="margin-top:0.85rem;">
+            <button type="button" class="mini-btn" data-split-prev>← Anterior</button>
+            <button type="button" class="mini-btn mini-btn--accent" data-split-next>Siguiente Escena →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  )}
+
+  {previewType === 'carousel-filmstrip' && (
+    <div class="carousel-stage" data-filmstrip-carousel>
+      <div class="filmstrip-main" data-fs-stage>
+        <span class="mono" data-fs-code>FRAME 01 // 3840 × 2160 RAW</span>
+        <h4 data-fs-heading>Topología de Malla Global</h4>
+        <p class="sub-p" data-fs-caption>Haz clic en cualquier miniatura inferior para conmutar la escena con Anime.js.</p>
+      </div>
+      <div class="filmstrip-thumbs">
+        <button type="button" class="fs-thumb is-active" data-fs-thumb="0" data-title="Topología de Malla Global" data-code="FRAME 01 // 3840 × 2160 RAW" data-cap="Vista satelital de nodos interconectados de baja latencia.">01. Malla</button>
+        <button type="button" class="fs-thumb" data-fs-thumb="1" data-title="Motor de Compilación Incremental" data-code="FRAME 02 // ASTRO + VITE" data-cap="Generación de rutas estáticas e islas hidratadas bajo demanda.">02. Build</button>
+        <button type="button" class="fs-thumb" data-fs-thumb="2" data-title="Pipeline de Contenedores OCI" data-code="FRAME 03 // DOCKER ALPINE" data-cap="Imágenes inmutables firmadas criptográficamente.">03. Docker</button>
+        <button type="button" class="fs-thumb" data-fs-thumb="3" data-title="Laboratorio Cinético Anime.js v4" data-code="FRAME 04 // 120 FPS ENGINE" data-cap="Curvas spring reales, timelines y trazado vectorial SVG.">04. Anime.js</button>
+      </div>
+    </div>
+  )}
+
+  {previewType === 'carousel-stories' && (
+    <div class="carousel-stage" data-stories-carousel>
+      <div class="stories-shell">
+        <div class="stories-bars">
+          <div class="story-seg"><span data-story-fill="0" style="width:100%"></span></div>
+          <div class="story-seg"><span data-story-fill="1" style="width:0%"></span></div>
+          <div class="story-seg"><span data-story-fill="2" style="width:0%"></span></div>
+        </div>
+        <div class="stories-body" data-story-body>
+          <span class="mono" data-story-step>HISTORIA 01 / 03</span>
+          <h4 data-story-title>Lanzamiento de Bóveda Multi-Framework</h4>
+          <p class="sub-p">Haz clic en Siguiente Historia para avanzar el segmento temporal.</p>
+        </div>
+        <div class="row-actions" style="justify-content:space-between;">
+          <button type="button" class="mini-btn" data-story-restart>Reiniciar</button>
+          <button type="button" class="mini-btn mini-btn--accent" data-story-next>Siguiente Historia →</button>
+        </div>
+      </div>
+    </div>
+  )}
+
+  {previewType === 'carousel-deck' && (
+    <div class="carousel-stage" data-deck-carousel>
+      <div class="swipe-deck-box">
+        <div class="swipe-card" data-swipe-card>
+          <span class="cxd-badge cxd-badge--active" data-deck-badge>TARJETA ACTIVA #01</span>
+          <h4 data-deck-title>Despliegue Canario v4.8.0</h4>
+          <p class="sub-p" data-deck-desc>Presiona Descartar o Aprobar para lanzar la tarjeta con física elástica y revelar la siguiente.</p>
+        </div>
+        <div class="row-actions" style="justify-content:center; margin-top:0.85rem;">
+          <button type="button" class="mini-btn mini-btn--danger" data-deck-throw="left">← Descartar</button>
+          <button type="button" class="mini-btn mini-btn--accent" data-deck-throw="right">Aprobar →</button>
+        </div>
+      </div>
+    </div>
+  )}
+
+  {/* ==========================================================================
+      CATEGORÍA 11: ACORDEONES, BEFORE/AFTER, KANBAN Y CONMUTADORES (8 VARIANTES)
+      ========================================================================== */}
+  {previewType === 'acc-exclusive' && (
+    <div class="acc-stack" data-exclusive-accordion>
+      <div class="acc-item is-open" data-acc-item>
+        <button type="button" class="acc-trigger" data-acc-btn>
+          <span>01. ¿Cómo funciona la integración Copy & Paste sin NPM?</span>
+          <span class="mono" data-acc-icon>−</span>
+        </button>
+        <div class="acc-panel" data-acc-panel>
+          <p class="sub-p">Cada carpeta contiene el código fuente autónomo en 10 frameworks junto con sus tokens CSS/SCSS para que tengas control total sin dependencias externas rotas.</p>
+        </div>
+      </div>
+      <div class="acc-item" data-acc-item>
+        <button type="button" class="acc-trigger" data-acc-btn>
+          <span>02. ¿Cómo se cambian las 12 interfaces arquitectónicas?</span>
+          <span class="mono" data-acc-icon>+</span>
+        </button>
+        <div class="acc-panel" data-acc-panel hidden>
+          <p class="sub-p">Basta con cambiar el atributo <code>data-theme</code> en la etiqueta raíz <code>&lt;html&gt;</code> o en cualquier contenedor aislado.</p>
+        </div>
+      </div>
+      <div class="acc-item" data-acc-item>
+        <button type="button" class="acc-trigger" data-acc-btn>
+          <span>03. ¿Qué módulos de Anime.js v4 están incluidos?</span>
+          <span class="mono" data-acc-icon>+</span>
+        </button>
+        <div class="acc-panel" data-acc-panel hidden>
+          <p class="sub-p">Incluye los 8 capítulos oficiales: Targets, Keyframes, Stagger 2D, createSpring, createTimeline, SVG Drawable/Morph/MotionPath, createTimer y Stackers 3D.</p>
+        </div>
+      </div>
+    </div>
+  )}
+
+  {previewType === 'acc-multi' && (
+    <div class="acc-stack" data-multi-accordion>
+      <div class="row-actions" style="margin-bottom:0.5rem; justify-content:flex-end;">
+        <button type="button" class="mini-btn" data-acc-expand-all>Expandir Todos</button>
+        <button type="button" class="mini-btn" data-acc-collapse-all>Colapsar Todos</button>
+      </div>
+      <div class="acc-item is-open" data-m-item>
+        <button type="button" class="acc-trigger" onclick="const p=this.nextElementSibling; p.hidden=!p.hidden">
+          <span>Módulo A // Motor de Renderizado SSR</span>
+          <span class="cxd-badge cxd-badge--active">ACTIVO</span>
+        </button>
+        <div class="acc-panel"><p class="sub-p">Tiempo de respuesta medio: 11.4ms con streaming HTML habilitado.</p></div>
+      </div>
+      <div class="acc-item is-open" data-m-item>
+        <button type="button" class="acc-trigger" onclick="const p=this.nextElementSibling; p.hidden=!p.hidden">
+          <span>Módulo B // Caché Distribuida Edge</span>
+          <span class="cxd-badge cxd-badge--active">ACTIVO</span>
+        </button>
+        <div class="acc-panel"><p class="sub-p">Tasa de aciertos (Hit Ratio): 98.7% en 42 ubicaciones globales.</p></div>
+      </div>
+    </div>
+  )}
+
+  {previewType === 'acc-before-after' && (
+    <div class="stage-center" data-before-after>
+      <div class="ba-comparator">
+        <div class="ba-layer ba-layer--after">
+          <span class="cxd-badge cxd-badge--active">DESPUÉS // ARQUITECTURA OPTIMIZADA</span>
+          <h4>Bundle 14 KB · 120 FPS Anime.js v4</h4>
+        </div>
+        <div class="ba-layer ba-layer--before" data-ba-overlay style="width:50%;">
+          <span class="cxd-badge cxd-badge--failed">ANTES // LEGACY UI</span>
+          <h4>Bundle 480 KB · Sin Tokens</h4>
+        </div>
+        <input type="range" min="5" max="95" value="50" class="ba-slider" data-ba-range aria-label="Comparar antes y después" />
+      </div>
+    </div>
+  )}
+
+  {previewType === 'acc-kanban' && (
+    <div class="kanban-board" data-kanban-board>
+      <div class="kanban-col" data-k-col="todo">
+        <div class="kanban-col__head"><span>PENDIENTE</span><span class="mono" data-k-count>2</span></div>
+        <div class="kanban-list" data-k-list>
+          <div class="kanban-card" data-k-card>
+            <strong>Integrar Tabla CRUD</strong>
+            <button type="button" class="mini-btn mini-btn--accent" data-k-move="doing">Mover →</button>
+          </div>
+          <div class="kanban-card" data-k-card>
+            <strong>Configurar Traefik TLS</strong>
+            <button type="button" class="mini-btn mini-btn--accent" data-k-move="doing">Mover →</button>
+          </div>
+        </div>
+      </div>
+      <div class="kanban-col" data-k-col="doing">
+        <div class="kanban-col__head"><span>EN CURSO</span><span class="mono" data-k-count>1</span></div>
+        <div class="kanban-list" data-k-list>
+          <div class="kanban-card" data-k-card>
+            <strong>Animar Carrusel 3D</strong>
+            <button type="button" class="mini-btn mini-btn--accent" data-k-move="done">Mover →</button>
+          </div>
+        </div>
+      </div>
+      <div class="kanban-col" data-k-col="done">
+        <div class="kanban-col__head"><span>COMPLETADO</span><span class="mono" data-k-count>1</span></div>
+        <div class="kanban-list" data-k-list>
+          <div class="kanban-card" data-k-card>
+            <strong>Tokens 12 Interfaces</strong>
+            <button type="button" class="mini-btn" data-k-move="todo">↺ Reiniciar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  )}
+
+  {previewType === 'acc-pricing' && (
+    <div class="stage-center" style="flex-direction:column; gap:1rem;" data-pricing-switch>
+      <div class="cxd-table-filter-group">
+        <button type="button" class="cxd-table-filter-btn is-active" data-bill-mode="monthly">Facturación Mensual</button>
+        <button type="button" class="cxd-table-filter-btn" data-bill-mode="annual">Facturación Anual (-25%)</button>
+      </div>
+      <div class="pricing-cards-row">
+        <div class="pricing-mini-card">
+          <span class="mono">STARTER</span>
+          <strong class="pricing-val" data-price-m="29" data-price-y="22">$29<span>/mes</span></strong>
+        </div>
+        <div class="pricing-mini-card pricing-mini-card--featured">
+          <span class="mono">ARCHITECT PRO</span>
+          <strong class="pricing-val" data-price-m="79" data-price-y="59">$79<span>/mes</span></strong>
+        </div>
+        <div class="pricing-mini-card">
+          <span class="mono">ENTERPRISE CLUSTER</span>
+          <strong class="pricing-val" data-price-m="249" data-price-y="189">$249<span>/mes</span></strong>
+        </div>
+      </div>
+    </div>
+  )}
+
+  {previewType === 'acc-filetree' && (
+    <div class="filetree-box" data-filetree>
+      <div class="filetree-sidebar">
+        <button type="button" class="ft-item is-active" data-ft-file="styles/tokens.css" data-ft-content=":root, [data-theme='geist-dark'] {\n  --cxd-bg-base: #090a0c;\n  --cxd-accent: #f4f4f6;\n}">styles/tokens.css</button>
+        <button type="button" class="ft-item" data-ft-file="components/carousels/Coverflow3d.tsx" data-ft-content="export const Coverflow3d = () => {\n  return <div className='cxd-carousel-3d'>Active</div>;\n};">components/carousels/Coverflow3d.tsx</button>
+        <button type="button" class="ft-item" data-ft-file="animations/svg-animations/morph.js" data-ft-content="import { animate, svg } from 'animejs';\nanimate(svg.morphTo('#star'), { duration: 1200 });">animations/svg-animations/morph.js</button>
+      </div>
+      <div class="filetree-viewer">
+        <div class="mono" style="font-size:0.7rem; color:var(--cxd-text-muted); margin-bottom:0.4rem;" data-ft-path>styles/tokens.css</div>
+        <pre class="mono" style="font-size:0.76rem; white-space:pre-wrap;" data-ft-code>:root, [data-theme='geist-dark'] &#123;
+  --cxd-bg-base: #090a0c;
+  --cxd-accent: #f4f4f6;
+&#125;</pre>
+      </div>
+    </div>
+  )}
+
+  {previewType === 'acc-transfer' && (
+    <div class="transfer-box" data-transfer-list>
+      <div class="transfer-col">
+        <span class="mono" style="font-size:0.7rem;">DISPONIBLES (HAZ CLIC PARA ASIGNAR →)</span>
+        <div class="transfer-items" data-tr-left>
+          <button type="button" class="tr-item" data-tr-item> Módulo SSO SAML 2.0 →</button>
+          <button type="button" class="tr-item" data-tr-item> Auditoría en Tiempo Real →</button>
+        </div>
+      </div>
+      <div class="transfer-col">
+        <span class="mono" style="font-size:0.7rem;">ACTIVOS EN PRODUCCIÓN (← QUITAR)</span>
+        <div class="transfer-items" data-tr-right>
+          <button type="button" class="tr-item is-assigned" data-tr-item>← Motor Anime.js v4</button>
+          <button type="button" class="tr-item is-assigned" data-tr-item>← 12 Interfaces CSS</button>
+        </div>
+      </div>
+    </div>
+  )}
+
+  {previewType === 'acc-scheduler' && (
+    <div class="scheduler-box" data-scheduler>
+      <div class="scheduler-days">
+        <button type="button" class="mini-btn mini-btn--accent" data-sch-day="Lunes 10">Lun 10</button>
+        <button type="button" class="mini-btn" data-sch-day="Martes 11">Mar 11</button>
+        <button type="button" class="mini-btn" data-sch-day="Miércoles 12">Mié 12</button>
+        <button type="button" class="mini-btn" data-sch-day="Jueves 13">Jue 13</button>
+      </div>
+      <div class="scheduler-slots">
+        <button type="button" class="mini-btn" data-sch-slot="09:00 UTC">09:00 UTC</button>
+        <button type="button" class="mini-btn mini-btn--accent" data-sch-slot="11:30 UTC">11:30 UTC</button>
+        <button type="button" class="mini-btn" data-sch-slot="15:00 UTC">15:00 UTC</button>
+        <button type="button" class="mini-btn" data-sch-slot="18:30 UTC">18:30 UTC</button>
+      </div>
+      <div class="mono" style="font-size:0.75rem; color:var(--cxd-accent);" data-sch-summary>
+        Ventana seleccionada: Lunes 10 a las 11:30 UTC · Lista para desplegar
+      </div>
+    </div>
+  )}
+
+  {/* ==========================================================================
+      CATEGORÍA 12: 20 COMPONENTES ESPECIALES COMBINADOS (UI + ANIME.JS v4 EN VIVO)
+      ========================================================================== */}
+
+  {/* 01. STEP-BY-STEP WIZARD + CARRUSEL 3D + TIMELINE */}
+  {previewType === 'hybrid-01' && (
+    <div class="hyb-shell" data-hyb-01>
+      <div class="hyb-stepper-head">
+        <div class="hyb-step-nodes">
+          <button type="button" class="hyb-step-pill is-active" data-h01-go="0">01 · Arquitectura</button>
+          <button type="button" class="hyb-step-pill" data-h01-go="1">02 · Base de Datos</button>
+          <button type="button" class="hyb-step-pill" data-h01-go="2">03 · Motor Anime.js</button>
+          <button type="button" class="hyb-step-pill" data-h01-go="3">04 · Producción</button>
+        </div>
+        <div class="cxd-telemetry-bar" style="height:6px; width:100%;">
+          <div class="cxd-telemetry-fill" data-h01-bar style="width:25%"></div>
+        </div>
+      </div>
+
+      <div class="hyb-carousel-3d" data-h01-slides>
+        <article class="hyb-slide-card is-active" data-h01-slide="0">
+          <span class="cxd-badge cxd-badge--active">PASO 01 // STACK FRONTEND</span>
+          <h4>Selecciona Framework Principal</h4>
+          <p class="sub-p">Configurando islas reactivas con Astro 5 + React 19 / Vue 3 / Svelte 5.</p>
+          <div class="hyb-chip-row">
+            <span class="hyb-chip" data-h01-chip>SSR Streaming</span>
+            <span class="hyb-chip" data-h01-chip>TypeScript Strict</span>
+            <span class="hyb-chip" data-h01-chip>Zero-Runtime CSS</span>
+          </div>
+        </article>
+        <article class="hyb-slide-card" data-h01-slide="1" hidden>
+          <span class="cxd-badge cxd-badge--active">PASO 02 // CLUSTER DATOS</span>
+          <h4>Topología PostgreSQL 17 + Redis 7.4</h4>
+          <p class="sub-p">Réplicas de lectura multi-región con failover automático en 40ms.</p>
+          <div class="hyb-chip-row">
+            <span class="hyb-chip" data-h01-chip>Pooler PgBouncer</span>
+            <span class="hyb-chip" data-h01-chip>Backups WAL</span>
+            <span class="hyb-chip" data-h01-chip>TLS 1.3 Interno</span>
+          </div>
+        </article>
+        <article class="hyb-slide-card" data-h01-slide="2" hidden>
+          <span class="cxd-badge cxd-badge--active">PASO 03 // CAPA CINÉTICA</span>
+          <h4>Inyección de Timelines & Física Spring</h4>
+          <p class="sub-p">Sincronización de transiciones de estado con <code>createTimeline()</code> y <code>stagger()</code>.</p>
+          <div class="hyb-chip-row">
+            <span class="hyb-chip" data-h01-chip>120 FPS Native</span>
+            <span class="hyb-chip" data-h01-chip>SVG Drawable</span>
+            <span class="hyb-chip" data-h01-chip>2D Grid Ripple</span>
+          </div>
+        </article>
+        <article class="hyb-slide-card" data-h01-slide="3" hidden>
+          <span class="cxd-badge cxd-badge--active">PASO 04 // LISTO PARA DESPLIEGUE</span>
+          <h4>Verificación Completa Superada</h4>
+          <p class="sub-p">Artefacto compilado en <code>.vercel/output</code> listo para producción global.</p>
+          <div class="hyb-chip-row">
+            <span class="hyb-chip" data-h01-chip>Edge CDN</span>
+            <span class="hyb-chip" data-h01-chip>Immutable Cache</span>
+            <span class="hyb-chip" data-h01-chip>Healthcheck OK</span>
+          </div>
+        </article>
+      </div>
+
+      <div class="row-actions" style="justify-content:space-between;">
+        <button type="button" class="mini-btn" data-h01-prev>← Paso Anterior</button>
+        <span class="mono" style="font-size:0.74rem;" data-h01-status>ETAPA 01 DE 04 · SINCRONIZADO</span>
+        <button type="button" class="mini-btn mini-btn--accent" data-h01-next>Siguiente Paso + Animar Carrusel →</button>
+      </div>
+    </div>
+  )}
+
+  {/* 02. TABLA REACTIVA + FORMULARIO DE INSERCIÓN/ELIMINACIÓN EN TIEMPO REAL CON ANIME.JS */}
+  {previewType === 'hybrid-02' && (
+    <div class="hyb-shell" data-hyb-02>
+      <form class="hyb-inline-add-form" data-h02-form>
+        <input type="text" class="tbl-input" placeholder="Nombre del microservicio (ej. auth-edge-v4)" value="billing-engine-v2" data-h02-name required />
+        <select class="tbl-select" data-h02-region>
+          <option value="us-east-1">us-east-1 (Virginia)</option>
+          <option value="eu-central-1">eu-central-1 (Frankfurt)</option>
+          <option value="ap-northeast-1">ap-northeast-1 (Tokyo)</option>
+        </select>
+        <input type="number" class="tbl-input" style="width:110px;" value="140" min="10" max="5000" data-h02-cost />
+        <button type="submit" class="mini-btn mini-btn--accent">+ Insertar con Anime.js</button>
+      </form>
+
+      <table class="cxd-table">
+        <thead>
+          <tr>
+            <th>Servicio</th>
+            <th>Región</th>
+            <th>Presupuesto Mensual</th>
+            <th style="text-align:right">Acción Cinética</th>
+          </tr>
+        </thead>
+        <tbody data-h02-tbody>
+          <tr data-h02-row data-cost="220">
+            <td><strong>core-api-gateway</strong></td>
+            <td class="mono">us-east-1</td>
+            <td class="mono">$220.00</td>
+            <td style="text-align:right"><button type="button" class="mini-btn mini-btn--danger" data-h02-del>Eliminar</button></td>
+          </tr>
+          <tr data-h02-row data-cost="180">
+            <td><strong>realtime-websocket-hub</strong></td>
+            <td class="mono">eu-central-1</td>
+            <td class="mono">$180.00</td>
+            <td style="text-align:right"><button type="button" class="mini-btn mini-btn--danger" data-h02-del>Eliminar</button></td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="2"><strong>TOTAL EN TIEMPO REAL (INTERPOLADO CON ANIME.JS)</strong></td>
+            <td colspan="2" class="mono" style="text-align:right; font-size:1.05rem; font-weight:800; color:var(--cxd-accent);" data-h02-total>$400.00</td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  )}
+
+  {/* 03. TABLA CON REORDENAMIENTO CASCADA STAGGER Y BARRAS CINÉTICAS */}
+  {previewType === 'hybrid-03' && (
+    <div class="hyb-shell" data-hyb-03>
+      <div class="row-actions" style="justify-content:space-between; flex-wrap:wrap;">
+        <span class="mono" style="font-size:0.74rem;">ORDENAMIENTO COREOGRAFIADO CON STAGGER(55)</span>
+        <div class="row-actions">
+          <button type="button" class="mini-btn mini-btn--accent" data-h03-sort="load-desc">Mayor Carga ↓</button>
+          <button type="button" class="mini-btn" data-h03-sort="load-asc">Menor Carga ↑</button>
+          <button type="button" class="mini-btn" data-h03-shuffle>Simular Picos de Tráfico</button>
+        </div>
+      </div>
+      <table class="cxd-table">
+        <thead>
+          <tr><th>Nodo</th><th>Utilización GPU</th><th> Barra en Vivo</th></tr>
+        </thead>
+        <tbody data-h03-tbody>
+          <tr data-h03-row data-load="92"><td><strong>tensor-node-01</strong></td><td class="mono" data-h03-pct>92%</td><td><div class="cxd-telemetry-bar"><div class="cxd-telemetry-fill" data-h03-bar style="width:92%"></div></div></td></tr>
+          <tr data-h03-row data-load="38"><td><strong>tensor-node-02</strong></td><td class="mono" data-h03-pct>38%</td><td><div class="cxd-telemetry-bar"><div class="cxd-telemetry-fill" data-h03-bar style="width:38%"></div></div></td></tr>
+          <tr data-h03-row data-load="74"><td><strong>tensor-node-03</strong></td><td class="mono" data-h03-pct>74%</td><td><div class="cxd-telemetry-bar"><div class="cxd-telemetry-fill" data-h03-bar style="width:74%"></div></div></td></tr>
+          <tr data-h03-row data-load="55"><td><strong>tensor-node-04</strong></td><td class="mono" data-h03-pct>55%</td><td><div class="cxd-telemetry-bar"><div class="cxd-telemetry-fill" data-h03-bar style="width:55%"></div></div></td></tr>
+        </tbody>
+      </table>
+    </div>
+  )}
+
+  {/* 04. CARRUSEL DE ESCENAS + TRANSFORMACIÓN GEOMÉTRICA SVG MORPH */}
+  {previewType === 'hybrid-04' && (
+    <div class="hyb-shell" data-hyb-04>
+      <div class="hyb-morph-grid">
+        <div class="hyb-morph-stage">
+          <svg viewBox="0 0 200 120" class="hyb-svg-canvas">
+            <polygon data-h04-poly points="100,12 175,38 175,85 100,110 25,85 25,38" fill="none" stroke="currentColor" stroke-width="3" />
+          </svg>
+        </div>
+        <div class="hyb-morph-info">
+          <span class="cxd-badge cxd-badge--active" data-h04-badge>GEOMETRÍA 01 // HEXÁGONO ESCUDO</span>
+          <h4 data-h04-title>Protección Perimetral Activa</h4>
+          <p class="sub-p" data-h04-desc>El polígono vectorial interpola sus coordenadas exactas al avanzar cada diapositiva del carrusel.</p>
+          <div class="row-actions" style="margin-top:0.75rem;">
+            <button type="button" class="mini-btn mini-btn--accent" data-h04-scene="0">01 · Escudo</button>
+            <button type="button" class="mini-btn" data-h04-scene="1">02 · Estrella</button>
+            <button type="button" class="mini-btn" data-h04-scene="2">03 · Diamante</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  )}
+
+  {/* 05. CARRUSEL MAZO 3D CON FÍSICA SPRING + ODÓMETRO */}
+  {previewType === 'hybrid-05' && (
+    <div class="hyb-shell" data-hyb-05>
+      <div class="hyb-spring-deck-row">
+        <div class="hyb-deck-stack" data-h05-stack>
+          <div class="hyb-deck-card" data-h05-card data-val="84200"><strong>BÓVEDA LIQUIDEZ A</strong><span class="mono">$84,200</span></div>
+          <div class="hyb-deck-card" data-h05-card data-val="156900"><strong>RESERVA INSTITUCIONAL B</strong><span class="mono">$156,900</span></div>
+          <div class="hyb-deck-card" data-h05-card data-val="312450"><strong>FONDO ALGORÍTMICO C</strong><span class="mono">$312,450</span></div>
+        </div>
+        <div class="hyb-odometer-box">
+          <span class="mono" style="font-size:0.7rem; color:var(--cxd-text-muted);">BALANCE ACTIVO INTERPOLADO</span>
+          <div class="telemetry-big-readout" data-h05-readout>$84,200.00</div>
+          <button type="button" class="mini-btn mini-btn--accent" data-h05-cycle>Rotar Mazo 3D con createSpring() →</button>
+        </div>
+      </div>
+    </div>
+  )}
+
+  {/* 06. STEP-BY-STEP CONFIGURADOR CLOUD + MOTOR CALCULANDO EN TIEMPO REAL */}
+  {previewType === 'hybrid-06' && (
+    <div class="hyb-shell" data-hyb-06>
+      <div class="row-actions" style="flex-wrap:wrap; justify-content:space-between;">
+        <div class="row-actions">
+          <button type="button" class="mini-btn mini-btn--accent" data-h06-preset="starter" data-price="64">Paso 1: Starter (4 vCPU)</button>
+          <button type="button" class="mini-btn" data-h06-preset="pro" data-price="240">Paso 2: Cluster Pro (16 vCPU)</button>
+          <button type="button" class="mini-btn" data-h06-preset="metal" data-price="890">Paso 3: Bare Metal GPU (64 vCPU)</button>
+        </div>
+        <div class="mono" style="font-size:1.35rem; font-weight:800; color:var(--cxd-accent);" data-h06-price>$64.00 / mes</div>
+      </div>
+      <div class="cxd-telemetry-bar" style="height:8px;"><div class="cxd-telemetry-fill" data-h06-bar style="width:22%"></div></div>
+    </div>
+  )}
+
+  {/* 07. TABLA MULTI-SELECCIÓN + DOCK FLOTANTE + PURGA / RESTAURACIÓN ANIMADA */}
+  {previewType === 'hybrid-07' && (
+    <div class="hyb-shell" data-hyb-07>
+      <div class="row-actions" style="justify-content:space-between;">
+        <span class="mono" style="font-size:0.74rem;" data-h07-count>3 contenedores en ejecución</span>
+        <div class="row-actions">
+          <button type="button" class="mini-btn mini-btn--danger" data-h07-purge>Purgar en Cascada con Anime.js</button>
+          <button type="button" class="mini-btn mini-btn--accent" data-h07-restore>Restaurar Todos</button>
+        </div>
+      </div>
+      <table class="cxd-table">
+        <tbody data-h07-tbody>
+          <tr data-h07-row><td><strong>worker-cache-01</strong></td><td><span class="cxd-badge cxd-badge--active">RUNNING</span></td></tr>
+          <tr data-h07-row><td><strong>worker-cache-02</strong></td><td><span class="cxd-badge cxd-badge--active">RUNNING</span></td></tr>
+          <tr data-h07-row><td><strong>worker-cache-03</strong></td><td><span class="cxd-badge cxd-badge--active">RUNNING</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  )}
+
+  {/* 08. DESPACHADOR DE TOASTS APILADOS 3D + CRONÓMETRO CREATETIMER */}
+  {previewType === 'hybrid-08' && (
+    <div class="hyb-shell" data-hyb-08>
+      <div class="row-actions" style="justify-content:space-between;">
+        <button type="button" class="mini-btn mini-btn--accent" data-h08-spawn>+ Lanzar Toast con Timer en Vivo</button>
+        <span class="mono" style="font-size:0.74rem;" data-h08-timer>TIMER ACTIVO: 05.00s</span>
+      </div>
+      <div class="spawned-toast-list" data-h08-list>
+        <div class="cxd-toast-card">
+          <span>Sincronización de snapshots completada</span>
+          <span class="cxd-badge cxd-badge--active">LIVE</span>
+        </div>
+      </div>
+    </div>
+  )}
+
+  {/* 09. TABLERO KANBAN CON FÍSICA SPRING + BARRA DE PROGRESO GLOBAL */}
+  {previewType === 'hybrid-09' && (
+    <div class="hyb-shell" data-hyb-09>
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <span class="mono" style="font-size:0.74rem;">AVANCE DEL SPRINT (INTERPOLADO)</span>
+        <strong class="mono" data-h09-pct>50% COMPLETADO</strong>
+      </div>
+      <div class="cxd-telemetry-bar" style="height:7px;"><div class="cxd-telemetry-fill" data-h09-bar style="width:50%"></div></div>
+      <div class="row-actions" style="flex-wrap:wrap; gap:0.6rem;">
+        <button type="button" class="mini-btn mini-btn--accent" data-h09-task="1"><Icon name="check" size={12} /> <span>Tarea 01: Tokens</span></button>
+        <button type="button" class="mini-btn mini-btn--accent" data-h09-task="1"><Icon name="check" size={12} /> <span>Tarea 02: Tablas</span></button>
+        <button type="button" class="mini-btn" data-h09-task="0"><Icon name="layers" size={12} /> <span>Tarea 03: Carruseles</span></button>
+        <button type="button" class="mini-btn" data-h09-task="0"><Icon name="layers" size={12} /> <span>Tarea 04: Deploy Vercel</span></button>
+      </div>
+    </div>
+  )}
+
+  {/* 10. BÓVEDA PIN/OTP + ESCUDO VECTORIAL AUTODIBUJABLE */}
+  {previewType === 'hybrid-10' && (
+    <div class="hyb-shell" data-hyb-10>
+      <div class="hyb-otp-row">
+        <svg viewBox="0 0 80 80" style="width:64px; height:64px; color:var(--cxd-accent);">
+          <path data-h10-shield d="M40 8 L68 20 V42 C68 58 40 72 40 72 C40 72 12 58 12 42 V20 Z" fill="none" stroke="currentColor" stroke-width="3" />
+          <path data-h10-check d="M28 40 L36 48 L54 30" fill="none" stroke="currentColor" stroke-width="3.5" />
+        </svg>
+        <div class="cxd-otp-grid">
+          <input maxlength="1" value="9" class="cxd-otp-slot" data-h10-slot />
+          <input maxlength="1" value="2" class="cxd-otp-slot" data-h10-slot />
+          <input maxlength="1" value="4" class="cxd-otp-slot" data-h10-slot />
+          <input maxlength="1" value="8" class="cxd-otp-slot" data-h10-slot />
+        </div>
+        <button type="button" class="mini-btn mini-btn--accent" data-h10-verify>Verificar & Trazar Escudo SVG</button>
+      </div>
+    </div>
+  )}
+
+  {/* 11. TARJETA INSPECTORA + DESCOMPOSICIÓN 3D DE CAPAS */}
+  {previewType === 'hybrid-11' && (
+    <div class="hyb-shell" data-hyb-11>
+      <div class="row-actions" style="justify-content:space-between;">
+        <span class="mono" style="font-size:0.74rem;">INSPECTOR DE ARQUITECTURA DE CAPAS</span>
+        <button type="button" class="mini-btn mini-btn--accent" data-h11-toggle>Explotar / Ensamblar Capas 3D</button>
+      </div>
+      <div class="hyb-layers-stack" data-h11-stack>
+        <div class="spatial-layer" data-h11-layer><span>01 // CHASIS TOKENIZADO</span><strong>styles/tokens.css</strong></div>
+        <div class="spatial-layer" data-h11-layer><span>02 // COMPONENTE MULTI-FRAMEWORK</span><strong>10 Adaptadores</strong></div>
+        <div class="spatial-layer spatial-layer--accent" data-h11-layer><span>03 // MOTOR ANIME.JS v4</span><strong>Spring & Stagger</strong></div>
+      </div>
+    </div>
+  )}
+
+  {/* 12. TABLA CON SKELETON CARGANDO -> HIDRATACIÓN REAL ESCALONADA */}
+  {previewType === 'hybrid-12' && (
+    <div class="hyb-shell" data-hyb-12>
+      <div class="row-actions" style="justify-content:space-between;">
+        <span class="mono" style="font-size:0.74rem;" data-h12-state>ESTADO: DATOS HIDRATADOS</span>
+        <button type="button" class="mini-btn mini-btn--accent" data-h12-toggle>Simular Carga Skeleton → Hidratar Tabla</button>
+      </div>
+      <div data-h12-skeleton hidden>
+        <div class="sk-shimmer-line w90" style="margin-bottom:0.5rem; height:18px;"></div>
+        <div class="sk-shimmer-line w75" style="margin-bottom:0.5rem; height:18px;"></div>
+        <div class="sk-shimmer-line w90" style="height:18px;"></div>
+      </div>
+      <table class="cxd-table" data-h12-table>
+        <tbody>
+          <tr data-h12-row><td><strong>nodo-alfa-01</strong></td><td class="mono">12.4 ms</td><td><span class="cxd-badge cxd-badge--active">ONLINE</span></td></tr>
+          <tr data-h12-row><td><strong>nodo-beta-02</strong></td><td class="mono">8.1 ms</td><td><span class="cxd-badge cxd-badge--active">ONLINE</span></td></tr>
+          <tr data-h12-row><td><strong>nodo-gamma-03</strong></td><td class="mono">9.7 ms</td><td><span class="cxd-badge cxd-badge--active">ONLINE</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  )}
+
+  {/* 13. CARRUSEL CINÉTICO CONTROLADO POR SLIDER SCRUBBER */}
+  {previewType === 'hybrid-13' && (
+    <div class="hyb-shell" data-hyb-13>
+      <div class="scrub-boxes">
+        <div class="peek-card" data-h13-card><strong>SLIDE 01</strong><p class="sub-p">Geist Dark</p></div>
+        <div class="peek-card" data-h13-card><strong>SLIDE 02</strong><p class="sub-p">Swiss Grid</p></div>
+        <div class="peek-card" data-h13-card><strong>SLIDE 03</strong><p class="sub-p">Teenage Eng</p></div>
+      </div>
+      <div class="row-actions" style="gap:1rem;">
+        <span class="mono" style="font-size:0.72rem;">SCRUBBER TIMELINE:</span>
+        <input type="range" min="0" max="100" value="0" style="flex:1;" data-h13-range />
+      </div>
+    </div>
+  )}
+
+  {/* 14. BUSCADOR DE NODOS + MATRIZ 2D CON ONDA RADIAL */}
+  {previewType === 'hybrid-14' && (
+    <div class="hyb-shell" data-hyb-14>
+      <div class="row-actions" style="justify-content:space-between;">
+        <span class="mono" style="font-size:0.72rem;">HAZ CLIC EN CUALQUIER NODO PARA EXPANDIR ONDA 2D</span>
+        <button type="button" class="mini-btn mini-btn--accent" data-h14-pulse>Pulso Central</button>
+      </div>
+      <div class="hyb-node-matrix" data-h14-grid>
+        {Array.from({ length: 18 }).map((_, idx) => (
+          <button type="button" class="hyb-matrix-btn" data-h14-cell={idx}>N-{idx + 1}</button>
+        ))}
+      </div>
+    </div>
+  )}
+
+  {/* 15. COMMAND PALETTE + CONSOLA DE EJECUCIÓN PASO A PASO ANIMADA */}
+  {previewType === 'hybrid-15' && (
+    <div class="hyb-shell" data-hyb-15>
+      <div class="row-actions">
+        <button type="button" class="mini-btn mini-btn--accent" data-h15-run="deploy"><Icon name="play" size={12} /> <span>Ejecutar Macro: Deploy Global</span></button>
+        <button type="button" class="mini-btn" data-h15-run="audit"><Icon name="shield" size={12} /> <span>Ejecutar Macro: Auditoría Seguridad</span></button>
+      </div>
+      <div class="hyb-console-output" data-h15-logs>
+        <div class="mono" data-h15-line>[01] Compilando 25 rutas estáticas Astro... OK</div>
+        <div class="mono" data-h15-line>[02] Empaquetando 1,120 archivos de componentes... OK</div>
+        <div class="mono" data-h15-line style="color:var(--cxd-accent);">[03] Artefacto .vercel/output sincronizado en 42ms.</div>
+      </div>
+    </div>
+  )}
+
+  {/* 16. CALCULADORA CON SLIDER + ODÓMETRO + BARRAS COMPARATIVAS */}
+  {previewType === 'hybrid-16' && (
+    <div class="hyb-shell" data-hyb-16>
+      <div class="row-actions" style="justify-content:space-between;">
+        <span class="mono" style="font-size:0.74rem;">VOLUMEN DE TRÁFICO MENSUAL:</span>
+        <input type="range" min="1" max="20" value="5" data-h16-slider />
+        <strong class="mono" style="color:var(--cxd-accent); font-size:1.15rem;" data-h16-out>5M req/mes // $95/mes</strong>
+      </div>
+      <div class="telemetry-bars-row">
+        <div class="t-bar"><span data-h16-bar style="width:35%"></span></div>
+        <div class="t-bar"><span data-h16-bar style="width:65%"></span></div>
+      </div>
+    </div>
+  )}
+
+  {/* 17. TOPOLOGÍA DOCKER + SIMULADOR DE PAQUETES EN RED */}
+  {previewType === 'hybrid-17' && (
+    <div class="hyb-shell" data-hyb-17>
+      <div class="docker-topology-box" style="justify-content:space-between;">
+        <div class="docker-node" data-h17-node><strong>01. Traefik Proxy</strong><small class="mono">443 TLS</small></div>
+        <div class="docker-node" data-h17-node><strong>02. Astro SSR</strong><small class="mono">4321 HTTP</small></div>
+        <div class="docker-node" data-h17-node><strong>03. Postgres 17</strong><small class="mono">5432 TCP</small></div>
+        <button type="button" class="mini-btn mini-btn--accent" data-h17-ping><Icon name="activity" size={12} /> <span>Simular Tráfico por Nodos</span></button>
+      </div>
+    </div>
+  )}
+
+  {/* 18. ACORDEÓN TÉCNICO MULTI-SECCIÓN + TELEMETRÍA QUE ANIMA DE 0% A 100% AL EXPANDIR */}
+  {previewType === 'hybrid-18' && (
+    <div class="hyb-shell" data-hyb-18>
+      <div class="acc-stack">
+        <div class="acc-item is-open" data-h18-item>
+          <button type="button" class="acc-trigger" data-h18-btn>
+            <span>01 · Diagnóstico de Salud del Cluster & CPU</span>
+            <span class="mono" data-h18-icon>-</span>
+          </button>
+          <div class="acc-panel" data-h18-panel>
+            <div class="hyb-diag-panel" style="margin-top:0.65rem;">
+              <div style="display:flex; justify-content:space-between;"><span class="mono">SALUD DEL CLUSTER</span><strong class="mono" data-h18-val="98.4">98.4%</strong></div>
+              <div class="cxd-telemetry-bar"><div class="cxd-telemetry-fill" data-h18-fill="98.4" style="width:98.4%"></div></div>
+              <div style="display:flex; justify-content:space-between; margin-top:0.35rem;"><span class="mono">RESERVA DE CÓMPUTO</span><strong class="mono" data-h18-val="84.0">84.0%</strong></div>
+              <div class="cxd-telemetry-bar"><div class="cxd-telemetry-fill" data-h18-fill="84" style="width:84%"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="acc-item" data-h18-item>
+          <button type="button" class="acc-trigger" data-h18-btn>
+            <span>02 · Rendimiento de Caché & Memoria NVMe</span>
+            <span class="mono" data-h18-icon>+</span>
+          </button>
+          <div class="acc-panel" data-h18-panel hidden>
+            <div class="hyb-diag-panel" style="margin-top:0.65rem;">
+              <div style="display:flex; justify-content:space-between;"><span class="mono">HIT RATIO GLOBAL EDGE</span><strong class="mono" data-h18-val="99.2">99.2%</strong></div>
+              <div class="cxd-telemetry-bar"><div class="cxd-telemetry-fill" data-h18-fill="99.2" style="width:99.2%"></div></div>
+              <div style="display:flex; justify-content:space-between; margin-top:0.35rem;"><span class="mono">THROUGHPUT IOPS</span><strong class="mono" data-h18-val="91.5">91.5%</strong></div>
+              <div class="cxd-telemetry-bar"><div class="cxd-telemetry-fill" data-h18-fill="91.5" style="width:91.5%"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="acc-item" data-h18-item>
+          <button type="button" class="acc-trigger" data-h18-btn>
+            <span>03 · Seguridad Zero-Trust & Mitigación WAF</span>
+            <span class="mono" data-h18-icon>+</span>
+          </button>
+          <div class="acc-panel" data-h18-panel hidden>
+            <div class="hyb-diag-panel" style="margin-top:0.65rem;">
+              <div style="display:flex; justify-content:space-between;"><span class="mono">TRÁFICO LIMPIO VERIFICADO</span><strong class="mono" data-h18-val="100">100.0%</strong></div>
+              <div class="cxd-telemetry-bar"><div class="cxd-telemetry-fill" data-h18-fill="100" style="width:100%"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  )}
+
+  {/* 19. TRANSFERENCIA DUAL DE MÓDULOS + SINCRONIZACIÓN MASIVA CON STAGGER */}
+  {previewType === 'hybrid-19' && (
+    <div class="hyb-shell" data-hyb-19>
+      <div class="row-actions" style="justify-content:space-between;">
+        <span class="mono" style="font-size:0.72rem;" data-h19-status>4 MÓDULOS LISTOS PARA SINCRONIZAR</span>
+        <button type="button" class="mini-btn mini-btn--accent" data-h19-sync><Icon name="refresh" size={12} /> <span>Sincronizar Todos en Cascada (stagger)</span></button>
+      </div>
+      <div class="hyb-chip-row" data-h19-items>
+        <span class="hyb-chip" data-h19-chip>WAF Zero-Trust</span>
+        <span class="hyb-chip" data-h19-chip>Brotli Compression</span>
+        <span class="hyb-chip" data-h19-chip>HTTP/3 QUIC</span>
+        <span class="hyb-chip" data-h19-chip>Edge Caching</span>
+      </div>
+    </div>
+  )}
+
+  {/* 20. TABLA DE INCIDENTES EN VIVO + CRONÓMETRO SLA + RESOLUCIÓN */}
+  {previewType === 'hybrid-20' && (
+    <div class="hyb-shell" data-hyb-20>
+      <table class="cxd-table">
+        <thead>
+          <tr><th>Incidente</th><th>Cronómetro SLA en Vivo</th><th>Estado</th><th style="text-align:right">Acción</th></tr>
+        </thead>
+        <tbody>
+          <tr data-h20-row>
+            <td><strong>INC-904 // Latencia en Nodo Tokyo</strong></td>
+            <td class="mono" data-h20-clock>00.00s</td>
+            <td><span class="cxd-badge cxd-badge--pending" data-h20-badge>INVESTIGATING</span></td>
+            <td style="text-align:right"><button type="button" class="mini-btn mini-btn--accent" data-h20-resolve><Icon name="check" size={12} /> <span>Resolver con Anime.js</span></button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  )}
+
+  {/* ==========================================================================
+      21 A 30: LOS 10 COMPONENTES ESPECTACULARES (HERO ANIME.JS, MAPA, LABERINTO, ORDENAMIENTO, SISTEMA SOLAR, GIT GRAPH)
+      ========================================================================== */}
+
+  {/* 21. ESCENARIO RELOJERÍA CINÉTICA & ONDA RADIAL (INSPIRADO EN EL HERO OFICIAL DE ANIME.JS V4) */}
+  {previewType === 'hybrid-21' && (
+    <div class="hyb-shell" data-hyb-21>
+      <div class="row-actions" style="justify-content:space-between; flex-wrap:wrap;">
+        <div class="row-actions">
+          <Icon name="sparkles" size={15} />
+          <span class="mono" style="font-size:0.72rem; color:var(--cxd-accent);">ANIME.JS v4 HERO ENGINE // 36 VECTORES RADIALES + MATRIZ 6×6 SINCRÓNICA</span>
+        </div>
+        <div class="row-actions" data-h21-modes>
+          <button type="button" class="mini-btn mini-btn--accent" data-h21-mode="clockwork"><Icon name="sliders" size={12} /> <span>01 · Relojería Sincrónica</span></button>
+          <button type="button" class="mini-btn" data-h21-mode="solar"><Icon name="sparkles" size={12} /> <span>02 · Explosión Solar</span></button>
+          <button type="button" class="mini-btn" data-h21-mode="vortex"><Icon name="refresh" size={12} /> <span>03 · Vórtice Espiral</span></button>
+          <button type="button" class="mini-btn" data-h21-mode="quantum"><Icon name="cpu" size={12} /> <span>04 · Pulso Cuántico</span></button>
+        </div>
+      </div>
+
+      <div class="hero-clockwork-stage">
+        <div class="hero-dial-ring" data-h21-dial>
+          <div class="hero-orbit-halo" data-h21-halo></div>
+          {Array.from({ length: 36 }).map((_, idx) => (
+            <div
+              class="hero-ray-wrap"
+              style={`transform: rotate(${idx * 10}deg)`}
+            >
+              <span class="hero-ray-bar" data-h21-ray data-idx={idx}></span>
+            </div>
+          ))}
+          <div class="hero-center-readout">
+            <span class="mono" style="font-size:0.62rem; color:var(--cxd-text-muted);">ANIME.JS v4</span>
+            <strong class="mono" data-h21-label>CLOCKWORK</strong>
+            <small class="mono" style="font-size:0.58rem; color:var(--cxd-accent);" data-h21-fps>60 FPS LOCK</small>
+          </div>
+        </div>
+
+        <div class="hero-side-matrix">
+          <div class="hero-mini-grid" data-h21-grid>
+            {Array.from({ length: 36 }).map((_, idx) => (
+              <span class="hero-grid-dot" data-h21-dot data-idx={idx}></span>
+            ))}
+          </div>
+          <span class="mono" style="font-size:0.68rem; color:var(--cxd-text-muted);">stagger(28, &#123; grid: [6, 6], from: 'center' &#125;)</span>
+        </div>
+      </div>
+    </div>
+  )}
+
+  {/* 22. MAPA MUNDIAL VECTORIAL INTERACTIVO CON RUTAS DE TRÁFICO EN VIVO */}
+  {previewType === 'hybrid-22' && (
+    <div class="hyb-shell" data-hyb-22>
+      <div class="row-actions" style="justify-content:space-between; flex-wrap:wrap;">
+        <div class="row-actions">
+          <Icon name="compass" size={15} />
+          <span class="mono" style="font-size:0.74rem;" data-h22-status>HUB ACTIVO: TOKYO (AP-NORTHEAST) · 1.48M PAQUETES/S</span>
+        </div>
+        <div class="row-actions" data-h22-hubs style="flex-wrap:wrap;">
+          <button type="button" class="mini-btn" data-h22-hub="sf" data-x="110" data-y="85" data-name="SAN FRANCISCO (US-WEST)">San Francisco</button>
+          <button type="button" class="mini-btn" data-h22-hub="ny" data-x="200" data-y="80" data-name="NEW YORK (US-EAST)">New York</button>
+          <button type="button" class="mini-btn" data-h22-hub="sp" data-x="245" data-y="165" data-name="SÃO PAULO (SA-EAST)">São Paulo</button>
+          <button type="button" class="mini-btn" data-h22-hub="fk" data-x="360" data-y="68" data-name="FRANKFURT (EU-CENTRAL)">Frankfurt</button>
+          <button type="button" class="mini-btn mini-btn--accent" data-h22-hub="tk" data-x="565" data-y="88" data-name="TOKYO (AP-NORTHEAST)">Tokyo</button>
+          <button type="button" class="mini-btn" data-h22-hub="sy" data-x="585" data-y="175" data-name="SYDNEY (AP-SOUTHEAST)">Sydney</button>
+        </div>
+      </div>
+
+      <div class="world-map-stage">
+        <svg viewBox="0 0 680 220" class="world-map-svg">
+          {/* Retícula de latitudes y longitudes */}
+          <g stroke="currentColor" stroke-opacity="0.1" stroke-width="1">
+            <line x1="0" y1="55" x2="680" y2="55" />
+            <line x1="0" y1="110" x2="680" y2="110" />
+            <line x1="0" y1="165" x2="680" y2="165" />
+            <line x1="170" y1="0" x2="170" y2="220" />
+            <line x1="340" y1="0" x2="340" y2="220" />
+            <line x1="510" y1="0" x2="510" y2="220" />
+          </g>
+
+          {/* Continentes estilizados arquitectónicos */}
+          <g fill="currentColor" fill-opacity="0.09" stroke="currentColor" stroke-opacity="0.24" stroke-width="1">
+            <polygon points="55,35 160,30 215,75 185,115 95,105 65,70" />
+            <polygon points="205,125 265,135 255,198 215,190" />
+            <polygon points="320,35 415,30 425,85 335,90" />
+            <polygon points="335,98 415,98 400,178 350,170" />
+            <polygon points="430,32 610,38 595,118 445,108" />
+            <polygon points="535,148 615,148 605,192 545,188" />
+          </g>
+
+          {/* Arcos de conexión intercontinental */}
+          <path data-h22-arc id="h22-arc-1" d="M 110,85 Q 235,15 360,68" fill="none" stroke="currentColor" stroke-width="1.8" stroke-dasharray="4 4" />
+          <path data-h22-arc id="h22-arc-2" d="M 200,80 Q 280,25 360,68" fill="none" stroke="currentColor" stroke-width="1.8" />
+          <path data-h22-arc id="h22-arc-3" d="M 360,68 Q 465,18 565,88" fill="none" stroke="currentColor" stroke-width="2" />
+          <path data-h22-arc id="h22-arc-4" d="M 200,80 Q 225,125 245,165" fill="none" stroke="currentColor" stroke-width="1.8" />
+          <path data-h22-arc id="h22-arc-5" d="M 565,88 Q 595,130 585,175" fill="none" stroke="currentColor" stroke-width="1.8" />
+
+          {/* Paquetes de datos en movimiento sobre las rutas */}
+          <circle data-h22-pkt r="4" fill="currentColor" />
+          <circle data-h22-pkt r="4" fill="currentColor" />
+          <circle data-h22-pkt r="4" fill="currentColor" />
+
+          {/* Nodos de Ciudades */}
+          <circle cx="110" cy="85" r="5" fill="currentColor" />
+          <circle cx="200" cy="80" r="5" fill="currentColor" />
+          <circle cx="245" cy="165" r="5" fill="currentColor" />
+          <circle cx="360" cy="68" r="5" fill="currentColor" />
+          <circle cx="565" cy="88" r="5" fill="currentColor" />
+          <circle cx="585" cy="175" r="5" fill="currentColor" />
+
+          {/* Anillo de Onda de Choque en el Hub Activo */}
+          <circle data-h22-ping cx="565" cy="88" r="8" fill="none" stroke="currentColor" stroke-width="2.5" />
+          <circle data-h22-focus cx="565" cy="88" r="6" fill="currentColor" />
+        </svg>
+      </div>
+    </div>
+  )}
+
+  {/* 23. VISUALIZADOR INTERACTIVO DE ALGORITMO DE BÚSQUEDA DE RUTA (A* / BFS LABERINTO DE ALTA DENSIDAD 24x10 = 240 CELDAS) */}
+  {previewType === 'hybrid-23' && (
+    <div class="hyb-shell" data-hyb-23>
+      <div class="row-actions" style="justify-content:space-between; flex-wrap:wrap; gap:0.65rem;">
+        <div class="row-actions" style="flex-wrap:wrap; gap:0.5rem;">
+          <Icon name="grid" size={15} />
+          <span class="mono" style="font-size:0.73rem;" data-h23-info>MATRIZ 24×10 (240 MICRO-CELDAS) · LABERINTO DE CAMINO LARGO LISTO</span>
+          <span class="cxd-badge cxd-badge--active mono" data-h23-steps-badge>PASOS: --</span>
+          <span class="cxd-badge mono" data-h23-visited-badge>EXPLORADOS: --</span>
+        </div>
+        <div class="row-actions" style="flex-wrap:wrap;">
+          <button type="button" class="mini-btn mini-btn--accent" data-h23-run><Icon name="play" size={12} /> <span>Ejecutar Algoritmo A* / BFS</span></button>
+          <button type="button" class="mini-btn" data-h23-labyrinth><Icon name="sliders" size={12} /> <span>Laberinto Serpenteante</span></button>
+          <button type="button" class="mini-btn" data-h23-maze><Icon name="grid" size={12} /> <span>Obstáculos Aleatorios</span></button>
+          <button type="button" class="mini-btn" data-h23-clear><Icon name="refresh" size={12} /> <span>Limpiar</span></button>
+        </div>
+      </div>
+
+      <div class="pathfinding-grid" data-h23-grid>
+        {Array.from({ length: 240 }).map((_, idx) => {
+          const cols = 24;
+          const r = Math.floor(idx / cols);
+          const c = idx % cols;
+          const isStart = idx === 0;
+          const isEnd = idx === 239;
+          // Serpentine labyrinth walls that force a long winding path (55+ steps)
+          const wallCol1 = c === 4 && r < 8;
+          const wallCol2 = c === 9 && r > 1;
+          const wallCol3 = c === 14 && r < 8;
+          const wallCol4 = c === 19 && r > 1;
+          const isWall = !isStart && !isEnd && (wallCol1 || wallCol2 || wallCol3 || wallCol4);
+          return (
+            <button
+              type="button"
+              class={`pf-cell ${isStart ? 'is-start' : ''} ${isEnd ? 'is-end' : ''} ${isWall ? 'is-wall' : ''}`}
+              data-pf-idx={idx}
+              title={`Celda [${r}, ${c}]`}
+            >
+              {isStart ? 'S' : isEnd ? 'E' : ''}
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  )}
+
+  {/* 24. VISUALIZADOR DE ALGORITMOS DE ORDENAMIENTO PASO A PASO EN TIEMPO REAL (QUICKSORT / BUBBLESORT / SELECTIONSORT / INSERTIONSORT) */}
+  {previewType === 'hybrid-24' && (
+    <div class="hyb-shell" data-hyb-24>
+      <div class="row-actions" style="justify-content:space-between; flex-wrap:wrap; gap:0.65rem;">
+        <div class="row-actions" style="flex-wrap:wrap; gap:0.5rem;">
+          <Icon name="activity" size={15} />
+          <span class="mono" style="font-size:0.73rem;" data-h24-status>MOTOR DE ORDENAMIENTO PASO A PASO // 28 COLUMNAS</span>
+          <span class="cxd-badge mono" data-h24-cmp>COMPARACIONES: 0</span>
+          <span class="cxd-badge cxd-badge--active mono" data-h24-swp>INTERCAMBIOS: 0</span>
+        </div>
+        <div class="row-actions" data-h24-btns style="flex-wrap:wrap;">
+          <button type="button" class="mini-btn mini-btn--accent" data-h24-sort="quick"><Icon name="play" size={12} /> <span>QuickSort Animado</span></button>
+          <button type="button" class="mini-btn" data-h24-sort="bubble"><Icon name="play" size={12} /> <span>BubbleSort Paso a Paso</span></button>
+          <button type="button" class="mini-btn" data-h24-sort="selection"><Icon name="play" size={12} /> <span>SelectionSort</span></button>
+          <button type="button" class="mini-btn" data-h24-sort="insertion"><Icon name="play" size={12} /> <span>InsertionSort</span></button>
+          <button type="button" class="mini-btn" data-h24-shuffle><Icon name="refresh" size={12} /> <span>Desordenar</span></button>
+        </div>
+      </div>
+
+      <div class="sorting-stage" data-h24-bars>
+        {[74, 28, 91, 46, 16, 85, 58, 34, 96, 51, 21, 79, 63, 31, 89, 43, 71, 38, 94, 24, 67, 54, 18, 82, 49, 76, 36, 61].map((val) => (
+          <div class="sort-col-wrap" data-h24-col data-val={val}>
+            <div class="sort-col-bar" style={`height:${val}%`}></div>
+            <span class="mono sort-col-num">{val}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  )}
+
+  {/* 25. GRAFO DE RED NEURONAL MULTICAPA CON SINAPSIS SVG Y PROPAGACIÓN DE IMPULSOS SOFTMAX */}
+  {previewType === 'hybrid-25' && (
+    <div class="hyb-shell" data-hyb-25>
+      <div class="row-actions" style="justify-content:space-between; flex-wrap:wrap;">
+        <div class="row-actions">
+          <Icon name="cpu" size={15} />
+          <span class="mono" style="font-size:0.74rem;" data-h25-out>PREDICCIÓN SOFTMAX: CLASE A (96.8% CONFIANZA)</span>
+        </div>
+        <div class="row-actions">
+          <button type="button" class="mini-btn mini-btn--accent" data-h25-fire><Icon name="play" size={12} /> <span>Disparar Inferencia Forward-Pass</span></button>
+        </div>
+      </div>
+
+      <div class="neural-graph-stage">
+        <svg viewBox="0 0 680 180" class="nn-synapse-svg" preserveAspectRatio="none">
+          <g stroke="currentColor" stroke-opacity="0.22" stroke-width="1.4" fill="none">
+            <line data-nn-syn x1="85" y1="45" x2="255" y2="35" />
+            <line data-nn-syn x1="85" y1="45" x2="255" y2="90" />
+            <line data-nn-syn x1="85" y1="80" x2="255" y2="62" />
+            <line data-nn-syn x1="85" y1="80" x2="255" y2="118" />
+            <line data-nn-syn x1="85" y1="115" x2="255" y2="90" />
+            <line data-nn-syn x1="85" y1="150" x2="255" y2="145" />
+            <line data-nn-syn x1="255" y1="35" x2="425" y2="48" />
+            <line data-nn-syn x1="255" y1="62" x2="425" y2="82" />
+            <line data-nn-syn x1="255" y1="90" x2="425" y2="115" />
+            <line data-nn-syn x1="255" y1="118" x2="425" y2="82" />
+            <line data-nn-syn x1="255" y1="145" x2="425" y2="148" />
+            <line data-nn-syn x1="425" y1="48" x2="595" y2="55" />
+            <line data-nn-syn x1="425" y1="82" x2="595" y2="55" />
+            <line data-nn-syn x1="425" y1="115" x2="595" y2="95" />
+            <line data-nn-syn x1="425" y1="148" x2="595" y2="135" />
+          </g>
+        </svg>
+
+        <div class="nn-layer" data-nn-layer="0">
+          <span class="mono nn-lbl">INPUT (4)</span>
+          <div class="nn-node" data-nn-node>x₁</div>
+          <div class="nn-node" data-nn-node>x₂</div>
+          <div class="nn-node" data-nn-node>x₃</div>
+          <div class="nn-node" data-nn-node>x₄</div>
+        </div>
+        <div class="nn-layer" data-nn-layer="1">
+          <span class="mono nn-lbl">HIDDEN L1 (5)</span>
+          <div class="nn-node" data-nn-node>h₁</div>
+          <div class="nn-node" data-nn-node>h₂</div>
+          <div class="nn-node" data-nn-node>h₃</div>
+          <div class="nn-node" data-nn-node>h₄</div>
+          <div class="nn-node" data-nn-node>h₅</div>
+        </div>
+        <div class="nn-layer" data-nn-layer="2">
+          <span class="mono nn-lbl">HIDDEN L2 (4)</span>
+          <div class="nn-node" data-nn-node>z₁</div>
+          <div class="nn-node" data-nn-node>z₂</div>
+          <div class="nn-node" data-nn-node>z₃</div>
+          <div class="nn-node" data-nn-node>z₄</div>
+        </div>
+        <div class="nn-layer" data-nn-layer="3">
+          <span class="mono nn-lbl">SOFTMAX (3)</span>
+          <div class="nn-node nn-node--out" data-nn-node data-nn-prob>96.8%</div>
+          <div class="nn-node nn-node--out" data-nn-node data-nn-prob>2.4%</div>
+          <div class="nn-node nn-node--out" data-nn-node data-nn-prob>0.8%</div>
+        </div>
+      </div>
+    </div>
+  )}
+
+  {/* 26. SISTEMA SOLAR ANIMADO COMPLETO (SOL + 8 PLANETAS + LUNA + CINTURÓN DE ASTEROIDES + ANILLOS DE SATURNO + TELEMETRÍA) */}
+  {previewType === 'hybrid-26' && (
+    <div class="hyb-shell" data-hyb-26>
+      <div class="row-actions" style="justify-content:space-between; flex-wrap:wrap; gap:0.65rem;">
+        <div class="row-actions" style="flex-wrap:wrap; gap:0.5rem;">
+          <Icon name="compass" size={15} />
+          <span class="mono" style="font-size:0.73rem;" data-h26-telemetry>PLANETA ENFOCADO: TIERRA (1.00 UA) · VEL: 29.78 KM/S · PERIODO: 365.2 DÍAS · 1 LUNA</span>
+        </div>
+        <div class="row-actions" data-h26-speeds>
+          <span class="mono" style="font-size:0.68rem; color:var(--cxd-text-muted);">ESCALA DE TIEMPO:</span>
+          <button type="button" class="mini-btn mini-btn--accent" data-h26-speed="1">1x</button>
+          <button type="button" class="mini-btn" data-h26-speed="4">4x</button>
+          <button type="button" class="mini-btn" data-h26-speed="12">12x Warp</button>
+        </div>
+      </div>
+
+      <div class="row-actions" data-h26-planets style="flex-wrap:wrap; gap:0.38rem;">
+        <button type="button" class="mini-btn" data-h26-planet="mercurio" data-r="34" data-info="PLANETA ENFOCADO: MERCURIO (0.39 UA) · VEL: 47.36 KM/S · PERIODO: 88 DÍAS · 0 LUNAS">01 · Mercurio</button>
+        <button type="button" class="mini-btn" data-h26-planet="venus" data-r="52" data-info="PLANETA ENFOCADO: VENUS (0.72 UA) · VEL: 35.02 KM/S · PERIODO: 224.7 DÍAS · 0 LUNAS">02 · Venus</button>
+        <button type="button" class="mini-btn mini-btn--accent" data-h26-planet="tierra" data-r="72" data-info="PLANETA ENFOCADO: TIERRA (1.00 UA) · VEL: 29.78 KM/S · PERIODO: 365.2 DÍAS · 1 LUNA">03 · Tierra + Luna</button>
+        <button type="button" class="mini-btn" data-h26-planet="marte" data-r="92" data-info="PLANETA ENFOCADO: MARTE (1.52 UA) · VEL: 24.07 KM/S · PERIODO: 687 DÍAS · 2 LUNAS">04 · Marte</button>
+        <button type="button" class="mini-btn" data-h26-planet="jupiter" data-r="122" data-info="PLANETA ENFOCADO: JÚPITER (5.20 UA) · VEL: 13.07 KM/S · PERIODO: 11.86 AÑOS · 95 LUNAS">05 · Júpiter</button>
+        <button type="button" class="mini-btn" data-h26-planet="saturno" data-r="150" data-info="PLANETA ENFOCADO: SATURNO (9.58 UA) · VEL: 9.68 KM/S · PERIODO: 29.45 AÑOS · ANILLOS + 146 LUNAS">06 · Saturno</button>
+        <button type="button" class="mini-btn" data-h26-planet="urano" data-r="176" data-info="PLANETA ENFOCADO: URANO (19.20 UA) · VEL: 6.80 KM/S · PERIODO: 84.01 AÑOS · 28 LUNAS">07 · Urano</button>
+        <button type="button" class="mini-btn" data-h26-planet="neptuno" data-r="200" data-info="PLANETA ENFOCADO: NEPTUNO (30.05 UA) · VEL: 5.43 KM/S · PERIODO: 164.8 AÑOS · 16 LUNAS">08 · Neptuno</button>
+      </div>
+
+      <div class="solar-system-stage">
+        <div class="solar-cosmos" data-h26-sys>
+          {/* Anillos orbitales de los 8 planetas + Cinturón de Asteroides */}
+          <div class="solar-orbit" style="width:68px; height:68px;"></div>
+          <div class="solar-orbit" style="width:104px; height:104px;"></div>
+          <div class="solar-orbit" style="width:144px; height:144px;"></div>
+          <div class="solar-orbit" style="width:184px; height:184px;"></div>
+          <div class="solar-asteroid-belt" style="width:214px; height:214px;"></div>
+          <div class="solar-orbit" style="width:244px; height:244px;"></div>
+          <div class="solar-orbit" style="width:300px; height:300px;"></div>
+          <div class="solar-orbit" style="width:352px; height:352px;"></div>
+          <div class="solar-orbit" style="width:400px; height:400px;"></div>
+
+          {/* Retícula de enfoque planetario dinámico */}
+          <div class="solar-target-ring" data-h26-target-ring style="width:144px; height:144px;"></div>
+
+          {/* Estrella Central: SOL */}
+          <div class="solar-sun" data-h26-sun>
+            <span>SOL</span>
+          </div>
+
+          {/* 1. Mercurio */}
+          <div class="solar-carrier" data-h26-carrier data-period="2400">
+            <div class="solar-planet p-mercurio" style="transform: translateX(34px);" title="Mercurio"></div>
+          </div>
+
+          {/* 2. Venus */}
+          <div class="solar-carrier" data-h26-carrier data-period="4200">
+            <div class="solar-planet p-venus" style="transform: translateX(52px);" title="Venus"></div>
+          </div>
+
+          {/* 3. Tierra + Luna */}
+          <div class="solar-carrier" data-h26-carrier data-period="6400">
+            <div class="solar-planet p-tierra" style="transform: translateX(72px);" title="Tierra">
+              <div class="solar-moon-orbit" data-h26-moon>
+                <span class="solar-moon"></span>
+              </div>
+            </div>
+          </div>
+
+          {/* 4. Marte */}
+          <div class="solar-carrier" data-h26-carrier data-period="9200">
+            <div class="solar-planet p-marte" style="transform: translateX(92px);" title="Marte"></div>
+          </div>
+
+          {/* 5. Júpiter */}
+          <div class="solar-carrier" data-h26-carrier data-period="14800">
+            <div class="solar-planet p-jupiter" style="transform: translateX(122px);" title="Júpiter"></div>
+          </div>
+
+          {/* 6. Saturno con Anillos */}
+          <div class="solar-carrier" data-h26-carrier data-period="21000">
+            <div class="solar-planet p-saturno" style="transform: translateX(150px);" title="Saturno">
+              <span class="saturn-ring"></span>
+            </div>
+          </div>
+
+          {/* 7. Urano */}
+          <div class="solar-carrier" data-h26-carrier data-period="28000">
+            <div class="solar-planet p-urano" style="transform: translateX(176px);" title="Urano"></div>
+          </div>
+
+          {/* 8. Neptuno */}
+          <div class="solar-carrier" data-h26-carrier data-period="36000">
+            <div class="solar-planet p-neptuno" style="transform: translateX(200px);" title="Neptuno"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  )}
+
+  {/* 27. CIUDADELA ISOMÉTRICA 3D DE SERVIDORES CON ONDA ESPACIAL 4x4 */}
+  {previewType === 'hybrid-27' && (
+    <div class="hyb-shell" data-hyb-27>
+      <div class="row-actions" style="justify-content:space-between; flex-wrap:wrap;">
+        <div class="row-actions">
+          <Icon name="box" size={15} />
+          <span class="mono" style="font-size:0.74rem;">PERSPECTIVA ISOMÉTRICA 3D // MATRIZ 4×4 NODOS</span>
+        </div>
+        <div class="row-actions" data-h27-btns>
+          <button type="button" class="mini-btn mini-btn--accent" data-h27-wave="center"><Icon name="sparkles" size={12} /> <span>Onda desde el Centro</span></button>
+          <button type="button" class="mini-btn" data-h27-wave="first"><Icon name="layers" size={12} /> <span>Barrido Diagonal</span></button>
+          <button type="button" class="mini-btn" data-h27-wave="random"><Icon name="activity" size={12} /> <span>Pico de Carga Aleatorio</span></button>
+        </div>
+      </div>
+
+      <div class="iso-stage-viewport">
+        <div class="iso-grid-plane" data-h27-grid>
+          {Array.from({ length: 16 }).map((_, idx) => (
+            <button type="button" class="iso-tower" data-h27-tower={idx}>
+              <span class="iso-tower__top">{String(idx + 1).padStart(2, '0')}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
+  )}
+
+  {/* 28. ANALIZADOR DE ESPECTRO DE 28 BANDAS + OSCILOSCOPIO VECTORIAL */}
+  {previewType === 'hybrid-28' && (
+    <div class="hyb-shell" data-hyb-28>
+      <div class="row-actions" style="justify-content:space-between; flex-wrap:wrap;">
+        <div class="row-actions">
+          <Icon name="activity" size={15} />
+          <span class="mono" style="font-size:0.74rem;" data-h28-label>PERFIL ACÚSTICO: CYBERPUNK ARP // 20Hz - 20kHz</span>
+        </div>
+        <div class="row-actions" data-h28-presets>
+          <button type="button" class="mini-btn mini-btn--accent" data-h28-mode="arp"><Icon name="activity" size={12} /> <span>Cyberpunk Arp</span></button>
+          <button type="button" class="mini-btn" data-h28-mode="bass"><Icon name="sliders" size={12} /> <span>Sub-Bass Boost</span></button>
+          <button type="button" class="mini-btn" data-h28-mode="vocal"><Icon name="sparkles" size={12} /> <span>Harmonic Mid</span></button>
+        </div>
+      </div>
+
+      <div class="spectrum-analyzer-box">
+        <svg viewBox="0 0 560 70" class="spectrum-wave-svg" preserveAspectRatio="none">
+          <path data-h28-wave d="M 0,35 Q 70,5 140,35 T 280,35 T 420,35 T 560,35" fill="none" stroke="currentColor" stroke-width="2" />
+        </svg>
+        {Array.from({ length: 28 }).map((_, idx) => (
+          <div class="spec-bar" data-h28-bar data-idx={idx} style={`height:${20 + ((idx * 17) % 75)}%`}></div>
+        ))}
+      </div>
+    </div>
+  )}
+
+  {/* 29. DIAGRAMA INTERACTIVO DE GRAFO GIT MULTIRAMA (MAIN, DEVELOP, FEATURE, TAGS & MERGE CURVES) */}
+  {previewType === 'hybrid-29' && (
+    <div class="hyb-shell" data-hyb-29>
+      <div class="row-actions" style="justify-content:space-between; flex-wrap:wrap; gap:0.65rem;">
+        <div class="row-actions" style="flex-wrap:wrap; gap:0.5rem;">
+          <Icon name="code" size={15} />
+          <span class="mono" style="font-size:0.74rem;" data-h29-head>HEAD // main (7 commits · 3 ramas · 2 tags)</span>
+          <span class="cxd-badge cxd-badge--active mono" data-h29-tag-badge>TAG: v4.2.0</span>
+        </div>
+        <div class="row-actions" style="flex-wrap:wrap;">
+          <button type="button" class="mini-btn mini-btn--accent" data-h29-commit-main><Icon name="play" size={12} /> <span>+ Commit en main</span></button>
+          <button type="button" class="mini-btn" data-h29-commit-feat><Icon name="layers" size={12} /> <span>+ Commit en feature/anime</span></button>
+          <button type="button" class="mini-btn" data-h29-merge><Icon name="check" size={12} /> <span>Merge feature a main</span></button>
+          <button type="button" class="mini-btn" data-h29-tag><Icon name="sparkles" size={12} /> <span>+ Crear Tag Release</span></button>
+          <button type="button" class="mini-btn" data-h29-reset><Icon name="refresh" size={12} /> <span>Reiniciar Grafo</span></button>
+        </div>
+      </div>
+
+      <div class="git-diagram-stage">
+        <svg viewBox="0 0 860 220" class="git-diagram-svg" data-h29-svg>
+          {/* Carriles guía de las 3 ramas */}
+          <g stroke="currentColor" stroke-opacity="0.14" stroke-dasharray="4 4" stroke-width="1">
+            <line x1="95" y1="45" x2="840" y2="45" />
+            <line x1="95" y1="110" x2="840" y2="110" />
+            <line x1="95" y1="175" x2="840" y2="175" />
+          </g>
+
+          {/* Etiquetas fijas de rama a la izquierda */}
+          <g class="mono" font-size="10" font-weight="700" fill="currentColor">
+            <rect x="8" y="32" width="76" height="24" rx="4" fill="currentColor" fill-opacity="0.12" />
+            <text x="16" y="48">main</text>
+
+            <rect x="8" y="97" width="76" height="24" rx="4" fill="currentColor" fill-opacity="0.12" />
+            <text x="16" y="113">develop</text>
+
+            <rect x="8" y="162" width="76" height="24" rx="4" fill="currentColor" fill-opacity="0.12" />
+            <text x="16" y="178">feat/anime</text>
+          </g>
+
+          {/* Curvas y líneas de conexión Git base */}
+          <g data-h29-edges fill="none" stroke="currentColor" stroke-width="2.6">
+            {/* Tronco principal main */}
+            <path data-h29-edge d="M 120,45 L 230,45 L 340,45 L 460,45 L 580,45" />
+            {/* Bifurcación main -> develop */}
+            <path data-h29-edge d="M 120,45 C 155,45 155,110 190,110 L 310,110 L 420,110" />
+            {/* Bifurcación develop -> feat/anime */}
+            <path data-h29-edge d="M 190,110 C 225,110 225,175 260,175 L 380,175" />
+            {/* Merge feat/anime -> develop */}
+            <path data-h29-edge d="M 380,175 C 400,175 400,110 420,110" />
+            {/* Merge develop -> main */}
+            <path data-h29-edge d="M 420,110 C 440,110 440,45 460,45" />
+          </g>
+
+          {/* Capa dinámica para nuevos commits, ramas y merges */}
+          <g data-h29-dynamic-edges fill="none" stroke="currentColor" stroke-width="2.6"></g>
+
+          {/* Nodos de Commits base */}
+          <g data-h29-nodes>
+            <g class="git-svg-node" data-h29-commit-item data-sha="a1f90c2" data-branch="main" data-msg="init: chasis arquitectónico 12 interfaces">
+              <circle cx="120" cy="45" r="8" />
+              <text x="120" y="25" text-anchor="middle" class="git-sha-txt">a1f90c2</text>
+              <rect x="92" y="56" width="56" height="16" rx="3" class="git-tag-pill" />
+              <text x="120" y="67" text-anchor="middle" class="git-tag-txt">v4.0.0</text>
+            </g>
+
+            <g class="git-svg-node" data-h29-commit-item data-sha="b4e81d7" data-branch="develop" data-msg="feat(tables): 10 variantes de tablas">
+              <circle cx="190" cy="110" r="7.5" />
+              <text x="190" y="132" text-anchor="middle" class="git-sha-txt">b4e81d7</text>
+            </g>
+
+            <g class="git-svg-node" data-h29-commit-item data-sha="c7a04e1" data-branch="main" data-msg="chore: tokens css multi-framework">
+              <circle cx="230" cy="45" r="7.5" />
+              <text x="230" y="25" text-anchor="middle" class="git-sha-txt">c7a04e1</text>
+            </g>
+
+            <g class="git-svg-node" data-h29-commit-item data-sha="d29f3b8" data-branch="feat/anime" data-msg="feat(anime): motor timeline & stagger 2D">
+              <circle cx="260" cy="175" r="7.5" />
+              <text x="260" y="198" text-anchor="middle" class="git-sha-txt">d29f3b8</text>
+            </g>
+
+            <g class="git-svg-node" data-h29-commit-item data-sha="e83c1a5" data-branch="develop" data-msg="feat(ui): carruseles 3D y acordeones">
+              <circle cx="310" cy="110" r="7.5" />
+              <text x="310" y="132" text-anchor="middle" class="git-sha-txt">e83c1a5</text>
+            </g>
+
+            <g class="git-svg-node" data-h29-commit-item data-sha="f05b7d2" data-branch="feat/anime" data-msg="feat(svg): createDrawable & motionPath">
+              <circle cx="380" cy="175" r="7.5" />
+              <text x="380" y="198" text-anchor="middle" class="git-sha-txt">f05b7d2</text>
+            </g>
+
+            <g class="git-svg-node" data-h29-commit-item data-sha="91c4e8a" data-branch="develop" data-msg="merge: integrar feat/anime en develop">
+              <circle cx="420" cy="110" r="8" />
+              <text x="420" y="132" text-anchor="middle" class="git-sha-txt">91c4e8a</text>
+            </g>
+
+            <g class="git-svg-node" data-h29-commit-item data-sha="4d7a2f1" data-branch="main" data-msg="release: merge develop en main v4.1.0">
+              <circle cx="460" cy="45" r="8.5" />
+              <text x="460" y="25" text-anchor="middle" class="git-sha-txt">4d7a2f1</text>
+              <rect x="432" y="56" width="56" height="16" rx="3" class="git-tag-pill" />
+              <text x="460" y="67" text-anchor="middle" class="git-tag-txt">v4.1.0</text>
+            </g>
+
+            <g class="git-svg-node is-head" data-h29-commit-item data-sha="7e3b9c4" data-branch="main" data-msg="deploy: .vercel/output static build ready">
+              <circle cx="580" cy="45" r="9" />
+              <text x="580" y="25" text-anchor="middle" class="git-sha-txt">7e3b9c4</text>
+              <rect x="546" y="56" width="68" height="16" rx="3" class="git-tag-pill" />
+              <text x="580" y="67" text-anchor="middle" class="git-tag-txt">HEAD · v4.2</text>
+            </g>
+          </g>
+
+          {/* Capa dinámica para nuevos nodos */}
+          <g data-h29-dynamic-nodes></g>
+        </svg>
+
+        <div class="git-inspector-bar mono" data-h29-inspector>
+          <span>HAZ CLIC EN CUALQUIER NODO DEL DIAGRAMA O USA LOS BOTONES PARA EXPANDIR EL GRAFO:</span>
+          <strong data-h29-detail>[7e3b9c4] (main) — deploy: .vercel/output static build ready</strong>
+        </div>
+      </div>
+    </div>
+  )}
+
+  {/* 30. RADAR SONAR TÁCTICO DE 360° CON DETECCIÓN E INTERCEPCIÓN DE OBJETIVOS */}
+  {previewType === 'hybrid-30' && (
+    <div class="hyb-shell" data-hyb-30>
+      <div class="row-actions" style="justify-content:space-between; flex-wrap:wrap;">
+        <div class="row-actions">
+          <Icon name="compass" size={15} />
+          <span class="mono" style="font-size:0.74rem;" data-h30-status>SONAR ACTIVO // 3 CONTACTOS EN RANGO</span>
+        </div>
+        <div class="row-actions">
+          <button type="button" class="mini-btn mini-btn--accent" data-h30-scan><Icon name="search" size={12} /> <span>Pulso de Escaneo Profundo</span></button>
+          <button type="button" class="mini-btn mini-btn--danger" data-h30-intercept><Icon name="shield" size={12} /> <span>Neutralizar Objetivos</span></button>
+        </div>
+      </div>
+
+      <div class="radar-sonar-stage">
+        <div class="radar-circle">
+          <div class="radar-ring r-1"></div>
+          <div class="radar-ring r-2"></div>
+          <div class="radar-cross-h"></div>
+          <div class="radar-cross-v"></div>
+          <div class="radar-sweep" data-h30-sweep></div>
+          <span class="radar-blip" data-h30-blip style="top:28%; left:66%;"></span>
+          <span class="radar-blip" data-h30-blip style="top:68%; left:32%;"></span>
+          <span class="radar-blip" data-h30-blip style="top:42%; left:24%;"></span>
+        </div>
+      </div>
+    </div>
+  )}
+</div>
+
+<style is:global>
+  .live-preview-host {
+    width: 100%;
+  }
+
+  .mono {
+    font-family: var(--cxd-font-mono);
+  }
+
+  .sub-p {
+    font-size: 0.8rem;
+    color: var(--cxd-text-secondary);
+    margin-top: 0.25rem;
+  }
+
+  .stage-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 120px;
+    padding: 0.5rem;
+  }
+
+  /* 1. Tabla Moderna Bordes Redondeados */
+  .tbl-modern-rounded {
+    background: var(--cxd-bg-surface);
+    border: 1px solid var(--cxd-border-strong);
+    border-radius: 20px;
+    padding: 0.75rem;
+    box-shadow: var(--cxd-shadow-md);
+    overflow-x: auto;
+  }
+
+  .tbl-modern-rounded__table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+  }
+
+  .tbl-modern-rounded__table th {
+    background: var(--cxd-bg-elevated);
+    padding: 0.75rem 1rem;
+    text-align: left;
+    font-size: 0.74rem;
+    color: var(--cxd-text-secondary);
+  }
+
+  .tbl-modern-rounded__table th:first-child { border-radius: 12px 0 0 12px; }
+  .tbl-modern-rounded__table th:last-child { border-radius: 0 12px 12px 0; }
+
+  .tbl-modern-rounded__table td {
+    padding: 0.9rem 1rem;
+    border-bottom: 1px solid var(--cxd-border);
+  }
+
+  .user-pill-cell {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .user-pill-cell small {
+    display: block;
+    font-size: 0.72rem;
+    color: var(--cxd-text-muted);
+  }
+
+  .avatar-circle {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--cxd-accent);
+    color: var(--cxd-accent-fg, #000);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.76rem;
+  }
+
+  .soft-tag {
+    padding: 0.25rem 0.65rem;
+    border-radius: 999px;
+    background: var(--cxd-bg-elevated);
+    font-size: 0.75rem;
+  }
+
+  .pill-status {
+    padding: 0.25rem 0.7rem;
+    border-radius: 999px;
+    font-size: 0.73rem;
+    font-weight: 600;
+  }
+
+  .pill-status--ok { background: var(--cxd-success-bg); color: var(--cxd-success); }
+  .pill-status--warn { background: var(--cxd-warning-bg); color: var(--cxd-warning); }
+
+  .rounded-bar {
+    width: 110px;
+    height: 8px;
+    background: var(--cxd-bg-elevated);
+    border-radius: 999px;
+    overflow: hidden;
+  }
+
+  .rounded-bar span {
+    display: block;
+    height: 100%;
+    background: var(--cxd-accent);
+    border-radius: 999px;
+  }
+
+  /* 2. Tabla Styleless Sin Bordes */
+  .tbl-styleless-wrap {
+    padding: 0.5rem 0;
+    overflow-x: auto;
+  }
+
+  .tbl-styleless {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .tbl-styleless th {
+    text-align: left;
+    font-family: var(--cxd-font-mono);
+    font-size: 0.7rem;
+    color: var(--cxd-text-muted);
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--cxd-text-primary);
+  }
+
+  .tbl-styleless td {
+    padding: 1.05rem 0;
+    border-bottom: 1px solid var(--cxd-border);
+    font-size: 0.9rem;
+  }
+
+  .styleless-title {
+    font-weight: 600;
+    font-size: 0.98rem;
+  }
+
+  /* 3. Tabla Content-Fit */
+  .tbl-content-fit-outer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .fit-helper-note {
+    font-family: var(--cxd-font-mono);
+    font-size: 0.7rem;
+    color: var(--cxd-text-muted);
+  }
+
+  .tbl-content-fit {
+    width: max-content;
+    border-collapse: collapse;
+    border: 1px solid var(--cxd-border-strong);
+    font-family: var(--cxd-font-mono);
+    font-size: 0.76rem;
+    background: var(--cxd-bg-surface);
+  }
+
+  .tbl-content-fit th,
+  .tbl-content-fit td {
+    padding: 0.42rem 0.75rem;
+    border: 1px solid var(--cxd-border);
+    white-space: nowrap;
+  }
+
+  .tbl-content-fit th {
+    background: var(--cxd-bg-elevated);
+    color: var(--cxd-text-secondary);
+  }
+
+  .dot-ok, .dot-warn {
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    margin-right: 0.35rem;
+  }
+  .dot-ok { background: var(--cxd-success); }
+  .dot-warn { background: var(--cxd-warning); }
+
+  /* 4. Tabla de Filas Flotantes */
+  .tbl-floating {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 10px;
+  }
+
+  .tbl-floating th {
+    padding: 0 1rem 0.35rem;
+    text-align: left;
+    font-family: var(--cxd-font-mono);
+    font-size: 0.7rem;
+    color: var(--cxd-text-muted);
+  }
+
+  .floating-row {
+    background: var(--cxd-bg-surface);
+    box-shadow: var(--cxd-shadow-sm);
+    transition: transform 150ms ease;
+  }
+
+  .floating-row:hover {
+    transform: translateY(-2px);
+  }
+
+  .floating-row td {
+    padding: 0.95rem 1.1rem;
+    border-top: 1px solid var(--cxd-border-strong);
+    border-bottom: 1px solid var(--cxd-border-strong);
+  }
+
+  .floating-row td:first-child {
+    border-left: 1px solid var(--cxd-border-strong);
+    border-radius: 10px 0 0 10px;
+  }
+
+  .floating-row td:last-child {
+    border-right: 1px solid var(--cxd-border-strong);
+    border-radius: 0 10px 10px 0;
+  }
+
+  /* 10. Tabla Cebra Industrial */
+  .tbl-brutalist-zebra {
+    width: 100%;
+    border-collapse: collapse;
+    border: 2px solid var(--cxd-text-primary);
+    font-family: var(--cxd-font-mono);
+    font-size: 0.8rem;
+  }
+
+  .tbl-brutalist-zebra th {
+    background: var(--cxd-text-primary);
+    color: var(--cxd-bg-base);
+    padding: 0.7rem 1rem;
+    text-align: left;
+  }
+
+  .tbl-brutalist-zebra td {
+    padding: 0.7rem 1rem;
+    border-bottom: 1px solid var(--cxd-border-strong);
+  }
+
+  .tbl-brutalist-zebra tbody tr:nth-child(even) {
+    background: var(--cxd-bg-elevated);
+  }
+
+  .tbl-brutalist-zebra tfoot td {
+    padding: 0.8rem 1rem;
+    font-weight: 700;
+    border-top: 2px solid var(--cxd-text-primary);
+    background: var(--cxd-bg-surface);
+  }
+
+  /* Controles comunes de tablas y componentes */
+  .mini-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.36rem;
+    padding: 0.36rem 0.72rem;
+    background: var(--cxd-bg-elevated);
+    color: var(--cxd-text-primary);
+    border: 1px solid var(--cxd-border-strong);
+    border-radius: var(--cxd-radius-sm);
+    font-family: var(--cxd-font-mono);
+    font-size: 0.72rem;
+    cursor: pointer;
+    transition: background-color 140ms ease, border-color 140ms ease, transform 120ms ease;
+  }
+
+  .mini-btn:hover {
+    border-color: var(--cxd-accent);
+  }
+
+  .mini-btn--accent {
+    background: var(--cxd-accent);
+    color: var(--cxd-accent-fg, #000);
+    border-color: var(--cxd-accent);
+    font-weight: 600;
+  }
+
+  .mini-btn--danger {
+    color: var(--cxd-danger);
+    border-color: var(--cxd-danger);
+  }
+
+  .row-actions {
+    display: inline-flex;
+    gap: 0.4rem;
+    align-items: center;
+  }
+
+  .tbl-input, .tbl-select {
+    background: var(--cxd-bg-base);
+    color: var(--cxd-text-primary);
+    border: 1px solid var(--cxd-border-strong);
+    border-radius: var(--cxd-radius-sm);
+    padding: 0.38rem 0.6rem;
+    font-family: var(--cxd-font-mono);
+    font-size: 0.76rem;
+  }
+
+  .tbl-input--num {
+    width: 72px;
+  }
+
+  .expand-trigger-row {
+    cursor: pointer;
+  }
+
+  .expanded-panel-box {
+    padding: 0.85rem 1rem;
+    background: var(--cxd-bg-elevated);
+    border-left: 3px solid var(--cxd-accent);
+    font-size: 0.82rem;
+  }
+
+  /* Toasters */
+  .toast-modern-box {
+    width: 100%;
+    max-width: 480px;
+    background: var(--cxd-bg-surface);
+    border: 1px solid var(--cxd-border-strong);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: var(--cxd-shadow-md);
+  }
+
+  .toast-modern-box__row {
+    padding: 1rem 1.15rem;
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+  }
+
+  .toast-modern-box__row p {
+    font-size: 0.78rem;
+    color: var(--cxd-text-secondary);
+  }
+
+  .toast-icon-circle {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--cxd-success-bg);
+    color: var(--cxd-success);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .toast-timer-bar {
+    height: 4px;
+    background: var(--cxd-bg-elevated);
+  }
+
+  .toast-timer-bar span {
+    display: block;
+    height: 100%;
+    width: 100%;
+    background: var(--cxd-accent);
+    transform-origin: left;
+  }
+
+  .island-morph-shell {
+    background: #050608;
+    color: #fff;
+    border: 1px solid #27272a;
+    border-radius: 28px;
+    padding: 0.65rem 1.15rem;
+    width: 100%;
+    max-width: 520px;
+    transition: all 280ms ease;
+  }
+
+  .island-top-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .island-extra-body {
+    margin-top: 0.75rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid #27272a;
+    font-size: 0.8rem;
+    color: #a1a1aa;
+  }
+
+  .toast-inline-form {
+    display: flex;
+    gap: 0.5rem;
+    width: 100%;
+    margin-top: 0.65rem;
+  }
+
+  .toast-inline-form input {
+    flex: 1;
+  }
+
+  .spawned-toast-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+    max-width: 480px;
+  }
+
+  .toast-styleless-line {
+    border-left: 2px solid var(--cxd-accent);
+    padding-left: 1rem;
+    max-width: 520px;
+  }
+
+  .toast-pill-fit {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+    padding: 0.45rem 0.85rem;
+    border-radius: 999px;
+    background: var(--cxd-bg-surface);
+    border: 1px solid var(--cxd-border-strong);
+    font-size: 0.82rem;
+  }
+
+  /* Botones */
+  .btn-pill-modern {
+    padding: 0.68rem 1.4rem;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: transform 140ms ease;
+  }
+
+  .btn-pill-modern:active { transform: scale(0.96); }
+  .btn-pill-modern--primary { background: var(--cxd-accent); color: var(--cxd-accent-fg, #000); }
+  .btn-pill-modern--soft { background: var(--cxd-bg-elevated); color: var(--cxd-text-primary); }
+  .btn-pill-modern--outline { background: transparent; border-color: var(--cxd-border-strong); color: var(--cxd-text-primary); }
+
+  .btn-styleless-minimal {
+    background: none;
+    border: none;
+    border-bottom: 1px solid var(--cxd-text-primary);
+    padding: 0.35rem 0;
+    color: var(--cxd-text-primary);
+    font-size: 0.9rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  .fab-cluster {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .fab-main-trigger {
+    padding: 0.75rem 1.25rem;
+    border-radius: 999px;
+    background: var(--cxd-accent);
+    color: var(--cxd-accent-fg, #000);
+    border: none;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    box-shadow: var(--cxd-shadow-md);
+  }
+
+  .fab-satellites {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .btn-3d-secondary {
+    padding: 0.65rem 1.25rem;
+    background: var(--cxd-bg-surface);
+    color: var(--cxd-text-primary);
+    border: 2px solid var(--cxd-text-primary);
+    box-shadow: 4px 4px 0 var(--cxd-text-primary);
+    font-family: var(--cxd-font-mono);
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  .btn-3d-secondary:active {
+    transform: translate(3px, 3px);
+    box-shadow: 1px 1px 0 var(--cxd-text-primary);
+  }
+
+  /* Tarjetas */
+  .card-styleless-editorial {
+    max-width: 520px;
+    border-top: 2px solid var(--cxd-text-primary);
+    padding-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .card-floating-3d {
+    max-width: 440px;
+    width: 100%;
+    padding: 1.5rem;
+    background: var(--cxd-bg-surface);
+    border: 1px solid var(--cxd-border-strong);
+    border-radius: 14px;
+    box-shadow: var(--cxd-shadow-lg);
+    transition: transform 120ms ease;
+  }
+
+  .card-tabbed-box, .card-with-actions {
+    max-width: 480px;
+    width: 100%;
+    background: var(--cxd-bg-surface);
+    border: 1px solid var(--cxd-border-strong);
+    border-radius: var(--cxd-radius-md);
+    padding: 1.15rem;
+  }
+
+  .card-tabbed-box__nav {
+    display: flex;
+    gap: 0.4rem;
+    border-bottom: 1px solid var(--cxd-border);
+    padding-bottom: 0.65rem;
+    margin-bottom: 0.85rem;
+  }
+
+  .card-tabbed-box__nav button {
+    padding: 0.3rem 0.65rem;
+    background: transparent;
+    border: 1px solid transparent;
+    color: var(--cxd-text-secondary);
+    font-family: var(--cxd-font-mono);
+    font-size: 0.72rem;
+    cursor: pointer;
+  }
+
+  .card-tabbed-box__nav button.is-active {
+    background: var(--cxd-bg-active);
+    color: var(--cxd-text-primary);
+    border-color: var(--cxd-border-strong);
+  }
+
+  .card-action-footer {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--cxd-border);
+  }
+
+  .card-content-fit-kpi {
+    width: max-content;
+    padding: 0.85rem 1.15rem;
+    background: var(--cxd-bg-surface);
+    border: 1px solid var(--cxd-border-strong);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  /* Forms */
+  .form-modern-box {
+    width: 100%;
+    max-width: 380px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    font-size: 0.82rem;
+  }
+
+  .input-modern-rounded {
+    padding: 0.7rem 1rem;
+    border-radius: 12px;
+    border: 1px solid var(--cxd-border-strong);
+    background: var(--cxd-bg-surface);
+    color: var(--cxd-text-primary);
+  }
+
+  .form-styleless-box {
+    width: 100%;
+    max-width: 440px;
+  }
+
+  .input-styleless-line {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid var(--cxd-text-primary);
+    padding: 0.6rem 0;
+    color: var(--cxd-text-primary);
+    font-size: 1rem;
+    outline: none;
+  }
+
+  .form-inline-fit {
+    width: max-content;
+    display: inline-flex;
+    align-items: center;
+    background: var(--cxd-bg-surface);
+    border: 1px solid var(--cxd-border-strong);
+    border-radius: 999px;
+    padding: 0.25rem;
+  }
+
+  .pwd-bars {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+    margin-bottom: 0.35rem;
+  }
+
+  .pwd-bars span {
+    height: 5px;
+    background: var(--cxd-bg-elevated);
+  }
+
+  .pwd-bars span.is-on {
+    background: var(--cxd-success);
+  }
+
+  .switch-row {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    cursor: pointer;
+  }
+
+  .demo-nav-bar, .docker-topology-box {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.65rem;
+    padding: 0.75rem 1rem;
+    background: var(--cxd-bg-surface);
+    border: 1px solid var(--cxd-border-strong);
+    border-radius: var(--cxd-radius-md);
+  }
+
+  .docker-node {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.5rem 0.8rem;
+    background: var(--cxd-bg-base);
+    border: 1px solid var(--cxd-border);
+  }
+
+  .docker-node small {
+    display: block;
+    font-size: 0.66rem;
+    color: var(--cxd-text-muted);
+  }
+
+  /* Carruseles & Sliders */
+  .carousel-stage {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .coverflow-viewport {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 0.85rem;
+    perspective: 900px;
+  }
+
+  .coverflow-slide {
+    padding: 1.15rem;
+    background: var(--cxd-bg-surface);
+    border: 1px solid var(--cxd-border);
+    border-radius: var(--cxd-radius-md);
+    opacity: 0.55;
+    transform: scale(0.92) rotateY(-8deg);
+    transition: all 260ms ease;
+  }
+
+  .coverflow-slide.is-active {
+    opacity: 1;
+    transform: scale(1.02) rotateY(0deg);
+    border-color: var(--cxd-accent);
+    box-shadow: var(--cxd-shadow-md);
+  }
+
+  .coverflow-slide h4 {
+    margin: 0.35rem 0;
+    font-size: 0.95rem;
+  }
+
+  .coverflow-slide p {
+    font-size: 0.78rem;
+    color: var(--cxd-text-secondary);
+  }
+
+  .carousel-controls-row,
+  .marquee-toolbar,
+  .peek-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .carousel-dots {
+    display: flex;
+    gap: 0.4rem;
+  }
+
+  .c-dot {
+    width: 22px;
+    height: 6px;
+    border-radius: 99px;
+    border: none;
+    background: var(--cxd-border-strong);
+    cursor: pointer;
+  }
+
+  .c-dot.is-active {
+    background: var(--cxd-accent);
+    width: 34px;
+  }
+
+  .marquee-window {
+    overflow: hidden;
+    background: var(--cxd-bg-surface);
+    border: 1px solid var(--cxd-border-strong);
+    padding: 0.85rem;
+    border-radius: var(--cxd-radius-sm);
+  }
+
+  .marquee-track {
+    display: flex;
+    gap: 0.75rem;
+    width: max-content;
+  }
+
+  .marquee-chip {
+    padding: 0.55rem 0.9rem;
+    background: var(--cxd-bg-base);
+    border: 1px solid var(--cxd-border);
+    display: flex;
+    flex-direction: column;
+    min-width: 150px;
+  }
+
+  .marquee-chip span {
+    font-family: var(--cxd-font-mono);
+    font-size: 0.66rem;
+    color: var(--cxd-text-muted);
+  }
+
+  .peek-viewport {
+    overflow: hidden;
+    width: 100%;
+  }
+
+  .peek-track {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(210px, 1fr));
+    gap: 0.85rem;
+    transition: transform 320ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .peek-card {
+    padding: 1rem;
+    background: var(--cxd-bg-surface);
+    border: 1px solid var(--cxd-border-strong);
+    border-radius: var(--cxd-radius-sm);
+  }
+
+  .peek-card h5 {
+    margin-top: 0.5rem;
+    font-size: 0.92rem;
+  }
+
+  .v-reel-shell {
+    display: grid;
+    grid-template-columns: 170px 1fr;
+    gap: 1rem;
+    align-items: stretch;
+  }
+
+  .v-reel-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .v-reel-btn {
+    padding: 0.55rem 0.75rem;
+    text-align: left;
+    font-family: var(--cxd-font-mono);
+    font-size: 0.73rem;
+    background: var(--cxd-bg-surface);
+    color: var(--cxd-text-secondary);
+    border: 1px solid var(--cxd-border);
+    cursor: pointer;
+  }
+
+  .v-reel-btn.is-active {
+    border-color: var(--cxd-accent);
+    color: var(--cxd-text-primary);
+    background: var(--cxd-bg-active);
+  }
+
+  .v-reel-window {
+    height: 118px;
+    overflow: hidden;
+    background: var(--cxd-bg-surface);
+    border: 1px solid var(--cxd-border-strong);
+    position: relative;
+  }
+
+  .v-reel-slide {
+    height: 118px;
+    padding: 1.1rem 1.25rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .split-showcase-box {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    border: 1px solid var(--cxd-border-strong);
+    background: var(--cxd-bg-surface);
+    border-radius: var(--cxd-radius-md);
+    overflow: hidden;
+  }
+
+  .split-visual-pane {
+    padding: 1.5rem;
+    background: var(--cxd-bg-elevated);
+    border-right: 1px solid var(--cxd-border);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .split-big-metric {
+    font-family: var(--cxd-font-mono);
+    font-size: 2.3rem;
+    font-weight: 800;
+    margin-top: 0.75rem;
+  }
+
+  .split-info-pane {
+    padding: 1.5rem;
+  }
+
+  .filmstrip-main {
+    padding: 1.35rem;
+    background: var(--cxd-bg-surface);
+    border: 1px solid var(--cxd-border-strong);
+    border-radius: var(--cxd-radius-sm);
+  }
+
+  .filmstrip-thumbs {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 0.5rem;
+  }
+
+  .fs-thumb {
+    padding: 0.55rem;
+    background: var(--cxd-bg-surface);
+    border: 1px solid var(--cxd-border);
+    color: var(--cxd-text-secondary);
+    font-family: var(--cxd-font-mono);
+    font-size: 0.72rem;
+    cursor: pointer;
+  }
+
+  .fs-thumb.is-active {
+    border-color: var(--cxd-accent);
+    color: var(--cxd-text-primary);
+    font-weight: 700;
+  }
+
+  .stories-shell,
+  .swipe-deck-box {
+    max-width: 520px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 1.15rem;
+    background: var(--cxd-bg-surface);
+    border: 1px solid var(--cxd-border-strong);
+    border-radius: var(--cxd-radius-md);
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+
+  .stories-bars {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+  }
+
+  .story-seg {
+    height: 4px;
+    background: var(--cxd-bg-elevated);
+    overflow: hidden;
+  }
+
+  .story-seg span {
+    display: block;
+    height: 100%;
+    background: var(--cxd-accent);
+    transition: width 260ms ease;
+  }
+
+  .swipe-card {
+    padding: 1.25rem;
+    background: var(--cxd-bg-base);
+    border: 1px solid var(--cxd-border-strong);
+    border-radius: var(--cxd-radius-sm);
+    text-align: center;
+  }
+
+  /* Acordeones, Before/After, Kanban & Pickers */
+  .acc-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+  }
+
+  .acc-item {
+    border: 1px solid var(--cxd-border-strong);
+    background: var(--cxd-bg-surface);
+    border-radius: var(--cxd-radius-sm);
+  }
+
+  .acc-trigger {
+    width: 100%;
+    padding: 0.85rem 1rem;
+    background: transparent;
+    border: none;
+    color: var(--cxd-text-primary);
+    font-weight: 600;
+    font-size: 0.86rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    text-align: left;
+  }
+
+  .acc-panel {
+    padding: 0 1rem 0.9rem;
+    border-top: 1px solid var(--cxd-border);
+  }
+
+  .ba-comparator {
+    position: relative;
+    width: 100%;
+    max-width: 580px;
+    height: 130px;
+    border: 1px solid var(--cxd-border-strong);
+    overflow: hidden;
+    background: var(--cxd-bg-surface);
+  }
+
+  .ba-layer {
+    position: absolute;
+    inset: 0;
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .ba-layer--before {
+    background: var(--cxd-bg-elevated);
+    border-right: 2px solid var(--cxd-accent);
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .ba-slider {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: ew-resize;
+  }
+
+  .kanban-board {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 0.85rem;
+    width: 100%;
+  }
+
+  .kanban-col {
+    background: var(--cxd-bg-surface);
+    border: 1px solid var(--cxd-border-strong);
+    border-radius: var(--cxd-radius-sm);
+    padding: 0.75rem;
+  }
+
+  .kanban-col__head {
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--cxd-font-mono);
+    font-size: 0.7rem;
+    color: var(--cxd-text-muted);
+    margin-bottom: 0.65rem;
+  }
+
+  .kanban-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .kanban-card {
+    padding: 0.65rem;
+    background: var(--cxd-bg-base);
+    border: 1px solid var(--cxd-border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    font-size: 0.78rem;
+  }
+
+  .pricing-cards-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    gap: 0.85rem;
+    width: 100%;
+    max-width: 640px;
+  }
+
+  .pricing-mini-card {
+    padding: 1rem;
+    background: var(--cxd-bg-surface);
+    border: 1px solid var(--cxd-border);
+    border-radius: var(--cxd-radius-sm);
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .pricing-mini-card--featured {
+    border-color: var(--cxd-accent);
+  }
+
+  .pricing-val {
+    font-family: var(--cxd-font-mono);
+    font-size: 1.5rem;
+  }
+
+  .pricing-val span {
+    font-size: 0.75rem;
+    color: var(--cxd-text-muted);
+  }
+
+  .filetree-box,
+  .transfer-box {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 0.85rem;
+    width: 100%;
+    background: var(--cxd-bg-surface);
+    border: 1px solid var(--cxd-border-strong);
+    padding: 0.9rem;
+    border-radius: var(--cxd-radius-sm);
+  }
+
+  .filetree-sidebar,
+  .transfer-items {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .ft-item,
+  .tr-item {
+    padding: 0.5rem 0.7rem;
+    background: var(--cxd-bg-base);
+    border: 1px solid var(--cxd-border);
+    color: var(--cxd-text-secondary);
+    font-family: var(--cxd-font-mono);
+    font-size: 0.72rem;
+    text-align: left;
+    cursor: pointer;
+  }
+
+  .ft-item.is-active,
+  .tr-item.is-assigned {
+    border-color: var(--cxd-accent);
+    color: var(--cxd-text-primary);
+  }
+
+  .filetree-viewer {
+    padding: 0.75rem;
+    background: var(--cxd-bg-base);
+    border: 1px solid var(--cxd-border);
+  }
+
+  .scheduler-box {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 1rem;
+    background: var(--cxd-bg-surface);
+    border: 1px solid var(--cxd-border-strong);
+    border-radius: var(--cxd-radius-sm);
+  }
+
+  .scheduler-days,
+  .scheduler-slots {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  /* ==========================================================================
+     ESTILOS PARA LOS 20 COMPONENTES ESPECIALES HÍBRIDOS (UI + ANIME.JS v4)
+     ========================================================================== */
+  .hyb-shell {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1.15rem;
+    background: var(--cxd-bg-surface);
+    border: 1px solid var(--cxd-border-strong);
+    border-radius: var(--cxd-radius-md);
+  }
+
+  .hyb-stepper-head {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+  }
+
+  .hyb-step-nodes {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 0.45rem;
+  }
+
+  .hyb-step-pill {
+    padding: 0.5rem 0.75rem;
+    background: var(--cxd-bg-base);
+    border: 1px solid var(--cxd-border);
+    color: var(--cxd-text-secondary);
+    font-family: var(--cxd-font-mono);
+    font-size: 0.72rem;
+    cursor: pointer;
+    text-align: left;
+  }
+
+  .hyb-step-pill.is-active {
+    background: var(--cxd-accent);
+    color: var(--cxd-accent-fg, #000);
+    border-color: var(--cxd-accent);
+    font-weight: 700;
+  }
+
+  .hyb-slide-card {
+    padding: 1.25rem;
+    background: var(--cxd-bg-base);
+    border: 1px solid var(--cxd-border-strong);
+    border-radius: var(--cxd-radius-sm);
+  }
+
+  .hyb-slide-card h4 {
+    margin: 0.45rem 0 0.25rem;
+    font-size: 1rem;
+  }
+
+  .hyb-chip-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    margin-top: 0.75rem;
+  }
+
+  .hyb-chip {
+    padding: 0.3rem 0.65rem;
+    background: var(--cxd-bg-elevated);
+    border: 1px solid var(--cxd-border-strong);
+    font-family: var(--cxd-font-mono);
+    font-size: 0.7rem;
+    border-radius: var(--cxd-radius-sm);
+  }
+
+  .hyb-inline-add-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+  }
+
+  .hyb-morph-grid,
+  .hyb-spring-deck-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.25rem;
+    align-items: center;
+  }
+
+  .hyb-morph-stage {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--cxd-bg-base);
+    border: 1px solid var(--cxd-border);
+    padding: 1rem;
+    color: var(--cxd-accent);
+  }
+
+  .hyb-svg-canvas {
+    width: 180px;
+    height: 110px;
+  }
+
+  .hyb-deck-stack,
+  .hyb-layers-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+
+  .hyb-deck-card {
+    padding: 0.7rem 0.95rem;
+    background: var(--cxd-bg-base);
+    border: 1px solid var(--cxd-border-strong);
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+  }
+
+  .hyb-otp-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1.25rem;
+  }
+
+  .hyb-node-matrix {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 0.45rem;
+  }
+
+  .hyb-matrix-btn {
+    padding: 0.5rem;
+    background: var(--cxd-bg-base);
+    border: 1px solid var(--cxd-border-strong);
+    color: var(--cxd-text-primary);
+    font-family: var(--cxd-font-mono);
+    font-size: 0.7rem;
+    cursor: pointer;
+  }
+
+  .hyb-console-output {
+    padding: 0.85rem 1rem;
+    background: #07080a;
+    color: #e4e4e7;
+    border: 1px solid var(--cxd-border-strong);
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    font-size: 0.75rem;
+  }
+
+  .hyb-diag-panel {
+    padding: 0.85rem;
+    background: var(--cxd-bg-base);
+    border: 1px solid var(--cxd-border);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  /* 21. Escenario Hero Relojería Anime.js v4 */
+  .hero-clockwork-stage {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+    align-items: center;
+    justify-items: center;
+    padding: 1.35rem;
+    background: var(--cxd-bg-base);
+    border: 1px solid var(--cxd-border);
+  }
+
+  .hero-dial-ring {
+    position: relative;
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    border: 1px dashed var(--cxd-border-strong);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .hero-orbit-halo {
+    position: absolute;
+    width: 170px;
+    height: 170px;
+    border-radius: 50%;
+    border: 1px solid var(--cxd-border);
+    pointer-events: none;
+  }
+
+  .hero-ray-wrap {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    pointer-events: none;
+  }
+
+  .hero-ray-bar {
+    width: 3px;
+    height: 28px;
+    background: var(--cxd-accent);
+    border-radius: 99px;
+    transform-origin: center 110px;
+  }
+
+  .hero-center-readout {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.1rem;
+    width: 102px;
+    height: 102px;
+    border-radius: 50%;
+    background: var(--cxd-bg-surface);
+    border: 1.5px solid var(--cxd-border-strong);
+    z-index: 2;
+    box-shadow: var(--cxd-shadow-sm);
+  }
+
+  .hero-side-matrix {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.65rem;
+  }
+
+  .hero-mini-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 22px);
+    grid-template-rows: repeat(6, 22px);
+    gap: 6px;
+  }
+
+  .hero-grid-dot {
+    width: 22px;
+    height: 22px;
+    background: var(--cxd-accent);
+    border-radius: 4px;
+  }
+
+  /* 22. Mapa Mundial Interactivo */
+  .world-map-stage {
+    background: var(--cxd-bg-base);
+    border: 1px solid var(--cxd-border);
+    padding: 0.75rem;
+    overflow: hidden;
+  }
+
+  .world-map-svg {
+    width: 100%;
+    height: auto;
+    max-height: 235px;
+    color: var(--cxd-accent);
+    display: block;
+  }
+
+  /* 23. Visualizador Pathfinding A* / BFS de Alta Densidad (24x10 = 240 micro-celdas) */
+  .pathfinding-grid {
+    display: grid;
+    grid-template-columns: repeat(24, minmax(0, 1fr));
+    gap: 2px;
+    background: var(--cxd-bg-base);
+    padding: 0.65rem;
+    border: 1px solid var(--cxd-border);
+  }
+
+  .pf-cell {
+    height: 21px;
+    padding: 0;
+    background: var(--cxd-bg-surface);
+    border: 1px solid var(--cxd-border);
+    color: var(--cxd-text-primary);
+    font-family: var(--cxd-font-mono);
+    font-size: 0.54rem;
+    font-weight: 800;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 2px;
+    transition: background-color 90ms ease, transform 90ms ease;
+  }
+
+  .pf-cell:hover {
+    border-color: var(--cxd-accent);
+  }
+
+  .pf-cell.is-start,
+  .pf-cell.is-end {
+    background: var(--cxd-accent);
+    color: var(--cxd-accent-fg, #000);
+    border-color: var(--cxd-accent);
+    box-shadow: 0 0 0 1px var(--cxd-accent);
+  }
+
+  .pf-cell.is-wall {
+    background: var(--cxd-text-primary);
+    border-color: var(--cxd-text-primary);
+    opacity: 0.88;
+  }
+
+  .pf-cell.is-visited {
+    background: color-mix(in srgb, var(--cxd-accent) 26%, var(--cxd-bg-surface));
+    border-color: color-mix(in srgb, var(--cxd-accent) 55%, var(--cxd-border));
+  }
+
+  .pf-cell.is-path {
+    background: var(--cxd-accent);
+    color: var(--cxd-accent-fg, #000);
+    border-color: var(--cxd-accent);
+    z-index: 1;
+  }
+
+  /* 24. Visualizador de Ordenamiento Paso a Paso (28 barras) */
+  .sorting-stage {
+    height: 195px;
+    background: var(--cxd-bg-base);
+    border: 1px solid var(--cxd-border);
+    padding: 1.1rem 0.75rem 0.55rem;
+    display: grid;
+    grid-template-columns: repeat(28, minmax(0, 1fr));
+    gap: 4px;
+    align-items: end;
+  }
+
+  .sort-col-wrap {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 0.22rem;
+  }
+
+  .sort-col-bar {
+    width: 100%;
+    background: var(--cxd-accent);
+    border-radius: 3px 3px 0 0;
+    transition: height 65ms ease, background-color 80ms ease;
+  }
+
+  .sort-col-wrap.is-comparing .sort-col-bar {
+    background: var(--cxd-warning, #f59e0b);
+    box-shadow: 0 0 8px var(--cxd-warning, #f59e0b);
+  }
+
+  .sort-col-wrap.is-pivot .sort-col-bar {
+    background: var(--cxd-danger, #ef4444);
+    box-shadow: 0 0 8px var(--cxd-danger, #ef4444);
+  }
+
+  .sort-col-wrap.is-sorted .sort-col-bar {
+    background: var(--cxd-success, #10b981);
+  }
+
+  .sort-col-num {
+    font-size: 0.56rem;
+    color: var(--cxd-text-muted);
+    line-height: 1;
+  }
+
+  /* 25. Grafo Red Neuronal con Sinapsis SVG */
+  .neural-graph-stage {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    background: var(--cxd-bg-base);
+    border: 1px solid var(--cxd-border);
+    padding: 1.25rem;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  .nn-synapse-svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    color: var(--cxd-accent);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .nn-layer {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.45rem;
+  }
+
+  .nn-lbl {
+    font-size: 0.65rem;
+    color: var(--cxd-text-muted);
+    margin-bottom: 0.25rem;
+  }
+
+  .nn-node {
+    width: 44px;
+    height: 32px;
+    border-radius: 99px;
+    background: var(--cxd-bg-surface);
+    border: 1.5px solid var(--cxd-border-strong);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--cxd-font-mono);
+    font-size: 0.7rem;
+    font-weight: 700;
+  }
+
+  .nn-node--out {
+    width: 68px;
+    border-color: var(--cxd-accent);
+  }
+
+  /* 26. Sistema Solar Animado Completo (Sol + 8 Planetas + Luna + Cinturón de Asteroides + Saturno) */
+  .solar-system-stage {
+    height: 430px;
+    background: radial-gradient(circle at center, color-mix(in srgb, var(--cxd-accent) 9%, var(--cxd-bg-base)) 0%, var(--cxd-bg-base) 72%);
+    border: 1px solid var(--cxd-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .solar-cosmos {
+    position: relative;
+    width: 410px;
+    height: 410px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .solar-orbit {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px dashed color-mix(in srgb, var(--cxd-border-strong) 75%, transparent);
+    pointer-events: none;
+  }
+
+  .solar-asteroid-belt {
+    position: absolute;
+    border-radius: 50%;
+    border: 3px dotted color-mix(in srgb, var(--cxd-text-muted) 45%, transparent);
+    pointer-events: none;
+  }
+
+  .solar-target-ring {
+    position: absolute;
+    border-radius: 50%;
+    border: 1.8px solid var(--cxd-accent);
+    box-shadow: 0 0 18px color-mix(in srgb, var(--cxd-accent) 28%, transparent);
+    pointer-events: none;
+    transition: width 320ms ease, height 320ms ease;
+  }
+
+  .solar-sun {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: #f59e0b;
+    color: #09090b;
+    border: 2px solid #fde047;
+    box-shadow: 0 0 24px rgba(245, 158, 11, 0.65);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--cxd-font-mono);
+    font-size: 0.58rem;
+    font-weight: 900;
+    z-index: 3;
+  }
+
+  .solar-carrier {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+  }
+
+  .solar-planet {
+    position: relative;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .p-mercurio { width: 7px; height: 7px; background: #a1a1aa; }
+  .p-venus { width: 10px; height: 10px; background: #fbbf24; }
+  .p-tierra { width: 12px; height: 12px; background: #38bdf8; box-shadow: 0 0 6px rgba(56, 189, 248, 0.65); }
+  .p-marte { width: 9px; height: 9px; background: #ef4444; }
+  .p-jupiter { width: 18px; height: 18px; background: #d97706; border: 1.5px solid #fcd34d; }
+  .p-saturno { width: 15px; height: 15px; background: #eab308; }
+  .p-urano { width: 12px; height: 12px; background: #22d3ee; }
+  .p-neptuno { width: 12px; height: 12px; background: #3b82f6; }
+
+  .solar-moon-orbit {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 1px dashed rgba(255, 255, 255, 0.35);
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  .solar-moon {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: #e4e4e7;
+  }
+
+  .saturn-ring {
+    position: absolute;
+    width: 28px;
+    height: 10px;
+    border-radius: 50%;
+    border: 2px solid #fde047;
+    transform: rotate(-24deg);
+    pointer-events: none;
+  }
+
+  /* 27. Ciudadela Isométrica 3D */
+  .iso-stage-viewport {
+    height: 220px;
+    background: var(--cxd-bg-base);
+    border: 1px solid var(--cxd-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    perspective: 800px;
+    overflow: hidden;
+  }
+
+  .iso-grid-plane {
+    display: grid;
+    grid-template-columns: repeat(4, 44px);
+    grid-template-rows: repeat(4, 44px);
+    gap: 10px;
+    transform: rotateX(52deg) rotateZ(-42deg);
+    transform-style: preserve-3d;
+  }
+
+  .iso-tower {
+    background: var(--cxd-accent);
+    color: var(--cxd-accent-fg, #000);
+    border: 1px solid var(--cxd-border-strong);
+    font-family: var(--cxd-font-mono);
+    font-size: 0.65rem;
+    font-weight: 800;
+    cursor: pointer;
+    box-shadow: -6px 6px 0 var(--cxd-border-strong);
+  }
+
+  /* 28. Analizador de Espectro 28 Bandas + Osciloscopio */
+  .spectrum-analyzer-box {
+    position: relative;
+    height: 145px;
+    background: var(--cxd-bg-base);
+    border: 1px solid var(--cxd-border);
+    padding: 0.85rem;
+    display: grid;
+    grid-template-columns: repeat(28, 1fr);
+    gap: 4px;
+    align-items: end;
+    overflow: hidden;
+  }
+
+  .spectrum-wave-svg {
+    position: absolute;
+    top: 8px;
+    left: 0;
+    width: 100%;
+    height: 55px;
+    color: var(--cxd-accent);
+    opacity: 0.55;
+    pointer-events: none;
+  }
+
+  .spec-bar {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    background: var(--cxd-accent);
+    border-radius: 2px 2px 0 0;
+  }
+
+  /* 29. Diagrama Interactivo de Grafo Git Multirama */
+  .git-diagram-stage {
+    background: var(--cxd-bg-base);
+    border: 1px solid var(--cxd-border);
+    padding: 0.85rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+    overflow-x: auto;
+  }
+
+  .git-diagram-svg {
+    width: 100%;
+    min-width: 680px;
+    height: auto;
+    max-height: 235px;
+    color: var(--cxd-accent);
+    display: block;
+  }
+
+  .git-svg-node {
+    cursor: pointer;
+  }
+
+  .git-svg-node circle {
+    fill: var(--cxd-bg-surface);
+    stroke: var(--cxd-accent);
+    stroke-width: 3px;
+    transition: r 140ms ease, fill 140ms ease;
+  }
+
+  .git-svg-node:hover circle,
+  .git-svg-node.is-head circle {
+    fill: var(--cxd-accent);
+  }
+
+  .git-sha-txt {
+    font-family: var(--cxd-font-mono);
+    font-size: 9.5px;
+    font-weight: 700;
+    fill: var(--cxd-text-secondary);
+  }
+
+  .git-tag-pill {
+    fill: var(--cxd-accent);
+  }
+
+  .git-tag-txt {
+    font-family: var(--cxd-font-mono);
+    font-size: 8.5px;
+    font-weight: 800;
+    fill: var(--cxd-accent-fg, #000);
+  }
+
+  .git-inspector-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding: 0.55rem 0.8rem;
+    background: var(--cxd-bg-surface);
+    border: 1px solid var(--cxd-border-strong);
+    border-radius: var(--cxd-radius-sm);
+    font-size: 0.72rem;
+  }
+
+  .git-inspector-bar strong {
+    color: var(--cxd-accent);
+  }
+
+  /* 30. Radar Sonar Táctico 360 */
+  .radar-sonar-stage {
+    height: 210px;
+    background: var(--cxd-bg-base);
+    border: 1px solid var(--cxd-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .radar-circle {
+    position: relative;
+    width: 176px;
+    height: 176px;
+    border-radius: 50%;
+    border: 2px solid var(--cxd-accent);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .radar-ring {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px dashed var(--cxd-border-strong);
+  }
+
+  .radar-ring.r-1 { width: 116px; height: 116px; }
+  .radar-ring.r-2 { width: 58px; height: 58px; }
+
+  .radar-cross-h { position: absolute; width: 100%; height: 1px; background: var(--cxd-border-strong); }
+  .radar-cross-v { position: absolute; height: 100%; width: 1px; background: var(--cxd-border-strong); }
+
+  .radar-sweep {
+    position: absolute;
+    width: 50%;
+    height: 50%;
+    top: 0;
+    left: 50%;
+    transform-origin: bottom left;
+    background: linear-gradient(45deg, var(--cxd-accent) 0%, transparent 70%);
+    opacity: 0.45;
+  }
+
+  .radar-blip {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--cxd-accent);
+    box-shadow: 0 0 0 4px var(--cxd-bg-active);
+  }
+</style>

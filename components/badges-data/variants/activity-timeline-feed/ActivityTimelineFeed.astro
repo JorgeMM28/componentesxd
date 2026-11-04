@@ -1,0 +1,32 @@
+---
+/**
+ * ============================================================================
+ * COMPONENTESXD — 02. Vertical Deployment & Event Timeline (ASTRO 5)
+ * Archivo: components/badges-data/variants/activity-timeline-feed/ActivityTimelineFeed.astro
+ * ============================================================================
+ */
+import './styles.css';
+
+interface Props {
+  title?: string;
+  badge?: string;
+  interfaceTheme?: string;
+}
+
+const {
+  title = '02. Vertical Deployment & Event Timeline',
+  badge = 'TIMELINE FEED',
+  interfaceTheme
+} = Astro.props;
+---
+
+<section class="cxd-badges-data-activity-timeline-feed" data-theme={interfaceTheme} data-variant="activity-timeline-feed">
+  <header class="cxd-badges-data-activity-timeline-feed__header">
+    <span>{title}</span>
+    <span class="cxd-badge">{badge}</span>
+  </header>
+  <div class="cxd-badges-data-activity-timeline-feed__body">
+    <p>Línea de tiempo técnica con nodos vectoriales conectados, autor, timestamp relativo y metadatos.</p>
+    <slot />
+  </div>
+</section>

@@ -1,0 +1,32 @@
+---
+/**
+ * ============================================================================
+ * COMPONENTESXD — 05. Technical Documentation Scrollspy Rail (ASTRO 5)
+ * Archivo: components/navigation/variants/scrollspy-toc-rail/ScrollspyTocRail.astro
+ * ============================================================================
+ */
+import './styles.css';
+
+interface Props {
+  title?: string;
+  badge?: string;
+  interfaceTheme?: string;
+}
+
+const {
+  title = '05. Technical Documentation Scrollspy Rail',
+  badge = 'TOC RAIL',
+  interfaceTheme
+} = Astro.props;
+---
+
+<section class="cxd-navigation-scrollspy-toc-rail" data-theme={interfaceTheme} data-variant="scrollspy-toc-rail">
+  <header class="cxd-navigation-scrollspy-toc-rail__header">
+    <span>{title}</span>
+    <span class="cxd-badge">{badge}</span>
+  </header>
+  <div class="cxd-navigation-scrollspy-toc-rail__body">
+    <p>Índice lateral para documentación técnica que resalta la sección visible actual y muestra porcentaje leído.</p>
+    <slot />
+  </div>
+</section>

@@ -1,0 +1,106 @@
+---
+/**
+ * ============================================================================
+ * COMPONENTESXD — DATA TABLE PRO (ASTRO COMPONENT)
+ * Archivo: components/tables/astro/DataTable.astro
+ * ============================================================================
+ */
+import '../css-scss/table.css';
+
+interface RowItem {
+  id: string;
+  name: string;
+  code: string;
+  role: string;
+  status: 'active' | 'pending' | 'failed';
+  load: number;
+  latency: string;
+}
+
+interface Props {
+  rows?: RowItem[];
+  theme?: 'obsidian' | 'brutalist' | 'swiss' | 'cyber';
+  id?: string;
+}
+
+const defaultRows: RowItem[] = [
+  { id: '1', name: 'Edge Gateway US-East', code: 'gw-iad-01', role: 'Ingress Proxy', status: 'active', load: 42, latency: '11.4ms' },
+  { id: '2', name: 'Neural Inference Pool', code: 'gpu-ord-08', role: 'Tensor Worker', status: 'active', load: 88, latency: '24.1ms' },
+  { id: '3', name: 'Realtime Event Bus', code: 'kafka-fra-03', role: 'Stream Broker', status: 'pending', load: 67, latency: '39.0ms' },
+  { id: '4', name: 'Cold Archive Replica', code: 's3-tok-12', role: 'Storage Node', status: 'failed', load: 14, latency: '182.5ms' }
+];
+
+const { rows = defaultRows, theme = 'obsidian', id = 'cxd-astro-table' } = Astro.props;
+---
+
+<div class="cxd-table-shell" id={id} data-theme={theme}>
+  <div class="cxd-table-toolbar">
+    <div class="cxd-table-search">
+      <input type="search" data-table-search placeholder="Filtrar nodos, ID o rol..." />
+    </div>
+    <div class="cxd-table-filter-group">
+      <button type="button" class="cxd-table-filter-btn is-active" data-table-filter="all">Todos</button>
+      <button type="button" class="cxd-table-filter-btn" data-table-filter="active">Active</button>
+      <button type="button" class="cxd-table-filter-btn" data-table-filter="pending">Pending</button>
+      <button type="button" class="cxd-table-filter-btn" data-table-filter="failed">Failed</button>
+    </div>
+  </div>
+
+  <div class="cxd-table-scroll">
+    <table class="cxd-table">
+      <thead>
+        <tr>
+          <th style="width: 40px"><input type="checkbox" data-select-all /></th>
+          <th class="is-sortable" data-sort-key="name">Nodo / Servicio ↕</th>
+          <th>Rol de Cluster</th>
+          <th class="is-sortable" data-sort-key="status">Estado ↕</th>
+          <th class="is-sortable" data-sort-key="load">Carga CPU ↕</th>
+          <th>Latencia</th>
+        </tr>
+      </thead>
+      <tbody>
+        {rows.map((row) => (
+          <tr
+            data-row-id={row.id}
+            data-name={row.name}
+            data-status={row.status}
+            data-load={row.load}
+          >
+            <td><input type="checkbox" /></td>
+            <td>
+              <div class="cxd-entity-cell">
+                <div class="cxd-entity-avatar">{row.name.slice(0, 2).toUpperCase()}</div>
+                <div class="cxd-entity-meta">
+                  <span class="cxd-entity-name">{row.name}</span>
+                  <span class="cxd-entity-sub">{row.code}</span>
+                </div>
+              </div>
+            </td>
+            <td>{row.role}</td>
+            <td>
+              <span class={`cxd-badge cxd-badge--${row.status}`}>
+                <span class="cxd-badge-dot"></span>
+                {row.status}
+              </span>
+            </td>
+            <td>
+              <div class="cxd-telemetry-cell">
+                <div class="cxd-telemetry-bar">
+                  <div class="cxd-telemetry-fill" style={`width: ${row.load}%`}></div>
+                </div>
+                <span class="cxd-telemetry-val">{row.load}%</span>
+              </div>
+            </td>
+            <td style="font-family: var(--cxd-font-mono)">{row.latency}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="cxd-table-footer">
+    <span data-table-count>{rows.length} de {rows.length} registros</span>
+    <span>Click en cabeceras para ordenar</span>
+  </div>
+</div>
+

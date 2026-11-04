@@ -1,0 +1,32 @@
+---
+/**
+ * ============================================================================
+ * COMPONENTESXD — 06. Expandable Postmortem & Diagnostics Card (ASTRO 5)
+ * Archivo: components/cards/variants/expandable-incident-card/ExpandableIncidentCard.astro
+ * ============================================================================
+ */
+import './styles.css';
+
+interface Props {
+  title?: string;
+  badge?: string;
+  interfaceTheme?: string;
+}
+
+const {
+  title = '06. Expandable Postmortem & Diagnostics Card',
+  badge = 'ACCORDION CARD',
+  interfaceTheme
+} = Astro.props;
+---
+
+<section class="cxd-cards-expandable-incident-card" data-theme={interfaceTheme} data-variant="expandable-incident-card">
+  <header class="cxd-cards-expandable-incident-card__header">
+    <span>{title}</span>
+    <span class="cxd-badge">{badge}</span>
+  </header>
+  <div class="cxd-cards-expandable-incident-card__body">
+    <p>Resumen compacto que despliega detalles técnicos de diagnóstico, nodos afectados y cronología.</p>
+    <slot />
+  </div>
+</section>
