@@ -3,9 +3,5 @@ namespace App\Livewire;
 use Livewire\Component;
 // Incluye styles.css y ajusta la ruta del módulo.
 class ProductComparatorWire extends Component { public function render(): string { return <<<'HTML'
-<div class="cxd-special" data-cxd-control="product-comparator" wire:ignore><h3>Comparador de productos</h3><div class="cxd-special__scene" data-scene><small data-phase>LISTO</small><strong data-value>0 / 3</strong><p data-copy>Demostración autónoma: ejecuta la acción para actualizar el escenario.</p><div class="cxd-special__progress"><span data-progress></span></div></div><div class="cxd-special__actions"><button type="button" data-run>Comparar selección</button><button type="button" data-reset>Reiniciar</button></div><span role="status">Selección restaurada</span>@script
-<script>
-import('/assets/product-comparator.js').then(module => module.mountProductComparator($wire.$el));
-</script>
-@endscript</div>
+<section class="cxd-special cxd-special--board" data-cxd-control="product-comparator" wire:ignore><header><small>COMPARADOR DE PRODUCTOS</small><h3>Comparador de productos</h3></header><p data-copy>Selección restaurada</p><div class="cxd-special__scene" data-scene data-shape="board"><div class="cxd-special__actions" data-items><button type="button" data-item="0" aria-pressed="true">Starter</button><button type="button" data-item="1" aria-pressed="false">Studio</button><button type="button" data-item="2" aria-pressed="false">Enterprise</button></div><strong data-output>Starter</strong></div><div class="cxd-special__actions"><button type="button" data-primary>Comparar selección</button><button type="button" data-reset>Restaurar</button></div><span role="status">Selección restaurada</span></section>
 HTML; } }

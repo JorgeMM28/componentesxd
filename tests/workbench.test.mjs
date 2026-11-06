@@ -54,6 +54,27 @@ test('el catálogo declara alternativas de movimiento reducido en las vistas y a
   assert.match(laboratory, /Movimiento reducido activo/);
 });
 
+test('los especiales no reutilizan el contador genérico y las 20 vistas nuevas tienen composición propia', () => {
+  const source = readFileSync('scripts/special-code.mjs', 'utf8');
+  const registry = JSON.parse(readFileSync('src/data/vaultRegistry.json', 'utf8'));
+  const special = registry.componentCategories.find(category => category.slug === 'special-hybrids').variants;
+  assert.doesNotMatch(source, /operationalSpecials|Demostración autónoma|count\+' \/ 3'/);
+  for (const variant of special.slice(7)) {
+    const vanilla = variant.files['vanilla-js'].code;
+    assert.doesNotMatch(vanilla, /Demostración autónoma|0 \/ 3/);
+  }
+  for (const id of ['agenda','flow','query','server','mail','media','inventory','orders','seats','events','permissions','survey','downloads','products','expenses','charts','files','deploy','queue','goals']) {
+    assert.match(preview, new RegExp(`hybrid-new-${id}`));
+  }
+});
+
+test('el hub de laboratorio expone cuatro módulos independientes y código copiable', () => {
+  for (const id of ['lab-text', 'surface-output', 'motion-output', 'layout-output', 'surface-copy', 'motion-copy', 'layout-copy']) assert.match(laboratory, new RegExp(id));
+  assert.match(laboratory, /motion-pause/);
+  assert.match(laboratory, /motion-reverse/);
+  assert.match(laboratory, /motion-reset/);
+});
+
 test('el botón moderno Vanilla actualiza selección, estado y permite desmontar', async () => {
   const { mountModernRoundedPills } = await import('../components/buttons/variants/modern-rounded-pills/modern-rounded-pills.js');
   const buttons = ['Despliegue Iniciado', 'Modo Previsualización Activo', 'Sincronizado con Éxito'].map(message => ({ dataset: { message }, pressed: '', setAttribute(_, value) { this.pressed = value; } }));

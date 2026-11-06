@@ -2,7 +2,7 @@
 declare(strict_types=1);
 // Incluye styles.css y ajusta la ruta del módulo.
 function renderDownloadsCenter(): string { return <<<'HTML'
-<div class="cxd-special" data-cxd-control="downloads-center"><h3>Centro de descargas</h3><div class="cxd-special__scene" data-scene><small data-phase>LISTO</small><strong data-value>0 / 3</strong><p data-copy>Demostración autónoma: ejecuta la acción para actualizar el escenario.</p><div class="cxd-special__progress"><span data-progress></span></div></div><div class="cxd-special__actions"><button type="button" data-run>Iniciar descarga</button><button type="button" data-reset>Reiniciar</button></div><span role="status">Descargas restauradas</span></div>
+<section class="cxd-special cxd-special--telemetry" data-cxd-control="downloads-center"><header><small>CENTRO DE DESCARGAS</small><h3>Centro de descargas</h3></header><p data-copy>Descargas restauradas</p><div class="cxd-special__scene" data-scene data-shape="telemetry"><div class="cxd-special__actions" data-items><button type="button" data-item="0" aria-pressed="true">kit-ui.zip</button><button type="button" data-item="1" aria-pressed="false">assets.mov</button><button type="button" data-item="2" aria-pressed="false">design.pdf</button></div><strong data-output>kit-ui.zip</strong></div><div class="cxd-special__actions"><button type="button" data-primary>Iniciar descarga</button><button type="button" data-reset>Restaurar</button></div><span role="status">Descargas restauradas</span></section>
 <script type="module">
 import { mountDownloadsCenter } from '/assets/downloads-center.js';
 document.querySelectorAll('[data-cxd-control="downloads-center"]:not([data-ready])').forEach(root => { root.dataset.ready = 'true'; mountDownloadsCenter(root); });

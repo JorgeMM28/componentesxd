@@ -1,7 +1,7 @@
 ---
 import './styles.css';
 ---
-<div class="cxd-special" data-cxd-control="mail-inbox"><h3>Bandeja de correo</h3><div class="cxd-special__scene" data-scene><small data-phase>LISTO</small><strong data-value>0 / 3</strong><p data-copy>Demostración autónoma: ejecuta la acción para actualizar el escenario.</p><div class="cxd-special__progress"><span data-progress></span></div></div><div class="cxd-special__actions"><button type="button" data-run>Archivar mensaje</button><button type="button" data-reset>Reiniciar</button></div><span role="status">Bandeja restaurada</span></div>
+<section class="cxd-special cxd-special--telemetry" data-cxd-control="mail-inbox"><header><small>BANDEJA DE CORREO</small><h3>Bandeja de correo</h3></header><p data-copy>Bandeja restaurada</p><div class="cxd-special__scene" data-scene data-shape="telemetry"><div class="cxd-special__actions" data-items><button type="button" data-item="0" aria-pressed="true">Propuesta</button><button type="button" data-item="1" aria-pressed="false">Informe</button><button type="button" data-item="2" aria-pressed="false">Invitación</button></div><strong data-output>Propuesta</strong></div><div class="cxd-special__actions"><button type="button" data-primary>Archivar mensaje</button><button type="button" data-reset>Restaurar</button></div><span role="status">Bandeja restaurada</span></section>
 <script>
 import { mountMailInbox } from './mail-inbox.js';
 document.querySelectorAll('[data-cxd-control="mail-inbox"]:not([data-ready])').forEach(root => { root.dataset.ready = 'true'; mountMailInbox(root); });

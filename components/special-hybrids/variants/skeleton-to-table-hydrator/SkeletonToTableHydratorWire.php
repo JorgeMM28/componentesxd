@@ -3,9 +3,5 @@ namespace App\Livewire;
 use Livewire\Component;
 // Incluye styles.css y ajusta la ruta del módulo.
 class SkeletonToTableHydratorWire extends Component { public function render(): string { return <<<'HTML'
-<div class="cxd-special" data-cxd-control="skeleton-to-table-hydrator" wire:ignore><h3>Hidratador de datos</h3><div class="cxd-special__scene" data-scene><small data-phase>LISTO</small><strong data-value>0 / 3</strong><p data-copy>Demostración autónoma: ejecuta la acción para actualizar el escenario.</p><div class="cxd-special__progress"><span data-progress></span></div></div><div class="cxd-special__actions"><button type="button" data-run>Hidratar tabla</button><button type="button" data-reset>Reiniciar</button></div><span role="status">Skeleton restaurado</span>@script
-<script>
-import('/assets/skeleton-to-table-hydrator.js').then(module => module.mountSkeletonToTableHydrator($wire.$el));
-</script>
-@endscript</div>
+<section class="cxd-special cxd-special--board" data-cxd-control="skeleton-to-table-hydrator" wire:ignore><header><small>HIDRATADOR DE DATOS</small><h3>Hidratador de datos</h3></header><p data-copy>Skeleton restaurado</p><div class="cxd-special__scene" data-scene data-shape="board"><div class="cxd-special__actions" data-items><button type="button" data-item="0" aria-pressed="true">nodo-alfa</button><button type="button" data-item="1" aria-pressed="false">nodo-beta</button><button type="button" data-item="2" aria-pressed="false">nodo-gamma</button></div><strong data-output>nodo-alfa</strong></div><div class="cxd-special__actions"><button type="button" data-primary>Hidratar tabla</button><button type="button" data-reset>Restaurar</button></div><span role="status">Skeleton restaurado</span></section>
 HTML; } }

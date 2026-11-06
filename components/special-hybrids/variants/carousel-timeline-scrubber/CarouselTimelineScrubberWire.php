@@ -3,9 +3,5 @@ namespace App\Livewire;
 use Livewire\Component;
 // Incluye styles.css y ajusta la ruta del módulo.
 class CarouselTimelineScrubberWire extends Component { public function render(): string { return <<<'HTML'
-<div class="cxd-special" data-cxd-control="carousel-timeline-scrubber" wire:ignore><h3>Línea de tiempo</h3><div class="cxd-special__scene" data-scene><small data-phase>LISTO</small><strong data-value>0 / 3</strong><p data-copy>Demostración autónoma: ejecuta la acción para actualizar el escenario.</p><div class="cxd-special__progress"><span data-progress></span></div></div><div class="cxd-special__actions"><button type="button" data-run>Avanzar escena</button><button type="button" data-reset>Reiniciar</button></div><span role="status">Escena inicial</span>@script
-<script>
-import('/assets/carousel-timeline-scrubber.js').then(module => module.mountCarouselTimelineScrubber($wire.$el));
-</script>
-@endscript</div>
+<section class="cxd-special cxd-special--stages" data-cxd-control="carousel-timeline-scrubber" wire:ignore><header><small>LÍNEA DE TIEMPO</small><h3>Línea de tiempo</h3></header><p data-copy>Escena inicial</p><div class="cxd-special__scene" data-scene data-shape="stages"><div class="cxd-special__actions" data-items><button type="button" data-item="0" aria-pressed="true">Geist</button><button type="button" data-item="1" aria-pressed="false">Swiss</button><button type="button" data-item="2" aria-pressed="false">Industrial</button></div><strong data-output>Geist</strong></div><div class="cxd-special__actions"><button type="button" data-primary>Avanzar escena</button><button type="button" data-reset>Restaurar</button></div><span role="status">Escena inicial</span></section>
 HTML; } }

@@ -41,11 +41,9 @@ const specs = {
  }
 
 };
-// Los estudios complejos comparten un pequeño chasis accesible, pero cada uno
-// declara una acción concreta. De este modo todos los adaptadores exportados
-// tienen montaje, reinicio y limpieza reales en vez de la plantilla "Alternar
-// estado" que usaba el generador general.
-const operationalSpecials = [
+// Estudios con composición propia. Cada exportación conserva sus datos y su
+// interacción real, sin el contador compartido que antes homogeneizaba 08–50.
+const scenarioRows = [
   ['toast-timeline-dispatcher','ToastTimelineDispatcher','Despachador de alertas','Despachar alerta','Alerta entregada','La cola está vacía'],
   ['kanban-spring-pipeline','KanbanSpringPipeline','Pipeline de entrega','Promover tarea','Tarea promovida','Backlog restaurado'],
   ['form-otp-svg-vault','FormOtpSvgVault','Bóveda OTP','Validar código','Código validado','Esperando código'],
@@ -91,12 +89,39 @@ const operationalSpecials = [
   ['goals-board','GoalsBoard','Tablero de objetivos','Completar hito','Hito completado','Objetivos restaurados']
 ];
 
-for (const [id, name, title, action, complete, reset] of operationalSpecials) {
-  specs[id] = {
+const shapes = ['board', 'stages', 'config', 'telemetry'];
+const labels = {
+  board: ['Seleccionar tarjeta', 'Selección actualizada'],
+  stages: ['Avanzar flujo', 'Etapa actualizada'],
+  config: ['Aplicar configuración', 'Configuración aplicada'],
+  telemetry: ['Actualizar lectura', 'Lectura actualizada']
+};
+const scenarioItems = {
+ 'toast-timeline-dispatcher':['Sincronización','Respaldo','Alerta'], 'kanban-spring-pipeline':['Tokens','Tablas','Deploy'], 'form-otp-svg-vault':['Código 9248','Escudo','Acceso'], 'card-3d-exploded-inspector':['Tokens','Componente','Motor'], 'skeleton-to-table-hydrator':['nodo-alfa','nodo-beta','nodo-gamma'], 'carousel-timeline-scrubber':['Geist','Swiss','Industrial'], 'search-grid-2d-ripple':['N-1','N-2','N-3'], 'modal-command-choreography':['Deploy','Auditoría','Rollback'], 'pricing-slider-odometer':['Starter','Pro','Enterprise'], 'docker-live-deploy-topology':['Traefik','Astro SSR','Postgres'], 'accordion-animated-metrics':['Salud','Caché','Seguridad'], 'dual-transfer-stagger-sync':['WAF','Brotli','HTTP/3'], 'chrono-sla-incident-table':['INC-904','INC-905','INC-906'], 'anime-hero-clockwork':['Relojería','Explosión','Vórtice'], 'interactive-world-telemetry-map':['San Francisco','Frankfurt','Tokyo'], 'pathfinding-dijkstra-visualizer':['Inicio','Ruta','Salida'], 'sorting-algorithm-symphony':['QuickSort','BubbleSort','Insertion'], 'neural-network-graph-propagator':['Input','Hidden','Softmax'], 'orbital-solar-gravity-sim':['Tierra','Júpiter','Saturno'], 'isometric-3d-city-cluster':['Nodo 01','Nodo 08','Nodo 16'], 'audio-synth-spectrum-analyzer':['Cyberpunk','Sub-Bass','Harmonics'], 'git-branch-commit-visualizer':['main','develop','feat/anime'], 'cyber-radar-threat-sonar':['Contacto A','Contacto B','Contacto C'],
+ 'agenda-reservations':['09:00','10:30','16:00'], 'flow-editor':['Formulario','Validar','Notificar'], 'query-builder':['estado = activo','región = MX','plan = pro'], 'server-monitor':['api-01','worker-02','db-primary'], 'mail-inbox':['Propuesta','Informe','Invitación'], 'media-player':['Reproducir','Retroceder','Detener'], 'inventory-board':['Cables USB-C','Adaptadores','Soportes'], 'order-tracker':['Pagado','Preparación','En ruta'], 'seat-map':['A1','A2','B2'], 'event-calendar':['Demo 12','Sync 16','Launch 23'], 'permissions-panel':['Editar','Publicar','Administrar'], 'survey-builder':['Búsqueda','Velocidad','Documentación'], 'downloads-center':['kit-ui.zip','assets.mov','design.pdf'], 'product-comparator':['Starter','Studio','Enterprise'], 'expense-monitor':['Infraestructura','Marketing','Operación'], 'chart-editor':['Columnas','Líneas','Área'], 'file-explorer':['src','components','README.md'], 'deploy-console':['build','test','publish'], 'queue-simulator':['exportar-reporte','indexar-búsqueda','enviar-resumen'], 'goals-board':['Documentación','Onboarding','Accesibilidad']
+};
+function escapeHtml(value) { return value.replace(/[&<>]/g, char => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;' }[char])); }
+function makeScenarioSpec(id, name, title, action, complete, reset, index) {
+  const shape = shapes[index % shapes.length];
+  const [primary, updated] = labels[shape];
+  const items = scenarioItems[id] || (shape === 'board'
+    ? ['Pendiente', 'En revisión', 'Listo']
+    : shape === 'stages'
+      ? ['Entrada', 'Proceso', 'Entrega']
+      : shape === 'config'
+        ? ['Base', 'Optimizado', 'Intensivo']
+        : ['CPU 42%', 'Memoria 61%', 'Red 18 ms']);
+  const itemMarkup = items.map((item, position) => `<button type="button" data-item="${position}" aria-pressed="${position === 0}">${escapeHtml(item)}</button>`).join('');
+  const className = `cxd-special--${shape}`;
+  return {
     name, mount: `mount${name}`, imports,
-    markup: `<div class="cxd-special" data-cxd-control><h3>${title}</h3><div class="cxd-special__scene" data-scene><small data-phase>LISTO</small><strong data-value>0 / 3</strong><p data-copy>Demostración autónoma: ejecuta la acción para actualizar el escenario.</p><div class="cxd-special__progress"><span data-progress></span></div></div><div class="cxd-special__actions"><button type="button" data-run>${action}</button><button type="button" data-reset>Reiniciar</button></div><span role="status">${reset}</span></div>`,
-    body: `${animation}let count=0;const scene=root.querySelector('[data-scene]');const value=root.querySelector('[data-value]');const progress=root.querySelector('[data-progress]');const status=root.querySelector('[role="status"]');const render=(message)=>{value.textContent=count+' / 3';progress.style.setProperty('--progress',(count/3*100)+'%');root.querySelector('[data-phase]').textContent=count===3?'COMPLETO':'EN CURSO';status.textContent=message;run(scene.children,{opacity:[0,1],y:[16,0],delay:stagger(55),duration:380,ease:'outCubic'});};root.querySelector('[data-run]').addEventListener('click',()=>{count=count===3?1:count+1;render(count===3?'${complete}': '${action}: paso '+count+' de 3');},{signal});root.querySelector('[data-reset]').addEventListener('click',()=>{count=0;render('${reset}');},{signal});render('${reset}');`
+    markup: `<section class="cxd-special ${className}" data-cxd-control><header><small>${escapeHtml(title.toUpperCase())}</small><h3>${escapeHtml(title)}</h3></header><p data-copy>${escapeHtml(reset)}</p><div class="cxd-special__scene" data-scene data-shape="${shape}"><div class="cxd-special__actions" data-items>${itemMarkup}</div><strong data-output>${escapeHtml(items[0])}</strong></div><div class="cxd-special__actions"><button type="button" data-primary>${escapeHtml(action || primary)}</button><button type="button" data-reset>Restaurar</button></div><span role="status">${escapeHtml(reset)}</span></section>`,
+    body: `${animation}const options=Array.from(root.querySelectorAll('[data-item]'));const output=root.querySelector('[data-output]');const copy=root.querySelector('[data-copy]');const status=root.querySelector('[role="status"]');const scene=root.querySelector('[data-scene]');let selected=0;const render=(message)=>{options.forEach((option,index)=>option.setAttribute('aria-pressed',String(index===selected)));output.textContent=options[selected].textContent;copy.textContent=message;status.textContent=message;run(scene.children,{opacity:[0,1],y:[12,0],delay:stagger(45),duration:360,ease:'outCubic'});};options.forEach((option,index)=>option.addEventListener('click',()=>{selected=index;render('${updated}: '+option.textContent);},{signal}));root.querySelector('[data-primary]').addEventListener('click',()=>{selected=(selected+1)%options.length;render('${complete}: '+options[selected].textContent);},{signal});root.querySelector('[data-reset]').addEventListener('click',()=>{selected=0;render('${reset}');},{signal});render('${reset}');`
   };
 }
+
+scenarioRows.forEach(([id, name, title, action, complete, reset], index) => {
+  specs[id] = makeScenarioSpec(id, name, title, action, complete, reset, index);
+});
 export function specialCode(id,fw){return buildInteractiveAdapters(id,fw,specs[id],css);}
 export const specialIds = Object.keys(specs);
