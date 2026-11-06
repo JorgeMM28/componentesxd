@@ -1,4 +1,0 @@
-import { useEffect, useRef } from 'react';
-import { mountGoalsBoard } from './goals-board.js';
-import './styles.css';
-export function GoalsBoard() { const root = useRef<HTMLDivElement>(null); useEffect(() => root.current ? mountGoalsBoard(root.current) : undefined, []); return <section className="cxd-special cxd-goals" data-cxd-control="goals-board" ref={root}><header><small>OBJETIVOS · Q4</small><h3>Tablero de hitos</h3></header><div data-goals><label><input type="checkbox" defaultChecked /> Documentación</label><label><input type="checkbox" /> Onboarding</label><label><input type="checkbox" defaultChecked /> Accesibilidad</label></div><progress max="3" value="2" data-goal-progress></progress><footer><strong data-goal-count>2 / 3 completados</strong><button type="button" data-complete>Completar siguiente</button></footer><span role="status"></span></section>; }

@@ -1,4 +1,0 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
-import { mountOrderTracker } from './order-tracker.js';
-@Component({ selector:'cxd-order-tracker', standalone:true, styleUrls:['./styles.css'], template:`<section class="cxd-special cxd-order" data-cxd-control="order-tracker" #root><header><small>PEDIDO #CX-2048</small><h3 data-order-title>Preparación</h3></header><ol data-stages><li>Pagado</li><li>Preparación</li><li>En ruta</li><li>Entregado</li></ol><div class="cxd-special__actions"><button type="button" data-next>Avanzar pedido</button><button type="button" data-reset>Reiniciar</button></div><span role="status"></span></section>` })
-export class OrderTrackerComponent implements AfterViewInit, OnDestroy { @ViewChild('root') root!: ElementRef<HTMLElement>; private unmount?: () => void; ngAfterViewInit() { this.unmount = mountOrderTracker(this.root.nativeElement); } ngOnDestroy() { this.unmount?.(); } }

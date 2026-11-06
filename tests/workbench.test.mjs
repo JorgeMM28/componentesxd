@@ -54,7 +54,7 @@ test('el catálogo declara alternativas de movimiento reducido en las vistas y a
   assert.match(laboratory, /Movimiento reducido activo/);
 });
 
-test('los especiales no reutilizan el contador genérico y las 20 vistas nuevas tienen composición propia', () => {
+test('los especiales curados no reutilizan el contador genérico', () => {
   const source = readFileSync('scripts/special-code.mjs', 'utf8');
   const registry = JSON.parse(readFileSync('src/data/vaultRegistry.json', 'utf8'));
   const special = registry.componentCategories.find(category => category.slug === 'special-hybrids').variants;
@@ -62,9 +62,6 @@ test('los especiales no reutilizan el contador genérico y las 20 vistas nuevas 
   for (const variant of special.slice(7)) {
     const vanilla = variant.files['vanilla-js'].code;
     assert.doesNotMatch(vanilla, /Demostración autónoma|0 \/ 3/);
-  }
-  for (const id of ['agenda','flow','query','server','mail','media','inventory','orders','seats','events','permissions','survey','downloads','products','expenses','charts','files','deploy','queue','goals']) {
-    assert.match(preview, new RegExp(`hybrid-new-${id}`));
   }
 });
 
@@ -271,7 +268,7 @@ test('los especiales implementados se regeneran y sus adaptadores se analizan', 
   const { transform } = await import('@astrojs/compiler');
   const registry = JSON.parse(readFileSync('src/data/vaultRegistry.json', 'utf8'));
   const variants = registry.componentCategories.find(category => category.slug === 'special-hybrids').variants.filter(variant => specialIds.includes(variant.id));
-  assert.equal(specialIds.length, 50);
+  assert.equal(specialIds.length, 30);
   assert.equal(variants.length, specialIds.length);
   for (const variant of variants) {
     assert.equal(Object.keys(variant.files).length, 10, `${variant.id} debe exponer diez adaptadores`);
@@ -286,12 +283,11 @@ test('los especiales implementados se regeneran y sus adaptadores se analizan', 
   }
 });
 
-test('las variantes especiales 31 a 50 exportan herramientas con estructuras propias', () => {
+test('el catálogo curado conserva únicamente los treinta especiales complejos', () => {
   const registry = JSON.parse(readFileSync('src/data/vaultRegistry.json', 'utf8'));
-  const special = registry.componentCategories.find(category => category.slug === 'special-hybrids').variants.slice(30);
-  const signatures = ['data-slots', 'data-flow', 'data-filters', 'data-metrics', 'data-mail-list', 'data-progress', 'data-stock', 'data-stages', 'data-seat-grid', 'data-days', 'data-permissions', 'data-questions', 'data-downloads', 'data-plans', 'data-expenses', 'data-chart', 'data-tree', 'data-log', 'data-queue', 'data-goals'];
-  assert.equal(special.length, signatures.length);
-  special.forEach((variant, index) => assert.match(variant.files['vanilla-js'].code, new RegExp(signatures[index])));
+  const special = registry.componentCategories.find(category => category.slug === 'special-hybrids').variants;
+  assert.equal(special.length, 30);
+  assert.deepEqual(special.map(variant => variant.id).slice(-3), ['audio-synth-spectrum-analyzer', 'git-branch-commit-visualizer', 'cyber-radar-threat-sonar']);
 });
 
 test('los adaptadores de botones, notificaciones, formularios, tarjetas, telemetría, diálogos, navegación, acordeones y tablas se pueden analizar', async () => {

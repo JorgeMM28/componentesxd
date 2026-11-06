@@ -1,4 +1,0 @@
-import { useEffect, useRef } from 'react';
-import { mountAgendaReservations } from './agenda-reservations.js';
-import './styles.css';
-export function AgendaReservations() { const root = useRef<HTMLDivElement>(null); useEffect(() => root.current ? mountAgendaReservations(root.current) : undefined, []); return <section className="cxd-special cxd-agenda" data-cxd-control="agenda-reservations" ref={root}><header><small>JUEVES 14 · ESTUDIO A</small><h3>Reservas disponibles</h3></header><div className="cxd-agenda__slots" data-slots><button type="button" data-slot="09:00">09:00</button><button type="button" data-slot="10:30">10:30</button><button type="button" data-slot="12:00">12:00</button><button type="button" data-slot="16:00">16:00</button></div><footer><strong data-selection>Sin reserva</strong><button type="button" data-book disabled>Confirmar reserva</button></footer><span role="status">Elige una franja disponible.</span></section>; }

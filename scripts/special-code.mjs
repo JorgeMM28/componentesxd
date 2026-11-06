@@ -191,4 +191,5 @@ Object.assign(specs, {
     `const goals=Array.from(root.querySelectorAll('[data-goals] input'));const progress=root.querySelector('[data-goal-progress]');const count=root.querySelector('[data-goal-count]');const status=root.querySelector('[role=status]');const render=()=>{const done=goals.filter(goal=>goal.checked).length;progress.value=done;count.textContent=done+' / '+goals.length+' completados';status.textContent=done===goals.length?'Todos los hitos completados.':'Siguiente hito disponible.';};root.querySelector('[data-goals]').addEventListener('change',render,{signal});root.querySelector('[data-complete]').addEventListener('click',()=>{const next=goals.find(goal=>!goal.checked);if(next)next.checked=true;render();},{signal});render();`)
 });
 export function specialCode(id,fw){return buildInteractiveAdapters(id,fw,specs[id],css);}
-export const specialIds = Object.keys(specs);
+// Solo se publican los treinta estudios complejos del catálogo curado.
+export const specialIds = Object.keys(specs).slice(0, 30);

@@ -1,4 +1,0 @@
-import { useEffect, useRef } from 'react';
-import { mountServerMonitor } from './server-monitor.js';
-import './styles.css';
-export function ServerMonitor() { const root = useRef<HTMLDivElement>(null); useEffect(() => root.current ? mountServerMonitor(root.current) : undefined, []); return <section className="cxd-special cxd-monitor" data-cxd-control="server-monitor" ref={root}><header><small>NOC · SALUD</small><h3>Monitor de servidores</h3><button type="button" data-refresh>Actualizar</button></header><div data-metrics><label>API <meter min="0" max="100" value="98"></meter><b>98%</b></label><label>Worker <meter min="0" max="100" value="72"></meter><b>72%</b></label><label>Base de datos <meter min="0" max="100" value="64"></meter><b>64%</b></label></div><span role="status">Lectura estable.</span></section>; }

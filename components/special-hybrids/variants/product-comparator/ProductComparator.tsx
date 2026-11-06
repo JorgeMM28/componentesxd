@@ -1,4 +1,0 @@
-import { useEffect, useRef } from 'react';
-import { mountProductComparator } from './product-comparator.js';
-import './styles.css';
-export function ProductComparator() { const root = useRef<HTMLDivElement>(null); useEffect(() => root.current ? mountProductComparator(root.current) : undefined, []); return <section className="cxd-special cxd-products" data-cxd-control="product-comparator" ref={root}><header><small>PLANES</small><h3 data-plan-title>Compara tus opciones</h3></header><div data-plans><label><input type="radio" name="plan" defaultValue="Starter · $19" defaultChecked /> Starter · $19</label><label><input type="radio" name="plan" defaultValue="Studio · $49" /> Studio · $49</label><label><input type="radio" name="plan" defaultValue="Enterprise · $99" /> Enterprise · $99</label></div><dl><dt>Usuarios</dt><dd data-users>3</dd><dt>Proyectos</dt><dd data-projects>5</dd></dl><span role="status">Starter seleccionado.</span></section>; }

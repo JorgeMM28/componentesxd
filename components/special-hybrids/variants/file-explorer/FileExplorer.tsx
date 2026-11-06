@@ -1,4 +1,0 @@
-import { useEffect, useRef } from 'react';
-import { mountFileExplorer } from './file-explorer.js';
-import './styles.css';
-export function FileExplorer() { const root = useRef<HTMLDivElement>(null); useEffect(() => root.current ? mountFileExplorer(root.current) : undefined, []); return <section className="cxd-special cxd-files" data-cxd-control="file-explorer" ref={root}><header><small>/PROYECTO</small><h3 data-file-title>src/components</h3></header><nav data-tree><button type="button" data-folder="src">▾ src</button><button type="button" data-file="LivePreview.astro">　LivePreview.astro</button><button type="button" data-file="tokens.css">　tokens.css</button><button type="button" data-file="README.md">README.md</button></nav><pre data-file-preview>Selecciona un archivo para ver su resumen.</pre><span role="status">4 elementos indexados.</span></section>; }

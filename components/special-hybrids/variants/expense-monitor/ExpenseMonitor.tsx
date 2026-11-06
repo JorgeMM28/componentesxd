@@ -1,4 +1,0 @@
-import { useEffect, useRef } from 'react';
-import { mountExpenseMonitor } from './expense-monitor.js';
-import './styles.css';
-export function ExpenseMonitor() { const root = useRef<HTMLDivElement>(null); useEffect(() => root.current ? mountExpenseMonitor(root.current) : undefined, []); return <section className="cxd-special cxd-expenses" data-cxd-control="expense-monitor" ref={root}><header><small>PRESUPUESTO · OCT</small><h3>Monitor de gastos</h3></header><div data-expenses><label>Infraestructura <input type="number" min="0" defaultValue="7200" /></label><label>Marketing <input type="number" min="0" defaultValue="3100" /></label><label>Operación <input type="number" min="0" defaultValue="2180" /></label></div><footer><strong data-total></strong><output data-remaining></output></footer><span role="status"></span></section>; }

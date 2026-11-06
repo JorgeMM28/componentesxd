@@ -1,4 +1,0 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
-import { mountDeployConsole } from './deploy-console.js';
-@Component({ selector:'cxd-deploy-console', standalone:true, styleUrls:['./styles.css'], template:`<section class="cxd-special cxd-deploy" data-cxd-control="deploy-console" #root><header><small>PRODUCTION</small><h3>Consola de despliegue</h3></header><pre data-log>$ listo para desplegar</pre><div class="cxd-special__actions"><button type="button" data-deploy>Desplegar versión</button><button type="button" data-clear>Limpiar</button></div><span role="status">Build #482 preparado.</span></section>` })
-export class DeployConsoleComponent implements AfterViewInit, OnDestroy { @ViewChild('root') root!: ElementRef<HTMLElement>; private unmount?: () => void; ngAfterViewInit() { this.unmount = mountDeployConsole(this.root.nativeElement); } ngOnDestroy() { this.unmount?.(); } }

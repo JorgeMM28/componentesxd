@@ -1,4 +1,0 @@
-import { useEffect, useRef } from 'react';
-import { mountPermissionsPanel } from './permissions-panel.js';
-import './styles.css';
-export function PermissionsPanel() { const root = useRef<HTMLDivElement>(null); useEffect(() => root.current ? mountPermissionsPanel(root.current) : undefined, []); return <section className="cxd-special cxd-permissions" data-cxd-control="permissions-panel" ref={root}><header><small>ROL · EDITOR</small><h3>Permisos del equipo</h3></header><fieldset data-permissions><label><input type="checkbox" defaultChecked /> Editar proyectos</label><label><input type="checkbox" defaultChecked /> Publicar contenido</label><label><input type="checkbox" /> Gestionar equipo</label></fieldset><footer><strong data-count>2 permisos</strong><button type="button" data-save>Guardar cambios</button></footer><span role="status">Cambios sin guardar.</span></section>; }

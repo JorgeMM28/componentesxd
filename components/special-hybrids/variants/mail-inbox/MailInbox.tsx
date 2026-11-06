@@ -1,4 +1,0 @@
-import { useEffect, useRef } from 'react';
-import { mountMailInbox } from './mail-inbox.js';
-import './styles.css';
-export function MailInbox() { const root = useRef<HTMLDivElement>(null); useEffect(() => root.current ? mountMailInbox(root.current) : undefined, []); return <section className="cxd-special cxd-inbox" data-cxd-control="mail-inbox" ref={root}><header><small>BANDEJA · 3 NUEVOS</small><h3 data-subject>Propuesta de proyecto</h3></header><div data-mail-list><button type="button" data-mail="Propuesta de proyecto">Lucía · Propuesta</button><button type="button" data-mail="Informe semanal">Diego · Informe</button><button type="button" data-mail="Invitación a demo">Equipo · Invitación</button></div><div className="cxd-special__actions"><button type="button" data-archive>Archivar seleccionado</button><button type="button" data-restore>Restaurar bandeja</button></div><span role="status">Selecciona un mensaje.</span></section>; }

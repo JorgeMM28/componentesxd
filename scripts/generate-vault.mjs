@@ -236,7 +236,7 @@ export const COMPONENT_CATEGORIES = [
     slug: 'special-hybrids',
     code: 'CAT-12',
     name: 'Componentes Especiales Combinados (UI + Anime.js v4 en Vivo)',
-    shortDesc: '50 super-componentes híbridos que combinan flujos de trabajo reales, datos interactivos y movimiento con Anime.js v4; cada uno exporta adaptadores funcionales para las diez tecnologías.',
+    shortDesc: '30 super-componentes híbridos de alta complejidad: flujos, visualizadores, simulaciones y telemetría con Anime.js v4; cada uno exporta adaptadores funcionales para las diez tecnologías.',
     icon: 'sparkles',
     variants: [
       { id: 'stepper-carousel-wizard', name: 'Variante 01 — Step-by-Step Wizard + Carrusel 3D Sincronizado + Timeline', badge: 'STEPPER + CAROUSEL', desc: 'Asistente paso a paso donde avanzar o retroceder sincroniza la barra de progreso superior, desliza el carrusel 3D y anima los sub-elementos con stagger.', previewType: 'hybrid-01' },
@@ -289,7 +289,7 @@ export const COMPONENT_CATEGORIES = [
       { id: 'deploy-console', name: 'Variante 48 — Consola de Despliegues', badge: 'DEPLOY CONSOLE', desc: 'Lanza una versión de demostración y refleja el resultado del flujo de despliegue.', previewType: 'hybrid-new-deploy' },
       { id: 'queue-simulator', name: 'Variante 49 — Simulador de Colas', badge: 'QUEUE SIMULATOR', desc: 'Procesa elementos de una cola y representa su progreso operativo paso a paso.', previewType: 'hybrid-new-queue' },
       { id: 'goals-board', name: 'Variante 50 — Tablero de Objetivos e Hitos', badge: 'GOALS BOARD', desc: 'Completa hitos de demostración y visualiza el avance acumulado hacia un objetivo.', previewType: 'hybrid-new-goals' }
-    ]
+    ].slice(0, 30)
   }
 ];
 

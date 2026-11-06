@@ -1,4 +1,0 @@
-import { useEffect, useRef } from 'react';
-import { mountQueryBuilder } from './query-builder.js';
-import './styles.css';
-export function QueryBuilder() { const root = useRef<HTMLDivElement>(null); useEffect(() => root.current ? mountQueryBuilder(root.current) : undefined, []); return <section className="cxd-special cxd-query" data-cxd-control="query-builder" ref={root}><header><small>CONSULTA VISUAL</small><h3>Filtros de clientes</h3></header><fieldset data-filters><label><input type="checkbox" defaultValue="estado = 'activo'" defaultChecked /> Activos</label><label><input type="checkbox" defaultValue="plan = 'pro'" /> Plan Pro</label><label><input type="checkbox" defaultValue="pais = 'MX'" /> México</label></fieldset><pre data-sql></pre><button type="button" data-copy>Preparar consulta</button><span role="status"></span></section>; }

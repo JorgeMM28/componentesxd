@@ -1,4 +1,0 @@
-import { useEffect, useRef } from 'react';
-import { mountEventCalendar } from './event-calendar.js';
-import './styles.css';
-export function EventCalendar() { const root = useRef<HTMLDivElement>(null); useEffect(() => root.current ? mountEventCalendar(root.current) : undefined, []); return <section className="cxd-special cxd-calendar" data-cxd-control="event-calendar" ref={root}><header><small>OCTUBRE 2026</small><h3 data-event-title>Calendario editorial</h3></header><div data-days><button type="button" data-event="Demo de producto">12<span>Demo</span></button><button type="button" data-event="Sync de diseño">16<span>Sync</span></button><button type="button" data-event="Lanzamiento">23<span>Launch</span></button></div><div className="cxd-special__actions"><button type="button" data-add>Crear evento</button><button type="button" data-clear>Limpiar selección</button></div><span role="status">Tres fechas destacadas.</span></section>; }
