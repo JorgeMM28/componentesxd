@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import Icon from '../components/Icon.astro';
 import registry from '../data/vaultRegistry.json';
+const homeVariantLimit = 5;
 ---
 
 <Layout title="COMPONENTESXD // Bóveda Multi-Framework & Documentación Interactiva Anime.js v4" section="HOME">
@@ -101,12 +102,18 @@ import registry from '../data/vaultRegistry.json';
           <p>{cat.shortDesc}</p>
 
           <div class="variant-links-list">
-            {cat.variants.map((v) => (
+            {cat.variants.slice(0, homeVariantLimit).map((v) => (
               <a href={`/components/${cat.slug}#${v.id}`} class="v-chip-link">
                 <span>{v.name}</span>
                 <Icon name="arrow-right" size={12} />
               </a>
             ))}
+            {cat.variants.length > homeVariantLimit && (
+              <a href={`/components/${cat.slug}`} class="v-chip-link v-chip-link--all">
+                <span>Ver las {cat.variants.length} variantes</span>
+                <Icon name="arrow-right" size={12} />
+              </a>
+            )}
           </div>
         </article>
       ))}
@@ -139,12 +146,18 @@ import registry from '../data/vaultRegistry.json';
           <p>{anim.desc}</p>
 
           <div class="variant-links-list">
-            {anim.presets.map((p) => (
+            {anim.presets.slice(0, homeVariantLimit).map((p) => (
               <a href={`/animations/${anim.slug}#${p.id}`} class="v-chip-link">
                 <span>{p.name}</span>
                 <Icon name="arrow-right" size={12} />
               </a>
             ))}
+            {anim.presets.length > homeVariantLimit && (
+              <a href={`/animations/${anim.slug}`} class="v-chip-link v-chip-link--all">
+                <span>Ver los {anim.presets.length} estudios</span>
+                <Icon name="arrow-right" size={12} />
+              </a>
+            )}
           </div>
         </article>
       ))}
@@ -400,6 +413,22 @@ import registry from '../data/vaultRegistry.json';
     margin-top: 0.35rem;
     padding-top: 0.65rem;
     border-top: 1px solid var(--cxd-border);
+  }
+
+  .v-chip-link--all {
+    color: var(--cxd-accent);
+    border-color: color-mix(in srgb, var(--cxd-accent) 48%, var(--cxd-border));
+    font-weight: 700;
+  }
+
+  @media (max-width: 640px) {
+    .hero-grid-shell__left { padding: 1.25rem; border-right: 0; border-bottom: 1px solid var(--cxd-border); }
+    .hero-anime-widget__bar { align-items: flex-start; gap: .65rem; flex-direction: column; }
+    .hero-stats-strip { grid-template-columns: repeat(2, 1fr); }
+    .hero-stats-strip > div:nth-child(2) { border-right: none; }
+    .hero-stats-strip > div:nth-child(-n+2) { border-bottom: 1px solid var(--cxd-border); }
+    .arch-grid { grid-template-columns: 1fr; }
+    .home-section__head { align-items: flex-start; }
   }
 
   .v-chip-link {

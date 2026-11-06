@@ -68,11 +68,23 @@ test('los especiales no reutilizan el contador genérico y las 20 vistas nuevas 
   }
 });
 
-test('el hub de laboratorio expone cuatro módulos independientes y código copiable', () => {
+test('el hub de laboratorio expone catorce módulos independientes y código copiable', () => {
   for (const id of ['lab-text', 'surface-output', 'motion-output', 'layout-output', 'surface-copy', 'motion-copy', 'layout-copy']) assert.match(laboratory, new RegExp(id));
   assert.match(laboratory, /motion-pause/);
   assert.match(laboratory, /motion-reverse/);
   assert.match(laboratory, /motion-reset/);
+  assert.equal((laboratory.match(/data-extra-lab=/g) || []).length, 10);
+  for (const id of ['data-card-deck', 'data-table-search', 'data-grid-range', 'data-async-button', 'data-password-input', 'data-toast-add', 'data-avatar-list', 'data-chart-range', 'data-dialog-open', 'data-state-preview']) assert.match(laboratory, new RegExp(id));
+});
+
+test('la portada limita las listas extensas y el skeleton conserva la transición visible', () => {
+  const home = readFileSync('src/pages/index.astro', 'utf8');
+  const skeleton = readFileSync('src/components/AnimeLab.astro', 'utf8');
+  assert.match(home, /homeVariantLimit = 5/);
+  assert.match(home, /variants\.slice\(0, homeVariantLimit\)/);
+  assert.match(home, /Ver las \{cat\.variants\.length\} variantes/);
+  assert.match(skeleton, /revealLoadedContent\(skLayer, '#real-content-layer \.real-item'\)/);
+  assert.ok(skeleton.indexOf("revealLoadedContent(skLayer") < skeleton.indexOf("skLayer.style.display = 'none'"));
 });
 
 test('el botón moderno Vanilla actualiza selección, estado y permite desmontar', async () => {
@@ -272,6 +284,14 @@ test('los especiales implementados se regeneran y sus adaptadores se analizan', 
     const file = variant.files.astro;
     assert.deepEqual((await transform(file.code, { filename: file.path })).diagnostics.filter(item => item.severity === 1), [], file.path);
   }
+});
+
+test('las variantes especiales 31 a 50 exportan herramientas con estructuras propias', () => {
+  const registry = JSON.parse(readFileSync('src/data/vaultRegistry.json', 'utf8'));
+  const special = registry.componentCategories.find(category => category.slug === 'special-hybrids').variants.slice(30);
+  const signatures = ['data-slots', 'data-flow', 'data-filters', 'data-metrics', 'data-mail-list', 'data-progress', 'data-stock', 'data-stages', 'data-seat-grid', 'data-days', 'data-permissions', 'data-questions', 'data-downloads', 'data-plans', 'data-expenses', 'data-chart', 'data-tree', 'data-log', 'data-queue', 'data-goals'];
+  assert.equal(special.length, signatures.length);
+  special.forEach((variant, index) => assert.match(variant.files['vanilla-js'].code, new RegExp(signatures[index])));
 });
 
 test('los adaptadores de botones, notificaciones, formularios, tarjetas, telemetría, diálogos, navegación, acordeones y tablas se pueden analizar', async () => {

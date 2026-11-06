@@ -2,7 +2,7 @@
 declare(strict_types=1);
 // Incluye styles.css y ajusta la ruta del módulo.
 function renderSeatMap(): string { return <<<'HTML'
-<section class="cxd-special cxd-special--telemetry" data-cxd-control="seat-map"><header><small>MAPA DE ASIENTOS</small><h3>Mapa de asientos</h3></header><p data-copy>Mapa restaurado</p><div class="cxd-special__scene" data-scene data-shape="telemetry"><div class="cxd-special__actions" data-items><button type="button" data-item="0" aria-pressed="true">A1</button><button type="button" data-item="1" aria-pressed="false">A2</button><button type="button" data-item="2" aria-pressed="false">B2</button></div><strong data-output>A1</strong></div><div class="cxd-special__actions"><button type="button" data-primary>Reservar asiento</button><button type="button" data-reset>Restaurar</button></div><span role="status">Mapa restaurado</span></section>
+<section class="cxd-special cxd-seats" data-cxd-control="seat-map"><header><small>SALA A · 12 DISPONIBLES</small><h3 data-seat-title>Elige un asiento</h3></header><div data-seat-grid><button type="button">A1</button><button type="button">A2</button><button type="button">A3</button><button type="button">B1</button><button type="button">B2</button><button type="button">B3</button><button type="button">C1</button><button type="button">C2</button><button type="button">C3</button></div><button type="button" data-reserve disabled>Reservar asiento</button><span role="status">9 asientos en el mapa.</span></section>
 <script type="module">
 import { mountSeatMap } from '/assets/seat-map.js';
 document.querySelectorAll('[data-cxd-control="seat-map"]:not([data-ready])').forEach(root => { root.dataset.ready = 'true'; mountSeatMap(root); });

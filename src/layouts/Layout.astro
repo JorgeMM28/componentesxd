@@ -1048,4 +1048,25 @@ const pathname = Astro.url.pathname;
     color: var(--cxd-text-secondary);
     text-decoration: none;
   }
+  /* Base responsive guardrails shared by every generated component preview. */
+  img, svg, video, canvas { max-width: 100%; }
+  input, select, textarea, button { max-width: 100%; }
+  pre { max-width: 100%; overflow-x: auto; }
+  @media (max-width: 760px) {
+    html { scroll-padding-top: 116px; }
+    .page-main { padding: 1.25rem .75rem 3rem; }
+    .ms-mega-dropdown { left: .5rem; right: .5rem; max-width: calc(100vw - 1rem); }
+    .ms-mega-col-secondary, .ms-interfaces-panel { padding: 1rem; }
+    .ms-variants-grid, .ms-iface-grid { grid-template-columns: 1fr; }
+    .arch-grid { grid-template-columns: 1fr; }
+    .site-footer, .site-footer__inner { padding-left: .75rem; padding-right: .75rem; }
+    .site-footer__links { flex-wrap: wrap; gap: .75rem; }
+  }
+  @media (max-width: 420px) {
+    .ms-brand__meta { display: none; }
+    .ms-nav-item, .ms-nav-trigger { padding: 0 .45rem; font-size: .68rem; }
+    .route-pill { display: none; }
+    .select-control, .codebar-left, .codebar-actions { width: 100%; }
+    .cxd-architect-select, .unit-action-btn { flex: 1; }
+  }
 </style>

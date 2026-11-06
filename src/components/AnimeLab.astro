@@ -439,14 +439,26 @@ const codeTimer = readRepoFile('animations/timers/chrono-timer.js');
     if (!skLayer || !realLayer) return;
     showingRealContent = !showingRealContent;
     if (showingRealContent) {
-      skLayer.style.display = 'none';
       realLayer.style.display = 'block';
+      realLayer.querySelectorAll<HTMLElement>('.real-item').forEach(item => {
+        item.style.opacity = '0';
+        item.style.transform = 'translateY(14px)';
+      });
+      // El skeleton debe seguir visible mientras el timeline lo desvanece.
       revealLoadedContent(skLayer, '#real-content-layer .real-item');
+      window.setTimeout(() => {
+        skLayer.style.display = 'none';
+        skLayer.style.opacity = '1';
+        skLayer.style.transform = 'scale(1)';
+      }, 620);
+      btnSkeleton.querySelector('span')!.textContent = 'Mostrar Skeleton';
     } else {
       realLayer.style.display = 'none';
+      realLayer.querySelectorAll<HTMLElement>('.real-item').forEach(item => item.style.cssText = '');
       skLayer.style.display = 'block';
       skLayer.style.opacity = '1';
       skLayer.style.transform = 'scale(1)';
+      btnSkeleton.querySelector('span')!.textContent = 'Revelar Contenido Real';
     }
   });
 

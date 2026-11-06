@@ -3067,4 +3067,21 @@ const dockerExamples: Record<string, { id: string; label: string; path: string }
   .unit-code-block.is-active {
     display: block;
   }
+  @media (max-width: 760px) {
+    .variant-search { align-items: stretch; }
+    .variant-search label, .variant-search span { width: 100%; }
+    .variant-jump-strip { padding: .75rem; }
+    .variant-jump-strip__pills { flex-wrap: nowrap; overflow-x: auto; padding-bottom: .3rem; }
+    .jump-pill { flex: 0 0 auto; }
+    .variant-full-stack { gap: 1.25rem; }
+    .variant-showcase-block__head, .variant-showcase-block__stage, .variant-showcase-block__codebar { padding-left: 1rem; padding-right: 1rem; }
+    .variant-showcase-block__stage { padding-top: 1rem; padding-bottom: 1rem; overflow-x: auto; }
+    .codebar-left, .codebar-actions { width: 100%; }
+    .codebar-actions { flex-wrap: wrap; }
+    .unit-action-btn { flex: 1 1 12rem; justify-content: center; }
+    .select-control { flex-wrap: wrap; }
+    .codebar-path { overflow-wrap: anywhere; }
+    .code-drawer__meta { padding-left: 1rem; padding-right: 1rem; }
+    .unit-code-block { padding-left: 1rem; padding-right: 1rem; font-size: .68rem; }
+  }
 </style>
