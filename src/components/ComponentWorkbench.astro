@@ -1499,7 +1499,7 @@ const dockerExamples: Record<string, { id: string; label: string; path: string }
     });
   });
 
-  // 6D. 20 COMPONENTES ESPECIALES COMBINADOS (UI + ANIME.JS v4 EN VIVO)
+  // 6D. 30 COMPONENTES ESPECIALES COMBINADOS (UI + ANIME.JS v4 EN VIVO)
   // H01: Step-by-Step Wizard + Carrusel 3D Sincronizado + Timeline
   document.querySelectorAll<HTMLElement>('[data-hyb-01]').forEach((h) => {
     const pills = Array.from(h.querySelectorAll<HTMLButtonElement>('[data-h01-go]'));
@@ -1595,16 +1595,12 @@ const dockerExamples: Record<string, { id: string; label: string; path: string }
   // H03: Tabla con Reordenamiento Cascada Stagger y Barras Cinéticas
   document.querySelectorAll<HTMLElement>('[data-hyb-03]').forEach((h) => {
     const tbody = h.querySelector<HTMLElement>('[data-h03-tbody]');
-    const allBtns = h.querySelectorAll<HTMLButtonElement>('.mini-btn');
+    const sortBtns = h.querySelectorAll<HTMLButtonElement>('[data-h03-sort]');
 
-    function markActiveButton(activeBtn: Element) {
-      allBtns.forEach((b) => b.classList.toggle('mini-btn--accent', b === activeBtn));
-    }
-
-    h.querySelectorAll<HTMLButtonElement>('[data-h03-sort]').forEach((btn) => {
+    sortBtns.forEach((btn) => {
       btn.addEventListener('click', () => {
         if (!tbody) return;
-        markActiveButton(btn);
+        sortBtns.forEach((b) => b.classList.toggle('mini-btn--accent', b === btn));
         const asc = btn.dataset.h03Sort === 'load-asc';
         const rows = Array.from(tbody.querySelectorAll<HTMLElement>('[data-h03-row]'));
         rows.sort((a, b) => {
@@ -1617,10 +1613,10 @@ const dockerExamples: Record<string, { id: string; label: string; path: string }
       });
     });
 
-    const shuffleBtn = h.querySelector('[data-h03-shuffle]');
+    const shuffleBtn = h.querySelector<HTMLButtonElement>('[data-h03-shuffle]');
     shuffleBtn?.addEventListener('click', () => {
       if (!tbody) return;
-      markActiveButton(shuffleBtn);
+      animate(shuffleBtn, { scale: [0.94, 1.05, 1], duration: 220, ease: 'outBack' });
       tbody.querySelectorAll<HTMLElement>('[data-h03-row]').forEach((r) => {
         const nextLoad = Math.floor(20 + Math.random() * 78);
         r.dataset.load = String(nextLoad);

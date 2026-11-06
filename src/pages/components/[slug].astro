@@ -29,7 +29,58 @@ const { category } = Astro.props;
     </div>
   </div>
 
-  {category.slug === "special-hybrids" && <p><a href="#motion-title">Explorar los 20 estudios de movimiento ↓</a></p>}
+  {category.slug === "special-hybrids" && (
+    <div class="special-hybrids-banner">
+      <span class="mono">CAT-12 // 30 VARIANTES HÍBRIDAS REACTIVAS + 20 ESTUDIOS DE MOVIMIENTO</span>
+      <a href="#motion-title" class="special-hybrids-link">
+        <span>Explorar los 20 estudios visuales de movimiento ↓</span>
+      </a>
+    </div>
+  )}
   <ComponentWorkbench category={category} />
   {category.slug === "special-hybrids" && <MotionStudies />}
 </Layout>
+
+<style>
+  .special-hybrids-banner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    padding: 0.85rem 1.25rem;
+    margin: 1.25rem 0 1.75rem;
+    background: color-mix(in srgb, var(--cxd-accent) 8%, var(--cxd-bg-surface));
+    border: 1px solid color-mix(in srgb, var(--cxd-accent) 28%, var(--cxd-border-strong));
+    border-radius: var(--cxd-radius-md);
+    font-size: 0.82rem;
+  }
+
+  .special-hybrids-banner span {
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    color: var(--cxd-accent);
+  }
+
+  .special-hybrids-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.35rem 0.85rem;
+    background: var(--cxd-bg-elevated);
+    border: 1px solid var(--cxd-border-strong);
+    border-radius: var(--cxd-radius-sm);
+    color: var(--cxd-text-primary);
+    text-decoration: none;
+    font-family: var(--cxd-font-mono);
+    font-size: 0.74rem;
+    font-weight: 600;
+    transition: all 140ms ease;
+  }
+
+  .special-hybrids-link:hover {
+    border-color: var(--cxd-accent);
+    color: var(--cxd-accent);
+    transform: translateY(-1px);
+  }
+</style>

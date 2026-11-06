@@ -20,6 +20,7 @@ const {
 } = Astro.props;
 
 const pathname = Astro.url.pathname;
+const specialHybridsCount = registry.componentCategories.find((c) => c.slug === 'special-hybrids')?.variants.length || 30;
 ---
 
 <!doctype html>
@@ -274,7 +275,7 @@ const pathname = Astro.url.pathname;
 
           <a href="/components/special-hybrids" class={`ms-nav-item ${pathname.startsWith('/components/special-hybrids') ? 'is-current' : ''}`}>
             <Icon name="sparkles" size={14} />
-            <span>Especiales + Anime.js (50)</span>
+            <span>Especiales + Anime.js ({specialHybridsCount})</span>
           </a>
 
           <a href="/guides" class={`ms-nav-item ${pathname.startsWith('/guides') ? 'is-current' : ''}`}>

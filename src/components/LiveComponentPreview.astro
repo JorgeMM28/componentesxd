@@ -1998,7 +1998,7 @@ const { previewType, variantId, variantName, badge } = Astro.props;
   )}
 
   {/* ==========================================================================
-      CATEGORÍA 12: 20 COMPONENTES ESPECIALES COMBINADOS (UI + ANIME.JS v4 EN VIVO)
+      CATEGORÍA 12: 30 COMPONENTES ESPECIALES COMBINADOS (UI + ANIME.JS v4 EN VIVO)
       ========================================================================== */}
 
   {/* 01. STEP-BY-STEP WIZARD + CARRUSEL 3D + TIMELINE */}
@@ -3307,8 +3307,8 @@ const { previewType, variantId, variantName, badge } = Astro.props;
     background: var(--cxd-bg-surface);
   }
 
-  /* Controles comunes de tablas y componentes */
-  .mini-btn {
+  /* Controles comunes de tablas, micro-UI y elementos dinámicos */
+  :global(.mini-btn) {
     display: inline-flex;
     align-items: center;
     gap: 0.36rem;
@@ -3320,32 +3320,39 @@ const { previewType, variantId, variantName, badge } = Astro.props;
     font-family: var(--cxd-font-mono);
     font-size: 0.72rem;
     cursor: pointer;
-    transition: background-color 140ms ease, border-color 140ms ease, transform 120ms ease;
+    text-decoration: none;
+    transition: background-color 140ms ease, border-color 140ms ease, transform 120ms ease, color 140ms ease;
   }
 
-  .mini-btn:hover {
+  :global(.mini-btn:hover) {
     border-color: var(--cxd-accent);
   }
 
-  .mini-btn--accent {
-    background: var(--cxd-accent);
-    color: var(--cxd-accent-fg, #000);
-    border-color: var(--cxd-accent);
+  :global(.mini-btn--accent) {
+    background: var(--cxd-accent) !important;
+    color: var(--cxd-accent-fg, #000) !important;
+    border-color: var(--cxd-accent) !important;
     font-weight: 600;
   }
 
-  .mini-btn--danger {
-    color: var(--cxd-danger);
-    border-color: var(--cxd-danger);
+  :global(.mini-btn--danger) {
+    background: var(--cxd-bg-elevated) !important;
+    color: var(--cxd-danger) !important;
+    border-color: var(--cxd-danger) !important;
+    font-weight: 600;
   }
 
-  .row-actions {
+  :global(.mini-btn--danger:hover) {
+    background: color-mix(in srgb, var(--cxd-danger) 16%, var(--cxd-bg-elevated)) !important;
+  }
+
+  :global(.row-actions) {
     display: inline-flex;
     gap: 0.4rem;
     align-items: center;
   }
 
-  .tbl-input, .tbl-select {
+  :global(.tbl-input), :global(.tbl-select) {
     background: var(--cxd-bg-base);
     color: var(--cxd-text-primary);
     border: 1px solid var(--cxd-border-strong);
@@ -3353,6 +3360,34 @@ const { previewType, variantId, variantName, badge } = Astro.props;
     padding: 0.38rem 0.6rem;
     font-family: var(--cxd-font-mono);
     font-size: 0.76rem;
+  }
+
+  :global(.cxd-badge) {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.2rem 0.55rem;
+    border-radius: var(--cxd-radius-sm);
+    background: var(--cxd-bg-elevated);
+    border: 1px solid var(--cxd-border);
+    font-family: var(--cxd-font-mono);
+    font-size: 0.68rem;
+    color: var(--cxd-text-secondary);
+  }
+
+  :global(.cxd-badge--active) {
+    background: color-mix(in srgb, var(--cxd-accent) 18%, var(--cxd-bg-elevated));
+    border-color: var(--cxd-accent);
+    color: var(--cxd-accent);
+    font-weight: 700;
+  }
+
+  :global([hidden]) {
+    display: none !important;
+  }
+
+  :global(.acc-panel[hidden]) {
+    display: none !important;
   }
 
   .tbl-input--num {
@@ -4728,7 +4763,7 @@ const { previewType, variantId, variantName, badge } = Astro.props;
   }
 
   /* ==========================================================================
-     ESTILOS PARA LOS 20 COMPONENTES ESPECIALES HÍBRIDOS (UI + ANIME.JS v4)
+     ESTILOS PARA LOS 30 COMPONENTES ESPECIALES HÍBRIDOS (UI + ANIME.JS v4)
      ========================================================================== */
   .hyb-shell {
     width: 100%;

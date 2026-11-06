@@ -15,7 +15,7 @@ Utiliza esta skill cuando el usuario solicite crear, mejorar o integrar tablas d
      `geist-dark`, `swiss-editorial`, `teenage-industrial`, `linear-obsidian`, `carbon-ibm`, `bauhaus-brutalist`, `tokyo-telemetry`, `nordic-paper`, `aerospace-hud`, `fintech-emerald`, `solarized-craft`, `ceramic-light`.
 
 2. **Selección de Componentes (`components/<categoria>/variants/<variante>/`)**:
-   - Cada una de las **66 variantes** incluye los 10 archivos listos para copiar:
+   - Cada una de las **116 variantes** incluye los 10 archivos listos para copiar (1,160 archivos en total):
      - `styles.css` y `_styles.scss`
      - `component.js` (Vanilla JS ES2024)
      - `Component.tsx` (React 19)

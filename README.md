@@ -68,15 +68,15 @@ Las vistas previas se agrupan por categoría. Cada variante mantiene alineada su
 
 `accordion-exclusive`, `accordion-multi-bento`, `before-after-split`, `kanban-mini-board`, `segmented-pricing-toggle`, `file-tree-inspector`, `transfer-dual-list`, `calendar-slot-Matrix`.
 
-### Componentes Especiales Combinados (UI + Anime.js v4 en Vivo) (`special-hybrids` · 50 variantes)
+### Componentes Especiales Combinados (UI + Anime.js v4 en Vivo) (`special-hybrids` · 30 variantes)
 
-`stepper-carousel-wizard`, `table-realtime-stream`, `table-stagger-sorter`, `carousel-svg-morph-showcase`, `carousel-spring-physics-deck`, `stepper-checkout-calculator`, `table-bulk-explosion`, `toast-timeline-dispatcher`, `kanban-spring-pipeline`, `form-otp-svg-vault`, `card-3d-exploded-inspector`, `skeleton-to-table-hydrator`, `carousel-timeline-scrubber`, `search-grid-2d-ripple`, `modal-command-choreography`, `pricing-slider-odometer`, `docker-live-deploy-topology`, `accordion-animated-metrics`, `dual-transfer-stagger-sync`, `chrono-sla-incident-table`, `anime-hero-clockwork`, `interactive-world-telemetry-map`, `pathfinding-dijkstra-visualizer`, `sorting-algorithm-symphony`, `neural-network-graph-propagator`, `orbital-solar-gravity-sim`, `isometric-3d-city-cluster`, `audio-synth-spectrum-analyzer`, `git-branch-commit-visualizer`, `cyber-radar-threat-sonar`, `agenda-reservations`, `flow-editor`, `query-builder`, `server-monitor`, `mail-inbox`, `media-player`, `inventory-board`, `order-tracker`, `seat-map`, `event-calendar`, `permissions-panel`, `survey-builder`, `downloads-center`, `product-comparator`, `expense-monitor`, `chart-editor`, `file-explorer`, `deploy-console`, `queue-simulator`, `goals-board`.
+`stepper-carousel-wizard`, `table-realtime-stream`, `table-stagger-sorter`, `carousel-svg-morph-showcase`, `carousel-spring-physics-deck`, `stepper-checkout-calculator`, `table-bulk-explosion`, `toast-timeline-dispatcher`, `kanban-spring-pipeline`, `form-otp-svg-vault`, `card-3d-exploded-inspector`, `skeleton-to-table-hydrator`, `carousel-timeline-scrubber`, `search-grid-2d-ripple`, `modal-command-choreography`, `pricing-slider-odometer`, `docker-live-deploy-topology`, `accordion-animated-metrics`, `dual-transfer-stagger-sync`, `chrono-sla-incident-table`, `anime-hero-clockwork`, `interactive-world-telemetry-map`, `pathfinding-dijkstra-visualizer`, `sorting-algorithm-symphony`, `neural-network-graph-propagator`, `orbital-solar-gravity-sim`, `isometric-3d-city-cluster`, `audio-synth-spectrum-analyzer`, `git-branch-commit-visualizer`, `cyber-radar-threat-sonar`.
 
 ---
 
 ## Enciclopedia interactiva Anime.js v4 (`animations/` — 48 escenarios en 8 capítulos)
 
-La página de animaciones incluye ejemplos de distribución, arrastre, desplazamiento y WAAPI. En Especiales hay 20 estudios visuales agrupados en cinco familias; el laboratorio permite editar tipografía y degradados y copiar CSS y JavaScript.
+La página de animaciones incluye ejemplos de distribución, arrastre, desplazamiento y WAAPI. En Especiales hay 30 variantes interactivas de alta fidelidad que combinan componentes UI reales con el motor cinético Anime.js v4 (incluyendo mapa mundial interactivo, visualizador de algoritmos, laberinto Dijkstra, grafo Git multirama y simulación orbital gravitatoria), además de 20 estudios visuales de movimiento.
 
 Basada en la documentación oficial de **Anime.js v4** ([documentación de Anime.js](https://animejs.com/documentation/)), utilizando la API modular (`animate`, `stagger`, `createTimeline`, `createTimer`, `createSpring`, `steps`, `svg.createDrawable`, `svg.morphTo`, `svg.createMotionPath`):
 
